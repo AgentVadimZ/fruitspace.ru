@@ -17,4 +17,6 @@ const NavItem = React.forwardRef((props,ref)=>{
     )
 })
 
+NavItem.displayName = 'NavItem'
+
 export default NavItem;
