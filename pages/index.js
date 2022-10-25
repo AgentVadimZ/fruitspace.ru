@@ -45,13 +45,13 @@ export default function Home() {
         <div className={styles.main}>
             <Carousel>
                 <CarouselItem image="https://media.wired.com/photos/60f0f10db3e52be52fcdc042/master/w_1600%2Cc_limit/Minecraft_Middle_Earth_Minas_Tirith_render_SOURCE_Minecraft_Middle-Earth.png"
-                              link="#" title="Title" text="A sample text that goes below 1" />
-                <CarouselItem image="https://media.wired.com/photos/60f0f10db3e52be52fcdc042/master/w_1600%2Cc_limit/Minecraft_Middle_Earth_Minas_Tirith_render_SOURCE_Minecraft_Middle-Earth.png"
-                              link="#" title="Title" text="A sample text that goes below 2" />
-                <CarouselItem image="https://media.wired.com/photos/60f0f10db3e52be52fcdc042/master/w_1600%2Cc_limit/Minecraft_Middle_Earth_Minas_Tirith_render_SOURCE_Minecraft_Middle-Earth.png"
-                              link="#" title="Title" text="A sample text that goes below 3" />
-                <CarouselItem image="https://media.wired.com/photos/60f0f10db3e52be52fcdc042/master/w_1600%2Cc_limit/Minecraft_Middle_Earth_Minas_Tirith_render_SOURCE_Minecraft_Middle-Earth.png"
-                              link="#" title="Title" text="A sample text that goes below 4" />
+                              link="#" title="Создайте сервер Minecraft" text="Наши сервера прошли испытание динамитом и лаг-машинами. Играйте без лагов!" />
+                <CarouselItem image={ProtoFlicker.src}
+                              link="#" title="Мы любим строителей на GDPS" text="Все мы знаем как важен блокдизайн и как важно его игнорировать" />
+                <CarouselItem image="https://i.imgur.com/8KV0PjH.jpg"
+                              link="#" title="GTA V [RAGE MP]" text="Соберитесь с друзьями в GTA On... от орбитальной пушки отойди" />
+                {/*<CarouselItem image="https://media.wired.com/photos/60f0f10db3e52be52fcdc042/master/w_1600%2Cc_limit/Minecraft_Middle_Earth_Minas_Tirith_render_SOURCE_Minecraft_Middle-Earth.png"*/}
+                {/*              link="#" title="Title" text="A sample text that goes below 4" />*/}
             </Carousel>
 
             <div className={styles.productCardGrid}>
@@ -134,21 +134,21 @@ export default function Home() {
 
         </div>
 
-        <h2 style={{textAlign:'center',margin:"3rem 0",color:"white"}}>Майден делает сайт...</h2>
+        <h2 style={{textAlign:'center',margin:"3rem 0",color:"white"}}>Vercel маршруты сломал 👍</h2>
 
 
 
 
-        <div style={{display:"flex", justifyContent:"center"}}>
-            <MetaCard double image={NightR.src}></MetaCard>
-            <MetaCard double image={"https://i.imgur.com/8KV0PjH.jpg"}></MetaCard>
-            <MetaCard image={"https://www.gamerevolution.com/wp-content/uploads/sites/2/2019/04/GTAO-XBWire-HeroMain-940x528-hero.jpg"}></MetaCard>
-        </div>
-        <div style={{display:"flex", justifyContent:"center"}}>
-            <MetaCard image={sImg.src}></MetaCard>
-            <MetaCard double image={ProtoFlicker.src}></MetaCard>
-            <MetaCard double image={"https://media.wired.com/photos/60f0f10db3e52be52fcdc042/master/w_1600%2Cc_limit/Minecraft_Middle_Earth_Minas_Tirith_render_SOURCE_Minecraft_Middle-Earth.png"}></MetaCard>
-        </div>
+        {/*<div style={{display:"flex", justifyContent:"center"}}>*/}
+        {/*    <MetaCard double image={NightR.src}></MetaCard>*/}
+        {/*    <MetaCard double image={"https://i.imgur.com/8KV0PjH.jpg"}></MetaCard>*/}
+        {/*    <MetaCard image={"https://www.gamerevolution.com/wp-content/uploads/sites/2/2019/04/GTAO-XBWire-HeroMain-940x528-hero.jpg"}></MetaCard>*/}
+        {/*</div>*/}
+        {/*<div style={{display:"flex", justifyContent:"center"}}>*/}
+        {/*    <MetaCard image={sImg.src}></MetaCard>*/}
+        {/*    <MetaCard double image={ProtoFlicker.src}></MetaCard>*/}
+        {/*    <MetaCard double image={"https://media.wired.com/photos/60f0f10db3e52be52fcdc042/master/w_1600%2Cc_limit/Minecraft_Middle_Earth_Minas_Tirith_render_SOURCE_Minecraft_Middle-Earth.png"}></MetaCard>*/}
+        {/*</div>*/}
         <Footer/>
     </>
   )
