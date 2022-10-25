@@ -1,0 +1,39 @@
+
+:root {
+    --bkg-color: #191921;
+    --active-color: #212125;
+    --btn-color: #484a4d;
+    --btn-hover: #525357;
+    --text-color: white;
+
+    --primary-color: #0d6efd;
+    --success-color: #43b581;
+    --error-color: #f04747;
+
+    --nav-height: 60px;
+    font-family: Helvetica, serif;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+a,p {
+    text-decoration: none;
+    color: white;
+}
+
+body {
+    margin: 0;
+    background-color: var(--bkg-color);
+}
+
+
+
+/* OVERRIDES */
+
+span.swiper-pagination-bullet-active {
+    background-color: #0d6efd !important;
+}
