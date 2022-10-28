@@ -55,27 +55,27 @@ export default function GlobalNav(props) {
             {/*        </DropdownItem>*/}
             {/*    </DropdownMenu>*/}
             {/*</NavItem>*/}
-            <NavItem icon={<NotificationSvg/>}>
-                <DropdownMenu centered>
-                    <DropdownItem leftIcon={<NotificationSvg/>} rightIcon={<DeleteIcon/>}>
-                        <div className={styles.MultilineItem}>
-                            Когда же запуск
-                            <span>Какие же вы любопытные. Работаем без сна и перерывов. Скоро)</span>
-                        </div>
-                    </DropdownItem>
-                    <DropdownItem leftIcon={<NotificationSvg/>} rightIcon={<DeleteIcon/>}>
-                        <div className={styles.MultilineItem}>
-                            Сообщение для Naizura
-                            <span>Сюда помещается 75 символов, учти это</span>
-                        </div>
-                    </DropdownItem>
-                </DropdownMenu>
-            </NavItem>
+            {/*<NavItem icon={<NotificationSvg/>}>*/}
+            {/*    <DropdownMenu centered>*/}
+            {/*        <DropdownItem leftIcon={<NotificationSvg/>} rightIcon={<DeleteIcon/>}>*/}
+            {/*            <div className={styles.MultilineItem}>*/}
+            {/*                Когда же запуск*/}
+            {/*                <span>Какие же вы любопытные. Работаем без сна и перерывов. Скоро)</span>*/}
+            {/*            </div>*/}
+            {/*        </DropdownItem>*/}
+            {/*        <DropdownItem leftIcon={<NotificationSvg/>} rightIcon={<DeleteIcon/>}>*/}
+            {/*            <div className={styles.MultilineItem}>*/}
+            {/*                Сообщение для Naizura*/}
+            {/*                <span>Сюда помещается 75 символов, учти это</span>*/}
+            {/*            </div>*/}
+            {/*        </DropdownItem>*/}
+            {/*    </DropdownMenu>*/}
+            {/*</NavItem>*/}
             {/*<NavItem profile icon={props.profilePic}>*/}
             <NavItem icon={<PersonIcon/>} >
                 <DropdownMenu>
                     {/*<Link href="/profile/user">*/}
-                    <Link href="#">
+                    <Link href="/profile/login">
                         {/*<DropdownItem leftIcon={<img src={"https://sun9-84.userapi.com/impg/kF4tqNO7BrLupDG8SUDVcn1s6AjCDbEJ9QpGhQ/--gm3SwQFA4.jpg?size=963x918&quality=95&sign=ca6881ea26076bebf1bb925b0672b168&type=album"}/>}*/}
                         {/*                            rightIcon={<RightSvg />}>M41den</DropdownItem>*/}
                         <DropdownItem leftIcon={<VpnKeyIcon/>}>Войти</DropdownItem>
