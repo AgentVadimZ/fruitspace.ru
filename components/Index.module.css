@@ -27,6 +27,64 @@
     color: white !important;
 }
 
+.form {
+    background-color: var(--active-color);
+    border-radius: 12px;
+    margin: 0 auto 2rem;
+    padding: .5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 600px;
+}
+
+.form > h3 {
+    margin: .5rem;
+    font-size: 16pt;
+}
+
+.form > form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form svg {
+    fill: white !important;
+}
+
+.formButton {
+    margin: .5rem 0;
+    border-radius: 8px;
+    height: 3rem;
+    background-color: #0d6efd;
+    color: white;
+    width: 100%;
+    transition: background-color 500ms;
+}
+
+.formButton:hover {
+    background-color: #5a00ff;
+}
+
+.formButton:disabled {
+    color: gray !important;
+}
+
+/*.form .inputwrap {*/
+/*    border-radius: 8px;*/
+/*    background-color: var(--bkg-color);*/
+/*    max-width: fit-content;*/
+/*}*/
+
+/*.inputwrap span {*/
+/*    padding: 0 8px;*/
+/*}*/
+
+.form > img {
+    max-height: 5rem;
+}
+
 @media screen and (max-width: 720px){
     .main {
         margin: 1rem .5rem;
