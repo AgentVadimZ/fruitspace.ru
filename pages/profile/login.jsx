@@ -11,6 +11,7 @@ import {LoadingButton} from "@mui/lab"
 import {styled} from "@mui/system";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import toast, {Toaster} from "react-hot-toast";
+import {useRouter} from "next/router";
 
 
 const ParseError = (err)=>{
@@ -41,7 +42,10 @@ const ParseError = (err)=>{
 
 export default function Login(progs) {
 
+    const router = useRouter()
+
     const [regMode, setRegMode] = useState(false)
+    const [forgotPass, setForgotPass] = useState(false)
     const [loading, setLoading] = useState(false)
 
     const [formData, setFormData] = useState({
@@ -55,13 +59,11 @@ export default function Login(progs) {
     })
 
 
-    const register = ()=> {
+    const register = async ()=> {
         setLoading(true)
-        // let resp = await fetch("https://api.fruitspace.one/v1/auth/register", {
-        //     method: 'POST', body: JSON.stringify(formData)
-        // }).then(r => r.json())
-        let resp = {status:"okd",error:"Amongus |captcha"}
-        console.log("E")
+        let resp = await fetch("https://api.fruitspace.one/v1/auth/register", {
+            method: 'POST', body: JSON.stringify(formData)
+        }).then(r => r.json())
         if (resp.status==="ok") {
             toast("На почту было отправлено письмо с подтверждением", {
                 duration: 5000,
@@ -78,7 +80,33 @@ export default function Login(progs) {
                 }
             })
         }else{
-            toast.error("Произошла ошибка: "+ParseError(resp.error), {
+            toast.error("Произошла ошибка: "+ParseError(resp.message), {
+                duration: 10000,
+                style: {
+                    color: "white",
+                    backgroundColor: "var(--btn-color)"
+                }
+            })
+        }
+        setLoading(false)
+    }
+
+    const login = async ()=> {
+        setLoading(true)
+        let resp = await fetch("https://api.fruitspace.one/v1/auth/login", {
+            method: 'POST', body: JSON.stringify(formData)
+        }).then(r => r.json())
+        if (resp.status==="ok") {
+            toast.success("Вход произошел успешно", {
+                duration: 1000,
+                style: {
+                    color: "white",
+                    backgroundColor: "var(--btn-color)"
+                }
+            })
+            setTimeout(()=>router.push("/profile/"),1000)
+        }else{
+            toast.error("Произошла ошибка: "+ParseError(resp.message), {
                 duration: 10000,
                 style: {
                     color: "white",
@@ -98,16 +126,16 @@ export default function Login(progs) {
             <div className={styles.main}>
                 <div className={styles.form}>
                     <img src={logo.src} />
-                    <h3>{regMode?"Зарегистрироваться":"Войти"}</h3>
+                    <h3>{regMode?"Зарегистрироваться":(forgotPass?"Восстановить пароль":"Войти")}</h3>
                     <form>
-                        <FruitTextField fullWidth label="@username" type="text" variant="outlined" style={{margin:".5rem"}}
+                        {!forgotPass && <FruitTextField fullWidth label="@username" type="text" variant="outlined" style={{margin:".5rem"}}
                                         value={formData.uname} onChange={(evt)=>{setFormData({
                                             ...formData,
                                             uname: evt.target.value.replaceAll(/[^a-zA-Z0-9_.-]/g,'')
-                                        })}}/>
+                                        })}}/> }
 
 
-                        {regMode && <FruitTextField fullWidth label="Email" type="email" variant="outlined" style={{margin:".5rem"}}
+                        {(regMode||forgotPass) && <FruitTextField fullWidth label="Email" type="email" variant="outlined" style={{margin:".5rem"}}
                                                     value={formData.email} onChange={(evt)=>{setFormData({
                             ...formData,
                             email: evt.target.value.replaceAll(/[^a-zA-Z0-9!#$%&'*+\-/=?^_`{|}~.@]/g,'')
@@ -125,7 +153,7 @@ export default function Login(progs) {
                             surname: evt.target.value.replaceAll(/[^a-zA-Z]/g,'')
                         })}} />}
 
-                        <FruitTextField fullWidth label="Пароль" type={formData.showPassword?"text":"password"}
+                        {!forgotPass && <FruitTextField fullWidth label="Пароль" type={formData.showPassword?"text":"password"}
                                         variant="outlined"
                                         style={{margin:".5rem"}} value={formData.password}
                                         onChange={(evt)=>{setFormData({
@@ -141,7 +169,7 @@ export default function Login(progs) {
                                                     </IconButton>
                                                 </InputAdornment>
                                             )
-                                        }}/>
+                                        }}/>}
                         <HCaptcha
                             sitekey="c17bb027-5ed7-4e3d-9f67-6f3ed2d78090"
                             onVerify={(val,idk)=>setFormData({
@@ -153,9 +181,13 @@ export default function Login(progs) {
                         <LoadingButton loading={loading} className={styles.formButton} onClick={register}>
                             {regMode?"Зарегистрироваться":"Войти"}
                         </LoadingButton>
-                        <p style={{margin:".5rem"}}>{regMode?"Уже есть аккаунт?":"Нет аккаунта?"}
+                        { !forgotPass && <p style={{margin:".5rem"}}>{regMode?"Уже есть аккаунт?":"Нет аккаунта?"}
                             <span style={{cursor:"pointer", color:"#0d6efd", fontWeight:"bolder"}}
-                            onClick={()=>setRegMode(!regMode)}> {regMode?"Войти":"Зарегистрироваться"}</span></p>
+                            onClick={()=>setRegMode(!regMode)}> {regMode?"Войти":"Зарегистрироваться"}</span></p>}
+                        {!regMode && <p style={{margin:".5rem"}}>{forgotPass?"А нет,":"Хуже,"}
+                            <span style={{cursor:"pointer", color:"#0d6efd", fontWeight:"bolder"}}
+                                  onClick={()=>setForgotPass(!forgotPass)}> {forgotPass?"я вспомнил пароль":" я забыл пароль"}</span></p>}
+
                     </form>
                 </div>
             </div>

@@ -99,4 +99,8 @@
         flex-direction: column;
         align-items: center;
     }
+
+    .form {
+        width: auto;
+    }
 }
