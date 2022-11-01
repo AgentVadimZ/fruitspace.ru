@@ -178,7 +178,7 @@ export default function Login(progs) {
                             })}
                             theme="dark"
                         />
-                        <LoadingButton loading={loading} className={styles.formButton} onClick={register}>
+                        <LoadingButton loading={loading} className={styles.formButton} onClick={(regMode?register:login)}>
                             {regMode?"Зарегистрироваться":"Войти"}
                         </LoadingButton>
                         { !forgotPass && <p style={{margin:".5rem"}}>{regMode?"Уже есть аккаунт?":"Нет аккаунта?"}
