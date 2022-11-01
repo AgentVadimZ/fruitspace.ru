@@ -115,7 +115,7 @@ export default function GlobalNav(props) {
                         </DropdownItem>
                     ): (
                         navData.notifications.map((notification, i)=>(
-                            <DropdownItem leftIcon={<NotificationSvg/>} rightIcon={<DeleteIcon/>}>
+                            <DropdownItem key={i} leftIcon={<NotificationSvg/>} rightIcon={<DeleteIcon/>}>
                                 <div className={styles.MultilineItem}>
                                     {notification.title}
                                     <span>{notification.text}</span>
