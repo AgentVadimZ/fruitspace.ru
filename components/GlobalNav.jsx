@@ -21,6 +21,7 @@ import MinecraftLogo from "./assets/logos/minecraft.png"
 import GDLogo from "./assets/logos/geometrydash.png"
 import RockstarLogo from "./assets/logos/rockstargames.png"
 import {useEffect, useState} from "react";
+import {useRouter} from "next/router";
 
 
 const getRegionalPostfix = (num)=> {
@@ -75,6 +76,8 @@ export default function GlobalNav(props) {
                         gta: 0,
                     }
                 })
+            }else{
+                useRouter().push("/profile/login")
             }
         })
     },[])
