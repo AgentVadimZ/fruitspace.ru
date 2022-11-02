@@ -94,7 +94,7 @@ export default function Login(progs) {
     const login = async ()=> {
         setLoading(true)
         let resp = await fetch("https://api.fruitspace.one/v1/auth/login", {
-            method: 'POST', body: JSON.stringify(formData)
+            method: 'POST', body: JSON.stringify(formData), credentials: "include"
         }).then(r => r.json())
         if (resp.status==="ok") {
             toast.success("Вход произошел успешно", {

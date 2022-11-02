@@ -58,7 +58,7 @@ export default function GlobalNav(props) {
 
 
     useEffect(()=>{
-        fetch("https://api.fruitspace.one/v1/user/sso").then(resp=>resp.json()).then((resp)=>{
+        fetch("https://api.fruitspace.one/v1/user/sso",{credentials:"include"}).then(resp=>resp.json()).then((resp)=>{
             if (resp.status==="ok") {
                 setNavData({
                     uname: resp.uname,
