@@ -41,6 +41,8 @@ const getRegionalPostfix = (num)=> {
 
 export default function GlobalNav(props) {
 
+    const router = useRouter()
+
     const [navData, setNavData] = useState({
         uname: null,
         profilePic: null,
@@ -77,7 +79,7 @@ export default function GlobalNav(props) {
                     }
                 })
             }else{
-                useRouter().push("/profile/login")
+                router.push("/profile/login")
             }
         })
     },[])

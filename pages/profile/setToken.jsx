@@ -2,7 +2,7 @@ import {useRouter} from "next/router";
 import {useCookies} from "react-cookie";
 
 
-export default function setToken(props) {
+export default function SetToken(props) {
     const router = useRouter()
     const [cookies, setCookie, removeCookie] = useCookies(['token'])
     if (router.query.token) {
