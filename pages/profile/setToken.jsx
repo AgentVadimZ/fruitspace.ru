@@ -7,7 +7,7 @@ export default function setToken(props) {
     const [cookies, setCookie, removeCookie] = useCookies(['token'])
     if (router.query.token) {
         setCookie("token",router.query.token,
-            {path:"/",expires:new Date(new Date().getDate()+30), secure:true})
+            {path:"/",expires:new Date(new Date().getTime()+(1000*60*60*24*30)), secure:true})
         router.push("/profile/")
     }
     return (
