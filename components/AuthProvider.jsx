@@ -34,7 +34,7 @@ export default function AuthProvider(props) {
                 router.push("/profile/login")
             }
         })
-    },[cookies])
+    },[user])
 
     return (user.uname?<>{props.children}</>:null)
 }
