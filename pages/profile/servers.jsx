@@ -32,22 +32,22 @@ export default function Servers(props) {
                         <Tab value="gta">GTA</Tab>
                         <TabButton><ExpandMoreIcon/></TabButton>
                     </TabsList>
-                    <TabPanel value="gd">
-                        <ServerItem type="gd" name="TestDash" plan="Press Start" desc="3 игрока, 8 уровней"/>
-                        <ServerItem type="gd" name="xHydra" plan="Takeoff" desc="15 игроков, 23 уровня"/>
-                        <ServerItem type="gd" name="Walugi" plan="Press Start" desc="0 игроков, 0 уровней"/>
-                        <ServerItem type="add"/>
-                    </TabPanel>
-                    <TabPanel value="mc">
-                        <ServerItem type="mc"/>
-                        <ServerItem type="mc"/>
-                        <ServerItem type="mc"/>
-                    </TabPanel>
-                    <TabPanel value="gta">
-                        <ServerItem type="gta"/>
-                        <ServerItem type="gta"/>
-                        <ServerItem type="gta"/>
-                    </TabPanel>
+                    {/*<TabPanel value="gd">*/}
+                    {/*    <ServerItem type="gd" name="TestDash" plan="Press Start" desc="3 игрока, 8 уровней"/>*/}
+                    {/*    <ServerItem type="gd" name="xHydra" plan="Takeoff" desc="15 игроков, 23 уровня"/>*/}
+                    {/*    <ServerItem type="gd" name="Walugi" plan="Press Start" desc="0 игроков, 0 уровней"/>*/}
+                    {/*    <ServerItem type="add"/>*/}
+                    {/*</TabPanel>*/}
+                    {/*<TabPanel value="mc">*/}
+                    {/*    <ServerItem type="mc"/>*/}
+                    {/*    <ServerItem type="mc"/>*/}
+                    {/*    <ServerItem type="mc"/>*/}
+                    {/*</TabPanel>*/}
+                    {/*<TabPanel value="gta">*/}
+                    {/*    <ServerItem type="gta"/>*/}
+                    {/*    <ServerItem type="gta"/>*/}
+                    {/*    <ServerItem type="gta"/>*/}
+                    {/*</TabPanel>*/}
                 </TabsUnstyled>
             </PanelContent>
         </>

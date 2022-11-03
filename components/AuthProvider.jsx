@@ -25,15 +25,15 @@ export default function AuthProvider(props) {
                     notifications: [],
 
                     servers: {
-                        mc: [],
-                        gd: [],
-                        gta: [],
+                        mc: 0,
+                        gd: 0,
+                        gta: 0,
                     }
                 })
             }else{
                 router.push("/profile/login")
             }
-        })
+        }).catch(()=>{router.push("/profile/login")})
     },[cookies])
 
     return (user.uname?<>{props.children}</>:null)
