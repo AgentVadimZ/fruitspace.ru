@@ -12,7 +12,7 @@ export default function AuthProvider(props) {
     const router = useRouter()
     useEffect(()=>{
         fetch("https://api.fruitspace.one/v1/user/sso",
-            {credentials:"include", method: "POST", headers: {Authorization: cookies["token"]}}
+            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]}}
         ).then(resp=>resp.json()).then((resp)=>{
             if (resp.status==="ok") {
                 setUser({
