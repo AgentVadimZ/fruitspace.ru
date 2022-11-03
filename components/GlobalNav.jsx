@@ -22,6 +22,8 @@ import GDLogo from "./assets/logos/geometrydash.png"
 import RockstarLogo from "./assets/logos/rockstargames.png"
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
+import {useRecoilState} from "recoil";
+import {UserState} from "../states/user";
 
 
 const getRegionalPostfix = (num)=> {
@@ -41,85 +43,44 @@ const getRegionalPostfix = (num)=> {
 
 export default function GlobalNav(props) {
 
-    const router = useRouter()
-
-    const [navData, setNavData] = useState({
-        uname: null,
-        profilePic: null,
-        bal: 0,
-        shop_bal: 0,
-        usd: false,
-
-        notifications: [],
-
-        servers: {
-            mc: 0,
-            gd: 0,
-            gta: 0,
-        }
-    })
-
-
-    useEffect(()=>{
-        fetch("https://api.fruitspace.one/v1/user/sso",{credentials:"include"}).then(resp=>resp.json()).then((resp)=>{
-            if (resp.status==="ok") {
-                setNavData({
-                    uname: resp.uname,
-                    profilePic: resp.profilePic,
-                    bal: resp.bal,
-                    shop_bal: 0,
-                    usd: false,
-
-                    notifications: [],
-
-                    servers: {
-                        mc: 0,
-                        gd: 0,
-                        gta: 0,
-                    }
-                })
-            }else{
-                router.push("/profile/login")
-            }
-        })
-    },[])
+    const [user,setUser] = useRecoilState(UserState)
 
     return (
         <NavBar>
             <Link href={"/"}><img src={logo.src} className={styles.logo}></img></Link>
             <span style={{flex:1}}></span>
-            { navData.uname && (<><NavItem icon={<ServerSvg/>}>
+            { user.uname && (<><NavItem icon={<ServerSvg/>}>
                 <DropdownMenu centered>
                     <DropdownItem leftIcon={<img src={MinecraftLogo.src}/>} rightIcon={<RightSvg/>}>
                         <div className={styles.MultilineItem}>
                             Minecraft
-                            <span>• {navData.servers.mc} {getRegionalPostfix(navData.servers.mc)}</span>
+                            <span>• {user.servers.mc} {getRegionalPostfix(user.servers.mc)}</span>
                         </div>
                     </DropdownItem>
                     <DropdownItem leftIcon={<img src={GDLogo.src}/>} rightIcon={<RightSvg/>}>
                         <div className={styles.MultilineItem}>
                             Geometry Dash
-                            <span>• {navData.servers.gd} {getRegionalPostfix(navData.servers.gd)}</span>
+                            <span>• {user.servers.gd} {getRegionalPostfix(user.servers.gd)}</span>
                         </div>
                     </DropdownItem>
                     <DropdownItem leftIcon={<img src={RockstarLogo.src}/>} rightIcon={<RightSvg/>}>
                         <div className={styles.MultilineItem}>
                             Grand Theft Auto
-                            <span>• {navData.servers.gta} {getRegionalPostfix(navData.servers.gta)}</span>
+                            <span>• {user.servers.gta} {getRegionalPostfix(user.servers.gta)}</span>
                         </div>
                     </DropdownItem>
                 </DropdownMenu>
             </NavItem>
             <NavItem icon={<NotificationSvg/>}>
                 <DropdownMenu centered>
-                    {navData.notifications.length===0? (
+                    {user.notifications.length===0? (
                         <DropdownItem leftIcon={<NotificationsOffIcon/>}>
                             <div className={styles.MultilineItem}>
                                 Нет новых уведомлений
                             </div>
                         </DropdownItem>
                     ): (
-                        navData.notifications.map((notification, i)=>(
+                        user.notifications.map((notification, i)=>(
                             <DropdownItem key={i} leftIcon={<NotificationSvg/>} rightIcon={<DeleteIcon/>}>
                                 <div className={styles.MultilineItem}>
                                     {notification.title}
@@ -139,18 +100,18 @@ export default function GlobalNav(props) {
             </NavItem> </>)}
 
 
-            {navData.uname ? (
-                <NavItem profile icon={<img src={navData.profilePic}/>}>
+            {user.uname ? (
+                <NavItem profile icon={<img src={user.profilePic}/>}>
                     <DropdownMenu>
                     <Link href="/profile/user">
-                        <DropdownItem leftIcon={<img src={navData.profilePic}/>}
-                                                    rightIcon={<RightSvg />}>{navData.uname}</DropdownItem>
+                        <DropdownItem leftIcon={<img src={user.profilePic}/>}
+                                                    rightIcon={<RightSvg />}>{user.uname}</DropdownItem>
                     </Link>
                     <Link href="/profile/billing">
                         <DropdownItem leftIcon={<MonetizationOnIcon/>} rightIcon={<AddCircleIcon/>}>
                             <p className={styles.BalBox}>
-                                <span><AccountBalanceWalletIcon/> {navData.bal}{navData.usd?"$":"₽"}</span>
-                                <span><StoreIcon/> {navData.shop_bal}{navData.usd?"$":"₽"}</span>
+                                <span><AccountBalanceWalletIcon/> {user.bal}{user.usd?"$":"₽"}</span>
+                                <span><StoreIcon/> {user.shop_bal.usd?"$":"₽"}</span>
                             </p>
                         </DropdownItem>
                     </Link>

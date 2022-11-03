@@ -17,3 +17,5 @@ export default function Index(props){
         </>
     )
 }
+
+Index.RequireAuth = true

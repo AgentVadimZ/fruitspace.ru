@@ -12,6 +12,7 @@ import {styled} from "@mui/system";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import toast, {Toaster} from "react-hot-toast";
 import {useRouter} from "next/router";
+import {useCookies} from "react-cookie";
 
 
 const ParseError = (err)=>{
@@ -41,7 +42,7 @@ const ParseError = (err)=>{
 
 
 export default function Login(progs) {
-
+    const [cookies, setCookie, removeCookie] = useCookies(['token'])
     const router = useRouter()
 
     const [regMode, setRegMode] = useState(false)
@@ -104,6 +105,8 @@ export default function Login(progs) {
                     backgroundColor: "var(--btn-color)"
                 }
             })
+            setCookie("token",resp.token,
+                {path:"/",expires:new Date(new Date().getTime()+(1000*60*60*24*30)), secure:true})
             setTimeout(()=>router.push("/profile/"),1000)
         }else{
             toast.error("Произошла ошибка: "+ParseError(resp.message), {

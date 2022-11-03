@@ -10,3 +10,5 @@ export default function Billing(props) {
         </>
     )
 }
+
+Billing.RequireAuth = true

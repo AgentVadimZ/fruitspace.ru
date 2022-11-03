@@ -53,3 +53,5 @@ export default function Servers(props) {
         </>
     )
 }
+
+Servers.RequireAuth = true

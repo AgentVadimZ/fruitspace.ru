@@ -10,3 +10,5 @@ export default function User(props) {
         </>
     )
 }
+
+User.RequireAuth = true
