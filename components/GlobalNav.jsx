@@ -51,27 +51,33 @@ export default function GlobalNav(props) {
             <span style={{flex:1}}></span>
             { user.uname && (<><NavItem icon={<ServerSvg/>}>
                 <DropdownMenu centered>
+                    <Link href="/profile/servers?s=mc">
                     <DropdownItem leftIcon={<img src={MinecraftLogo.src}/>} rightIcon={<RightSvg/>}>
                         <div className={styles.MultilineItem}>
                             Minecraft
                             <span>• {user.servers.mc} {getRegionalPostfix(user.servers.mc)}</span>
                         </div>
                     </DropdownItem>
+                    </Link>
+                    <Link href="/profile/servers?s=gd">
                     <DropdownItem leftIcon={<img src={GDLogo.src}/>} rightIcon={<RightSvg/>}>
                         <div className={styles.MultilineItem}>
                             Geometry Dash
                             <span>• {user.servers.gd} {getRegionalPostfix(user.servers.gd)}</span>
                         </div>
                     </DropdownItem>
+                    </Link>
+                    <Link href="/profile/servers?s=gta">
                     <DropdownItem leftIcon={<img src={RockstarLogo.src}/>} rightIcon={<RightSvg/>}>
                         <div className={styles.MultilineItem}>
                             Grand Theft Auto
                             <span>• {user.servers.gta} {getRegionalPostfix(user.servers.gta)}</span>
                         </div>
                     </DropdownItem>
+                    </Link>
                 </DropdownMenu>
             </NavItem>
-            <NavItem icon={<NotificationSvg/>}>
+            <NavItem icon={<NotificationSvg className={user.notifications.length!==0&&"notifyAnimate"} />}>
                 <DropdownMenu centered>
                     {user.notifications.length===0? (
                         <DropdownItem leftIcon={<NotificationsOffIcon/>}>
@@ -81,7 +87,7 @@ export default function GlobalNav(props) {
                         </DropdownItem>
                     ): (
                         user.notifications.map((notification, i)=>(
-                            <DropdownItem key={i} leftIcon={<NotificationSvg/>} rightIcon={<DeleteIcon/>}>
+                            <DropdownItem key={i} leftIcon={<NotificationSvg/>} rightIcon={notification.target_uid!==0&&<DeleteIcon/>}>
                                 <div className={styles.MultilineItem}>
                                     {notification.title}
                                     <span>{notification.text}</span>
@@ -111,7 +117,7 @@ export default function GlobalNav(props) {
                         <DropdownItem leftIcon={<MonetizationOnIcon/>} rightIcon={<AddCircleIcon/>}>
                             <p className={styles.BalBox}>
                                 <span><AccountBalanceWalletIcon/> {user.bal}{user.usd?"$":"₽"}</span>
-                                <span><StoreIcon/> {user.shop_bal.usd?"$":"₽"}</span>
+                                <span><StoreIcon/> {user.shop_bal}{user.usd?"$":"₽"}</span>
                             </p>
                         </DropdownItem>
                     </Link>

@@ -45,6 +45,15 @@ label, legend {
 }
 
 
+.btnSuccess {
+    background-color: var(--success-color) !important;
+}
+
+.btnError {
+    background-color: var(--error-color) !important;
+}
+
+
 
 /* OVERRIDES */
 
@@ -52,3 +61,26 @@ span.swiper-pagination-bullet-active {
     background-color: #0d6efd !important;
 }
 
+.MuiTooltip-tooltip {
+    font-size: 12pt !important;
+}
+.MuiTooltip-popper {
+    margin-left: 4px !important;
+}
+
+.MuiTooltip-arrow {
+    margin-left: -0.7em !important;
+}
+
+
+
+/* ANIMATIONS */
+
+.notifyAnimate {
+    animation: notify alternate infinite 1s ease-in-out;
+}
+
+@keyframes notify {
+    from {fill: var(--text-color);}
+    to {fill: var(--error-color);}
+}

@@ -53,7 +53,7 @@ export default function GD(props) {
 
                 <h2 style={{textAlign:'center',margin:"3rem 0",color:"white"}}>Тарифы</h2>
                 <div className={indexStyles.productCardGrid} id="cloud">
-                    <ProductCard title="Press Start" btnText="Бесплатно*" link="/product/order/gd/1">
+                    <ProductCard title="Press Start" btnText="Бесплатно*" link="/product/order/gd?t=1">
                         <ListItem>
                             <ListItemIcon><AllInclusiveIcon/></ListItemIcon>
                             <ListItemText primary="Неограниченное количество игроков/уровней"/>
@@ -75,7 +75,7 @@ export default function GD(props) {
                             <ListItemText primary="Панель с ограниченными возможностями"/>
                         </ListItem>
                     </ProductCard>
-                    <ProductCard title="Singularity" btnText="50₽/мес" link="/product/order/gd/2">
+                    <ProductCard title="Singularity" btnText="50₽/мес" link="/product/order/gd?t=2">
                         <ListItem>
                             <ListItemIcon><AllInclusiveIcon/></ListItemIcon>
                             <ListItemText primary="Неограниченное количество игроков/уровней"/>
@@ -101,7 +101,7 @@ export default function GD(props) {
                             <ListItemText primary="Удобная и функциональная панель"/>
                         </ListItem>
                     </ProductCard>
-                    <ProductCard  title="Takeoff" btnText="100₽/мес" link="/product/order/gd/3">
+                    <ProductCard  title="Takeoff" btnText="100₽/мес" link="/product/order/gd?t=3">
                         <ListItem>
                             <ListItemIcon><AllInclusiveIcon/></ListItemIcon>
                             <ListItemText primary="Неограниченное количество игроков/уровней"/>

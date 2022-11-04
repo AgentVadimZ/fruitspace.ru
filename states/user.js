@@ -4,13 +4,17 @@ const UserState = atom({
     key: "userState",
     default: {
         uname: null,
+        name: "",
+        surname: "",
         profilePic: null,
+        is2fa: false,
         bal: 0,
         shop_bal: 0,
         usd: false,
 
         notifications: [{
-            id: "ababbabba",
+            uuid: "ababbabba",
+            target_uid: 1, // if 0 then global
             title: "title",
             text: "Max 75 sym",
         }],

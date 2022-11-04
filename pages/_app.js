@@ -7,13 +7,9 @@ export default function WebApp({ Component, pageProps }) {
   return (
       <RecoilRoot>
           <StyledEngineProvider injectFirst>
-              {Component.RequireAuth ? (
-                  <AuthProvider>
-                      <Component {...pageProps} />
-                  </AuthProvider>
-              ):(
+              <AuthProvider RequireAuth={Component.RequireAuth}>
                   <Component {...pageProps} />
-              )}
+              </AuthProvider>
           </StyledEngineProvider>
       </RecoilRoot>
       )

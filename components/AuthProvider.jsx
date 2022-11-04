@@ -17,24 +17,21 @@ export default function AuthProvider(props) {
             if (resp.status==="ok") {
                 setUser({
                     uname: resp.uname,
+                    name: resp.name,
+                    surname: resp.surname,
+                    is2fa: !!resp.is2fa,
                     profilePic: resp.profilePic,
                     bal: resp.bal,
-                    shop_bal: 0,
+                    shop_bal: resp.shop_bal,
                     usd: false,
 
-                    notifications: [],
+                    notifications: resp.notifications?resp.notifications:[],
 
-                    servers: {
-                        mc: 0,
-                        gd: 0,
-                        gta: 0,
-                    }
+                    servers: resp.servers
                 })
-            }else{
-                router.push("/profile/login")
-            }
-        }).catch(()=>{router.push("/profile/login")})
+            }else{props.RequireAuth&&router.push("/profile/login")}
+        }).catch(()=>{props.RequireAuth&&router.push("/profile/login")})
     },[cookies])
 
-    return (user.uname?<>{props.children}</>:null)
+    return (<>{props.children}</>)
 }
