@@ -72,6 +72,19 @@ span.swiper-pagination-bullet-active {
     margin-left: -0.7em !important;
 }
 
+.serversWindow {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 40rem;
+}
+
+
+@media screen and (max-width: 720px){
+    .serversWindow {
+        width: 100%;
+    }
+}
 
 
 /* ANIMATIONS */

@@ -24,7 +24,7 @@ export default function Servers(props) {
             <PanelSideNav />
             <PanelContent>
                 <TabsUnstyled value={tab} onChange={(e,val)=>setTab(val)}
-                              style={{display:"flex",alignItems:'center',flexDirection:"column",minWidth:"40rem"}}>
+                              className={"serversWindow"}>
                     <TabsList>
                         <Tab value="gd">GD</Tab>
                         <Tab value="mc">MC</Tab>
