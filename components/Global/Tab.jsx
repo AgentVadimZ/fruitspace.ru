@@ -15,14 +15,14 @@ const Tab = styled(TabUnstyled)`
   font-size: 12pt;
   font-weight: bold;
   background-color: transparent;
-  width: 100%;
+  width: 6rem;
   padding: 10px;
   margin: 4px;
   border: none;
   border-radius: 8px;
   display: flex;
   justify-content: center;
-  min-width: 6rem;
+  min-width: 4rem;
 
   &:hover {
     background-color: var(--btn-hover);

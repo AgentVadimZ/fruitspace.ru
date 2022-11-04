@@ -84,6 +84,9 @@ span.swiper-pagination-bullet-active {
     .serversWindow {
         width: 100%;
     }
+    .serversWindow button {
+        width: 4rem !important;
+    }
 }
 
 
