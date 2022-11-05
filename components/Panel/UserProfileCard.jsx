@@ -10,18 +10,46 @@ import {useState} from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import LockPersonIcon from '@mui/icons-material/LockPerson';
 import PasswordIcon from '@mui/icons-material/Password';
+import {useCookies} from "react-cookie";
+import ParseError from "../ErrParser";
+import {toast} from "react-hot-toast";
 
 export default function UserProfileCard(props) {
 
     const [user,setUser] = useRecoilState(UserState)
     const [showEditPicHint, setPicEditHint] = useState(false)
+    const [cookies, setCookie, delCookie] = useCookies(["token"])
+
+    const updateName = ()=> {
+        fetch("https://api.fruitspace.one/v1/user/update/name",
+            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
+                body: JSON.stringify({name:user.name, surname:user.surname})}).then(resp=>resp.json()).then((resp)=>{
+            if(resp.status==="ok") {
+                toast.success("Профиль обновлен успешно", {
+                    duration: 1000,
+                    style: {
+                        color: "white",
+                        backgroundColor: "var(--btn-color)"
+                    }
+                })
+            }else{
+                toast.error("Произошла ошибка: "+ParseError(resp.message), {
+                    duration: 10000,
+                    style: {
+                        color: "white",
+                        backgroundColor: "var(--btn-color)"
+                    }
+                })
+            }
+        }).catch(()=>{})
+    }
 
     return (
         <>
             <div className={styles.ProfileBox}>
                 <div className={styles.ProfilePic}>
                     <img src={user.profilePic} />
-                    <Tooltip title="Изменить фотографию" placement="right" arrow open={showEditPicHint}>
+                    <Tooltip title="Изменить фотографию (Max: 5MB)" placement="right" arrow open={showEditPicHint}>
                         <EditIcon onMouseEnter={()=>setPicEditHint(true)} onMouseLeave={()=>setPicEditHint(false)}/>
                     </Tooltip>
                 </div>
@@ -41,8 +69,8 @@ export default function UserProfileCard(props) {
                     </div>
                     <h3>@{user.uname}</h3>
                     <div className={styles.UnameBoxButtons}>
-                        <Button variant="contained" className={`${styles.cardButton} btnError`}>Сбросить фотографию</Button>
-                        <Button variant="contained" className={styles.cardButton}>Сохранить</Button>
+                        <Button variant="contained" className={`${styles.cardButton} btnError`} disabled>Сбросить фотографию</Button>
+                        <Button variant="contained" className={styles.cardButton} onClick={updateName}>Сохранить</Button>
                     </div>
                 </div>
             </div>

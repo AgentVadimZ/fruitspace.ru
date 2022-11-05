@@ -14,3 +14,5 @@ export default function Order(props) {
         </>
     )
 }
+
+Order.RequireAuth = true
