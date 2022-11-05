@@ -12,13 +12,14 @@ import LockPersonIcon from '@mui/icons-material/LockPerson';
 import PasswordIcon from '@mui/icons-material/Password';
 import {useCookies} from "react-cookie";
 import ParseError from "../ErrParser";
-import {toast} from "react-hot-toast";
+import toast from "react-hot-toast";
 
 export default function UserProfileCard(props) {
 
     const [user,setUser] = useRecoilState(UserState)
     const [showEditPicHint, setPicEditHint] = useState(false)
     const [cookies, setCookie, delCookie] = useCookies(["token"])
+    console.log(user)
 
     const updateName = ()=> {
         fetch("https://api.fruitspace.one/v1/user/update/name",
@@ -44,13 +45,75 @@ export default function UserProfileCard(props) {
         }).catch(()=>{})
     }
 
+    const updateProfilePic = (evt, reset=false)=> {
+        console.log(reset)
+        var input = document.createElement("input")
+        input.type = "file"
+        input.accept="image/png, image/jpeg"
+        input.onchange=(e)=>{
+            var datax = new FormData()
+            datax.append("profile_pic", e.target.files[0])
+            fetch("https://api.fruitspace.one/v1/user/update/avatar",
+                {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
+                    body: datax}).then(resp=>resp.json()).then((resp)=>{
+                if(resp.status==="ok") {
+                    toast.success("Аватар обновлен успешно", {
+                        duration: 1000,
+                        style: {
+                            color: "white",
+                            backgroundColor: "var(--btn-color)"
+                        }
+                    })
+                    setUser((usr)=>({...usr, profilePic: resp.profilePic}))
+                }else{
+                    toast.error("Произошла ошибка: "+ParseError(resp.message), {
+                        duration: 10000,
+                        style: {
+                            color: "white",
+                            backgroundColor: "var(--btn-color)"
+                        }
+                    })
+                }
+            }).catch(()=>{})
+        }
+        (reset===false)&&input.click()
+        if (reset) {
+            var datax = new FormData()
+            datax.append("reset","reset")
+            fetch("https://api.fruitspace.one/v1/user/update/avatar",
+                {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
+                    body: datax}).then(resp=>resp.json()).then((resp)=>{
+                if(resp.status==="ok") {
+                    toast.success("Аватар обновлен успешно", {
+                        duration: 1000,
+                        style: {
+                            color: "white",
+                            backgroundColor: "var(--btn-color)"
+                        }
+                    })
+                    setUser((usr)=>({...usr, profilePic: resp.profilePic}))
+                }else{
+                    toast.error("Произошла ошибка: "+ParseError(resp.message), {
+                        duration: 10000,
+                        style: {
+                            color: "white",
+                            backgroundColor: "var(--btn-color)"
+                        }
+                    })
+                }
+            }).catch(()=>{})
+        }
+    }
+    // Code is highly unoptimized
+
     return (
         <>
             <div className={styles.ProfileBox}>
                 <div className={styles.ProfilePic}>
                     <img src={user.profilePic} />
                     <Tooltip title="Изменить фотографию (Max: 5MB)" placement="right" arrow open={showEditPicHint}>
-                        <EditIcon onMouseEnter={()=>setPicEditHint(true)} onMouseLeave={()=>setPicEditHint(false)}/>
+                        <EditIcon onMouseEnter={()=>setPicEditHint(true)} onMouseLeave={()=>setPicEditHint(false)}
+                        onClick={updateProfilePic}/>
                     </Tooltip>
                 </div>
 
@@ -69,7 +132,7 @@ export default function UserProfileCard(props) {
                     </div>
                     <h3>@{user.uname}</h3>
                     <div className={styles.UnameBoxButtons}>
-                        <Button variant="contained" className={`${styles.cardButton} btnError`} disabled>Сбросить фотографию</Button>
+                        <Button variant="contained" className={`${styles.cardButton} btnError`} onClick={(e)=>updateProfilePic(e,true)}>Сбросить фотографию</Button>
                         <Button variant="contained" className={styles.cardButton} onClick={updateName}>Сохранить</Button>
                     </div>
                 </div>
