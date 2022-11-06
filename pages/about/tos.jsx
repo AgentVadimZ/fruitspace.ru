@@ -7,7 +7,7 @@ import {Chip} from "@mui/material";
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import ReceiptIcon from '@mui/icons-material/Receipt';
-
+import PersonIcon from '@mui/icons-material/Person';
 
 export default function Tos(props) {
 
@@ -101,8 +101,10 @@ export default function Tos(props) {
                         <Chip icon={<EmailIcon />} label="support@fruitspace.one" variant="outlined" />
                         <span style={{padding:"0 .5rem"}} />
                         <Chip icon={<PhoneIcon />} label="+2 597 064 (факс)" variant="outlined" />
-                        {/*<span style={{padding:"0 .5rem"}} />*/}
-                        {/*<Chip icon={<ReceiptIcon />} label="ИНН: 777" variant="outlined" />*/}
+                        <span style={{padding:"0 .5rem"}} />
+                        <Chip icon={<ReceiptIcon />} label="ИНН: 366416455929" variant="outlined" />
+                        <span style={{padding:"0 .5rem"}} />
+                        <Chip icon={<PersonIcon />} label="ФИО: Фоминых Александр Михайлович" variant="outlined" />
                     </div>
                 </div>
             </div>
