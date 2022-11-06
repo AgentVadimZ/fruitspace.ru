@@ -33,5 +33,5 @@ export default function AuthProvider(props) {
         }).catch(()=>{props.RequireAuth&&router.push("/profile/login")})
     },[cookies])
 
-    return (<>{props.children}</>)
+    return (<>{user.uname&&props.children}</>)
 }
