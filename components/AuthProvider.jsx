@@ -31,11 +31,10 @@ export default function AuthProvider(props) {
                 })
             }else{props.RequireAuth&&router.push("/profile/login")}
         }).catch(()=>{props.RequireAuth&&router.push("/profile/login")})
-    },[cookies])
-    console.log(props.RequireAuth?"Auth":"no")
+    },[cookies,router.pathname])
     return (<>{
         props.RequireAuth
-            ?(user.uname&&props.children)
+            ?(user.uname?props.children:"Redirecting...")
             :props.children}
     </>)
 }

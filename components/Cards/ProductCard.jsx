@@ -16,7 +16,7 @@ export default function ProductCard(props) {
                     {props.children}
                 </List>
             </div>
-            <Link href={props.link?props.link:"#"} >
+            <Link href={props.link?props.link:"#"}>
                 <Button variant="contained" className={styles.cardButton} disabled={props.disabled}>
                     {props.disabled?"Недоступно":props.btnText}
                 </Button>
