@@ -23,7 +23,6 @@
 .contactBox {
     display: flex;
     justify-content: center;
-    color: white;
 }
 .contactBox svg {
     fill: #cacad0;

@@ -97,7 +97,7 @@ export default function Tos(props) {
 
                 <div className={styles.innerMain} >
                     <h3>Контакты</h3>
-                    <div className={styles.contactBox}>
+                    <div className={`${styles.contactBox} ${styles.MrWhite}`}>
                         <Chip icon={<EmailIcon />} label="support@fruitspace.one" variant="outlined" />
                         <span style={{padding:"0 .5rem"}} />
                         <Chip icon={<PhoneIcon />} label="+2 597 064 (факс)" variant="outlined" />
