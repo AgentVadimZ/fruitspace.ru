@@ -12,11 +12,12 @@ export default function About(props) {
             {/*<Script src="//code.jivo.ru/widget/QDbblcMLJ0" strategy="lazyOnload"/>*/}
             <GlobalNav />
             <div className={styles.main}>
-                <h1 style={{color:"white"}}>Нет блин 🍍Онанас</h1>
-                <p>Ищу сотрудников: разрабов, тех. поддержку, маркетологов и модераторов. Оплата хэллоуинскими тыквами.</p>
-                <p>А если серьезно, то я еще не составил вакансии, но все-равно пишите в лс.</p>
-                <span>— With ♥️, M41den</span>
-                <p style={{height:"100vh"}} />
+                <div className={styles.innerMain}>
+                    <h2>О нас</h2>
+                    <p style={{margin:"2rem"}}><strong>FruitSpace</strong> - игровой хостинг, предоставляющий приватные сервера для игр Minecraft,
+                        Geometry Dash и Grand Theft Auto: San Andreas / IV / V</p>
+                </div>
+                <div style={{height:"100vh"}} />
             </div>
             <Footer/>
         </>
