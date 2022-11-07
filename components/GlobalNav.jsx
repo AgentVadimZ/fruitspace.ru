@@ -47,7 +47,7 @@ export default function GlobalNav(props) {
 
     return (
         <NavBar>
-            <Link href={"/"}><img src={logo.src} className={styles.logo}></img></Link>
+            <Link href={"/"}><img src={logo.src} alt="logo" className={styles.logo}></img></Link>
             <span style={{flex:1}}></span>
             { user.uname && (<><NavItem icon={<ServerSvg/>}>
                 <DropdownMenu centered>

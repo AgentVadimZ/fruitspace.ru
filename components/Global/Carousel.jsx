@@ -29,7 +29,7 @@ export function CarouselItem(props) {
     return (
         <Link href={props.link}>
             <div className={styles.carouselItem}>
-                <img src={props.image} />
+                <img src={props.image} alt="carousel"/>
                 <div className={styles.textbox}>
                     <h3>{props.title}</h3>
                     <p>{props.text}</p>

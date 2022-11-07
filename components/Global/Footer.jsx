@@ -27,7 +27,7 @@ export default function Footer(props) {
                     <Link href="/product/gta"><p>Хостинг Grand Theft Auto</p></Link>
                     <Link href="https://docs.fruitspace.ru"><p>Документация</p></Link>
                 </div>
-                <Link href="https://halogen.cc" prefetch={false}><img src={HalogenLogoB.src} /></Link>
+                <Link href="https://halogen.cc" prefetch={false}><img src={HalogenLogoB.src} alt="halogen.cc" /></Link>
                 <div>
                     <p>Developed by</p>
                     <h3>M41den</h3>
@@ -36,9 +36,9 @@ export default function Footer(props) {
             </div>
             <div className={styles.footerLine}></div>
             <div className={styles.footerBottom}>
-                <a href="https://discord.gg/fruitspace"><img src={discordLogo.src}/> FruitSpace</a>
+                <a href="https://discord.gg/fruitspace"><img src={discordLogo.src} alt="discord"/> FruitSpace</a>
                 {/*<a href="https://t.co/the_m41den"><img src={twitterLogo.src}/> Alexander</a>*/}
-                <a href="https://vk.com/fruit_space"><img src={vkLogo.src}/> FruitSpace</a>
+                <a href="https://vk.com/fruit_space"><img src={vkLogo.src} alt="vk"/> FruitSpace</a>
                 {/*<a href="https://t.me/m41den"><img src={telegramLogo.src}/> M41den</a>*/}
             </div>
         </div>
