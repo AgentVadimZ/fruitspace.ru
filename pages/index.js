@@ -134,7 +134,6 @@ export default function Home() {
 
         </div>
 
-        <h2 style={{textAlign:'center',margin:"3rem 0",color:"white"}}>Vercel маршруты сломал 👍</h2>
 
 
 
