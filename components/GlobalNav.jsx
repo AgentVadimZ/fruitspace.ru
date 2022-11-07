@@ -45,6 +45,9 @@ export default function GlobalNav(props) {
 
     const [user,setUser] = useRecoilState(UserState)
 
+    const prettyPrint = (num)=>new Intl.NumberFormat(user.usd?'en-US':'ru-RU',
+        {style: 'currency',currency: user.usd?"USD":"RUB"}).format(num).replace(/[.|,]00/g, '')
+
     return (
         <NavBar>
             <Link href={"/"}><img src={logo.src} alt="logo" className={styles.logo}></img></Link>
@@ -95,13 +98,6 @@ export default function GlobalNav(props) {
                             </DropdownItem>
                         ))
                     )}
-
-                    {/*<DropdownItem leftIcon={<NotificationSvg/>} rightIcon={<DeleteIcon/>}>*/}
-                    {/*    <div className={styles.MultilineItem}>*/}
-                    {/*        Сообщение для Naizura*/}
-                    {/*        <span>Сюда помещается 75 символов, учти это</span>*/}
-                    {/*    </div>*/}
-                    {/*</DropdownItem>*/}
                 </DropdownMenu>
             </NavItem> </>)}
 
@@ -116,8 +112,8 @@ export default function GlobalNav(props) {
                     <Link href="/profile/billing">
                         <DropdownItem leftIcon={<MonetizationOnIcon/>} rightIcon={<AddCircleIcon/>}>
                             <p className={styles.BalBox}>
-                                <span><AccountBalanceWalletIcon/> {user.bal}{user.usd?"$":"₽"}</span>
-                                <span><StoreIcon/> {user.shop_bal}{user.usd?"$":"₽"}</span>
+                                <span><AccountBalanceWalletIcon/> {prettyPrint(user.bal)}</span>
+                                <span><StoreIcon/> {prettyPrint(user.shop_bal)}</span>
                             </p>
                         </DropdownItem>
                     </Link>

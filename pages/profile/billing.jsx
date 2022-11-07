@@ -6,14 +6,38 @@ import {Tab, TabButton, TabPanel, TabsList} from "../../components/Global/Tab";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ServerItem from "../../components/Cards/ServerItem";
 import PanelContent from "../../components/Global/PanelContent";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useRecoilState} from "recoil";
 import {UserState} from "../../states/user";
+import {Avatar, IconButton, List, ListItem, ListItemAvatar, ListItemText} from "@mui/material";
+import CreditScoreIcon from '@mui/icons-material/CreditScore';
+import TimerIcon from '@mui/icons-material/Timer';
+import SendIcon from '@mui/icons-material/Send';
+import styles from "../../components/Index.module.css"
+
+import toast, {Toaster} from "react-hot-toast";
+import {useCookies} from "react-cookie";
+import {Router} from "next/router";
+import PayBox from "../../components/Panel/PayBox";
+import Link from "next/link";
 
 
 export default function Billing(props) {
     const [tab, setTab] = useState("wallet")
     const [user,setUser] = useRecoilState(UserState)
+    const [cookies, setCookie, delCookie] = useCookies(["token"])
+
+    const [transactions, setTransactions] = useState([])
+
+    useEffect(()=>{
+        fetch("https://api.fruitspace.one/v1/user/payments",
+            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]}}
+        ).then(resp=>resp.json()).then((resp)=>{
+            if (resp.status==="ok") {
+                setTransactions(resp.transactions?resp.transactions:[])
+            }
+        })
+    },[user,Router.pathname])
 
 
     const prettyPrint = (num)=>new Intl.NumberFormat(user.usd?'en-US':'ru-RU',
@@ -24,16 +48,36 @@ export default function Billing(props) {
             <GlobalHead title="Биллинг"/>
             <GlobalNav />
             <PanelSideNav />
+            <Toaster/>
             <PanelContent>
                 <TabsUnstyled value={tab} onChange={(e,val)=>setTab(val)}
-                              className={"serversWindow"}>
+                              className={"vServersWindow"}>
                     <TabsList>
                         <Tab value="wallet">Баланс</Tab>
                         <Tab value="shops">Магазины</Tab>
                     </TabsList>
                     <TabPanel value="wallet">
-                        <ServerItem type="gd" add/>
-                        {}
+                        <PayBox />
+
+                        {transactions.length===0
+                            ?(<p style={{textAlign:"center",fontSize:"14pt"}}>Нет транзакций</p>)
+                        :(<List className={styles.MrWhite}>
+                                {transactions.map((tr, i)=>(
+                                        <ListItem className={styles.buttonHover} key={i} secondaryAction={
+                                            tr.is_active&&<Link href={tr.gopay_url}><IconButton edge="end"><SendIcon /></IconButton></Link>}>
+                                            <ListItemAvatar>
+                                                <Avatar style={{backgroundColor:"var(--btn-color)"}}>
+                                                    {tr.is_active?<TimerIcon/>:<CreditScoreIcon/>}
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText
+                                                primary={`Пополнение баланса на ${prettyPrint(tr.amount)} (№${tr.id})`}
+                                                secondary={`Оплата через ${tr.method}`}
+                                            />
+                                        </ListItem>
+                                    ))}
+                            </List>
+                            )}
                     </TabPanel>
                     <TabPanel value="shops">
                         <p style={{textAlign:"center"}}>Типа возможность вывода баланса магазина. Но пока нет</p>

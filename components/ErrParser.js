@@ -29,6 +29,7 @@ const ParseError = (err)=>{
         case "form": return "Не удалось прочитать запрос"
         case "file": return "Ошибка чтения файла"
         case "type": return "Неверный тип файла"
+        case "tr_create": return "Не удалось создать транзакцию, обратитесь в поддержку"
         default: return err
     }
 }
