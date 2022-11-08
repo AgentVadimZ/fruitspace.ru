@@ -12,7 +12,7 @@ export default function GlobalHead(props) {
                 "Игровой хостинг FruitSpace: сервера Minecraft, Geometry Dash, GTA SA/IV/V"} />
             {props.image && <meta property="og:image" content={props.image} />}
             <meta name="pandora-tag" content="cdn:edge.halogen.cc;ttl=300;instances=3"/>
-            <meta name="enot" content="9351666987180gkztbxxyahFV6gZj4rIKPQdJuyM4koOB" />
+            <meta name="payok" content="payok_verification"/>
         </Head>
     )
 }
