@@ -70,11 +70,12 @@ export default function PayBox(props) {
                             value={paymentParam.merchant}
                             onChange={(e,m)=>setPaymentParam({...paymentParam, merchant: m})}>
                             <FormControlLabel value="qiwi" control={<Radio />} label={<img src={QiwiLogo.src}/>} />
-                            <FormControlLabel value="yookassa" control={<Radio />} label={<YooMoneyLogo/>} disabled/>
+                            <FormControlLabel value="yookassa" control={<Radio />} label={<YooMoneyLogo/>}/>
                         </RadioGroup>
                     </FormControl>
 
-                    <p>*Выберите Qiwi, если вы планируете пополнять баланс с Qiwi-кошелька. Для остальных методов оплаты выберите ЮKassa</p>
+                    {/*<p>*Выберите Qiwi, если вы планируете пополнять баланс с Qiwi-кошелька. Для остальных методов оплаты выберите ЮKassa</p>*/}
+                    <p>*Выберите ЮKassa, если вы планируете пополнять баланс с ЮMoney. Для остальных методов оплаты выберите Qiwi</p>
 
                     <FruitTextField fullWidth label={`Сумма ${user.usd?"$":"₽"}`} type="text" variant="outlined" style={{margin:".5rem"}}
                                     value={paymentParam.amount} onChange={(evt)=>{setPaymentParam({
