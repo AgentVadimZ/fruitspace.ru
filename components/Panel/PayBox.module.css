@@ -32,6 +32,11 @@
     font-size: 14pt;
 }
 
+.payOption {
+    display: inline-flex;
+    align-items: center;
+}
+
 .innerbox {
     display: flex;
     align-items: center;

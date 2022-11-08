@@ -8,6 +8,7 @@ import {useState} from "react";
 import {Backdrop, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField} from "@mui/material";
 import QiwiLogo from "../assets/logos/qiwi_logo.png"
 import YooMoneyLogo from "../assets/logos/yoomoney_logo.svg"
+import PayokLogo from "../assets/logos/payok_logo.svg"
 import {styled} from "@mui/system";
 import {Router, useRouter} from "next/router";
 import toast from "react-hot-toast";
@@ -69,13 +70,20 @@ export default function PayBox(props) {
                             name="controlled-radio-buttons-group"
                             value={paymentParam.merchant}
                             onChange={(e,m)=>setPaymentParam({...paymentParam, merchant: m})}>
-                            <FormControlLabel value="qiwi" control={<Radio />} label={<img src={QiwiLogo.src}/>} />
-                            <FormControlLabel value="yookassa" control={<Radio />} label={<YooMoneyLogo/>}/>
+                            <FormControlLabel value="qiwi" control={<Radio />} label={<span className={styles.payOption}>
+                                <img src={QiwiLogo.src}/>Подходит для Qiwi и банковских карт
+                            </span>} />
+                            <FormControlLabel value="yookassa" control={<Radio />} label={<span className={styles.payOption}>
+                                <YooMoneyLogo/>ЮMoney и наличные
+                            </span>}/>
+                            <FormControlLabel value="payok" control={<Radio />} label={<span className={styles.payOption}>
+                                <PayokLogo/> Криптовалюты, PerfectMoney и Мегафон
+                            </span>}/>
                         </RadioGroup>
                     </FormControl>
 
-                    {/*<p>*Выберите Qiwi, если вы планируете пополнять баланс с Qiwi-кошелька. Для остальных методов оплаты выберите ЮKassa</p>*/}
-                    <p>*Выберите ЮKassa, если вы планируете пополнять баланс с ЮMoney. Для остальных методов оплаты выберите Qiwi</p>
+                    <p>*Если оплата не удалась или деньги не пришли, откройте тикет на Discord сервере или напишите нам в ВК.
+                        Хотя такого обычно не происходит</p>
 
                     <FruitTextField fullWidth label={`Сумма ${user.usd?"$":"₽"}`} type="text" variant="outlined" style={{margin:".5rem"}}
                                     value={paymentParam.amount} onChange={(evt)=>{setPaymentParam({
