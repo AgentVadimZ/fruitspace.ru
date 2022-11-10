@@ -26,6 +26,16 @@ export default function PayBox(props) {
     })
 
     const createPayment = () => {
+        if (paymentParam.amount<20) {
+            toast.error("Минимальная сумма для пополнения - 20₽", {
+                duration: 10000,
+                style: {
+                    color: "white",
+                    backgroundColor: "var(--btn-color)"
+                }
+            })
+            return
+        }
         fetch("https://api.fruitspace.one/v1/user/create_payment",
             {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
                 body: JSON.stringify(paymentParam)}
@@ -84,12 +94,13 @@ export default function PayBox(props) {
 
                     <p>*Если оплата не удалась или деньги не пришли, откройте тикет на Discord сервере или напишите нам в ВК.
                         Хотя такого обычно не происходит</p>
+                    <p style={{color:"var(--error-color)"}}>Минимальная сумма для пополнения: 20₽</p>
 
                     <FruitTextField fullWidth label={`Сумма ${user.usd?"$":"₽"}`} type="text" variant="outlined" style={{margin:".5rem"}}
                                     value={paymentParam.amount} onChange={(evt)=>{setPaymentParam({
                         ...paymentParam,
                         amount: evt.target.value.replaceAll(/[^0-9.]/g,'')
-                    })}} />
+                    })}}/>
                     <Button variant="contained" className={styles.cardButton} onClick={createPayment}>Перейти к оплате</Button>
                 </div>
             </Backdrop>
