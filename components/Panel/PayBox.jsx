@@ -84,7 +84,7 @@ export default function PayBox(props) {
                                 <img src={QiwiLogo.src}/>Подходит для Qiwi и банковских карт
                             </span>} />
                             <FormControlLabel value="yookassa" control={<Radio />} label={<span className={styles.payOption}>
-                                <YooMoneyLogo/>ЮMoney и наличные
+                                <YooMoneyLogo/>SberPay, Тинькофф и ЮMoney
                             </span>}/>
                             <FormControlLabel value="payok" control={<Radio />} label={<span className={styles.payOption}>
                                 <PayokLogo/> Криптовалюты, PerfectMoney и Мегафон

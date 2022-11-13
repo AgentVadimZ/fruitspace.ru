@@ -94,6 +94,7 @@ export default function Login(progs) {
                     backgroundColor: "var(--btn-color)"
                 }
             })
+            hcaptcha.reset()
         }
         setLoading(false)
     }

@@ -92,7 +92,7 @@ export default function Home() {
                     </ListItem>
                     <ListItem>
                         <ListItemIcon><CloudDoneIcon/></ListItemIcon>
-                        <ListItemText primary="Автоматичесие резервные копии"/>
+                        <ListItemText primary="Автоматические резервные копии"/>
                     </ListItem>
                     <ListItem>
                         <ListItemIcon><PrecisionManufacturingIcon/></ListItemIcon>

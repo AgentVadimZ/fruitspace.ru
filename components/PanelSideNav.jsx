@@ -19,7 +19,7 @@ export default function PanelSideNav(props) {
         <SideBar>
             <Link href="/profile" passHref>
                 <NavItem icon={<WindowIcon/>} acetone square active={router.pathname==="/profile"}>
-                    <Tooltip title="Baller" placement="right" arrow open><span /></Tooltip>
+                    <Tooltip title="Главная" placement="right" arrow open><span /></Tooltip>
                 </NavItem>
             </Link>
             <Link href="/profile/servers" passHref>
