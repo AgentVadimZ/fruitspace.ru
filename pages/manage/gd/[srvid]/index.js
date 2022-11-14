@@ -58,7 +58,7 @@ export default function ManageGD(props) {
                             <Tab value="all">all</Tab>
                         </TabsList>
                     </TabsUnstyled>
-                    <FruitCharts dataAll={[100,120,190,190,250]} dataActive={[50,120,40,70,90]} dataNew={[0,20,70,0,60]}
+                    <FruitCharts dataAll={[100,120,190,190,250]} dataActive={[50,120,40,70,90]} dataNew={[2,20,70,2,60]}
                                  labels={['S1', 'S2', 'S3', 'S4', 'S5']}/>
                 </div>
                 <div className={styles.chartBox}>
@@ -71,7 +71,7 @@ export default function ManageGD(props) {
                             <Tab value="all">all</Tab>
                         </TabsList>
                     </TabsUnstyled>
-                    <FruitChartLevels dataAll={[100,120,190,190,250]} dataActive={[50,120,40,70,90]} dataNew={[0,20,70,0,60]}
+                    <FruitChartLevels dataAll={[100,120,190,190,250]} dataNew={[2,20,70,2,60]}
                                  labels={['S1', 'S2', 'S3', 'S4', 'S5']}/>
                 </div>
             </PanelContent>
@@ -91,7 +91,7 @@ function FruitCharts(props) {
             label: 'Всего',
             data: props.dataAll,
             borderColor: "#919195",
-            backgroundColor: "#919195",
+            backgroundColor: "#91919588",
             cubicInterpolationMode: "monotone",
             order: 3
         },
@@ -100,7 +100,7 @@ function FruitCharts(props) {
                 label: 'Активные',
                 data: props.dataActive,
                 borderColor: "#0d6efd",
-                backgroundColor: "#0d6efd",
+                backgroundColor: "#0d6efd88",
                 cubicInterpolationMode: "monotone",
                 order: 2
             },
@@ -109,7 +109,7 @@ function FruitCharts(props) {
                 label: 'Новые',
                 data: props.dataNew,
                 borderColor: "#fff",
-                backgroundColor: "#fff",
+                backgroundColor: "#ffffff88",
                 cubicInterpolationMode: "monotone",
                 order: 1
             }
@@ -154,7 +154,7 @@ function FruitChartLevels(props) {
             label: 'Всего',
             data: props.dataAll,
             borderColor: "#919195",
-            backgroundColor: "#919195",
+            backgroundColor: "#91919588",
             cubicInterpolationMode: "monotone",
             order: 3
         },
@@ -163,7 +163,7 @@ function FruitChartLevels(props) {
                 label: 'Новые',
                 data: props.dataNew,
                 borderColor: "#fff",
-                backgroundColor: "#fff",
+                backgroundColor: "#ffffff88",
                 cubicInterpolationMode: "monotone",
                 order: 1
             }
