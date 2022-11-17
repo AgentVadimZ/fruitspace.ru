@@ -8,7 +8,7 @@ import {useState} from "react";
 import {Backdrop, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField} from "@mui/material";
 import QiwiLogo from "../assets/logos/qiwi_logo.png"
 import YooMoneyLogo from "../assets/logos/yoomoney_logo.svg"
-import PayokLogo from "../assets/logos/payok_logo.svg"
+import EnotLogo from "../assets/logos/enot_logo.svg"
 import {styled} from "@mui/system";
 import {Router, useRouter} from "next/router";
 import toast from "react-hot-toast";
@@ -86,8 +86,8 @@ export default function PayBox(props) {
                             <FormControlLabel value="yookassa" control={<Radio />} label={<span className={styles.payOption}>
                                 <YooMoneyLogo/>SberPay, Тинькофф и ЮMoney
                             </span>}/>
-                            <FormControlLabel value="payok" control={<Radio />} label={<span className={styles.payOption}>
-                                <PayokLogo/> Криптовалюты, PerfectMoney и Мегафон
+                            <FormControlLabel value="enot" control={<Radio />} label={<span className={styles.payOption}>
+                                <EnotLogo/> Российские и международные банковские карты, криптовалюты и PerfectMoney
                             </span>}/>
                         </RadioGroup>
                     </FormControl>
