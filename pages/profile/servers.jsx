@@ -35,7 +35,6 @@ export default function Servers(props) {
         ).then(resp=>resp.json()).then((resp)=>{
             if (resp.status==="ok") {
                 setServers(resp)
-                console.log(resp)
             }
         })
     },[user])
@@ -56,7 +55,7 @@ export default function Servers(props) {
                         <TabButton><ExpandMoreIcon/></TabButton>
                     </TabsList>
                     <TabPanel value="gd">
-                        {servers?servers.gd.map((val, i)=>(
+                        {servers.gd?servers.gd.map((val, i)=>(
                             <ServerItem key={i} type="gd" name={val.srvname} plan={GetGDPlan(val.plan)}
                                         desc={ParseDesc(val.userCount, val.levelCount)} uuid={val.srvid} />
                             )):""}
