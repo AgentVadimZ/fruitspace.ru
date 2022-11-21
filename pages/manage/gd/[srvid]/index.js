@@ -48,6 +48,7 @@ export default function ManageGD(props) {
             <GlobalNav />
             <GDNavBar />
             <PanelContent>
+                <h3>Стата - фейк, но как красиво!</h3>
                 <div className={styles.chartBox}>
                     <h3>Игроки</h3>
                     <TabsUnstyled value={userStatTab} onChange={(e,val)=>setUserStatTab(val)} className={styles.floatSelector}>

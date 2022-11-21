@@ -4,11 +4,14 @@ import GlobalHead from "../../components/GlobalHead";
 import PanelContent from "../../components/Global/PanelContent";
 import {TabsList, TabPanel, Tab, TabButton} from "../../components/Global/Tab";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
-import {useRouter} from "next/router";
-import {useEffect, useState} from "react";
+import {Router, useRouter} from "next/router";
+import {useEffect, useMemo, useState} from "react";
 import {Button} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ServerItem from "../../components/Cards/ServerItem";
+import {useRecoilState} from "recoil";
+import {UserState} from "../../states/user";
+import {useCookies} from "react-cookie";
 
 
 export default function Servers(props) {
@@ -16,6 +19,27 @@ export default function Servers(props) {
     const {s} = router.query;
     var route = "gd";
     const [tab, setTab] = useState(route);
+
+    const [user,setUser] = useRecoilState(UserState)
+    const [cookies, setCookie, delCookie] = useCookies(["token"])
+
+    const [servers, setServers] = useState({
+        gd: [],
+        mc: [],
+        gta: []
+    })
+
+    useEffect(()=>{
+        fetch("https://api.fruitspace.one/v1/manage/list",
+            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]}, body: "type=gd"}
+        ).then(resp=>resp.json()).then((resp)=>{
+            if (resp.status==="ok") {
+                setServers(resp)
+                console.log(resp)
+            }
+        })
+    },[user])
+
     useEffect(()=>{setTab(s?s:"gd")},[s])
     return (
         <>
@@ -32,9 +56,10 @@ export default function Servers(props) {
                         <TabButton><ExpandMoreIcon/></TabButton>
                     </TabsList>
                     <TabPanel value="gd">
-                        {/*<ServerItem type="gd" name="TestDash" plan="Press Start" desc="3 игрока, 8 уровней" uuid="000S"/>*/}
-                        {/*<ServerItem type="gd" name="xHydra" plan="Takeoff" desc="15 игроков, 23 уровня"/>*/}
-                        {/*<ServerItem type="gd" name="Walugi" plan="Press Start" desc="0 игроков, 0 уровней"/>*/}
+                        {servers?servers.gd.map((val, i)=>(
+                            <ServerItem key={i} type="gd" name={val.srvname} plan={GetGDPlan(val.plan)}
+                                        desc={ParseDesc(val.userCount, val.levelCount)} uuid={val.srvid} />
+                            )):""}
                         <ServerItem type="gd" add/>
                     </TabPanel>
                     <TabPanel value="mc">
@@ -56,3 +81,48 @@ export default function Servers(props) {
 }
 
 Servers.RequireAuth = true
+
+
+
+
+const GetGDPlan=(plan)=> {
+            switch (plan) {
+                case 0:
+                case 1: return "Press Start"
+                case 2: return "Singularity"
+                case 3:
+                case 4: return "Takeoff"
+            }
+}
+
+const ParseDesc=(players, levels)=>{
+    let str=""+players
+    let cplayers=players%10
+    switch (cplayers) {
+        case 1:
+            str+=" игрок"
+            break
+        case 2:
+        case 3:
+        case 4:
+            str+=" игрока"
+            break
+        default:
+            str+=" игроков"
+    }
+    str+=", "+levels
+    let clevels=levels%10
+    switch (clevels) {
+        case 1:
+            str+=" уровень"
+            break
+        case 2:
+        case 3:
+        case 4:
+            str+=" уровня"
+            break
+        default:
+            str+=" уровней"
+    }
+    return str
+}
