@@ -84,7 +84,8 @@ export default function Home() {
                     </ListItem>
                     <ListItem>
                         <ListItemIcon><MusicNoteIcon/></ListItemIcon>
-                        <ListItemText primary="Музыка из NewGrounds, YouTube, Soundcloud, Deezer, VK и из файлов"/>
+                        <ListItemText primary="Музыка из NewGrounds, YouTube, Deezer, VK и из файлов"/>
+                        {/*Soundcloud*/}
                     </ListItem>
                     <ListItem>
                         <ListItemIcon><SmartToyIcon/></ListItemIcon>

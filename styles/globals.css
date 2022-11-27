@@ -43,6 +43,10 @@ body {
 label, legend {
     color: #cacad0 !important;
 }
+input {
+    -webkit-text-fill-color: unset !important;
+    color: #cacad0 !important;
+}
 
 
 .btnSuccess {

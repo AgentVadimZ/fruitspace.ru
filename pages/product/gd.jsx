@@ -81,7 +81,7 @@ export default function GD(props) {
                         </ListItem>
                         <ListItem>
                             <ListItemIcon><MusicNoteIcon/></ListItemIcon>
-                            <ListItemText primary="Музыка из NewGrounds, YouTube и Soundcloud"/>
+                            <ListItemText primary="Музыка из NewGrounds и YouTube"/>
                         </ListItem>
                         <ListItem>
                             <ListItemIcon><SmartToyIcon/></ListItemIcon>
@@ -107,7 +107,7 @@ export default function GD(props) {
                         </ListItem>
                         <ListItem>
                             <ListItemIcon><MusicNoteIcon/></ListItemIcon>
-                            <ListItemText primary="Музыка из NewGrounds, YouTube, Soundcloud, Deezer, VK и из файлов"/>
+                            <ListItemText primary="Музыка из NewGrounds, YouTube, Deezer, VK и из файлов"/>
                         </ListItem>
                         <ListItem>
                             <ListItemIcon><SmartToyIcon/></ListItemIcon>

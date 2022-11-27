@@ -31,7 +31,7 @@ export default function Servers(props) {
 
     useEffect(()=>{
         fetch("https://api.fruitspace.one/v1/manage/list",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]}, body: "type=gd"}
+            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]}}
         ).then(resp=>resp.json()).then((resp)=>{
             if (resp.status==="ok") {
                 setServers(resp)
@@ -57,7 +57,7 @@ export default function Servers(props) {
                     <TabPanel value="gd">
                         {servers.gd?servers.gd.map((val, i)=>(
                             <ServerItem key={i} type="gd" name={val.srvname} plan={GetGDPlan(val.plan)}
-                                        desc={ParseDesc(val.userCount, val.levelCount)} uuid={val.srvid} />
+                                        desc={ParseDesc(val.userCount, val.levelCount)} uuid={val.srvid} icon={val.icon} />
                             )):""}
                         <ServerItem type="gd" add/>
                     </TabPanel>

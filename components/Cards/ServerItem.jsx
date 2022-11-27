@@ -26,10 +26,10 @@ export default function ServerItem(props) {
     ):(
         <Link href={"/manage/"+props.type+"/"+props.uuid}>
             <div className={styles.ServerCard}>
-                <img className={styles.ServerIcon} src={Types[props.type]||QuestionMark.src} />
+                <img className={styles.ServerIcon} src={props.icon?props.icon:(Types[props.type]||QuestionMark.src)} />
                 <div className={styles.ServerBox}>
                     <h3>{props.name}</h3>
-                    <p>{props.plan} → {props.desc}</p>
+                    <p><b>{props.plan}</b> → {props.desc}</p>
                 </div>
                 <RightSvg/>
             </div>
