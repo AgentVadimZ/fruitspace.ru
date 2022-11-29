@@ -5,7 +5,7 @@ import PanelContent from "../../../../components/Global/PanelContent";
 import {Router, useRouter} from "next/router";
 
 
-export default function SettingsGD(props) {
+export default function MusicGD(props) {
     const router = useRouter()
 
     return (
@@ -19,3 +19,5 @@ export default function SettingsGD(props) {
         </>
     )
 }
+
+MusicGD.RequireAuth=true

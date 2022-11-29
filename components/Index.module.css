@@ -132,4 +132,10 @@
     .form {
         width: auto;
     }
+    .contactBox {
+        flex-direction: column;
+    }
+    .contactBox > div {
+        margin: .25rem;
+    }
 }

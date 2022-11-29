@@ -7,6 +7,7 @@ import styles from "../../../../components/Manage/GDManage.module.css"
 import {Tab, TabPanel, TabsList} from "../../../../components/Global/TinyTab";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
 import {useMemo, useState} from "react";
+import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -19,6 +20,11 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import {styled} from "@mui/system";
+import {IconButton, InputAdornment, TextField} from "@mui/material";
+import toast, {Toaster} from "react-hot-toast";
+import {useRecoilState} from "recoil";
+import GDServer from "../../../../states/gd_server";
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -42,44 +48,86 @@ export default function ManageGD(props) {
     const [userStatTab, setUserStatTab] = useState("7d")
     const [lvlStatTab, setLvlStatTab] = useState("7d")
 
+    const [srv, setSrv] = useRecoilState(GDServer)
+
+    const copyValueR=()=>{
+        toast.success("Скопировано", {
+            duration: 1000,
+            style: {
+                color: "white",
+                backgroundColor: "var(--btn-color)"
+            }
+        })
+    }
+
     return (
         <>
             <GlobalHead title="Игровой хостинг"/>
             <GlobalNav />
             <GDNavBar />
+            <Toaster/>
             <PanelContent>
-                <h3>Стата - фейк, но как красиво!</h3>
-                <div className={styles.chartBox}>
-                    <h3>Игроки</h3>
-                    <TabsUnstyled value={userStatTab} onChange={(e,val)=>setUserStatTab(val)} className={styles.floatSelector}>
-                        <TabsList>
-                            <Tab value="7d">7d</Tab>
-                            <Tab value="30d">30d</Tab>
-                            <Tab value="1y">1y</Tab>
-                            <Tab value="all">all</Tab>
-                        </TabsList>
-                    </TabsUnstyled>
-                    <FruitCharts dataAll={[100,120,190,190,250]} dataActive={[50,120,40,70,90]} dataNew={[2,20,70,2,60]}
-                                 labels={['S1', 'S2', 'S3', 'S4', 'S5']}/>
+                <h3>Вот ссылочки на скачивание, скопируй их.</h3>
+                <p>Автообновление в комплекте</p>
+                <div className={styles.CardBox}>
+                    <h3></h3>
+                    <div className={styles.CardInbox}>
+                    <FruitTextField fullWidth label="Android" value={srv.clientAndroidURL}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText(srv.clientAndroidURL);copyValueR()}}>
+                                                    <ContentPasteIcon/>
+                                                </IconButton>
+                                            </InputAdornment>
+                                        )
+                                    }}
+                                    disabled/>
+                    <FruitTextField fullWidth label="Windows (Лаунчер)" value={srv.clientWindowsURL}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText(srv.clientWindowsURL);copyValueR()}}>
+                                                    <ContentPasteIcon/>
+                                                </IconButton>
+                                            </InputAdornment>
+                                        )
+                                    }}
+                                    disabled/>
+                    </div>
                 </div>
-                <div className={styles.chartBox}>
-                    <h3>Уровни</h3>
-                    <TabsUnstyled value={lvlStatTab} onChange={(e,val)=>setLvlStatTab(val)} className={styles.floatSelector}>
-                        <TabsList>
-                            <Tab value="7d">7d</Tab>
-                            <Tab value="30d">30d</Tab>
-                            <Tab value="1y">1y</Tab>
-                            <Tab value="all">all</Tab>
-                        </TabsList>
-                    </TabsUnstyled>
-                    <FruitChartLevels dataAll={[100,120,190,190,250]} dataNew={[2,20,70,2,60]}
-                                 labels={['S1', 'S2', 'S3', 'S4', 'S5']}/>
-                </div>
+                {/*<div className={styles.chartBox}>*/}
+                {/*    <h3>Игроки</h3>*/}
+                {/*    <TabsUnstyled value={userStatTab} onChange={(e,val)=>setUserStatTab(val)} className={styles.floatSelector}>*/}
+                {/*        <TabsList>*/}
+                {/*            <Tab value="7d">7d</Tab>*/}
+                {/*            <Tab value="30d">30d</Tab>*/}
+                {/*            <Tab value="1y">1y</Tab>*/}
+                {/*            <Tab value="all">all</Tab>*/}
+                {/*        </TabsList>*/}
+                {/*    </TabsUnstyled>*/}
+                {/*    <FruitCharts dataAll={[100,120,190,190,250]} dataActive={[50,120,40,70,90]} dataNew={[2,20,70,2,60]}*/}
+                {/*                 labels={['S1', 'S2', 'S3', 'S4', 'S5']}/>*/}
+                {/*</div>*/}
+                {/*<div className={styles.chartBox}>*/}
+                {/*    <h3>Уровни</h3>*/}
+                {/*    <TabsUnstyled value={lvlStatTab} onChange={(e,val)=>setLvlStatTab(val)} className={styles.floatSelector}>*/}
+                {/*        <TabsList>*/}
+                {/*            <Tab value="7d">7d</Tab>*/}
+                {/*            <Tab value="30d">30d</Tab>*/}
+                {/*            <Tab value="1y">1y</Tab>*/}
+                {/*            <Tab value="all">all</Tab>*/}
+                {/*        </TabsList>*/}
+                {/*    </TabsUnstyled>*/}
+                {/*    <FruitChartLevels dataAll={[100,120,190,190,250]} dataNew={[2,20,70,2,60]}*/}
+                {/*                 labels={['S1', 'S2', 'S3', 'S4', 'S5']}/>*/}
+                {/*</div>*/}
             </PanelContent>
         </>
     )
 }
 
+ManageGD.RequireAuth=true
 
 
 
@@ -199,3 +247,28 @@ function FruitChartLevels(props) {
         }}  data={data} redraw className={styles.chart}/>
     )
 }
+
+
+const FruitTextField = styled(TextField)({
+    '& label.Mui-focused': {
+        color: '#0d6efd',
+    },
+    '& .MuiInput-underline:after': {
+        borderBottomColor: 'green',
+    },
+    '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+            borderColor: 'white !important',
+        },
+        '&:hover fieldset': {
+            borderColor: '#cacad0',
+        },
+        '&.Mui-focused fieldset': {
+            borderColor: '#0d6efd',
+        },
+        borderRadius: "8px",
+        color: "white",
+        // backgroundColor: "var(--btn-color)",
+        marginBottom: "1rem"
+    },
+});

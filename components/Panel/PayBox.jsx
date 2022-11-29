@@ -36,6 +36,16 @@ export default function PayBox(props) {
             })
             return
         }
+        if (paymentParam.amount>100000) {
+            toast.error("Максимальная сумма для пополнения - 100000₽", {
+                duration: 10000,
+                style: {
+                    color: "white",
+                    backgroundColor: "var(--btn-color)"
+                }
+            })
+            return
+        }
         fetch("https://api.fruitspace.one/v1/user/create_payment",
             {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
                 body: JSON.stringify(paymentParam)}

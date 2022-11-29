@@ -16,6 +16,10 @@ import ActionsIcon from "../../assets/icons/panel_actions.svg"
 import Link from "next/link";
 import {useRouter} from "next/router";
 import {Tooltip} from "@mui/material";
+import {useRecoilState} from "recoil";
+import GDServer from "../../../states/gd_server";
+import {useEffect} from "react";
+import {useCookies} from "react-cookie";
 
 
 export default function GDNavBar(props) {
@@ -24,7 +28,16 @@ export default function GDNavBar(props) {
     const srvid = router.query.srvid
     let action = router.pathname.split("/")
     action = action[action.length-1]
-    console.log(action)
+    const [cookies, setCookie, delCookie] = useCookies(["token"])
+    const [srv, setSrv] = useRecoilState(GDServer)
+    useEffect(()=>{
+        fetch("https://api.fruitspace.one/v1/manage/gd/get",
+            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
+            body: JSON.stringify({id:srvid})}).then(resp=>resp.json()).then((resp)=>{
+                if(resp.srvid) setSrv(resp);
+                else router.push("/profile/servers");
+        })
+    },[srvid])
 
     return (
         <SideBar>
