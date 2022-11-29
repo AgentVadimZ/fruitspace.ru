@@ -94,6 +94,15 @@ export default function ManageGD(props) {
                                         )
                                     }}
                                     disabled/>
+                        <a href="https://telegra.ph/Dokumentaciya-dlya-ochen-umnyh-09-29"
+                           style={{
+                               padding: ".75rem 2rem",
+                               background: "linear-gradient(135deg, #8e388e,#5a00ff 70%, #0d6efd)",
+                               borderRadius: "8px",
+                               margin: "0 auto",
+
+                           }}
+                        >Документация</a>
                     </div>
                 </div>
                 {/*<div className={styles.chartBox}>*/}
