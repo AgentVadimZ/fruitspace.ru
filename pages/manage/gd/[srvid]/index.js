@@ -72,22 +72,22 @@ export default function ManageGD(props) {
                 <div className={styles.CardBox}>
                     <h3></h3>
                     <div className={styles.CardInbox}>
-                    <FruitTextField fullWidth label="Android" value={srv.clientAndroidURL}
+                    <FruitTextField fullWidth label="Android" value={encodeURI(srv.clientAndroidURL)}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
-                                                <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText(srv.clientAndroidURL);copyValueR()}}>
+                                                <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText(encodeURI(srv.clientAndroidURL));copyValueR()}}>
                                                     <ContentPasteIcon/>
                                                 </IconButton>
                                             </InputAdornment>
                                         )
                                     }}
                                     disabled/>
-                    <FruitTextField fullWidth label="Windows (Лаунчер)" value={srv.clientWindowsURL}
+                    <FruitTextField fullWidth label="Windows (Лаунчер)" value={encodeURI(srv.clientWindowsURL)}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
-                                                <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText(srv.clientWindowsURL);copyValueR()}}>
+                                                <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText(encodeURI(srv.clientWindowsURL));copyValueR()}}>
                                                     <ContentPasteIcon/>
                                                 </IconButton>
                                             </InputAdornment>
