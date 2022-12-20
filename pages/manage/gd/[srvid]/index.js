@@ -25,6 +25,7 @@ import {IconButton, InputAdornment, TextField} from "@mui/material";
 import toast, {Toaster} from "react-hot-toast";
 import {useRecoilState} from "recoil";
 import GDServer from "../../../../states/gd_server";
+import useEffectOnce from "../../../../components/Hooks";
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -50,6 +51,10 @@ export default function ManageGD(props) {
 
     const [srv, setSrv] = useRecoilState(GDServer)
 
+    useEffectOnce(()=>{
+        toast.dismiss()
+    })
+
     const copyValueR=()=>{
         toast.success("Скопировано", {
             duration: 1000,
@@ -67,10 +72,14 @@ export default function ManageGD(props) {
             <GDNavBar />
             <Toaster/>
             <PanelContent>
-                <h3>Вот ссылочки на скачивание, скопируй их.</h3>
-                <p>Автообновление в комплекте</p>
+                <div className={styles.Smallbanner}>
+                    <div></div>
+                    <p>Панель в разработке. Так что сильно не привыкайте</p>
+                </div>
+
                 <div className={styles.CardBox}>
-                    <h3></h3>
+                    <h3>Вот ссылочки на скачивание, скопируй их.</h3>
+                    <p align="center">Автообновление в комплекте</p>
                     <div className={styles.CardInbox}>
                     <FruitTextField fullWidth label="Android" value={encodeURI(srv.clientAndroidURL)}
                                     InputProps={{

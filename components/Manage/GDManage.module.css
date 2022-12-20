@@ -39,13 +39,22 @@
 }
 
 
+.SettingsPlato {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
+.SettingsFieldset {
+    border-radius: 12px;
+}
 
 
 .CardBox {
     composes: chartBox;
     width: auto;
     margin: 0;
+    height: unset;
 }
 
 .CardBox svg {
@@ -64,7 +73,7 @@
 .CardBottom {
     margin-top: auto;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .cardButton {
@@ -79,6 +88,13 @@
     margin-right: 0;
 }
 
+.CodeBlock {
+    background-color: var(--btn-color);
+    border-radius: 4px;
+    padding: .25rem .5rem;
+    font-family: monospace;
+}
+
 .btnSuccess {
     background-color: var(--success-color) !important;
 }
@@ -87,9 +103,351 @@
     background-color: var(--error-color) !important;
 }
 
+.ToggleGroupImitator {
+    background-color: var(--btn-color);
+    border-radius: 8px;
+    margin: 0 .5rem;
+}
+
+.ToggleGroupImitator img {
+    height: 1em;
+    filter: invert();
+}
+
+.btnLinked {
+    background-color: var(--success-color);
+}
+.btnLinked:hover {
+    background-color: var(--error-color) !important;
+}
+
+.BackdropBox {
+    border-radius: 12px;
+    padding: 0 .5rem .5rem 1rem;
+    background-color: var(--active-color);
+    max-width: 45rem;
+    margin: .5rem;
+}
+
+.BackdropBox svg {
+    fill: white;
+}
+
+img.adornments {
+    height: 1em;
+    filter: invert();
+}
+
+.SlimButton {
+    composes: cardButton;
+    height: 40px;
+}
+
+.deleteBox {
+    background: url("/trash.svg") .75rem .75rem;
+    background-size: 2rem 2rem;
+    padding: 0 .5rem .5rem 1rem;
+}
+
+.deleteBox > h3 {
+    background-color: var(--active-color);
+    margin: 0 auto;
+    border-style: solid;
+    border-top: none;
+    border-width: 2px;
+    width: fit-content;
+    padding: .25rem .5rem;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.deleteBox p {
+    border-radius: 4px;
+    background-color: #00000088;
+    padding: .5rem;
+}
+
+.redsvg {
+    fill: var(--error-color) !important;
+}
+
+.greensvg {
+    fill: var(--success-color) !important;
+}
+
+.bluesvg {
+    fill: var(--primary-color) !important;
+}
+
+.hoverable:hover {
+    background-color: var(--btn-color);
+    border-radius: 8px;
+}
+
+.hoverable button:hover {
+    background-color: var(--success-color);
+    border-radius: 16rem;
+}
+
+.SquareIcon {
+    border-radius: 8px;
+    margin: 0 .25rem;
+
+}
+
+.SquareIconGreen:hover {
+    background-color: var(--success-color);
+}
+
+.SquareIconRed:hover {
+    background-color: var(--error-color);
+}
+
+.SquareIconBlue:hover {
+    background-color: var(--primary-color);
+}
+
+.SquareIcon path {
+    fill: white;
+}
+
+
+.buildlabBrand {
+    display: flex;
+    align-items: center;
+}
+
+.buildlabBrand img {
+    width: 3rem;
+}
+
+.buildlabBrand h5 {
+    font-weight: bold;
+    margin:0;
+    font-size: 12pt;
+    background: linear-gradient(-30deg, #8e388e,#5a00ff 50%, dodgerblue);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.buildlabBrand h3 {
+    margin: 0;
+}
+
+.buildlabTop {
+    display: flex;
+    border-radius: 12px;
+    background-color: var(--btn-color);
+    padding: .5rem;
+    margin-bottom: 1rem;
+}
+
+.buildlabTop > div {
+    border-radius: 8px;
+    /*background: linear-gradient(0deg, var(--active-color) , #ffffff00 80%);*/
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.buildlabTop img {
+    width: 6rem;
+    border-radius: 8px;
+    margin-right: 1rem;
+}
+
+.Smallbanner img {
+    object-fit: cover;
+    border-radius: 8px;
+    height: 6rem;
+    width: 20rem;
+    opacity: .3;
+}
+
+.Smallbanner div {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background: linear-gradient(0deg, var(--bkg-color), transparent);
+}
+
+.Smallbanner {
+    position: relative;
+    width: 20rem;
+    height: 6rem;
+    background: url("/banana.jpg") 0 40%;
+    background-size: 100% auto;
+    border-radius: 9px;
+    transition: background-position 300ms ease;
+    margin-bottom: 1rem;
+    user-select: none;
+}
+
+.Smallbanner:hover {
+    background-position: 0 70%;
+}
+
+.Smallbanner:hover p {
+    opacity: 0.3;
+}
+
+.Smallbanner p {
+    margin: .5rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: opacity 300ms ease;
+    font-size: 11pt;
+}
+
+
+.MusicSlider {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.MusicSliderSelector {
+    display: flex;
+    align-items: center;
+}
+
+.MusicSlider img {
+    height: 4rem;
+    border-radius: 6px;
+    margin: 0 .25rem;
+    transition: 300ms ease;
+    filter: brightness(0.8);
+}
+.MusicSlider img:hover {
+    cursor: pointer;
+    filter: brightness(1.2);
+}
+.MusicSlider > div > svg:first-of-type {
+    width: 2rem;
+    height: 2rem;
+    margin-left: .5rem;
+}
+
+.MusicSliderPlayer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.MusicSliderPlayer > div {
+    display: flex;
+    align-items: center;
+    margin: 0 .5rem;
+}
+
+.MusicSliderPlayer > div > svg:first-of-type {
+    width: 2rem;
+    height: 2rem;
+    margin-left: .5rem;
+}
+.MusicSliderPlayer > div > svg:first-of-type:hover {
+    cursor: pointer;
+}
+
+.MusicPlayerText {
+    margin: 0 .5rem;
+}
+
+.MusicPlayerText h3 {
+    margin: 0;
+}
+
+.MusicPlayerText p {
+    margin: 0 0 0 1rem;
+    font-size: 11pt;
+    color: #cacad0;
+}
+
+.MusicPlayerID {
+    background-color: var(--btn-color);
+    padding: .25rem .5rem;
+    border-radius: 4px;
+    font-size: 11pt;
+}
+
+.PlayerVolumeBox {
+    border-radius: 6px;
+    background-color: var(--btn-color);
+    display: flex;
+    align-items: center;
+    width: 8rem;
+    padding-right: 1rem;
+    padding-left: .25rem;
+    margin-left: .5rem;
+}
+
+.PlayerTimelineText {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.PlayerTimelineText span {
+    font-size: 10pt;
+    color: #cacad0;
+}
+
+
+.SliderDelimiter {
+    background-color: var(--btn-color);
+    width: .25rem;
+    height: 3rem;
+    border-radius: 4rem;
+    margin: 0 .5rem;
+}
+
 @media screen and (max-width: 720px){
     .CardGrid {
         width: 100%;
         grid-template-columns: repeat(1, 1fr);
+    }
+
+    .MusicSlider {
+        flex-direction: column;
+    }
+    .SliderDelimiter {
+        height: .25rem;
+        width: 75%;
+        margin: .5rem 0;
+    }
+
+    .MusicSlider img {
+        height: 2rem;
+    }
+
+    .MusicPlayerText > h3 {
+        font-size: 11pt;
+    }
+    .MusicPlayerText > p {
+        font-size: 10pt;
+    }
+    .MusicPlayerID {
+        font-size: 9pt;
+        white-space: nowrap;
+    }
+    .MusicSliderPlayer > div {
+        margin: 0;
+    }
+    .MusicSliderPlayer > div:last-child {
+        flex-direction: column;
+    }
+    .MusicSliderPlayer > div:last-child > div {
+        width: calc(100% - 2rem);
+    }
+    .MusicSliderPlayer > div:last-child > div:first-of-type > span {
+        padding: 2px !important;
+    }
+    .PlayerVolumeBox {
+        margin: .5rem 0 0;
+    }
+    .PlayerVolumeBox > span {
+        padding: 13px 0 !important;
     }
 }

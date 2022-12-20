@@ -58,6 +58,14 @@ input {
 }
 
 
+.loading {
+    background-color: var(--btn-hover);
+    padding: 2rem;
+    border-radius: 8px;
+    width: fit-content;
+}
+
+
 
 /* OVERRIDES */
 
@@ -74,6 +82,10 @@ span.swiper-pagination-bullet-active {
 
 .MuiTooltip-arrow {
     margin-left: -0.7em !important;
+}
+
+.MuiBadge-badge {
+    padding: 0;
 }
 
 .serversWindow {

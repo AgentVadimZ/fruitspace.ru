@@ -18,6 +18,8 @@
 
 .logo {
     cursor: pointer;
+    height: 75%;
+    margin: auto 0;
 }
 
 .MultilineItem {
@@ -44,7 +46,7 @@
     padding: .5rem;
 }
 
-.BalBox span:first-child {
+.BalBox span:first-of-type {
     border-right: 2px solid black;
 }
 

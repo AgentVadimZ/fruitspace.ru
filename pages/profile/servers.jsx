@@ -12,6 +12,7 @@ import ServerItem from "../../components/Cards/ServerItem";
 import {useRecoilState} from "recoil";
 import {UserState} from "../../states/user";
 import {useCookies} from "react-cookie";
+import useEffectOnce from "../../components/Hooks";
 
 
 export default function Servers(props) {
@@ -29,7 +30,7 @@ export default function Servers(props) {
         gta: []
     })
 
-    useEffect(()=>{
+    useEffectOnce(()=>{
         fetch("https://api.fruitspace.one/v1/manage/list",
             {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]}}
         ).then(resp=>resp.json()).then((resp)=>{
@@ -37,7 +38,7 @@ export default function Servers(props) {
                 setServers(resp)
             }
         })
-    },[user])
+    })
 
     useEffect(()=>{setTab(s?s:"gd")},[s])
     return (
@@ -89,8 +90,9 @@ const GetGDPlan=(plan)=> {
                 case 0:
                 case 1: return "Press Start"
                 case 2: return "Singularity"
-                case 3:
-                case 4: return "Takeoff"
+                case 3: return "Takeoff"
+                case 4: return "Overkill"
+                default: return "???"
             }
 }
 

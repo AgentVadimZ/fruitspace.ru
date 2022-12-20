@@ -1,12 +1,11 @@
 import Link from "next/link";
 import styles from "./NavBar/NavBar.module.css";
-import {useCookies} from "react-cookie";
 import NavBar from "./NavBar/NavBar";
 import NavItem from "./NavBar/NavItem";
 import {DropdownItem, DropdownMenu} from "./NavBar/DropDown";
 
 import RightSvg from "./assets/icons/right.svg";
-import logo from "./assets/logo.png";
+import logo from "./assets/Fruitspace2.png";
 import ServerSvg from "./assets/icons/server.svg";
 import NotificationSvg from "./assets/icons/notification.svg";
 import PersonIcon from '@mui/icons-material/Person';

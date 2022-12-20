@@ -44,10 +44,11 @@ export default function Home() {
 
         <div className={styles.main}>
             <Carousel>
+                <CarouselItem image={ProtoFlicker.src}
+                              link="/product/gd/" title="Мы любим строителей на GDPS" text="Все мы знаем как важен блокдизайн и как важно его игнорировать" />
+
                 <CarouselItem image="https://media.wired.com/photos/60f0f10db3e52be52fcdc042/master/w_1600%2Cc_limit/Minecraft_Middle_Earth_Minas_Tirith_render_SOURCE_Minecraft_Middle-Earth.png"
                               link="#" title="Создайте сервер Minecraft" text="Наши сервера прошли испытание динамитом и лаг-машинами. Играйте без лагов!" />
-                <CarouselItem image={ProtoFlicker.src}
-                              link="#" title="Мы любим строителей на GDPS" text="Все мы знаем как важен блокдизайн и как важно его игнорировать" />
                 <CarouselItem image="https://i.imgur.com/8KV0PjH.jpg"
                               link="#" title="GTA V [RAGE MP]" text="Соберитесь с друзьями в GTA On... от орбитальной пушки отойди" />
                 {/*<CarouselItem image="https://media.wired.com/photos/60f0f10db3e52be52fcdc042/master/w_1600%2Cc_limit/Minecraft_Middle_Earth_Minas_Tirith_render_SOURCE_Minecraft_Middle-Earth.png"*/}

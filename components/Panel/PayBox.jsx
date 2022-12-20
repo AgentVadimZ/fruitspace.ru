@@ -64,8 +64,6 @@ export default function PayBox(props) {
         })
     }
 
-    console.log(paymentParam)
-
     const prettyPrint = (num)=>new Intl.NumberFormat(user.usd?'en-US':'ru-RU',
         {style: 'currency',currency: user.usd?"USD":"RUB"}).format(num).replace(/[.|,]00/g, '')
 
@@ -107,7 +105,7 @@ export default function PayBox(props) {
                     <p style={{color:"var(--error-color)"}}>Минимальная сумма для пополнения: 20₽</p>
 
                     <FruitTextField fullWidth label={`Сумма ${user.usd?"$":"₽"}`} type="text" variant="outlined" style={{margin:".5rem"}}
-                                    value={paymentParam.amount} onChange={(evt)=>{setPaymentParam({
+                                    value={paymentParam.amount||''} onChange={(evt)=>{setPaymentParam({
                         ...paymentParam,
                         amount: evt.target.value.replaceAll(/[^0-9.]/g,'')
                     })}}/>

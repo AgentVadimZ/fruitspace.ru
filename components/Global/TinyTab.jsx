@@ -29,7 +29,7 @@ const Tab = styled(TabUnstyled)`
     background-color: var(--btn-hover);
   }
   
-  &:first-child {
+  &:first-of-type {
     margin: 4px 1px 4px 4px;
   }
 

@@ -12,6 +12,17 @@ const nextConfig = {
     })
     return config
   },
+  headers: async ()=>[
+    {
+      source: '/manage/gd/:srv*',
+      headers: [
+        {
+          key: 'Referrer-Policy',
+          value: 'no-referrer',
+        },
+      ],
+    },
+  ],
   sentry: {
     hideSourceMaps: true
   }
@@ -21,4 +32,5 @@ const sentryWebpackPluginOptions = {
   silent: true
 };
 
-module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions);
+// module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions);
+module.exports = nextConfig

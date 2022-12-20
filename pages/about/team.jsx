@@ -22,19 +22,23 @@ export default function Team(props) {
                             "Я просто сделал FruitSpace, от сайта до самой системы хостинга и возни с серверами",
                             "🤨🤨🤨 Норм"
                         ]} img="https://cdn.fruitspace.one/profile_pics/c4ca4238a0b923820dcc509a6f75849b.png" />
-                        <TeamMemberCard name="TheOfSover" position="Денис" dialogue={[
-                            "Привет, что делаешь?",
-                            "В техподдержке работаю и модерирую Discord",
-                            "Сейчас 3 ночи...",
-                            "Я сова, ничего не знаю🦉"
-                        ]} img="https://images-ext-2.discordapp.net/external/kIkcA_EWozABAvJKAyEAFsRhxz8juU0p-UWAOj1MoAY/%3Fsize%3D2048/https/cdn.discordapp.com/avatars/1026126589102133280/b10d7ee4b5ca0493cdce953ead67220c.webp"/>
-                        <TeamMemberCard name="Nikomu" position="Тимур" dialogue={[
-                            "Тимуууур Бабаааев",
-                            "Тимуууур Бабаааев)",
+                        <TeamMemberCard name="MemHouse" position="Дмитрий" dialogue={[
+                            "Ты там живой?",
+                            "Ахах, конечно нет! Я же занимаюсь Minecraft и плагины пишу",
+                            "Аааа, подготовь тогда public static java.lang.Object ноль равно равно один...",
+                            "Не смешно",
+                            "Смешно"
+                        ]} img="https://media.discordapp.net/attachments/949684545505091617/1052206376027439104/MemHouse.webp"/>
+                        {/*<TeamMemberCard name="Flowi" position="???" dialogue={[*/}
+                        {/*    "..."*/}
+                        {/*]} img="https://media.discordapp.net/attachments/949684545505091617/1052209127675396166/flowi-1.webp"/>*/}
+                    <TeamMemberCard name="Mirvis" position="Артем" dialogue={[
+                            "Это Мирвис 😺",
+                            "Да, это я",
                             "← Он нам классные статьи пишет и выпускает посты в ВК",
                             "Ага",
                             "Круто"
-                        ]} img="https://sun2-9.userapi.com/s/v1/ig2/zZqHjOCiU0wekMBxTj52lKiMQ7VvVykfAfXJH3vQlL4UUUbzCpnyw82m7rbaICoQNjJckxya4Y2sQu6eUwiUkTnq.jpg?size=200x200&quality=95&crop=999,115,475,475&ava=1"/>
+                        ]} img="https://media.discordapp.net/attachments/949684545505091617/1052208025273892884/Screenshot_2022-12-13-15-58-48-28_92460851df6f172a4592fca41cc2d2e6.jpg"/>
                     </div>
                 </div>
             </div>

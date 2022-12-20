@@ -111,33 +111,33 @@ export default function Login(progs) {
                     <h3>{regMode?"Зарегистрироваться":(forgotPass?"Восстановить пароль":"Войти")}</h3>
                     <form>
                         {!forgotPass && <FruitTextField fullWidth label="@username" type="text" variant="outlined" style={{margin:".5rem"}}
-                                        value={formData.uname} onChange={(evt)=>{setFormData({
+                                        value={formData.uname||''} onChange={(evt)=>{setFormData({
                                             ...formData,
                                             uname: evt.target.value.replaceAll(/[^a-zA-Z0-9_.-]/g,'')
                                         })}}/> }
 
 
                         {(regMode||forgotPass) && <FruitTextField fullWidth label="Email" type="email" variant="outlined" style={{margin:".5rem"}}
-                                                    value={formData.email} onChange={(evt)=>{setFormData({
+                                                    value={formData.email||''} onChange={(evt)=>{setFormData({
                             ...formData,
                             email: evt.target.value.replaceAll(/[^a-zA-Z0-9!#$%&'*+\-/=?^_`{|}~.@]/g,'')
                         })}} />}
 
                         {regMode && <FruitTextField fullWidth label="Имя (англ)" type="text" variant="outlined" style={{margin:".5rem"}}
-                                        value={formData.name} onChange={(evt)=>{setFormData({
+                                        value={formData.name||''} onChange={(evt)=>{setFormData({
                             ...formData,
                             name: evt.target.value.replaceAll(/[^a-zA-Z]/g,'')
                         })}} />}
 
                         {regMode && <FruitTextField fullWidth label="Фамилия (англ)" type="text" variant="outlined" style={{margin:".5rem"}}
-                                                    value={formData.surname} onChange={(evt)=>{setFormData({
+                                                    value={formData.surname||''} onChange={(evt)=>{setFormData({
                             ...formData,
                             surname: evt.target.value.replaceAll(/[^a-zA-Z]/g,'')
                         })}} />}
 
                         {!forgotPass && <FruitTextField fullWidth label="Пароль" type={formData.showPassword?"text":"password"}
                                         variant="outlined"
-                                        style={{margin:".5rem"}} value={formData.password}
+                                        style={{margin:".5rem"}} value={formData.password||''}
                                         onChange={(evt)=>{setFormData({
                                             ...formData,
                                             password: evt.target.value.replaceAll(/[^a-zA-Z0-9~!@#$%^&*()_\-+={}\[\]|\\:;"'<,>.?/]/g,'')
