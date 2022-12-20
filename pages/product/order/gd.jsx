@@ -91,7 +91,7 @@ export default function Order(props) {
                         </TabsList>
                     </TabsUnstyled>
 
-                    {tariffs[srv.tariff] && <p>Вы получаете GDPS с названием <b>"{srv.name||"Безымянный"}"</b> с тарифом <b>{tariffs[srv.tariff].Title}</b> по цене <b>{tariffs[srv.tariff].PriceRUB}р</b>.
+                    {tariffs[srv.tariff] && <p>Вы получаете GDPS с названием <b>{srv.name||"Безымянный"}</b> с тарифом <b>{tariffs[srv.tariff].Title}</b> по цене <b>{tariffs[srv.tariff].PriceRUB}р</b>.
                     А именно возможность иметь {tariffs[srv.tariff].Players===-1?"∞":tariffs[srv.tariff].Players} игроков, {tariffs[srv.tariff].Levels===-1?"∞":tariffs[srv.tariff].Levels} уровней. <br/><br/> Функионал в панели: настройка сундуков,
                         {tariffs[srv.tariff].ACL&&" ACL,"}{tariffs[srv.tariff].Shops&&" магазины,"}{tariffs[srv.tariff].Roles&&" удобная настройка ролей,"}{tariffs[srv.tariff].CustomChests&&" кастомные сундуки для ролей,"}
                         {tariffs[srv.tariff].Modules&&" модули ядра,"}{tariffs[srv.tariff].Backups&&" резервные копии,"}{tariffs[srv.tariff].Logs&&" логи,"}{tariffs[srv.tariff].Levelpacks&&" удобная настройка маппаков и гаунтлетов,"}

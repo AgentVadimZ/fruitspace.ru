@@ -236,7 +236,7 @@ export default function MusicGD(props) {
                 {backdrop==="add-ng" && <div className={styles.BackdropBox} onClick={(e)=>e.stopPropagation()}>
                     <h3>💬 Ссылки на медиа</h3>
                     <p>Инвайт для Discord сервера генерируйте <b style={{color:"var(--primary-color)"} }>бессрочным</b></p>
-                    <FruitTextField fullWidth label="Паблик ВКонтакте" value={settings.description.vk||''}
+                    <FruitThinField fullWidth label="Паблик ВКонтакте" value={settings.description.vk||''}
                                     onChange={(evt)=>setSettings({...settings, description: {
                                             ...settings.description, vk: evt.target.value
                                         }})}
@@ -257,7 +257,7 @@ export default function MusicGD(props) {
                                             </InputAdornment>
                                         )
                                     }}/>
-                    <FruitTextField fullWidth label="Сервер Discord" value={settings.description.discord||''}
+                    <FruitThinField fullWidth label="Сервер Discord" value={settings.description.discord||''}
                                     onChange={(evt)=>setSettings({...settings, description: {
                                             ...settings.description, discord: evt.target.value
                                         }})}
@@ -317,3 +317,4 @@ const FruitThinField = styled(TextField)({
         color: "white",
     },
 });
+
