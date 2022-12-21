@@ -20,6 +20,7 @@ import {useCookies} from "react-cookie";
 import {Router} from "next/router";
 import PayBox from "../../components/Panel/PayBox";
 import Link from "next/link";
+import useEffectOnce from "../../components/Hooks";
 
 
 export default function Billing(props) {
@@ -28,6 +29,10 @@ export default function Billing(props) {
     const [cookies, setCookie, delCookie] = useCookies(["token"])
 
     const [transactions, setTransactions] = useState([])
+
+    useEffectOnce(()=>{
+        toast.dismiss()
+    })
 
     useEffect(()=>{
         fetch("https://api.fruitspace.one/v1/user/payments",

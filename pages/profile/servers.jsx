@@ -13,6 +13,7 @@ import {useRecoilState} from "recoil";
 import {UserState} from "../../states/user";
 import {useCookies} from "react-cookie";
 import useEffectOnce from "../../components/Hooks";
+import toast from "react-hot-toast";
 
 
 export default function Servers(props) {
@@ -28,6 +29,10 @@ export default function Servers(props) {
         gd: [],
         mc: [],
         gta: []
+    })
+
+    useEffectOnce(()=>{
+        toast.dismiss()
     })
 
     useEffectOnce(()=>{

@@ -14,6 +14,7 @@ import toast, {Toaster} from "react-hot-toast";
 import {useRouter} from "next/router";
 import {useCookies} from "react-cookie";
 import ParseError from "../../components/ErrParser";
+import useEffectOnce from "../../components/Hooks";
 
 
 
@@ -35,6 +36,10 @@ export default function Login(progs) {
         password: "",
         hCaptchaToken: "",
         showPassword: false
+    })
+
+    useEffectOnce(()=>{
+        toast.dismiss()
     })
 
 
