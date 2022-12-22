@@ -282,7 +282,7 @@ export default function SettingsGD() {
                                         Музыка FruitSpace</p>
                                     <FruitSwitch checked={settings.spaceMusic} onChange={(e, val)=>setSettings({
                                         ...settings, spaceMusic: val,
-                                    })} />
+                                    })} disabled={!!srv.isSpaceMusic} />
                                 </div>
                             }
                             <fieldset className={styles.SettingsFieldset}>
