@@ -33,6 +33,7 @@ import ReactPlayer from "react-player";
 import vkLogo from "../../../../components/assets/social/vkontakte.png";
 import DeleteIcon from "@mui/icons-material/Delete";
 import discordLogo from "../../../../components/assets/social/discord.png";
+import {LoadingButton} from "@mui/lab";
 
 export default function MusicGD(props) {
     const [srv, setSrv] = useRecoilState(GDServer)
@@ -55,6 +56,13 @@ export default function MusicGD(props) {
     const [page, setPage] = useState(0)
     const [search, setSearch] = useState("")
     const [backdrop, setBackdrop] = useState("none")
+    const [loading, setLoading] = useState(false)
+    const [musUrl, setMusUrl] = useState({
+        ng: "", yt: "", dz: "", vk: "", db: ""
+    })
+    const [musUploadData, setMusUploadData] = useState({
+        id: 0, name: "", artist: ""
+    })
     const formatTime = (value)=>{
         const minute = Math.floor(value / 60);
         const secondLeft = value - minute * 60;
@@ -83,6 +91,30 @@ export default function MusicGD(props) {
     }
 
 
+    const addMusic = (type) => {
+        let url=""
+        switch (type) {
+            case "ng": url=musUrl.ng; break;
+            case "yt": url=musUrl.yt; break;
+            case "dz": url=musUrl.dz; break;
+            case "vk": url=musUrl.vk; break;
+            case "db": url=musUrl.db; break;
+        }
+        setLoading(true)
+        fetch("https://api.fruitspace.one/v1/manage/gd/add_music",
+            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
+                body: JSON.stringify({id: srv.srvid, type: type, url: url})}).then(resp=>resp.json()).then((resp)=>{
+            if(resp.status==="ok") {
+                setMusUploadData({id: resp.music.id, name: resp.music.name, artist: resp.music.artist})
+            }else{
+                setMusUploadData({id: resp.error})
+                console.error(resp)
+            }
+            setLoading(false)
+        })
+    }
+
+
 
     useEffect(()=>{
         srv.srvid&&searchMusic()
@@ -102,11 +134,11 @@ export default function MusicGD(props) {
                     <div className={styles.MusicSliderSelector}>
                         <AddCircleIcon />
                         <KeyboardArrowRightIcon />
-                        <img src={LogoNG.src} />
-                        {srv.tariffConfig && srv.tariffConfig.Music.YouTube && <img src={LogoYT.src} /> }
-                        {srv.tariffConfig && srv.tariffConfig.Music.Deezer &&<img src={LogoDZ.src} /> }
-                        {srv.tariffConfig && srv.tariffConfig.Music.VK &&<img src={LogoVK.src} /> }
-                        {srv.tariffConfig && srv.tariffConfig.Music.Files &&<img src={LogoDBox.src} /> }
+                        <img src={LogoNG.src} onClick={()=>setBackdrop("add-ng")} />
+                        {srv.tariffConfig && srv.tariffConfig.Music.YouTube && <img src={LogoYT.src} onClick={()=>setBackdrop("add-yt")} /> }
+                        {srv.tariffConfig && srv.tariffConfig.Music.Deezer &&<img src={LogoDZ.src} onClick={()=>setBackdrop("add-dz")} /> }
+                        {srv.tariffConfig && srv.tariffConfig.Music.VK &&<img src={LogoVK.src} onClick={()=>setBackdrop("add-vk")} /> }
+                        {srv.tariffConfig && srv.tariffConfig.Music.Files &&<img src={LogoDBox.src} onClick={()=>setBackdrop("add-db")} /> }
                     </div>
                     <span className={styles.SliderDelimiter} />
                     <div className={styles.MusicSliderPlayer}>
@@ -233,56 +265,110 @@ export default function MusicGD(props) {
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={backdrop!="none"} onClick={()=>setBackdrop("none")}>
-                {backdrop==="add-ng" && <div className={styles.BackdropBox} onClick={(e)=>e.stopPropagation()}>
-                    <h3>💬 Ссылки на медиа</h3>
-                    <p>Инвайт для Discord сервера генерируйте <b style={{color:"var(--primary-color)"} }>бессрочным</b></p>
-                    <FruitThinField fullWidth label="Паблик ВКонтакте" value={settings.description.vk||''}
-                                    onChange={(evt)=>setSettings({...settings, description: {
-                                            ...settings.description, vk: evt.target.value
-                                        }})}
-                                    placeholder="fruit_space"
-                                    InputProps={{
-                                        startAdornment: (
-                                            <InputAdornment position="start"><IconButton>
-                                                <img src={vkLogo.src} className={styles.adornments}/>
-                                            </IconButton><p>vk.com/</p></InputAdornment>
-                                        ),
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton edge="end" onClick={()=>{setSettings({...settings, description: {
-                                                        ...settings.description, vk: ""
-                                                    }})}}>
-                                                    <DeleteIcon className={styles.redsvg}/>
-                                                </IconButton>
-                                            </InputAdornment>
-                                        )
-                                    }}/>
-                    <FruitThinField fullWidth label="Сервер Discord" value={settings.description.discord||''}
-                                    onChange={(evt)=>setSettings({...settings, description: {
-                                            ...settings.description, discord: evt.target.value
-                                        }})}
-                                    placeholder="fruitspace"
-                                    InputProps={{
-                                        startAdornment: (
-                                            <InputAdornment position="start"><IconButton>
-                                                <img src={discordLogo.src} className={styles.adornments}/>
-                                            </IconButton><p>discord.gg/</p></InputAdornment>
-                                        ),
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton edge="end" onClick={()=>{setSettings({...settings, description: {
-                                                        ...settings.description, discord: ""
-                                                    }})}}>
-                                                    <DeleteIcon className={styles.redsvg}/>
-                                                </IconButton>
-                                            </InputAdornment>
-                                        )
-                                    }}/>
+                {backdrop==="add-ng" && <div className={styles.BackdropBox} style={{minWidth:"20rem",padding:".5rem"}} onClick={(e)=>e.stopPropagation()}>
+                    <div className={styles.UploadMusicBox}>
+                        <img src={LogoNG.src} />
+                        <h3>NewGrounds</h3>
+                    </div>
+                    <FruitThinField fullWidth label="Ссылка на трек или ID" value={musUrl.ng||''}
+                                    onChange={(evt)=>setMusUrl({...musUrl,ng:evt.target.value})} />
+                    <p style={{textAlign:"center"}}>Или используйте <span className={styles.CodeBlock}>hal:ng:&lt;ID&gt;</span> в БД</p>
+                    {musUploadData.id!==0 && <div className={styles.UploadTrackBox}>
+                        <div>
+                            <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg} style={{marginRight:"1rem", height:"3rem"}}/>
+                            <h3>ID: {musUploadData.id}</h3>
+                        </div>
+                        <p>{musUploadData.name} — {musUploadData.artist}</p>
+                    </div>}
                     <div className={styles.CardBottom}>
-                        <Button variant="contained" className={styles.cardButton}
-                                onClick={()=>setBackdrop("none")}>Готово</Button>
+                        <LoadingButton loading={loading} variant="contained" className={styles.cardButton} style={{width:"100%",margin:"0"}}
+                                       onClick={()=>addMusic("ng")}>Загрузить</LoadingButton>
                     </div>
                 </div>}
+
+                {backdrop==="add-yt" && <div className={styles.BackdropBox} style={{minWidth:"20rem",padding:".5rem"}} onClick={(e)=>e.stopPropagation()}>
+                    <div className={styles.UploadMusicBox}>
+                        <img src={LogoYT.src} />
+                        <h3>YouTube</h3>
+                    </div>
+                    <FruitThinField fullWidth label="Ссылка на видео или ID" value={musUrl.yt||''}
+                                    onChange={(evt)=>setMusUrl({...musUrl,yt:evt.target.value})} />
+                    <p style={{textAlign:"center"}}>Или используйте <span className={styles.CodeBlock}>hal:yt:&lt;ID&gt;</span> в БД</p>
+                    {musUploadData.id!==0 && <div className={styles.UploadTrackBox}>
+                        <div>
+                            <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg} style={{marginRight:"1rem", height:"3rem"}}/>
+                            <h3>ID: {musUploadData.id}</h3>
+                        </div>
+                        <p>{musUploadData.name} — {musUploadData.artist}</p>
+                    </div>}
+                    <div className={styles.CardBottom}>
+                        <LoadingButton loading={loading} variant="contained" className={styles.cardButton} style={{width:"100%",margin:"0"}}
+                                       onClick={()=>addMusic("yt")}>Загрузить</LoadingButton>
+                    </div>
+                </div>}
+
+                {backdrop==="add-dz" && <div className={styles.BackdropBox} style={{minWidth:"20rem",padding:".5rem"}} onClick={(e)=>e.stopPropagation()}>
+                    <div className={styles.UploadMusicBox}>
+                        <img src={LogoDZ.src} />
+                        <h3>Deezer</h3>
+                    </div>
+                    <FruitThinField fullWidth label="Ссылка на трек или ID" value={musUrl.dz||''}
+                                    onChange={(evt)=>setMusUrl({...musUrl,dz:evt.target.value})} />
+                    <p style={{textAlign:"center"}}>Или используйте <span className={styles.CodeBlock}>hal:dz:&lt;ID&gt;</span> в БД</p>
+                    {musUploadData.id!==0 && <div className={styles.UploadTrackBox}>
+                        <div>
+                            <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg} style={{marginRight:"1rem", height:"3rem"}}/>
+                            <h3>ID: {musUploadData.id}</h3>
+                        </div>
+                        <p>{musUploadData.name} — {musUploadData.artist}</p>
+                    </div>}
+                    <div className={styles.CardBottom}>
+                        <LoadingButton loading={loading} variant="contained" className={styles.cardButton} style={{width:"100%",margin:"0"}}
+                                       onClick={()=>addMusic("dz")}>Загрузить</LoadingButton>
+                    </div>
+                </div>}
+
+                {backdrop==="add-vk" && <div className={styles.BackdropBox} style={{minWidth:"20rem",padding:".5rem"}} onClick={(e)=>e.stopPropagation()}>
+                    <div className={styles.UploadMusicBox}>
+                        <img src={LogoVK.src} />
+                        <h3>VK</h3>
+                    </div>
+                    <p style={{textAlign:"center"}}>Загрузить музыку можно будет через бота</p>
+                    <p style={{textAlign:"center"}}>Или используйте <span className={styles.CodeBlock}>hal:vk:&lt;ID&gt;</span> в БД</p>
+                    {musUploadData.id!==0 && <div className={styles.UploadTrackBox}>
+                        <div>
+                            <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg} style={{marginRight:"1rem", height:"3rem"}}/>
+                            <h3>ID: {musUploadData.id}</h3>
+                        </div>
+                        <p>{musUploadData.name} — {musUploadData.artist}</p>
+                    </div>}
+                    <div className={styles.CardBottom}>
+                        <LoadingButton loading={loading} variant="contained" className={styles.cardButton} style={{width:"100%",margin:"0"}}
+                                       onClick={()=>addMusic("vk")} disabled>Загрузить</LoadingButton>
+                    </div>
+                </div>}
+
+                {backdrop==="add-db" && <div className={styles.BackdropBox} style={{minWidth:"20rem",padding:".5rem"}} onClick={(e)=>e.stopPropagation()}>
+                    <div className={styles.UploadMusicBox}>
+                        <img src={LogoDBox.src} />
+                        <h3>Dropbox</h3>
+                    </div>
+                    <FruitThinField fullWidth label="Ссылка на mp3 файл" value={musUrl.db||''}
+                                    onChange={(evt)=>setMusUrl({...musUrl,db:evt.target.value})} />
+                    <p style={{textAlign:"center"}}>Или используйте <span className={styles.CodeBlock}>&lt;URL&gt;</span> в БД</p>
+                    {musUploadData.id!==0 && <div className={styles.UploadTrackBox}>
+                        <div>
+                            <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg} style={{marginRight:"1rem", height:"3rem"}}/>
+                            <h3>ID: {musUploadData.id}</h3>
+                        </div>
+                        <p>{musUploadData.name} — {musUploadData.artist}</p>
+                    </div>}
+                    <div className={styles.CardBottom}>
+                        <LoadingButton loading={loading} variant="contained" className={styles.cardButton} style={{width:"100%",margin:"0"}}
+                                       onClick={()=>addMusic("db")}>Загрузить</LoadingButton>
+                    </div>
+                </div>}
+
             </Backdrop>
         </>
     )

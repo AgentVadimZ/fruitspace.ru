@@ -14,7 +14,7 @@ const nextConfig = {
   },
   headers: async ()=>[
     {
-      source: '/manage/gd/:srv*',
+      source: '/:path*{/}?',
       headers: [
         {
           key: 'Referrer-Policy',

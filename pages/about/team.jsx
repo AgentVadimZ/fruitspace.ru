@@ -32,10 +32,10 @@ export default function Team(props) {
                         {/*<TeamMemberCard name="Flowi" position="???" dialogue={[*/}
                         {/*    "..."*/}
                         {/*]} img="https://media.discordapp.net/attachments/949684545505091617/1052209127675396166/flowi-1.webp"/>*/}
-                    <TeamMemberCard name="Mirvis" position="Артем" dialogue={[
+                    <TeamMemberCard name="Mirvis" position="Вячеслав" dialogue={[
                             "Это Мирвис 😺",
                             "Да, это я",
-                            "← Он нам классные статьи пишет и выпускает посты в ВК",
+                            "← Он нам выпускает посты в ВК и админит в Discord",
                             "Ага",
                             "Круто"
                         ]} img="https://media.discordapp.net/attachments/949684545505091617/1052208025273892884/Screenshot_2022-12-13-15-58-48-28_92460851df6f172a4592fca41cc2d2e6.jpg"/>

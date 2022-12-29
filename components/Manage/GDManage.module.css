@@ -403,6 +403,36 @@ img.adornments {
     margin: 0 .5rem;
 }
 
+
+
+
+
+.UploadMusicBox {
+    display: flex;
+    align-items: center;
+    margin: 0 0 1rem 0;
+}
+
+.UploadMusicBox img {
+    height: 4rem;
+    border-radius: 6px;
+    margin-right: .5rem;
+}
+
+.UploadTrackBox {
+    border-radius: 6px;
+    background-color: var(--btn-color);
+}
+.UploadTrackBox > div {
+    display: flex;
+    align-items: center;
+    margin: 0 .5rem;
+}
+.UploadTrackBox > p {
+    text-align: center;
+    margin: 1rem;
+}
+
 @media screen and (max-width: 720px){
     .CardGrid {
         width: 100%;
