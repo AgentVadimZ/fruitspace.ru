@@ -35,7 +35,8 @@ export default function Login(progs) {
         surname: "",
         password: "",
         hCaptchaToken: "",
-        showPassword: false
+        showPassword: false,
+        lang: "ru"  //! change in .one version to en
     })
 
     useEffectOnce(()=>{
@@ -91,6 +92,32 @@ export default function Login(progs) {
             setCookie("token",resp.token,
                 {path:"/",expires:new Date(new Date().getTime()+(1000*60*60*24*30)), secure:true})
             setTimeout(()=>router.push("/profile/"),1000)
+        }else{
+            toast.error("Произошла ошибка: "+ParseError(resp.message), {
+                duration: 10000,
+                style: {
+                    color: "white",
+                    backgroundColor: "var(--btn-color)"
+                }
+            })
+            hcaptcha.reset()
+        }
+        setLoading(false)
+    }
+
+    const resetPassword = async ()=> {
+        setLoading(true)
+        let resp = await fetch("https://api.fruitspace.one/v1/auth/recover", {
+            method: 'POST', body: JSON.stringify(formData), credentials: "include"
+        }).then(r => r.json())
+        if (resp.status==="ok") {
+            toast.success("Пароль успешно сброшен. Проверьте почту", {
+                duration: 1000,
+                style: {
+                    color: "white",
+                    backgroundColor: "var(--btn-color)"
+                }
+            })
         }else{
             toast.error("Произошла ошибка: "+ParseError(resp.message), {
                 duration: 10000,
@@ -165,7 +192,7 @@ export default function Login(progs) {
                             })}
                             theme="dark"
                         />
-                        <LoadingButton loading={loading} className={styles.formButton} onClick={(regMode?register:login)}>
+                        <LoadingButton loading={loading} className={styles.formButton} onClick={(regMode?register:(forgotPass?resetPassword:login))}>
                             {regMode?"Зарегистрироваться":"Войти"}
                         </LoadingButton>
                         { !forgotPass && <p style={{margin:".5rem"}}>{regMode?"Уже есть аккаунт?":"Нет аккаунта?"}
