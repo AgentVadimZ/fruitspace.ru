@@ -29,9 +29,11 @@ export default function Team(props) {
                             "Не смешно",
                             "Смешно"
                         ]} img="https://media.discordapp.net/attachments/949684545505091617/1052206376027439104/MemHouse.webp"/>
-                        {/*<TeamMemberCard name="Flowi" position="???" dialogue={[*/}
-                        {/*    "..."*/}
-                        {/*]} img="https://media.discordapp.net/attachments/949684545505091617/1052209127675396166/flowi-1.webp"/>*/}
+                        <TeamMemberCard name="Flowi" position="???" dialogue={[
+                            "Как успехи с ботом?",
+                            "Нуууу##v:https://cdn.discordapp.com/attachments/1044208028452409375/1058667798194307093/discord_bug_numbrer_on1.mp4",
+                            "Ты сможешь"
+                        ]} img="https://cdn.discordapp.com/avatars/685774766262452264/ef779841dcbc48ee824c721231c93e77.webp"/>
                     <TeamMemberCard name="Mirvis" position="Вячеслав" dialogue={[
                             "Это Мирвис 😺",
                             "Да, это я",
@@ -39,6 +41,16 @@ export default function Team(props) {
                             "Ага",
                             "Круто"
                         ]} img="https://media.discordapp.net/attachments/949684545505091617/1052208025273892884/Screenshot_2022-12-13-15-58-48-28_92460851df6f172a4592fca41cc2d2e6.jpg"/>
+                        <TeamMemberCard name="Wilson" position="Артем" dialogue={[
+                            "Техсаппортатор-3000?",
+                            "##g:https://images-ext-1.discordapp.net/external/4Duyxm-m5Mea236PNvF3SNAYOxF_WjZJXFbyjl96m6k/https/media.tenor.com/exRZ3es-yb8AAAPo/maxwell-maxwell-cat.mp4",
+                            "Вопросов не имею"
+                        ]} img="https://cdn.discordapp.com/avatars/907548853694234675/549c32d28b6e351026f494803b2f8248.webp"/>
+                        {/*<TeamMemberCard name="Leapher" position="Иван" dialogue={[*/}
+                        {/*    "Как успехи с ботом?",*/}
+                        {/*    "Нуууу##v:https://cdn.discordapp.com/attachments/1044208028452409375/1058667798194307093/discord_bug_numbrer_on1.mp4",*/}
+                        {/*    "Ты сможешь"*/}
+                        {/*]} img="https://cdn.discordapp.com/avatars/534337521551671306/b8fe367643e5deb23e70ede5f48cd914.webp"/>*/}
                     </div>
                 </div>
             </div>

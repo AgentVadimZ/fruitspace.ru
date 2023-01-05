@@ -64,3 +64,20 @@
     max-width: 70%;
 }
 
+.attachImg {
+    margin-top:.5rem;
+    border-radius: 6px;
+    width: 100%;
+}
+
+.attachVid {
+    margin-top:.5rem;
+    border-radius: 6px;
+    width: 100%;
+    transition: filter 300ms ease;
+}
+.attachVid:hover {
+    cursor: pointer;
+    filter: brightness(0.75);
+
+}
