@@ -90,9 +90,9 @@ export default function SettingsGD() {
         srvname: "",
         version: "2.1",
 
-        windows: true,
-        android: true,
-        ios: true,
+        windows: false,
+        android: false,
+        ios: false,
         macos: false,
 
         icon: "gd_default.png",
