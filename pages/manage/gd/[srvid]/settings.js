@@ -50,6 +50,7 @@ import {Tab, TabsList} from "../../../../components/Global/TinyTab";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAndroid, faApple, faWindows} from "@fortawesome/free-brands-svg-icons";
 import {useCookies} from "react-cookie";
+import ParseError from "../../../../components/ErrParser";
 
 
 const aligns = ["left","center","right"]
@@ -85,18 +86,20 @@ export default function SettingsGD() {
     })
 
     const [buildlab, setBuildlab] = useState({
+        id: "",
         srvname: "",
         version: "2.1",
+
         windows: true,
         android: true,
         ios: true,
-        macos: true,
+        macos: false,
+
         icon: "gd_default.png",
         iconObj: null,
         iconData: null,
         textures: "default",
         textureObj: null,
-        refrigerator: true
     })
 
     useEffect(()=>{
@@ -118,7 +121,6 @@ export default function SettingsGD() {
         })
     },[srv])
 
-
     const ResetDBPassword = ()=> {
         fetch("https://api.fruitspace.one/v1/manage/gd/dbreset",
             {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
@@ -137,9 +139,6 @@ export default function SettingsGD() {
         })
         setBackdrop("none")
     }
-
-
-
     const copyValueR=()=>{
         toast.success("Скопировано", {
             duration: 1000,
@@ -149,9 +148,8 @@ export default function SettingsGD() {
             }
         })
     }
-
     const saveData = ()=>{
-        console.log(settings)
+        toast.dismiss("save")
         fetch("https://api.fruitspace.one/v1/manage/gd/set_settings",
             {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
                 body: JSON.stringify({...settings,id:srv.srvid})}).then(resp=>resp.json()).then((resp)=>{
@@ -166,6 +164,76 @@ export default function SettingsGD() {
                         backgroundColor: "var(--btn-color)"
                     }})
             }
+        }).catch(()=>toast.error("Не удалось сохранить настройки",{style: {
+                color: "white",
+                backgroundColor: "var(--btn-color)"
+            }}))
+    }
+
+    const updateIcon = async ()=> {
+        var datax = new FormData()
+        datax.append("id", srv.srvid)
+        datax.append("icon", buildlab.iconObj)
+        let cl = await fetch("https://api.fruitspace.one/v1/manage/gd/update_icon",
+            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
+                body: datax}).then(resp=>resp.json()).catch(()=>{})
+
+                if(cl.status==="ok") {
+                    toast.success("Логотип обновлен успешно", {
+                        duration: 1000,
+                        style: {
+                            color: "white",
+                            backgroundColor: "var(--btn-color)"
+                        }
+                    })
+                }else{
+                    toast.error("Произошла ошибка: "+ParseError(cl.message), {
+                        duration: 10000,
+                        style: {
+                            color: "white",
+                            backgroundColor: "var(--btn-color)"
+                        }
+                    })
+                }
+                return cl.status==="ok"
+    }
+    const goBuildLab = async () => {
+        let loader = toast.loading("Таак, собираем ваши установщики...",{style: {
+                color: "white",
+                backgroundColor: "var(--btn-color)"
+            }})
+
+        let rc = true
+        if (buildlab.icon==="custom") rc = await updateIcon()
+        if (rc===false) toast.dismiss(loader)
+
+        fetch("https://api.fruitspace.one/v1/manage/gd/buildlab",
+            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
+                body: JSON.stringify({
+                    ...buildlab,
+                    iconData:"",
+                    id: srv.srvid,
+                    iconObj: "",
+                    textureObj: ""
+                })}).then(resp=>resp.json()).then((resp)=>{
+                    toast.dismiss(loader)
+            if(resp.status==="ok"){
+                toast.success("Все готово, скоро ваши установщики будут доступны для всех",{style: {
+                        color: "white",
+                        backgroundColor: "var(--btn-color)"
+                    }})
+            }else{
+                toast.error("Что-то пошло не так: "+resp.error,{style: {
+                        color: "white",
+                        backgroundColor: "var(--btn-color)"
+                    }})
+            }
+        }).catch(()=>{
+            toast.dismiss(loader)
+            toast.error("Проблемы с подключением",{style: {
+                color: "white",
+                backgroundColor: "var(--btn-color)"
+            }})
         })
     }
 
@@ -520,7 +588,7 @@ export default function SettingsGD() {
                 {backdrop==="buildlab" && <div className={styles.BackdropBox}
                                                style={{position:"relative",padding:"0 .5rem .5rem .5rem "}} onClick={(e)=>e.stopPropagation()}>
                         <TabsUnstyled value={buildlab.version} onChange={(e,val)=>setBuildlab({
-                            ...buildlab, version: val
+                            ...buildlab, version: val, ios: (val==="2.2"?false:buildlab.ios)
                         })} className={styles.floatSelector}>
                             <TabsList>
                                 <Tab value="2.1">2.1</Tab>
@@ -533,7 +601,6 @@ export default function SettingsGD() {
                         <div><h5>FruitSpace</h5><h3>GeometryLab™</h3></div>
                     </h3>
                     <div className={styles.buildlabTop}>
-                        {/*<img src={"https://cdn.fruitspace.one/server_icons/"+srv.icon} />*/}
                         <img src={srvIcon} />
                         <input type="file" accept=".png, .jpg, .jpeg" hidden ref={uploadRef} onChange={changeIcon}/>
                         <div>
@@ -543,7 +610,7 @@ export default function SettingsGD() {
                             })} style={{marginBottom: ".5rem"}} InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
-                                        <IconButton edge="end" onClick={()=>{setBuildlab({...buildlab, srvname: srv.srvname})}}>
+                                        <IconButton edge="end" onClick={()=>{setBuildlab({...buildlab, srvname: ""})}}>
                                             <Restore/>
                                         </IconButton>
                                     </InputAdornment>
@@ -590,7 +657,7 @@ export default function SettingsGD() {
                     {buildlab.version==="2.2"&& <Alert severity="warning" style={{backgroundColor:"#ed6c02",color:"#fff",marginTop:"1rem"}}>
                         Версия 2.2 не является официальной, поэтому может содержать баги</Alert>}
 
-                    {buildlab.textures!="default"&& <Alert severity="warning" style={{backgroundColor:"#ed6c02",color:"#fff",marginTop:"1rem"}}>
+                    {buildlab.textures!=="default"&& <Alert severity="warning" style={{backgroundColor:"#ed6c02",color:"#fff",marginTop:"1rem"}}>
                         Использование текстурпаков для Android приводит к большому размеру игры</Alert>}
 
                     {srv.tariffConfig && srv.tariffConfig.GDLab.Textures
@@ -610,10 +677,7 @@ export default function SettingsGD() {
 
                     <div className={styles.CardBottom} style={{margin:".5rem 0 0 0"}}>
                         <Button variant="contained" className={`${styles.SlimButton} ${styles.btnSuccess}`}
-                                onClick={()=>toast.success("Сделаем вид, что loading билд",{style: {
-                                        color: "white",
-                                        backgroundColor: "var(--btn-color)"
-                                    }})}>Запуск сборки</Button>
+                                onClick={goBuildLab}>Запуск сборки</Button>
                         <Button variant="contained" className={styles.SlimButton}
                                 onClick={()=>setBackdrop("none")}>Отмена</Button>
                     </div>
