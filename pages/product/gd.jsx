@@ -1,7 +1,6 @@
 import GlobalHead from "../../components/GlobalHead";
 import GlobalNav from "../../components/GlobalNav";
 import styles from "../../components/Index.module.css";
-import indexStyles from "../../components/Index.module.css"
 import Footer from "../../components/Global/Footer";
 import BannerGD from "../../components/assets/BannerGD.png"
 import ProductHeader from "../../components/Global/ProductHeader";
@@ -33,8 +32,15 @@ import LanguageIcon from "@mui/icons-material/Language";
 import DesktopMacIcon from '@mui/icons-material/DesktopMac';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
+import PersonIcon from '@mui/icons-material/Person';
 
 import GhostIcon from "../../components/assets/icons/ghost.svg"
+import FeatureCard from "../../components/Cards/FeatureCard";
+
+import FeatureCoreImg from "../../components/assets/features/core_3d-sm.png"
+import FeatureShieldImg from "../../components/assets/features/shield_3d-sm.png"
+import FeatureSetupImg from "../../components/assets/features/autosetup_3d-sm.png"
+import FeatureMusicImg from "../../components/assets/features/music_3d-sm.png"
 
 
 export default function GD(props) {
@@ -51,23 +57,15 @@ export default function GD(props) {
                 {/*Insert Halogen Counter*/}
 
                 <h2 style={{textAlign:'center',margin:"3rem 0",color:"white"}}>Тарифы</h2>
-                <div className={indexStyles.productCardGrid} id="cloud">
+                <div className={styles.productCardGrid} id="cloud">
                     <ProductCard title="Press Start" btnText="Бесплатно*" link="/product/order/gd?t=1">
                         <ListItem>
-                            <ListItemIcon><AllInclusiveIcon/></ListItemIcon>
-                            <ListItemText primary="Неограниченное количество игроков/уровней"/>
+                            <ListItemIcon><PersonIcon/></ListItemIcon>
+                            <ListItemText primary="100 игроков/ 500 уровней"/>
                         </ListItem>
                         <ListItem>
                             <ListItemIcon><MusicNoteIcon/></ListItemIcon>
                             <ListItemText primary="Музыка из NewGrounds без ограничений"/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><SmartToyIcon/></ListItemIcon>
-                            <ListItemText primary="AntiDDoS / AntiBot"/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><GhostIcon style={{height:"1.5em"}}/></ListItemIcon>
-                            <ListItemText primary="Быстрое ядро GhostCore"/>
                         </ListItem>
                         <ListItem>
                             <ListItemIcon><CloseIcon/></ListItemIcon>
@@ -82,14 +80,6 @@ export default function GD(props) {
                         <ListItem>
                             <ListItemIcon><MusicNoteIcon/></ListItemIcon>
                             <ListItemText primary="Музыка из NewGrounds и YouTube"/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><SmartToyIcon/></ListItemIcon>
-                            <ListItemText primary="AntiDDoS / AntiBot"/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><GhostIcon style={{height:"1.5em"}}/></ListItemIcon>
-                            <ListItemText primary="Быстрое ядро GhostCore"/>
                         </ListItem>
                         <ListItem>
                             <ListItemIcon><PrecisionManufacturingIcon/></ListItemIcon>
@@ -109,35 +99,64 @@ export default function GD(props) {
                             <ListItemIcon><MusicNoteIcon/></ListItemIcon>
                             <ListItemText primary="Музыка из NewGrounds, YouTube, Deezer, VK и из файлов"/>
                         </ListItem>
+                        {/*<ListItem>*/}
+                        {/*    <ListItemIcon><SmartToyIcon/></ListItemIcon>*/}
+                        {/*    <ListItemText primary="AntiDDoS / AntiBot"/>*/}
+                        {/*</ListItem>*/}
+                        {/*<ListItem>*/}
+                        {/*    <ListItemIcon><GhostIcon style={{height:"1.5em"}}/></ListItemIcon>*/}
+                        {/*    <ListItemText primary="Быстрое ядро GhostCore"/>*/}
+                        {/*</ListItem>*/}
                         <ListItem>
-                            <ListItemIcon><SmartToyIcon/></ListItemIcon>
-                            <ListItemText primary="AntiDDoS / AntiBot"/>
+                            <ListItemIcon><PrecisionManufacturingIcon/></ListItemIcon>
+                            <ListItemText primary="Конфигуратор установщиков: иконки, текстурпаки и 2.2"/>
                         </ListItem>
                         <ListItem>
-                            <ListItemIcon><GhostIcon style={{height:"1.5em"}}/></ListItemIcon>
-                            <ListItemText primary="Быстрое ядро GhostCore"/>
+                            <ListItemIcon><DesktopMacIcon/></ListItemIcon>
+                            <ListItemText primary="Удобная и функциональная панель"/>
                         </ListItem>
                         <ListItem>
                             <ListItemIcon><CloudDoneIcon/></ListItemIcon>
                             <ListItemText primary="Автоматические резервные копии"/>
                         </ListItem>
                         <ListItem>
-                            <ListItemIcon><PrecisionManufacturingIcon/></ListItemIcon>
-                            <ListItemText primary="Конфигуратор установщиков: иконки, текстурпаки и 2.2"/>
-                        </ListItem>
-                        <ListItem>
                             <ListItemIcon><AppleIcon/></ListItemIcon>
                             <ListItemText primary="Полная поддержка iOS"/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><DesktopMacIcon/></ListItemIcon>
-                            <ListItemText primary="Удобная и функциональная панель"/>
                         </ListItem>
                     </ProductCard>
                 </div>
                 <p style={{textAlign:'center', margin:"0  1rem 1rem"}}>*Разрешен только 1 бесплатный GDPS на аккаунт</p>
 
 
+                {/*<h2 style={{textAlign:'center',margin:"3rem 0",color:"white"}} id="selfhosted">Наши преимущества</h2>*/}
+                <div className={styles.featuresCardGrid}>
+                    <FeatureCard img={FeatureCoreImg.src} title={"Ядро GhostCore"} text={<>
+                        <b>Наше собственное ядро <b style={{color:"#0d6efd"}}>GhostCore</b> поддерживает Geometry Dash 2.2</b><br/><br/>
+                        А еще кастомные роли,
+                        изменяемый размер лидербордов, поддержка различных модулей и множество других настроек определенно понравится гикам.
+                        К тому же оно написано на Go и <b style={{color:"#0d6efd"}}>быстрее Cvolton в 8-10 раз</b>
+                    </>} subtext={"Это покебол???"} />
+                    <FeatureCard img={FeatureShieldImg.src} title={"Защита от DDoS, ботов и не только"} text={<>
+                        Наш хостинг успешно отразил атаки <b className={styles.featuredText}>с пиковой мощностью 10Гбит/с</b>.
+                        Система подтверждения пользователей защищает от ботов с поддержкой решения капч, а антиспам работает
+                        благодаря анализу активности GDPS<br/><br/>
+                        Случайно стерли базу данных? Восстановите её из <b className={styles.featuredText}>автоматических резервных копий</b> за пару минут
+                    </>} subtext={"Резервные копии создаются раз в 3 дня"} />
+                    <FeatureCard img={FeatureSetupImg.src} title={"Простая настройка сервера"} text={<>
+                        <b>Забудьте про головную боль с настройкой через PHP-файлы и БД.</b><br/><br/>
+                        Используйте готовые шаблоны и удобную панель управления для создавания ролей, квестов, настройки сундуков
+                        и даже <b style={{color:"#0d6efd"}}>логотипа приватки</b>. <br/>
+                        Для игроков доступна отдельная панель, где они могут загружать музыку
+                    </>} subtext={"+ загрузка приватных серверов в разы быстрее за счет GhostLauncher"} />
+                    <FeatureCard img={FeatureMusicImg.src} title={"Наслаждайтесь музыкой"} text={<>
+                        NewGrounds без ограничений или Dropbox? Пффф...
+                        Как насчет загрузки музыки прямо из <b style={{color:"red"}}>YouTube</b> и <b style={{color:"#0d6efd"}}>ВКонтакте</b>?
+                        А может ваш любимый исполнитель доступен только на <b style={{color:"#27d263"}}>Deezer</b>?
+                        Не вопрос, превращайте видео в музыку для Geometry Dash в пару кликов!
+                    </>} subtext={"Spotify? А может лучше наш плеер в панели?"} />
+                </div>
+
+                <span className={styles.hyperSpan}></span>
                 <h2 style={{textAlign:'center',margin:"3rem 0",color:"white"}} id="selfhosted">Запустить на своем сервере</h2>
                 <p style={{textAlign:'center', margin:"0  5rem 1rem"}}>Возможно, вы захотите установить ядро на свой сервер,
                     будь то веб-хостинг или VDS. Это дает возможность более тонко настроить приватный сервер, модифицировать ядро
@@ -146,7 +165,7 @@ export default function GD(props) {
                     получить API-ключ, а поддержка 2.2 может появиться значительно позже, чем на FruitSpace. Также вы можете
                     ознакомиться со сравнительной таблицей ниже, чтобы выбрать оптимальный для вас вариант.
                 </p>
-                <TableContainer sx={{borderRadius:"12px",backgroundColor:"var(--btn-color)", width:"fit-content", maxWidth:"100%", margin:"0 auto"}} className={indexStyles.MrWhite}>
+                <TableContainer sx={{borderRadius:"12px",backgroundColor:"var(--btn-color)", width:"fit-content", maxWidth:"100%", margin:"0 auto"}} className={styles.MrWhite}>
                     <Table>
                         <TableHead>
                             <TableRow>
@@ -162,7 +181,7 @@ export default function GD(props) {
                                 <TableCell align="right"><CheckIcon/></TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell component="th" scope="row">Кастомная музыка (кроме NewGrounds)</TableCell>
+                                <TableCell component="th" scope="row">Кастомная музыка</TableCell>
                                 <TableCell align="right"><CheckIcon/></TableCell>
                                 <TableCell align="right">Через FruitSpace API</TableCell>
                             </TableRow>
