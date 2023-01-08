@@ -30,6 +30,9 @@ const ParseError = (err)=>{
         case "file": return "Ошибка чтения файла"
         case "type": return "Неверный тип файла"
         case "tr_create": return "Не удалось создать транзакцию, обратитесь в поддержку"
+        case "promo_invalid": return "Неверный промокод"
+        case "promo_expire": return "Срок действия промокода истек"
+        case "promo_limit": return "Количество использований промокода достигло своего предела"
         default: return err
     }
 }

@@ -11,6 +11,7 @@ import TabsUnstyled from "@mui/base/TabsUnstyled";
 import {LoadingButton} from "@mui/lab";
 import toast, {Toaster} from "react-hot-toast";
 import {useCookies} from "react-cookie";
+import ParseError from "../../../components/ErrParser";
 
 
 export default function Order(props) {
@@ -19,7 +20,8 @@ export default function Order(props) {
     const [srv, setSrv] = useState({
         name: "",
         tariff: router.query.t||2,
-        payDuration: "mo"
+        payDuration: "mo",
+        promocode: ""
     })
     const [tariffs,setTariffs] = useState({});
     const [loading, setLoading] = useState(false)
@@ -29,7 +31,7 @@ export default function Order(props) {
         setLoading(true)
         fetch("https://api.fruitspace.one/v1/manage/gd/new",
             {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                body: JSON.stringify({name: srv.name, tariff: parseInt(srv.tariff), duration: srv.payDuration})}).then(resp=>resp.json()).then((resp)=>{
+                body: JSON.stringify({name: srv.name, tariff: parseInt(srv.tariff), duration: srv.payDuration, promocode: srv.promocode})}).then(resp=>resp.json()).then((resp)=>{
                     setLoading(false)
                     if(resp.status==="ok") {
                 toast.success("Сервер создан",{style: {
@@ -38,7 +40,7 @@ export default function Order(props) {
                     }})
                 router.push("/profile/servers")
             }else{
-                toast.error("Не удалось создать GDPS: "+resp.error,{style: {
+                toast.error("Не удалось создать GDPS: "+ParseError(resp.error),{style: {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})
@@ -98,9 +100,16 @@ export default function Order(props) {
                         {tariffs[srv.tariff].Quests&&" удобная настройка дейли/викли и квестов,"}<br/><br/>GDLab: {tariffs[srv.tariff].GDLab.Enabled?" Доступен. Android, Windows,":" нет."} {tariffs[srv.tariff].GDLab.IOS&&" iOS,"}
                         {tariffs[srv.tariff].GDLab&&" MacOS,"}{tariffs[srv.tariff].GDLab.Icons&&" кастомная иконка,"}{tariffs[srv.tariff].GDLab&&" кастомные текстуры,"}{tariffs[srv.tariff].GDLab.V22&&" поддержка 2.2,"}<br/><br/>
                     Возможности музыки: NewGrounds,{tariffs[srv.tariff].Music.YouTube&&" YouTube,"}{tariffs[srv.tariff].Music.Deezer&&" Deezer,"}{tariffs[srv.tariff].Music.VK&&" VK,"}{tariffs[srv.tariff].Music.Files&&" Dropbox,"}</p>}
+
+
                     <div style={{display:'flex',alignItems:"center",justifyContent:"space-between",width:"100%"}}>
                         {tariffs[srv.tariff] && <p style={{padding:"1rem .5rem",borderRadius:"8px",backgroundColor:"var(--btn-color)"}}>
                             {srv.payDuration==="yr"?tariffs[srv.tariff].PriceRUB*10:tariffs[srv.tariff].PriceRUB}р/{srv.payDuration==="yr"?"год":"мес"}</p>}
+
+                        <FruitThinField label="Промокод (если есть)" type="text" variant="outlined" style={{margin:".5rem"}}
+                                        value={srv.promocode||''} onChange={(evt)=>{setSrv({
+                            ...srv, promocode: evt.target.value.toUpperCase().replaceAll(/[^a-zA-Z\d\-_]/g,'')
+                        })}} />
 
                         <LoadingButton loading={loading} className={styles.formButton} style={{width:"fit-content"}} onClick={createServer}>
                             Создать
@@ -136,5 +145,32 @@ const FruitTextField = styled(TextField)({
         color: "white",
         // backgroundColor: "var(--btn-color)",
         marginBottom: "1rem"
+    },
+});
+
+
+const FruitThinField = styled(TextField)({
+    '& label.Mui-focused': {
+        color: '#0d6efd',
+    },
+    '& .MuiInput-underline:after': {
+        borderBottomColor: 'green',
+    },
+    '& .MuiInputLabel-root[data-shrink="false"]:not(.Mui-focused)': {
+        transform: "translate(14px, 10px) scale(1)"
+    },
+    '& .MuiOutlinedInput-root': {
+        height: 40,
+        '& fieldset': {
+            borderColor: 'white !important',
+        },
+        '&:hover fieldset': {
+            borderColor: '#cacad0',
+        },
+        '&.Mui-focused fieldset': {
+            borderColor: '#0d6efd',
+        },
+        borderRadius: "8px",
+        color: "white",
     },
 });
