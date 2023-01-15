@@ -11,10 +11,12 @@ import NotificationSvg from "./assets/icons/notification.svg";
 import PersonIcon from '@mui/icons-material/Person';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import VpnKeyIcon from '@mui/icons-material/VpnKey';import StoreIcon from '@mui/icons-material/Store';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import StoreIcon from '@mui/icons-material/Store';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 import MinecraftLogo from "./assets/logos/minecraft.png"
 import GDLogo from "./assets/logos/geometrydash.png"
@@ -23,6 +25,7 @@ import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {useRecoilState} from "recoil";
 import {UserState} from "../states/user";
+import {useCookies} from "react-cookie";
 
 
 const getRegionalPostfix = (num)=> {
@@ -43,6 +46,14 @@ const getRegionalPostfix = (num)=> {
 export default function GlobalNav(props) {
 
     const [user,setUser] = useRecoilState(UserState)
+
+    const [cookies, setCookie, delCookie] = useCookies(["token"])
+    const router = useRouter()
+
+    const logout = () => {
+        delCookie("token", { path: '/' })
+        router.reload()
+    }
 
     const prettyPrint = (num)=>new Intl.NumberFormat(user.usd?'en-US':'ru-RU',
         {style: 'currency',currency: user.usd?"USD":"RUB"}).format(num).replace(/[.|,]00/g, '')
@@ -119,6 +130,7 @@ export default function GlobalNav(props) {
                     <Link href="/manage/store">
                         <DropdownItem leftIcon={<StoreIcon/>} rightIcon={<RightSvg/>}>Мои магазины</DropdownItem>
                     </Link>
+                        <DropdownItem leftIcon={<LogoutOutlinedIcon/>} onClick={()=>logout()}>Выйти</DropdownItem>
                 </DropdownMenu>
                 </NavItem>
             ): (<NavItem icon={<PersonIcon/>}>
