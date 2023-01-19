@@ -116,7 +116,7 @@ const ParseDesc=(players, levels)=>{
         default:
             str+=" игроков"
     }
-    str+=", "+levels
+    str+=" • "+levels
     let clevels=levels%10
     switch (clevels) {
         case 1:
