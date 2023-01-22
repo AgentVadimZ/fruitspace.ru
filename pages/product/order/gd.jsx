@@ -20,7 +20,7 @@ export default function Order(props) {
     const [srv, setSrv] = useState({
         name: "",
         tariff: router.query.t||2,
-        payDuration: "mo",
+        payDuration: "yr",
         promocode: ""
     })
     const [tariffs,setTariffs] = useState({});
@@ -78,7 +78,7 @@ export default function Order(props) {
                                 console.log(i,tariffs[i])
                                 return (
                                     <MenuItem key={i} value={i}>
-                                        {tariffs[i].Title} [{tariffs[i].PriceRUB}р]
+                                        {tariffs[i].Title} [{tariffs[i].PriceRUB===0?0:tariffs[i].PriceRUB-1}р]
                                     </MenuItem>
                                 )
                             })}
@@ -104,7 +104,9 @@ export default function Order(props) {
 
                     <div style={{display:'flex',alignItems:"center",justifyContent:"space-between",width:"100%"}}>
                         {tariffs[srv.tariff] && <p style={{padding:"1rem .5rem",borderRadius:"8px",backgroundColor:"var(--btn-color)"}}>
-                            {srv.payDuration==="yr"?tariffs[srv.tariff].PriceRUB*10:tariffs[srv.tariff].PriceRUB}р/{srv.payDuration==="yr"?"год":"мес"}</p>}
+                            {srv.payDuration==="yr"
+                                ?(tariffs[srv.tariff].PriceRUB===0?0:tariffs[srv.tariff].PriceRUB*10-1)
+                                :(tariffs[srv.tariff].PriceRUB===0?0:tariffs[srv.tariff].PriceRUB-1)}р/{srv.payDuration==="yr"?"год":"мес"}</p>}
 
                         <FruitThinField label="Промокод (если есть)" type="text" variant="outlined" style={{margin:".5rem"}}
                                         value={srv.promocode||''} onChange={(evt)=>{setSrv({

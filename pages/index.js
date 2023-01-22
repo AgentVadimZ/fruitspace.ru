@@ -49,7 +49,7 @@ export default function Home() {
 
                 <CarouselItem image="https://media.wired.com/photos/60f0f10db3e52be52fcdc042/master/w_1600%2Cc_limit/Minecraft_Middle_Earth_Minas_Tirith_render_SOURCE_Minecraft_Middle-Earth.png"
                               link="#" title="Создайте сервер Minecraft" text="Наши сервера прошли испытание динамитом и лаг-машинами. Играйте без лагов!" />
-                <CarouselItem image="https://i.imgur.com/8KV0PjH.jpg"
+                <CarouselItem image="https://cdn.mos.cms.futurecdn.net/HGJSsb2UnhV2xTYaa9GLGB.png"
                               link="#" title="GTA V [RAGE MP]" text="Соберитесь с друзьями в GTA On... от орбитальной пушки отойди" />
                 {/*<CarouselItem image="https://media.wired.com/photos/60f0f10db3e52be52fcdc042/master/w_1600%2Cc_limit/Minecraft_Middle_Earth_Minas_Tirith_render_SOURCE_Minecraft_Middle-Earth.png"*/}
                 {/*              link="#" title="Title" text="A sample text that goes below 4" />*/}
