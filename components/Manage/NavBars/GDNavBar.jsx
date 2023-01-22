@@ -51,11 +51,11 @@ export default function GDNavBar(props) {
                     <Tooltip title="Аналитика" placement="right" arrow open><span /></Tooltip>
                 </NavItem>
             </Link>
-            srv.tariffConfig.CustomMusic && <Link href={"/manage/gd/"+srvid+"/music"} passHref>
+            {srv.tariffConfig.CustomMusic && <Link href={"/manage/gd/"+srvid+"/music"} passHref>
                 <NavItem icon={<MusicIcon/>} acetone square active={action==="music"}>
                     <Tooltip title="Музыка" placement="right" arrow open><span /></Tooltip>
                 </NavItem>
-            </Link>
+            </Link> }
             {/* {srv.tariffConfig.Roles && <Link href={"/manage/gd/"+srvid+"/roles"}>
                 <NavItem icon={<RolesIcon/>} acetone square active={action==="roles"}>
                     <Tooltip title="Игроки и роли" placement="right" arrow open><span /></Tooltip>
