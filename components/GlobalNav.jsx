@@ -26,6 +26,8 @@ import {useRouter} from "next/router";
 import {useRecoilState} from "recoil";
 import {UserState} from "../states/user";
 import {useCookies} from "react-cookie";
+import toast from "react-hot-toast";
+import ParseError from "./ErrParser";
 
 
 const getRegionalPostfix = (num)=> {
@@ -53,6 +55,19 @@ export default function GlobalNav(props) {
     const logout = () => {
         delCookie("token", { path: '/' })
         router.reload()
+    }
+
+    const deleteNotification = (notif)=> {
+        fetch("https://api.fruitspace.one/v1/user/del_notification",
+            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
+                body: JSON.stringify({uuid: notif})}).then(()=>{
+                    let not = structuredClone(user.notifications)
+                    for (let i=0;i<not.length;i++)
+                        if(not.at(i).uuid===notif)
+                            not.splice(i,1)
+                    setUser({...user,notifications: not})
+
+        }).catch(()=>{})
     }
 
     const prettyPrint = (num)=>new Intl.NumberFormat(user.usd?'en-US':'ru-RU',
@@ -90,7 +105,7 @@ export default function GlobalNav(props) {
                     </Link>
                 </DropdownMenu>
             </NavItem>
-            <NavItem icon={<NotificationSvg className={user.notifications.length!==0&&"notifyAnimate"} />}>
+            <NavItem icon={<NotificationSvg className={user.notifications.length!==0?"notifyAnimate":""} />}>
                 <DropdownMenu centered>
                     {user.notifications.length===0? (
                         <DropdownItem leftIcon={<NotificationsOffIcon/>}>
@@ -100,7 +115,8 @@ export default function GlobalNav(props) {
                         </DropdownItem>
                     ): (
                         user.notifications.map((notification, i)=>(
-                            <DropdownItem key={i} leftIcon={<NotificationSvg/>} rightIcon={notification.target_uid!==0&&<DeleteIcon/>}>
+                            <DropdownItem key={i} leftIcon={<NotificationSvg/>} rightIcon={notification.target_uid!==0&&<DeleteIcon
+                            onClick={()=>deleteNotification(notification.uuid)}/>}>
                                 <div className={styles.MultilineItem}>
                                     {notification.title}
                                     <span>{notification.text}</span>
