@@ -61,11 +61,11 @@ export default function GDNavBar(props) {
                     <Tooltip title="Игроки и роли" placement="right" arrow open><span /></Tooltip>
                 </NavItem>
             </Link>} */}
-            {/* <Link href={"/manage/gd/"+srvid+"/chests"}>
+            <Link href={"/manage/gd/"+srvid+"/chests"}>
                 <NavItem icon={<ChestsIcon/>} acetone square active={action==="chests"}>
                     <Tooltip title="Сундуки" placement="right" arrow open><span /></Tooltip>
                 </NavItem>
-            </Link> */}
+            </Link>
             {/* {srv.tariffConfig.Quests && <Link href={"/manage/gd/"+srvid+"/quests"}>
                 <NavItem icon={<QuestsIcon/>} acetone square active={action==="quests"}>
                     <Tooltip title="Уровни и квесты" placement="right" arrow open><span /></Tooltip>

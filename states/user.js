@@ -12,8 +12,11 @@ const UserState = atom({
         shop_bal: 0,
         usd: false,
 
+        is_admin: false,
+        reflink: "",
+
         notifications: [{
-            uuid: "ababbabba",
+            uuid: "nouuid",
             target_uid: 1, // if 0 then global
             title: "title",
             text: "Max 75 sym",
