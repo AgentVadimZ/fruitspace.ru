@@ -108,12 +108,12 @@ export default function ChestsGD(props) {
                             <span>
                                 <FruitThinField label={"Минимум"} value={chestConfig.ChestSmallOrbsMin}
                                                 onChange={(evt)=>setChestConfig({...chestConfig,
-                                                    ChestSmallOrbsMin: evt.target.value.replaceAll(/[^0-9]/g,'')
+                                                    ChestSmallOrbsMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                                 })}/>
                                 <span style={{margin:".5rem"}} />
                             <FruitThinField label={"Максимум"} value={chestConfig.ChestSmallOrbsMax}
                                             onChange={(evt)=>setChestConfig({...chestConfig,
-                                                ChestSmallOrbsMax: evt.target.value.replaceAll(/[^0-9]/g,'')
+                                                ChestSmallOrbsMax: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                             })}/>
                             </span>
                         </div>
@@ -122,12 +122,12 @@ export default function ChestsGD(props) {
                             <span>
                                 <FruitThinField label={"Минимум"} value={chestConfig.ChestSmallDiamondsMin}
                                                 onChange={(evt)=>setChestConfig({...chestConfig,
-                                                    ChestSmallDiamondsMin: evt.target.value.replaceAll(/[^0-9]/g,'')
+                                                    ChestSmallDiamondsMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                                 })}/>
                                 <span style={{margin:".5rem"}} />
                             <FruitThinField label={"Максимум"} value={chestConfig.ChestSmallDiamondsMax}
                                             onChange={(evt)=>setChestConfig({...chestConfig,
-                                                ChestSmallDiamondsMax: evt.target.value.replaceAll(/[^0-9]/g,'')
+                                                ChestSmallDiamondsMax: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                             })}/>
                             </span>
                         </div>
@@ -136,12 +136,12 @@ export default function ChestsGD(props) {
                             <span>
                                 <FruitThinField label={"Минимум"} value={chestConfig.ChestSmallKeysMin}
                                                 onChange={(evt)=>setChestConfig({...chestConfig,
-                                                    ChestSmallKeysMin: evt.target.value.replaceAll(/[^0-9]/g,'')
+                                                    ChestSmallKeysMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                                 })}/>
                                 <span style={{margin:".5rem"}} />
                             <FruitThinField label={"Максимум"} value={chestConfig.ChestSmallKeysMax}
                                             onChange={(evt)=>setChestConfig({...chestConfig,
-                                                ChestSmallKeysMax: evt.target.value.replaceAll(/[^0-9]/g,'')
+                                                ChestSmallKeysMax: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                             })}/>
                             </span>
                         </div>
@@ -198,12 +198,12 @@ export default function ChestsGD(props) {
                             <span>
                                 <FruitThinField label={"Минимум"} value={chestConfig.ChestBigOrbsMin}
                                                 onChange={(evt)=>setChestConfig({...chestConfig,
-                                                    ChesBigOrbsMin: evt.target.value.replaceAll(/[^0-9]/g,'')
+                                                    ChesBigOrbsMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                                 })}/>
                                 <span style={{margin:".5rem"}} />
                             <FruitThinField label={"Максимум"} value={chestConfig.ChestBigOrbsMax}
                                             onChange={(evt)=>setChestConfig({...chestConfig,
-                                                ChestBigOrbsMax: evt.target.value.replaceAll(/[^0-9]/g,'')
+                                                ChestBigOrbsMax: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                             })}/>
                             </span>
                         </div>
@@ -212,12 +212,12 @@ export default function ChestsGD(props) {
                             <span>
                                 <FruitThinField label={"Минимум"} value={chestConfig.ChestBigDiamondsMin}
                                                 onChange={(evt)=>setChestConfig({...chestConfig,
-                                                    ChestBigDiamondsMin: evt.target.value.replaceAll(/[^0-9]/g,'')
+                                                    ChestBigDiamondsMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                                 })}/>
                                 <span style={{margin:".5rem"}} />
                             <FruitThinField label={"Максимум"} value={chestConfig.ChestBigDiamondsMax}
                                             onChange={(evt)=>setChestConfig({...chestConfig,
-                                                ChestBigDiamondsMax: evt.target.value.replaceAll(/[^0-9]/g,'')
+                                                ChestBigDiamondsMax: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                             })}/>
                             </span>
                         </div>
@@ -226,12 +226,12 @@ export default function ChestsGD(props) {
                             <span>
                                 <FruitThinField label={"Минимум"} value={chestConfig.ChestBigKeysMin}
                                                 onChange={(evt)=>setChestConfig({...chestConfig,
-                                                    ChestBigKeysMin: evt.target.value.replaceAll(/[^0-9]/g,'')
+                                                    ChestBigKeysMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                                 })}/>
                                 <span style={{margin:".5rem"}} />
                             <FruitThinField label={"Максимум"} value={chestConfig.ChestBigKeysMax}
                                             onChange={(evt)=>setChestConfig({...chestConfig,
-                                                ChestBigKeysMax: evt.target.value.replaceAll(/[^0-9]/g,'')
+                                                ChestBigKeysMax: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                             })}/>
                             </span>
                         </div>
