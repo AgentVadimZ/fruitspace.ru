@@ -29,7 +29,7 @@ import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
 import useEffectOnce from "../../../../components/Hooks";
 import {useRecoilState} from "recoil";
 import GDServer from "../../../../states/gd_server";
-import toast from "react-hot-toast";
+import toast, {Toaster} from "react-hot-toast";
 
 
 const darkTheme = createTheme({
@@ -97,6 +97,7 @@ export default function ChestsGD(props) {
             <GlobalHead title="Игровой хостинг"/>
             <GlobalNav />
             <GDNavBar />
+            <Toaster/>
             <PanelContent>
                 <ThemeProvider theme={darkTheme}>
                 <div className={styles.CardGrid}>
