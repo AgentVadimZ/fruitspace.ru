@@ -198,7 +198,7 @@ export default function ChestsGD(props) {
                             <span>
                                 <FruitThinField label={"Минимум"} value={chestConfig.ChestBigOrbsMin}
                                                 onChange={(evt)=>setChestConfig({...chestConfig,
-                                                    ChesBigOrbsMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
+                                                    ChestBigOrbsMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                                 })}/>
                                 <span style={{margin:".5rem"}} />
                             <FruitThinField label={"Максимум"} value={chestConfig.ChestBigOrbsMax}
