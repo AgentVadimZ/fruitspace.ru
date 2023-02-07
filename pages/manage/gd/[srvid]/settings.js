@@ -2,7 +2,7 @@ import GlobalHead from "../../../../components/GlobalHead";
 import GlobalNav from "../../../../components/GlobalNav";
 import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
 import PanelContent from "../../../../components/Global/PanelContent";
-import {useRouter} from "next/router";
+import {Router, useRouter} from "next/router";
 
 import styles from "../../../../components/Manage/GDManage.module.css"
 import {styled} from "@mui/system";
@@ -41,7 +41,6 @@ import FormatAlignRightIcon from '@mui/icons-material/FormatAlignRight';
 import {Alert, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import HelpIcon from '@mui/icons-material/Help';
 import DeleteIcon from '@mui/icons-material/Delete';
-import useEffectOnce from "../../../../components/Hooks";
 import SettingsIcon from '@mui/icons-material/Settings';
 import Face3Icon from '@mui/icons-material/Face3';
 import BackupBox from '../../../../components/assets/icons/backup_box.svg'
@@ -234,6 +233,30 @@ export default function SettingsGD() {
                 color: "white",
                 backgroundColor: "var(--btn-color)"
             }})
+        })
+    }
+
+    const deleteServer=()=>{
+        fetch("https://api.fruitspace.one/v1/manage/gd/delete",
+            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
+                body: JSON.stringify({id: srv.srvid})}).then(resp=>resp.json()).then((resp)=>{
+            if(resp.status==="ok"){
+                toast.success("Сервер удален успешно",{style: {
+                        color: "white",
+                        backgroundColor: "var(--btn-color)"
+                    }})
+                setTimeout(()=>router.push("/profile/servers/"), 5000)
+            }else{
+                toast.error("Что-то пошло не так: "+resp.error,{style: {
+                        color: "white",
+                        backgroundColor: "var(--btn-color)"
+                    }})
+            }
+        }).catch(()=>{
+            toast.error("Проблемы с подключением",{style: {
+                    color: "white",
+                    backgroundColor: "var(--btn-color)"
+                }})
         })
     }
 
@@ -542,10 +565,7 @@ export default function SettingsGD() {
                             <FruitThinField label={"Введите "+deleteCode} value={userDelCode}
                             onChange={(evt)=>setUserDelCode(evt.target.value.replaceAll(/[^0-9]/g,'').substring(0,4))}/>
                             <Button variant="contained" className={`${styles.SlimButton} ${styles.btnError}`}
-                                    onClick={()=>{userDelCode===deleteCode?toast.success("Сделаем вид, что врвррврврвр",{style: {
-                                            color: "white",
-                                            backgroundColor: "var(--btn-color)"
-                                        }})
+                                    onClick={()=>{userDelCode===deleteCode?deleteServer()
                                         :toast.error("Код неверный",{style: {
                                                 color: "white",
                                                 backgroundColor: "var(--btn-color)"
