@@ -14,7 +14,7 @@ export default function GTA(props) {
             <div className={styles.main}>
 
             </div>
-            <Footer/>
+            <Footer router={props.router}/>
         </>
     )
 }

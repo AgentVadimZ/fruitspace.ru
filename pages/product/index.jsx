@@ -14,7 +14,7 @@ export default function ProductIndex(props) {
             <div className={styles.main}>
 
             </div>
-            <Footer/>
+            <Footer router={props.router}/>
         </>
     )
 }

@@ -20,7 +20,7 @@ import useEffectOnce from "../../components/Hooks";
 
 
 
-export default function Login(progs) {
+export default function Login(props) {
     const [cookies, setCookie, removeCookie] = useCookies(['token'])
     const router = useRouter()
 
@@ -205,7 +205,7 @@ export default function Login(progs) {
                     </form>
                 </div>
             </div>
-            <Footer/>
+            <Footer router={props.router}/>
         </>
     )
 }
