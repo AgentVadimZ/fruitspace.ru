@@ -112,7 +112,7 @@ export default function Order(props) {
 
                     {tariffs[srv.tariff] && <p>{locale.get('descInter')[0]} <b>{srv.name||locale.get('nameless')}</b>
                         {' '}{locale.get('descInter')[1]} <b>{tariffs[srv.tariff].Title}</b> {locale.get('descInter')[2]}
-                        {' '}<b>{getLocalPrice(tariffs[srv.tariff])} {locale.get('descInter')[3]}</b>.
+                        {' '}<b>{getLocalPrice(tariffs[srv.tariff])}</b>.
                         {' '}{locale.get('descInter')[4]} {tariffs[srv.tariff].Players===-1?"∞":tariffs[srv.tariff].Players} {locale.get('descInter')[5]},
                         {' '}{tariffs[srv.tariff].Levels===-1?"∞":tariffs[srv.tariff].Levels} {locale.get('descInter')[6]}. <br/><br/>
 
