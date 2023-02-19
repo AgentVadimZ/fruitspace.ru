@@ -139,7 +139,7 @@ export default function GlobalNav(props) {
                 </NavItem>
             ): (<NavItem icon={<PersonIcon/>}>
                 <DropdownMenu>
-                    <Link href="/profile/login"><DropdownItem leftIcon={<VpnKeyIcon/>}>Войти</DropdownItem></Link>
+                    <Link href="/profile/login"><DropdownItem leftIcon={<VpnKeyIcon/>}>{localeGlobal.get('navLogin')}</DropdownItem></Link>
                 </DropdownMenu>
             </NavItem>)}
         </NavBar>

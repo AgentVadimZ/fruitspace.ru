@@ -11,6 +11,10 @@ const globalLocale = {
         ru: "Выйти",
         en: "Log out"
     },
+    navLogin: {
+        ru: "Войти",
+        en: "Log in"
+    },
 
     navNoNewNotifications: {
         ru: "Нет новых уведомлений",
