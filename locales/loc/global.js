@@ -1,0 +1,167 @@
+
+
+const globalLocale = {
+
+    navName: {
+        ru: "Игровой хостинг",
+        en: "Game Hosting"
+    },
+
+    navLogout: {
+        ru: "Выйти",
+        en: "Log out"
+    },
+
+    navNoNewNotifications: {
+        ru: "Нет новых уведомлений",
+        en: "No new notifications"
+    },
+
+    navMyShops: {
+        ru: "Мои магазины",
+        en: "My shops"
+    },
+
+    "footer.about": {
+        ru: "О нас",
+        en: "About us"
+    },
+    "footer.team": {
+        ru: "Команда",
+        en: "Our team"
+    },
+    "footer.partnership": {
+        ru: "Партнерская программа",
+        en: "Partnership"
+    },
+    "footer.tos": {
+        ru: "Условия использования",
+        "en": "Terms of use"
+    },
+    "footer.docs": {
+        ru: "Документация",
+        en: "Docs"
+    },
+
+    "footer.hostingmc":{
+        ru: "Хостинг Minecraft",
+        en: "Minecraft hosting"
+
+    },
+    "footer.hostinggd":{
+        ru: "Хостинг Geometry Dash",
+        en: "Geometry Dash hosting"
+    },
+    "footer.hostinggta":{
+        ru: "Хостинг Grand Theft Auto",
+        en: "Grand Theft Auto hosting"
+    },
+
+
+    funcShowServers: {
+        ru: (num)=> {
+            num%=10
+            switch (num) {
+                case 1:
+                    return "сервер"
+                case 2:
+                case 3:
+                case 4:
+                    return "сервера"
+                default:
+                    return "серверов"
+
+            }
+        },
+        en: (num)=> {
+            num%=10
+            switch (num) {
+                case 1:
+                    return "server"
+                default:
+                    return "servers"
+
+            }
+        }
+    },
+
+
+    funcParseErr: {
+        ru: (err)=>{
+            let errc = err.split("|")[1] || err
+            switch (errc){
+                case "eml": return "Неверный формат email"
+                case "uname_shrt": return "Слишком короткий логин (необходимо 5+ символов)"
+                case "uname_long": return "Слишком длинный логин (необходимо меньше 32 символов)"
+                case "name_shrt": return "Слишком короткое имя (необходимо 2+ символов)"
+                case "name_long": return "Слишком длинное имя (необходимо меньше 120 символов)"
+                case "surname_shrt": return "Слишком короткая фамилия (необходимо 2+ символов)"
+                case "surname_long": return "Слишком длинная фамилия (необходимо меньше 120 символов)"
+                case "uname": return "Логин содержит недопустимые символы"
+                case "name": return "Имя содержит недопустимые символы"
+                case "surname": return "Фамилия содержит недопустимые символы"
+                case "pwd_shrt": return "Слишком короткий пароль (необходимо 8+ символов)"
+                case "pwd_long": return "Слишком длинный пароль (необходимо меньше 120 символов)"
+                case "pwd": return "Пароль содержит недопустимые символы"
+                case "uname_taken": return "Данное имя пользователя уже занято"
+                case "eml_taken": return "Аккаунт с данной почтой уже зарегистрирован"
+                case "reg": return "Техническая ошибка при регистрации. Сообщите о ней в тех. поддержку!"
+                case "ver": return "Ошибка отправки письма с подтверждением. Сообщите о ней в тех. поддержку!"
+                case "captcha": return "Не удалось пройти капчу. Попробуйте еще раз"
+                case "nouser": return "Пользователь не найден"
+                case "ban": return "Данный аккаунт заблокирован. Обратитесь в техподдержку"
+                case "act": return "Данный аккаунт не активирован"
+                case "nopwd": return "Неверный пароль"
+                case "2fa": return "Неверный токен 2ФА"
+                case "form": return "Не удалось прочитать запрос"
+                case "file": return "Ошибка чтения файла"
+                case "type": return "Неверный тип файла"
+                case "tr_create": return "Не удалось создать транзакцию, обратитесь в поддержку"
+                case "promo_invalid": return "Неверный промокод"
+                case "promo_expire": return "Срок действия промокода истек"
+                case "promo_limit": return "Количество использований промокода достигло своего предела"
+                default: return err
+            }
+        },
+        en: (err)=>{
+            let errc = err.split("|")[1] || err
+            switch (errc){
+                case "eml": return "Invalid email format"
+                case "uname_shrt": return "Username is too short (5+ symbols needed)"
+                case "uname_long": return "Username is too long (max 32 symbols)"
+                case "name_shrt": return "Name is too short (2+ symbols needed)"
+                case "name_long": return "Name is too long (max 120 symbols)"
+                case "surname_shrt": return "Surname is too short (2+ symbols needed)"
+                case "surname_long": return "Surname is too long (max 120 symbols)"
+                case "uname": return "Username contains invalid symbols"
+                case "name": return "Name contains invalid symbols"
+                case "surname": return "Surname contains invalid symbols"
+                case "pwd_shrt": return "Password is too short (8+ symbols needed)"
+                case "pwd_long": return "Password is too long (max 120 symbols)"
+                case "pwd": return "Password contains invalid symbols"
+                case "uname_taken": return "That username is already taken"
+                case "eml_taken": return "Provided email is already used"
+                case "reg": return "Unexpected registration error. Contact Support for resolution!"
+                case "ver": return "Unable to send confirmation email. Contact Support for resolution!"
+                case "captcha": return "Unable to verify captcha. Try again"
+                case "nouser": return "User not found"
+                case "ban": return "User is banned. Contact Support for resolution"
+                case "act": return "Account is not activated"
+                case "nopwd": return "Invalid password"
+                case "2fa": return "Invalid 2FA code"
+                case "form": return "Unable to read request"
+                case "file": return "Unable to read file"
+                case "type": return "Invalid file type"
+                case "tr_create": return "Unable to create transaction. Contact Support for resolution"
+                case "promo_invalid": return "Invalid promo code"
+                case "promo_expire": return "Promo code is expired"
+                case "promo_limit": return "Promo code usage limit is depleted"
+                default: return err
+            }
+        }
+    }
+
+}
+
+
+export {globalLocale}

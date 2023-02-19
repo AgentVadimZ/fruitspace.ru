@@ -2,6 +2,8 @@ import GlobalHead from "../../components/GlobalHead";
 import GlobalNav from "../../components/GlobalNav";
 import styles from "../../components/Index.module.css";
 import Footer from "../../components/Global/Footer";
+import {useRouter} from "next/router";
+import useLocale from "../../locales/useLocale";
 
 
 export default function Partnership(props) {
@@ -14,7 +16,7 @@ export default function Partnership(props) {
             <div className={styles.main}>
                 <p style={{height:"100vh"}} />
             </div>
-            <Footer/>
+            <Footer router={props.router}/>
         </>
     )
 }

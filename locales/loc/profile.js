@@ -1,0 +1,7 @@
+
+
+const profileLocale = {
+    
+}
+
+export {profileLocale}

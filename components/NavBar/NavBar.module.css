@@ -70,3 +70,10 @@
 .SideBar > li {
     margin: .25rem 0;
 }
+
+.delim {
+    height: 80%;
+    width: 0.5px;
+    background: linear-gradient(0deg, #8e388e,#5a00ff 70%, #0d6efd);;
+    margin: auto 1rem;
+}

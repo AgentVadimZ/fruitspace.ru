@@ -34,104 +34,108 @@ import AppleIcon from '@mui/icons-material/Apple';
 import Footer from "../components/Global/Footer";
 import GlobalHead from "../components/GlobalHead";
 import {ListItem, ListItemIcon, ListItemText} from "@mui/material";
+import useLocale, {useGlobalLocale} from "../locales/useLocale";
 
-export default function Home() {
-  return (
+export default function Home(props) {
+
+    const locale = useLocale(props.router)
+    const localeGlobal = useGlobalLocale(props.router)
+
+    return (
     <>
-        <GlobalHead title="Игровой хостинг"/>
-        {/*<Script src="//code.jivo.ru/widget/QDbblcMLJ0" strategy="lazyOnload"/>*/}
-        <GlobalNav />
+        <GlobalHead title={localeGlobal.get('navName')}/>
+        <GlobalNav router={props.router} />
 
         <div className={styles.main}>
             <Carousel>
                 <CarouselItem image={ProtoFlicker.src}
-                              link="/product/gd/" title="Мы любим строителей на GDPS" text="Все мы знаем как важен блокдизайн и как важно его игнорировать" />
+                              link="/product/gd/" title={locale.get('carousel.1.title')} text={locale.get('carousel.1.content')}/>
 
                 <CarouselItem image="https://media.wired.com/photos/60f0f10db3e52be52fcdc042/master/w_1600%2Cc_limit/Minecraft_Middle_Earth_Minas_Tirith_render_SOURCE_Minecraft_Middle-Earth.png"
-                              link="#" title="Создайте сервер Minecraft" text="Наши сервера прошли испытание динамитом и лаг-машинами. Играйте без лагов!" />
+                              link="#" title={locale.get('carousel.2.title')} text={locale.get('carousel.2.content')} />
                 <CarouselItem image="https://cdn.mos.cms.futurecdn.net/HGJSsb2UnhV2xTYaa9GLGB.png"
-                              link="#" title="GTA V [RAGE MP]" text="Соберитесь с друзьями в GTA On... от орбитальной пушки отойди" />
+                              link="#" title={locale.get('carousel.3.title')} text={locale.get('carousel.3.content')} />
                 {/*<CarouselItem image="https://media.wired.com/photos/60f0f10db3e52be52fcdc042/master/w_1600%2Cc_limit/Minecraft_Middle_Earth_Minas_Tirith_render_SOURCE_Minecraft_Middle-Earth.png"*/}
                 {/*              link="#" title="Title" text="A sample text that goes below 4" />*/}
             </Carousel>
 
             <div className={styles.productCardGrid}>
-                <ProductCard logo={MinecraftLogo.src} title="Minecraft" startPrice="" disabled>
+                <ProductCard logo={MinecraftLogo.src} title="Minecraft" btnText={locale.get('soon')} disabled>
                     <ListItem>
                         <ListItemIcon><BoltIcon/></ListItemIcon>
-                        <ListItemText primary="Быстрые сервера"/>
+                        <ListItemText primary={locale.get('cardMinecraft')[0]}/>
                     </ListItem>
                     <ListItem>
                         <ListItemIcon><BuildIcon/></ListItemIcon>
-                        <ListItemText primary="Легкая установка плагинов"/>
+                        <ListItemText primary={locale.get('cardMinecraft')[1]}/>
                     </ListItem>
                     <ListItem>
                         <ListItemIcon><CloudDoneIcon/></ListItemIcon>
-                        <ListItemText primary="Автоматические резервные копии"/>
+                        <ListItemText primary={locale.get('cardMinecraft')[2]}/>
                     </ListItem>
                         <ListItem>
                             <ListItemIcon><StorageIcon/></ListItemIcon>
-                            <ListItemText primary="Виртуальная сеть для нескольких серверов"/>
+                            <ListItemText primary={locale.get('cardMinecraft')[3]}/>
                         </ListItem>
                     <ListItem>
                         <ListItemIcon><EqualizerIcon/></ListItemIcon>
-                        <ListItemText primary="Динамические ресурсы, которые позволяют вам сэкономить"/>
+                        <ListItemText primary={locale.get('cardMinecraft')[4]}/>
                     </ListItem>
                 </ProductCard>
-                <ProductCard logo={GDLogo.src} title="GDPS" btnText="От 0₽" link="/product/gd">
+                <ProductCard logo={GDLogo.src} title="GDPS" btnText={locale.get('startingZero')} link="/product/gd">
                     <ListItem>
                         <ListItemIcon><AllInclusiveIcon/></ListItemIcon>
-                        <ListItemText primary="Неограниченное количество игроков/уровней"/>
+                        <ListItemText primary={locale.get('cardGDPS')[0]}/>
                     </ListItem>
                     <ListItem>
                         <ListItemIcon><MusicNoteIcon/></ListItemIcon>
-                        <ListItemText primary="Музыка из NewGrounds, YouTube, Deezer, VK и из файлов"/>
+                        <ListItemText primary={locale.get('cardGDPS')[1]}/>
                         {/*Soundcloud*/}
                     </ListItem>
                     <ListItem>
                         <ListItemIcon><SmartToyIcon/></ListItemIcon>
-                        <ListItemText primary="Лучший антибот из существующих"/>
+                        <ListItemText primary={locale.get('cardGDPS')[2]}/>
                     </ListItem>
                     <ListItem>
                         <ListItemIcon><CloudDoneIcon/></ListItemIcon>
-                        <ListItemText primary="Автоматические резервные копии"/>
+                        <ListItemText primary={locale.get('cardGDPS')[3]}/>
                     </ListItem>
                     <ListItem>
                         <ListItemIcon><PrecisionManufacturingIcon/></ListItemIcon>
-                        <ListItemText primary="Конфигуратор установщиков: иконки, текстурпаки и 2.2"/>
+                        <ListItemText primary={locale.get('cardGDPS')[4]}/>
                     </ListItem>
                     <ListItem>
                         <ListItemIcon><AppleIcon/></ListItemIcon>
-                        <ListItemText primary="Полная поддержка iOS"/>
+                        <ListItemText primary={locale.get('cardGDPS')[5]}/>
                     </ListItem>
                 </ProductCard>
-                <ProductCard logo={RockstarLogo.src} title="GTA SA/IV/V" disabled>
+                <ProductCard logo={RockstarLogo.src} title="GTA SA/IV/V" btnText={locale.get('soon')} disabled>
                     <ListItem>
                         <ListItemIcon><AllInclusiveIcon/></ListItemIcon>
-                        <ListItemText primary="Неограниченное количество слотов"/>
+                        <ListItemText primary={locale.get('cardGTA')[0]}/>
                     </ListItem>
                     <ListItem>
                         <ListItemIcon><BuildIcon/></ListItemIcon>
-                        <ListItemText primary="Легкая установка плагинов"/>
+                        <ListItemText primary={locale.get('cardGTA')[1]}/>
                     </ListItem>
                     <ListItem>
                         <ListItemIcon><CloudDoneIcon/></ListItemIcon>
-                        <ListItemText primary="Автоматичесие резервные копии"/>
+                        <ListItemText primary={locale.get('cardGTA')[2]}/>
                     </ListItem>
                     <ListItem>
                         <ListItemIcon><StorageIcon/></ListItemIcon>
-                        <ListItemText primary="Поддержка FTP и MySQL"/>
+                        <ListItemText primary={locale.get('cardGTA')[3]}/>
                     </ListItem>
                     <ListItem>
                         <ListItemIcon><LanguageIcon/></ListItemIcon>
-                        <ListItemText primary="Кастомный IP и порт"/>
+                        <ListItemText primary={locale.get('cardGTA')[4]}/>
                     </ListItem>
                 </ProductCard>
             </div>
 
             <div className={styles.productUtilsBox}>
-                <LineCard logo={<WebhookIcon/>} title="FruitSpace API"/>
-                <LineCard logo={<MonetizationOnIcon/>} title="Рекламная сеть"/>
+                <LineCard logo={<WebhookIcon/>} title={locale.get('apiButton')}/>
+                <LineCard logo={<MonetizationOnIcon/>} title={locale.get('adButton')}/>
             </div>
 
         </div>
@@ -150,7 +154,7 @@ export default function Home() {
         {/*    <MetaCard double image={ProtoFlicker.src}></MetaCard>*/}
         {/*    <MetaCard double image={"https://media.wired.com/photos/60f0f10db3e52be52fcdc042/master/w_1600%2Cc_limit/Minecraft_Middle_Earth_Minas_Tirith_render_SOURCE_Minecraft_Middle-Earth.png"}></MetaCard>*/}
         {/*</div>*/}
-        <Footer/>
+        <Footer router={props.router}/>
     </>
   )
 }

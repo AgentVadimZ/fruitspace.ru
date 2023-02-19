@@ -6,26 +6,30 @@ import twitterLogo from './../assets/social/twitter.png'
 import vkLogo from './../assets/social/vkontakte.png'
 import telegramLogo from './../assets/social/telegram.png'
 import Link from "next/link";
+import {useGlobalLocale} from "../../locales/useLocale";
 
 
 export default function Footer(props) {
     const year = new Date().getFullYear()
+
+    const locale = useGlobalLocale(props.router)
+
     return (
         <div className={styles.footer}>
             <div className={styles.footerTop}>
                 <div className={styles.footerLinklist}>
-                    <h3>О нас</h3>
-                    <Link href="/about"><p>О нас</p></Link>
-                    <Link href="/about/team"><p>Команда</p></Link>
-                    <Link href="/about/partnership"><p>Партнерская программа</p></Link>
-                    <Link href="/about/tos"><p>Условия использования</p></Link>
+                    <h3>{locale.get('footer.about')}</h3>
+                    <Link href="/about"><p>{locale.get('footer.about')}</p></Link>
+                    <Link href="/about/team"><p>{locale.get('footer.team')}</p></Link>
+                    <Link href="/about/partnership"><p>{locale.get('footer.partnership')}</p></Link>
+                    <Link href="/about/tos"><p>{locale.get('footer.tos')}</p></Link>
                 </div>
                 <div className={styles.footerLinklist}>
                     <h3>FruitSpace</h3>
-                    <Link href="/product/mc"><p>Хостинг Minecraft</p></Link>
-                    <Link href="/product/gd"><p>Хостинг Geometry Dash</p></Link>
-                    <Link href="/product/gta"><p>Хостинг Grand Theft Auto</p></Link>
-                    <Link href="https://docs.fruitspace.ru"><p>Документация</p></Link>
+                    <Link href="/product/mc"><p>{locale.get('footer.hostingmc')}</p></Link>
+                    <Link href="/product/gd"><p>{locale.get('footer.hostinggd')}</p></Link>
+                    <Link href="/product/gta"><p>{locale.get('footer.hostinggta')}</p></Link>
+                    <Link href="https://telegra.ph/Dokumentaciya-dlya-ochen-umnyh-09-29"><p>{locale.get('footer.docs')}</p></Link>
                 </div>
                 <Link href="https://halogen.cc" prefetch={false}><img src={HalogenLogoB.src} alt="halogen.cc" /></Link>
                 <div>

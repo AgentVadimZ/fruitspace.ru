@@ -25,6 +25,21 @@ const nextConfig = {
   ],
   sentry: {
     hideSourceMaps: true
+  },
+  i18n: {
+    locales: ['en', 'ru'],
+    defaultLocale: 'en',
+
+    domains: [
+      {
+        domain: 'fruitspace.ru',
+        defaultLocale: 'ru',
+      },
+      {
+        domain: 'fruitspace.one',
+        defaultLocale: 'en'
+      }
+    ]
   }
 }
 

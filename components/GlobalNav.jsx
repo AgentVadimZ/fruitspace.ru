@@ -21,29 +21,13 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import MinecraftLogo from "./assets/logos/minecraft.png"
 import GDLogo from "./assets/logos/geometrydash.png"
 import RockstarLogo from "./assets/logos/rockstargames.png"
-import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {useRecoilState} from "recoil";
 import {UserState} from "../states/user";
 import {useCookies} from "react-cookie";
-import toast from "react-hot-toast";
-import ParseError from "./ErrParser";
+import {useGlobalLocale} from "../locales/useLocale";
 
 
-const getRegionalPostfix = (num)=> {
-    num%=10
-    switch (num) {
-        case 1:
-            return "сервер"
-        case 2:
-        case 3:
-        case 4:
-            return "сервера"
-        default:
-            return "серверов"
-
-    }
-}
 
 export default function GlobalNav(props) {
 
@@ -51,6 +35,8 @@ export default function GlobalNav(props) {
 
     const [cookies, setCookie, delCookie] = useCookies(["token"])
     const router = useRouter()
+
+    const localeGlobal = useGlobalLocale(router)
 
     const logout = () => {
         delCookie("token", { path: '/' })
@@ -69,6 +55,8 @@ export default function GlobalNav(props) {
 
         }).catch(()=>{})
     }
+
+    const getRegionalPostfix = localeGlobal.get('funcShowServers')
 
     const prettyPrint = (num)=>new Intl.NumberFormat(user.usd?'en-US':'ru-RU',
         {style: 'currency',currency: user.usd?"USD":"RUB"}).format(num).replace(/[.|,]00/g, '')
@@ -110,7 +98,7 @@ export default function GlobalNav(props) {
                     {user.notifications.length===0? (
                         <DropdownItem leftIcon={<NotificationsOffIcon/>}>
                             <div className={styles.MultilineItem}>
-                                Нет новых уведомлений
+                                {localeGlobal.get('navNoNewNotifications')}
                             </div>
                         </DropdownItem>
                     ): (
@@ -144,9 +132,9 @@ export default function GlobalNav(props) {
                         </DropdownItem>
                     </Link>
                     <Link href="/manage/store">
-                        <DropdownItem leftIcon={<StoreIcon/>} rightIcon={<RightSvg/>}>Мои магазины</DropdownItem>
+                        <DropdownItem leftIcon={<StoreIcon/>} rightIcon={<RightSvg/>}>{localeGlobal.get('navMyShops')}</DropdownItem>
                     </Link>
-                        <DropdownItem leftIcon={<LogoutOutlinedIcon/>} onClick={()=>logout()}>Выйти</DropdownItem>
+                        <DropdownItem leftIcon={<LogoutOutlinedIcon/>} onClick={()=>logout()}>{localeGlobal.get('navLogout')}</DropdownItem>
                 </DropdownMenu>
                 </NavItem>
             ): (<NavItem icon={<PersonIcon/>}>

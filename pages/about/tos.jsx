@@ -8,12 +8,15 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import PersonIcon from '@mui/icons-material/Person';
+import {useGlobalLocale} from "../../locales/useLocale";
 
 export default function Tos(props) {
 
+    const localeGlobal = useGlobalLocale(props.router)
+
     return (
         <>
-            <GlobalHead title="Игровой хостинг"/>
+            <GlobalHead title={localeGlobal.get('navName')}/>
             {/*<Script src="//code.jivo.ru/widget/QDbblcMLJ0" strategy="lazyOnload"/>*/}
             <GlobalNav />
             <div className={styles.main}>
@@ -108,7 +111,7 @@ export default function Tos(props) {
                     </div>
                 </div>
             </div>
-            <Footer/>
+            <Footer router={props.router}/>
         </>
     )
 }
