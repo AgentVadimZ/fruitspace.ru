@@ -12,7 +12,7 @@ import EnotLogo from "../assets/logos/enot_logo.svg"
 import {styled} from "@mui/system";
 import {Router, useRouter} from "next/router";
 import toast from "react-hot-toast";
-import ParseError from "../ErrParser";
+import useLocale, {useGlobalLocale} from "../../locales/useLocale";
 
 export default function PayBox(props) {
 
@@ -25,9 +25,14 @@ export default function PayBox(props) {
         merchant: "qiwi"
     })
 
+    const locale = useLocale(props.router)
+    const globalLocale = useGlobalLocale(props.router)
+
+    const ParseError = globalLocale.get('funcParseErr')
+
     const createPayment = () => {
         if (paymentParam.amount<20) {
-            toast.error("Минимальная сумма для пополнения - 20₽", {
+            toast.error(locale.get('minMax')[0], {
                 duration: 10000,
                 style: {
                     color: "white",
@@ -37,7 +42,7 @@ export default function PayBox(props) {
             return
         }
         if (paymentParam.amount>100000) {
-            toast.error("Максимальная сумма для пополнения - 100000₽", {
+            toast.error(locale.get('minMax')[1], {
                 duration: 10000,
                 style: {
                     color: "white",
@@ -53,7 +58,7 @@ export default function PayBox(props) {
             if (resp.status==="ok") {
                 router.push(encodeURI(resp.payUrl))
             }else {
-                toast.error("Произошла ошибка: "+ParseError(resp.message), {
+                toast.error(locale.get('err')+ParseError(resp.message), {
                     duration: 10000,
                     style: {
                         color: "white",
@@ -73,43 +78,42 @@ export default function PayBox(props) {
             <span />
             <div className={styles.innerbox} onClick={()=>openBackdrop(true)}>
                 <AddCircleIcon/>
-                <p>Пополнить</p>
+                <p>{locale.get('payment')[0]}</p>
             </div>
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={backdrop} onClick={()=>openBackdrop(false)}>
                 <div className={styles.choosePaymentBox} onClick={(e)=>e.stopPropagation()}>
-                    <h2 style={{textAlign:"center"}}>Выберите метод оплаты</h2>
+                    <h2 style={{textAlign:"center"}}>{locale.get('payment')[1]}</h2>
 
                     <FormControl>
-                        <FormLabel>Платежная система</FormLabel>
+                        <FormLabel>{locale.get('payment')[2]}</FormLabel>
                         <RadioGroup
                             aria-labelledby="demo-controlled-radio-buttons-group"
                             name="controlled-radio-buttons-group"
                             value={paymentParam.merchant}
                             onChange={(e,m)=>setPaymentParam({...paymentParam, merchant: m})}>
                             <FormControlLabel value="qiwi" control={<Radio />} label={<span className={styles.payOption}>
-                                <img src={QiwiLogo.src}/>Подходит для Qiwi и банковских карт
+                                <img src={QiwiLogo.src}/>{locale.get('paymentSystem')[0]}
                             </span>} />
                             <FormControlLabel value="yookassa" control={<Radio />} label={<span className={styles.payOption}>
-                                <YooMoneyLogo/>SberPay, Тинькофф и ЮMoney
+                                <YooMoneyLogo/>{locale.get('paymentSystem')[1]}
                             </span>}/>
                             <FormControlLabel value="enot" control={<Radio />} label={<span className={styles.payOption}>
-                                <EnotLogo/> Российские и международные банковские карты, криптовалюты и PerfectMoney
+                                <EnotLogo/> {locale.get('paymentSystem')[2]}
                             </span>}/>
                         </RadioGroup>
                     </FormControl>
 
-                    <p>*Если оплата не удалась или деньги не пришли, откройте тикет на Discord сервере или напишите нам в ВК.
-                        Хотя такого обычно не происходит</p>
-                    <p style={{color:"var(--error-color)"}}>Минимальная сумма для пополнения: 20₽</p>
+                    <p>{locale.get('paymentFail')}</p>
+                    <p style={{color:"var(--error-color)"}}>{locale.get('minMax')[0]}</p>
 
-                    <FruitTextField fullWidth label={`Сумма ${user.usd?"$":"₽"}`} type="text" variant="outlined" style={{margin:".5rem"}}
+                    <FruitTextField fullWidth label={locale.get('sum')+` ${user.usd?"$":"₽"}`} type="text" variant="outlined" style={{margin:".5rem"}}
                                     value={paymentParam.amount||''} onChange={(evt)=>{setPaymentParam({
                         ...paymentParam,
                         amount: evt.target.value.replaceAll(/[^0-9.]/g,'')
                     })}}/>
-                    <Button variant="contained" className={styles.cardButton} onClick={createPayment}>Перейти к оплате</Button>
+                    <Button variant="contained" className={styles.cardButton} onClick={createPayment}>{locale.get('goToPayment')}</Button>
                 </div>
             </Backdrop>
         </div>

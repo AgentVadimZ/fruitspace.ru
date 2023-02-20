@@ -76,6 +76,10 @@ span.swiper-pagination-bullet-active {
 
 .MuiTooltip-tooltip {
     font-size: 12pt !important;
+    background-color: var(--btn-color);
+    border-color: rgb(97,97,97);
+    border-style: solid;
+    border-width: 2px;
 }
 .MuiTooltip-popper {
     margin-left: 4px !important;

@@ -1,0 +1,7 @@
+
+
+const gdSettingsLocale = {
+
+}
+
+export {gdSettingsLocale}

@@ -91,8 +91,8 @@ export default function GDNavBar(props) {
                 <NavItem icon={<ActionsIcon/>} acetone square active={action==="actions"}>
                     <Tooltip title="Действия" placement="right" arrow open><span /></Tooltip>
                 </NavItem>
-            </Link>}
-            {srv.tariffConfig.Shops && <Link href={"/manage/gd/"+srvid+"/store"}>
+            </Link>} */}
+            {/* {srv.tariffConfig.Shops && <Link href={"/manage/gd/"+srvid+"/store"}>
                 <NavItem icon={<StoreIcon/>} acetone square active={action==="store"}>
                     <Tooltip title="Мои магазины" placement="right" arrow open><span /></Tooltip>
                 </NavItem>

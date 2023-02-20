@@ -1,0 +1,7 @@
+
+
+const gdLevelpacksLocale = {
+
+}
+
+export {gdLevelpacksLocale}

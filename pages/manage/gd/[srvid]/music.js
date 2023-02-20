@@ -12,8 +12,24 @@ import LogoVK from '../../../../components/assets/logos/vk-logo.png'
 import LogoDZ from '../../../../components/assets/logos/dz-logo.png'
 import LogoDBox from '../../../../components/assets/logos/dbox-logo.png'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCompactDisc, faPause, faPlay} from "@fortawesome/free-solid-svg-icons";
-import {Slider, Pagination, TextField, InputAdornment, IconButton, Backdrop, Button} from "@mui/material";
+import {
+    faArrowDown19,
+    faArrowDownAZ,
+    faArrowDownWideShort,
+    faCompactDisc,
+    faPause,
+    faPlay
+} from "@fortawesome/free-solid-svg-icons";
+import {
+    Slider,
+    Pagination,
+    TextField,
+    InputAdornment,
+    IconButton,
+    Backdrop,
+    Button,
+    ClickAwayListener, ButtonGroup, MenuList, MenuItem
+} from "@mui/material";
 import {PauseRounded, PlayArrowRounded, Search, VolumeUpRounded} from "@mui/icons-material";
 import {useEffect, useRef, useState} from "react";
 import {styled} from "@mui/system";
@@ -30,17 +46,18 @@ import {useCookies} from "react-cookie";
 import {useRecoilState} from "recoil";
 import GDServer from "../../../../states/gd_server";
 import ReactPlayer from "react-player";
-import vkLogo from "../../../../components/assets/social/vkontakte.png";
-import DeleteIcon from "@mui/icons-material/Delete";
-import discordLogo from "../../../../components/assets/social/discord.png";
 import {LoadingButton} from "@mui/lab";
+import {Tooltip} from "@mui/material"
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import useLocale from "../../../../locales/useLocale";
+
 
 export default function MusicGD(props) {
     const [srv, setSrv] = useRecoilState(GDServer)
     const [cookies, setCookie, delCookie] = useCookies(["token"])
     const playerRef = useRef(null)
     const [playerData, setPlayerData] = useState({
-        title: "Выберите трек",
+        title: "Hmmmmmm",
         artist: "FruitSpace ft. Fruce",
         id: 0,
         src: "",
@@ -69,10 +86,20 @@ export default function MusicGD(props) {
         return `${minute}:${secondLeft < 10 ? `0${secondLeft}` : secondLeft}`;
     }
 
-    const searchMusic = () => {
+    const [sortShow, setSortShow] = useState(false)
+    const [sortMode, setSortModeX] = useState("downloads")
+    const setSortMode=(mode)=>{
+        setSortModeX(mode)
+        searchMusic(mode)
+        setSortShow(false)
+    }
+
+    const locale = useLocale(props.router)
+
+    const searchMusic = (mode) => {
         fetch("https://api.fruitspace.one/v1/manage/gd/get_music",
             {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                body: JSON.stringify({id: srv.srvid, page: page, query: search})}).then(resp=>resp.json()).then((resp)=>{
+                body: JSON.stringify({id: srv.srvid, page: page, query: search, mode: mode})}).then(resp=>resp.json()).then((resp)=>{
             if(resp.status==="ok") {
                 setMusic(resp.music)
                 setPageCount(Math.ceil(resp.total/10))
@@ -117,7 +144,7 @@ export default function MusicGD(props) {
 
 
     useEffect(()=>{
-        srv.srvid&&searchMusic()
+        srv.srvid&&searchMusic(sortMode)
     },[srv, page])
 
     return (
@@ -225,19 +252,65 @@ export default function MusicGD(props) {
                     </div>
                 </div>
 
+
+
+
                 <div className={styles.CardBox} style={{marginTop:"2rem"}}>
-                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                        <FruitThinField label="Поиск"
-                                        value={search} onChange={(evt)=>setSearch(evt.target.value)}
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton edge="end" onClick={searchMusic}>
-                                                        <Search />
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            )
-                                        }} />
+                    <div className={styles.MusicSearchBox}>
+                        <div className={styles.MusicSearchSlick}>
+                            <ClickAwayListener onClickAway={()=>setSortShow(false)}>
+                                <div>
+                            <Tooltip
+                                open={sortShow}
+                                disableFocusListener disableHoverListener disableTouchListener
+                                title={
+                                    <MenuList>
+                                        <MenuItem selected={false} style={{borderRadius:"4px", backgroundColor: (sortMode==="alpha"?"#0d6efd":"none")}}
+                                            onClick={()=>setSortMode("alpha")}>
+                                            <Button style={{color: "white"}} variant="text"
+                                                    startIcon={<FontAwesomeIcon icon={faArrowDownAZ} style={{height:"1.5rem"}}/>}>
+                                                {locale.get("sort")[0]}
+                                            </Button>
+                                        </MenuItem>
+                                        <MenuItem selected={false} style={{borderRadius:"4px", backgroundColor: (sortMode==="id"?"#0d6efd":"none")}}
+                                                  onClick={()=>setSortMode("id")}>
+                                            <Button style={{color: "white"}} variant="text"
+                                                    startIcon={<FontAwesomeIcon icon={faArrowDown19} style={{height:"1.5rem"}}/>}>
+                                                {locale.get("sort")[1]}
+                                            </Button>
+                                        </MenuItem>
+                                        <MenuItem selected={false} style={{borderRadius:"4px", backgroundColor: (sortMode==="downloads"?"#0d6efd":"none")}}
+                                                  onClick={()=>setSortMode("downloads")}>
+                                            <Button style={{color: "white"}} variant="text"
+                                                    startIcon={<FontAwesomeIcon icon={faArrowDownWideShort} style={{height:"1.5rem"}}/>}>
+                                                {locale.get("sort")[2]}
+                                            </Button>
+                                        </MenuItem>
+                                    </MenuList>
+                                }>
+                                <Button onClick={()=>setSortShow(!sortShow)} className={styles.SlimButton}
+                                style={{margin: "0 .5rem 0 0", color: "white"}}>
+                                    {sortMode==="alpha"&&<FontAwesomeIcon icon={faArrowDownAZ} style={{height:"1.5rem"}}/>}
+                                    {sortMode==="id"&&<FontAwesomeIcon icon={faArrowDown19} style={{height:"1.5rem"}}/>}
+                                    {sortMode==="downloads"&&<FontAwesomeIcon icon={faArrowDownWideShort} style={{height:"1.5rem"}}/>}
+                                    <KeyboardArrowDownIcon style={{height:"1rem"}} />
+                                </Button>
+                            </Tooltip>
+                                </div>
+                            </ClickAwayListener>
+
+                            <FruitThinField label={locale.get('search')}
+                                            value={search} onChange={(evt)=>setSearch(evt.target.value)}
+                                            InputProps={{
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <IconButton edge="end" onClick={searchMusic}>
+                                                            <Search />
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                )
+                                            }} />
+                        </div>
                         <Pagination count={pageCount} page={page+1} onChange={(e,val)=>setPage(val-1)} shape="rounded" sx={{"& *": {color:"white !important"}}} />
                     </div>
                     <List>
@@ -270,9 +343,9 @@ export default function MusicGD(props) {
                         <img src={LogoNG.src} />
                         <h3>NewGrounds</h3>
                     </div>
-                    <FruitThinField fullWidth label="Ссылка на трек или ID" value={musUrl.ng||''}
+                    <FruitThinField fullWidth label={locale.get("url")} value={musUrl.ng||''}
                                     onChange={(evt)=>setMusUrl({...musUrl,ng:evt.target.value})} />
-                    <p style={{textAlign:"center"}}>Или используйте <span className={styles.CodeBlock}>hal:ng:&lt;ID&gt;</span> в БД</p>
+                    <p style={{textAlign:"center"}}>{locale.get("oruse")[0]}<span className={styles.CodeBlock}>hal:ng:&lt;ID&gt;</span>{locale.get("oruse")[1]}</p>
                     {musUploadData.id!==0 && <div className={styles.UploadTrackBox}>
                         <div>
                             <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg} style={{marginRight:"1rem", height:"3rem"}}/>
@@ -282,7 +355,7 @@ export default function MusicGD(props) {
                     </div>}
                     <div className={styles.CardBottom}>
                         <LoadingButton loading={loading} variant="contained" className={styles.cardButton} style={{width:"100%",margin:"0"}}
-                                       onClick={()=>addMusic("ng")}>Загрузить</LoadingButton>
+                                       onClick={()=>addMusic("ng")}>{locale.get("upload")}</LoadingButton>
                     </div>
                 </div>}
 
@@ -291,9 +364,9 @@ export default function MusicGD(props) {
                         <img src={LogoYT.src} />
                         <h3>YouTube</h3>
                     </div>
-                    <FruitThinField fullWidth label="Ссылка на видео или ID" value={musUrl.yt||''}
+                    <FruitThinField fullWidth label={locale.get("videolink")} value={musUrl.yt||''}
                                     onChange={(evt)=>setMusUrl({...musUrl,yt:evt.target.value})} />
-                    <p style={{textAlign:"center"}}>Или используйте <span className={styles.CodeBlock}>hal:yt:&lt;ID&gt;</span> в БД</p>
+                    <p style={{textAlign:"center"}}>{locale.get("oruse")[0]}<span className={styles.CodeBlock}>hal:yt:&lt;ID&gt;</span>{locale.get("oruse")[1]}</p>
                     {musUploadData.id!==0 && <div className={styles.UploadTrackBox}>
                         <div>
                             <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg} style={{marginRight:"1rem", height:"3rem"}}/>
@@ -303,7 +376,7 @@ export default function MusicGD(props) {
                     </div>}
                     <div className={styles.CardBottom}>
                         <LoadingButton loading={loading} variant="contained" className={styles.cardButton} style={{width:"100%",margin:"0"}}
-                                       onClick={()=>addMusic("yt")}>Загрузить</LoadingButton>
+                                       onClick={()=>addMusic("yt")}>{locale.get("upload")}</LoadingButton>
                     </div>
                 </div>}
 
@@ -312,9 +385,9 @@ export default function MusicGD(props) {
                         <img src={LogoDZ.src} />
                         <h3>Deezer</h3>
                     </div>
-                    <FruitThinField fullWidth label="Ссылка на трек или ID" value={musUrl.dz||''}
+                    <FruitThinField fullWidth label={locale.get("url")} value={musUrl.dz||''}
                                     onChange={(evt)=>setMusUrl({...musUrl,dz:evt.target.value})} />
-                    <p style={{textAlign:"center"}}>Или используйте <span className={styles.CodeBlock}>hal:dz:&lt;ID&gt;</span> в БД</p>
+                    <p style={{textAlign:"center"}}>{locale.get("oruse")[0]} <span className={styles.CodeBlock}>hal:dz:&lt;ID&gt;</span>{locale.get("oruse")[1]}</p>
                     {musUploadData.id!==0 && <div className={styles.UploadTrackBox}>
                         <div>
                             <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg} style={{marginRight:"1rem", height:"3rem"}}/>
@@ -324,7 +397,7 @@ export default function MusicGD(props) {
                     </div>}
                     <div className={styles.CardBottom}>
                         <LoadingButton loading={loading} variant="contained" className={styles.cardButton} style={{width:"100%",margin:"0"}}
-                                       onClick={()=>addMusic("dz")}>Загрузить</LoadingButton>
+                                       onClick={()=>addMusic("dz")}>{locale.get("upload")}</LoadingButton>
                     </div>
                 </div>}
 
@@ -333,8 +406,8 @@ export default function MusicGD(props) {
                         <img src={LogoVK.src} />
                         <h3>VK</h3>
                     </div>
-                    <p style={{textAlign:"center"}}>Загрузить музыку можно будет через бота</p>
-                    <p style={{textAlign:"center"}}>Или используйте <span className={styles.CodeBlock}>hal:vk:&lt;ID&gt;</span> в БД</p>
+                    <p style={{textAlign:"center"}}>{locale.get("bot")}</p>
+                    <p style={{textAlign:"center"}}>{locale.get("oruse")[0]}<span className={styles.CodeBlock}>hal:vk:&lt;ID&gt;</span>{locale.get("oruse")[1]}</p>
                     {musUploadData.id!==0 && <div className={styles.UploadTrackBox}>
                         <div>
                             <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg} style={{marginRight:"1rem", height:"3rem"}}/>
@@ -344,7 +417,7 @@ export default function MusicGD(props) {
                     </div>}
                     <div className={styles.CardBottom}>
                         <LoadingButton loading={loading} variant="contained" className={styles.cardButton} style={{width:"100%",margin:"0"}}
-                                       onClick={()=>addMusic("vk")} disabled>Загрузить</LoadingButton>
+                                       onClick={()=>addMusic("vk")} disabled>{locale.get("upload")}</LoadingButton>
                     </div>
                 </div>}
 
@@ -353,9 +426,9 @@ export default function MusicGD(props) {
                         <img src={LogoDBox.src} />
                         <h3>Dropbox</h3>
                     </div>
-                    <FruitThinField fullWidth label="Ссылка на mp3 файл" value={musUrl.db||''}
+                    <FruitThinField fullWidth label={locale.get("filelink")} value={musUrl.db||''}
                                     onChange={(evt)=>setMusUrl({...musUrl,db:evt.target.value})} />
-                    <p style={{textAlign:"center"}}>Или используйте <span className={styles.CodeBlock}>&lt;URL&gt;</span> в БД</p>
+                    <p style={{textAlign:"center"}}>{locale.get("oruse")[0]}<span className={styles.CodeBlock}>&lt;URL&gt;</span>{locale.get("oruse")[1]}</p>
                     {musUploadData.id!==0 && <div className={styles.UploadTrackBox}>
                         <div>
                             <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg} style={{marginRight:"1rem", height:"3rem"}}/>
@@ -365,7 +438,7 @@ export default function MusicGD(props) {
                     </div>}
                     <div className={styles.CardBottom}>
                         <LoadingButton loading={loading} variant="contained" className={styles.cardButton} style={{width:"100%",margin:"0"}}
-                                       onClick={()=>addMusic("db")}>Загрузить</LoadingButton>
+                                       onClick={()=>addMusic("db")}>{locale.get("upload")}</LoadingButton>
                     </div>
                 </div>}
 

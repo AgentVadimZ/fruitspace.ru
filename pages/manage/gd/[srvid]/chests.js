@@ -30,6 +30,7 @@ import useEffectOnce from "../../../../components/Hooks";
 import {useRecoilState} from "recoil";
 import GDServer from "../../../../states/gd_server";
 import toast, {Toaster} from "react-hot-toast";
+import useLocale from "../../../../locales/useLocale";
 
 
 const darkTheme = createTheme({
@@ -68,19 +69,21 @@ export default function ChestsGD(props) {
     const toSeconds = (time)=>{
         return time.hour()*3600+time.minute()*60+time.second()
     }
+    const locale = useLocale(props.router)
+
 
     const saveChests = ()=>{
         fetch("https://api.fruitspace.one/v1/manage/gd/set_chests",
             {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
                 body: JSON.stringify({id:srv.srvid, chests: chestConfig})}).then(resp=>resp.json()).then((resp)=>{
             if(resp.status==="ok") {
-                toast.success("Сундуки успешно обновлены",{style: {
+                toast.success(locale.get("updSuccess"),{style: {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})
                 setSrv({...srv, coreConfig: {...srv.coreConfig, ChestConfig: chestConfig}})
             }else{
-                toast.error("Не удалось обновить сундуки",{style: {
+                toast.error(locale.get("updFailed"),{style: {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})
@@ -94,7 +97,7 @@ export default function ChestsGD(props) {
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <GlobalHead title="Игровой хостинг"/>
+            <GlobalHead title={locale.get("nav")}/>
             <GlobalNav />
             <GDNavBar />
             <Toaster/>
@@ -102,51 +105,51 @@ export default function ChestsGD(props) {
                 <ThemeProvider theme={darkTheme}>
                 <div className={styles.CardGrid}>
                     <div className={styles.CardBox}>
-                        <h3>Малый сундук</h3>
+                        <h3>{locale.get("small")}</h3>
                         <div className={styles.SettingsPlato}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={orbsIcon.src} style={{height:"1em"}}/></IconButton>Орбы</span>
+                            <span style={{fontSize:"13pt"}}><IconButton><img src={orbsIcon.src} style={{height:"1em"}}/></IconButton>{locale.get("drop")[0]}</span>
                             <span>
-                                <FruitThinField label={"Минимум"} value={chestConfig.ChestSmallOrbsMin}
+                                <FruitThinField label={locale.get("minMax")[0]} value={chestConfig.ChestSmallOrbsMin}
                                                 onChange={(evt)=>setChestConfig({...chestConfig,
                                                     ChestSmallOrbsMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                                 })}/>
                                 <span style={{margin:".5rem"}} />
-                            <FruitThinField label={"Максимум"} value={chestConfig.ChestSmallOrbsMax}
+                            <FruitThinField label={locale.get("minMax")[1]} value={chestConfig.ChestSmallOrbsMax}
                                             onChange={(evt)=>setChestConfig({...chestConfig,
                                                 ChestSmallOrbsMax: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                             })}/>
                             </span>
                         </div>
                         <div className={styles.SettingsPlato} style={{marginTop:"1rem"}}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={diamondsIcon.src} style={{height:"1em"}}/></IconButton>Алмазы</span>
+                            <span style={{fontSize:"13pt"}}><IconButton><img src={diamondsIcon.src} style={{height:"1em"}}/></IconButton>{locale.get("drop")[1]}</span>
                             <span>
-                                <FruitThinField label={"Минимум"} value={chestConfig.ChestSmallDiamondsMin}
+                                <FruitThinField label={locale.get("minMax")[0]} value={chestConfig.ChestSmallDiamondsMin}
                                                 onChange={(evt)=>setChestConfig({...chestConfig,
                                                     ChestSmallDiamondsMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                                 })}/>
                                 <span style={{margin:".5rem"}} />
-                            <FruitThinField label={"Максимум"} value={chestConfig.ChestSmallDiamondsMax}
+                            <FruitThinField label={locale.get("minMax")[1]} value={chestConfig.ChestSmallDiamondsMax}
                                             onChange={(evt)=>setChestConfig({...chestConfig,
                                                 ChestSmallDiamondsMax: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                             })}/>
                             </span>
                         </div>
                         <div className={styles.SettingsPlato} style={{marginTop:"1rem"}}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={keysIcon.src} style={{height:"1em"}}/></IconButton>Ключи</span>
+                            <span style={{fontSize:"13pt"}}><IconButton><img src={keysIcon.src} style={{height:"1em"}}/></IconButton>{locale.get("drop")[2]}</span>
                             <span>
-                                <FruitThinField label={"Минимум"} value={chestConfig.ChestSmallKeysMin}
+                                <FruitThinField label={locale.get("minMax")[0]} value={chestConfig.ChestSmallKeysMin}
                                                 onChange={(evt)=>setChestConfig({...chestConfig,
                                                     ChestSmallKeysMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                                 })}/>
                                 <span style={{margin:".5rem"}} />
-                            <FruitThinField label={"Максимум"} value={chestConfig.ChestSmallKeysMax}
+                            <FruitThinField label={locale.get("minMax")[1]} value={chestConfig.ChestSmallKeysMax}
                                             onChange={(evt)=>setChestConfig({...chestConfig,
                                                 ChestSmallKeysMax: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                             })}/>
                             </span>
                         </div>
                         <div className={styles.SettingsPlato} style={{marginTop:"1rem"}}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={shardIce.src} style={{height:"1em"}}/></IconButton>Шарды</span>
+                            <span style={{fontSize:"13pt"}}><IconButton><img src={shardIce.src} style={{height:"1em"}}/></IconButton>{locale.get("drop")[3]}</span>
                             <FruitToggleButtonGroup
                                 size={"small"}
                                 sx={{backgroundColor:"var(--bkg-color)", width:"fit-content", borderRadius: "8px"}}
@@ -172,14 +175,14 @@ export default function ChestsGD(props) {
                             </FruitToggleButtonGroup>
                         </div>
                         <div className={styles.SettingsPlato} style={{marginTop:"1rem"}}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={timeIcon.src} style={{height:"1em"}}/></IconButton>Таймаут</span>
+                            <span style={{fontSize:"13pt"}}><IconButton><img src={timeIcon.src} style={{height:"1em"}}/></IconButton>{locale.get("timeout")}</span>
                                 <TimePicker
                                     ampm={false}
                                     openTo="hours"
                                     views={['hours', 'minutes', 'seconds']}
-                                    inputFormat="HHч mmм ssс"
-                                    mask="__ч __м __с"
-                                    label="Таймаут"
+                                    inputFormat={locale.get('timeFormat').input}
+                                    mask={locale.get('timeFormat').mask}
+                                    label={locale.get('timeFormat').title}
                                     value={s}
                                     onChange={(val) => {
                                         setChestConfig({...chestConfig, ChestSmallWait: toSeconds(val)})
@@ -192,51 +195,51 @@ export default function ChestsGD(props) {
 
 
                     <div className={styles.CardBox}>
-                        <h3>Большой сундук</h3>
+                        <h3>{locale.get("big")}</h3>
                         <div className={styles.SettingsPlato}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={orbsIcon.src} style={{height:"1em"}}/></IconButton>Орбы</span>
+                            <span style={{fontSize:"13pt"}}><IconButton><img src={orbsIcon.src} style={{height:"1em"}}/></IconButton>{locale.get("drop")[0]}</span>
                             <span>
-                                <FruitThinField label={"Минимум"} value={chestConfig.ChestBigOrbsMin}
+                                <FruitThinField label={locale.get("minMax")[0]} value={chestConfig.ChestBigOrbsMin}
                                                 onChange={(evt)=>setChestConfig({...chestConfig,
                                                     ChestBigOrbsMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                                 })}/>
                                 <span style={{margin:".5rem"}} />
-                            <FruitThinField label={"Максимум"} value={chestConfig.ChestBigOrbsMax}
+                            <FruitThinField label={locale.get("minMax")[1]} value={chestConfig.ChestBigOrbsMax}
                                             onChange={(evt)=>setChestConfig({...chestConfig,
                                                 ChestBigOrbsMax: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                             })}/>
                             </span>
                         </div>
                         <div className={styles.SettingsPlato} style={{marginTop:"1rem"}}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={diamondsIcon.src} style={{height:"1em"}}/></IconButton>Алмазы</span>
+                            <span style={{fontSize:"13pt"}}><IconButton><img src={diamondsIcon.src} style={{height:"1em"}}/></IconButton>{locale.get("drop")[1]}</span>
                             <span>
-                                <FruitThinField label={"Минимум"} value={chestConfig.ChestBigDiamondsMin}
+                                <FruitThinField label={locale.get("minMax")[0]} value={chestConfig.ChestBigDiamondsMin}
                                                 onChange={(evt)=>setChestConfig({...chestConfig,
                                                     ChestBigDiamondsMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                                 })}/>
                                 <span style={{margin:".5rem"}} />
-                            <FruitThinField label={"Максимум"} value={chestConfig.ChestBigDiamondsMax}
+                            <FruitThinField label={locale.get("minMax")[1]} value={chestConfig.ChestBigDiamondsMax}
                                             onChange={(evt)=>setChestConfig({...chestConfig,
                                                 ChestBigDiamondsMax: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                             })}/>
                             </span>
                         </div>
                         <div className={styles.SettingsPlato} style={{marginTop:"1rem"}}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={keysIcon.src} style={{height:"1em"}}/></IconButton>Ключи</span>
+                            <span style={{fontSize:"13pt"}}><IconButton><img src={keysIcon.src} style={{height:"1em"}}/></IconButton>{locale.get("drop")[2]}</span>
                             <span>
-                                <FruitThinField label={"Минимум"} value={chestConfig.ChestBigKeysMin}
+                                <FruitThinField label={locale.get("minMax")[0]} value={chestConfig.ChestBigKeysMin}
                                                 onChange={(evt)=>setChestConfig({...chestConfig,
                                                     ChestBigKeysMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                                 })}/>
                                 <span style={{margin:".5rem"}} />
-                            <FruitThinField label={"Максимум"} value={chestConfig.ChestBigKeysMax}
+                            <FruitThinField label={locale.get("minMax")[1]} value={chestConfig.ChestBigKeysMax}
                                             onChange={(evt)=>setChestConfig({...chestConfig,
                                                 ChestBigKeysMax: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
                                             })}/>
                             </span>
                         </div>
                         <div className={styles.SettingsPlato} style={{marginTop:"1rem"}}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={shardIce.src} style={{height:"1em"}}/></IconButton>Шарды</span>
+                            <span style={{fontSize:"13pt"}}><IconButton><img src={shardIce.src} style={{height:"1em"}}/></IconButton>{locale.get("drop")[3]}</span>
                             <FruitToggleButtonGroup
                                 size={"small"}
                                 sx={{backgroundColor:"var(--bkg-color)", width:"fit-content", borderRadius: "8px"}}
@@ -262,14 +265,14 @@ export default function ChestsGD(props) {
                             </FruitToggleButtonGroup>
                         </div>
                         <div className={styles.SettingsPlato} style={{marginTop:"1rem"}}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={timeIcon.src} style={{height:"1em"}}/></IconButton>Таймаут</span>
+                            <span style={{fontSize:"13pt"}}><IconButton><img src={timeIcon.src} style={{height:"1em"}}/></IconButton>{locale.get("timeout")}</span>
                             <TimePicker
                                 ampm={false}
                                 openTo="hours"
                                 views={['hours', 'minutes', 'seconds']}
-                                inputFormat="HHч mmм ssс"
-                                mask="__ч __м __с"
-                                label="Таймаут"
+                                inputFormat={locale.get('timeFormat').input}
+                                mask={locale.get('timeFormat').mask}
+                                label={locale.get('timeFormat').title}
                                 value={sb}
                                 onChange={(val) => {
                                     setChestConfig({...chestConfig, ChestBigWait: toSeconds(val)})
@@ -284,7 +287,7 @@ export default function ChestsGD(props) {
 
                 <Button variant="contained" className={styles.SlimButton}
                         style={{marginTop:"2rem"}}
-                        onClick={saveChests}>Сохранить</Button>
+                        onClick={saveChests}>{locale.get("save")}</Button>
             </PanelContent>
         </LocalizationProvider>
     )

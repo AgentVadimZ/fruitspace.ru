@@ -4,6 +4,8 @@ import {profileLocale} from "./loc/profile";
 import {productGDLocale} from "./loc/product/gd";
 import {indexLocale} from "./loc";
 import {orderGDPSLocale} from "./loc/order/gd";
+import {storeLocale} from "./loc/manage/store";
+import {gdManageLocale} from "./loc/manage/gd.js";
 
 
 const translationList = {
@@ -11,7 +13,10 @@ const translationList = {
     ...profileLocale,
     ...productGDLocale,
     ...indexLocale,
-    ...orderGDPSLocale
+    ...orderGDPSLocale,
+    ...storeLocale,
+
+    ...gdManageLocale
 }
 
 export default function useLocale(router) {

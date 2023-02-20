@@ -1,0 +1,7 @@
+
+
+const gdRolesLocale = {
+
+}
+
+export {gdRolesLocale}

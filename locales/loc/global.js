@@ -2,6 +2,11 @@
 
 const globalLocale = {
 
+    create: {
+        ru: "Создать",
+        en: "Create"
+    },
+
     navName: {
         ru: "Игровой хостинг",
         en: "Game Hosting"
@@ -25,6 +30,24 @@ const globalLocale = {
         ru: "Мои магазины",
         en: "My shops"
     },
+
+    panelSideNav: {
+        ru: {
+            dashboard: "Главная",
+            servers: "Мои серверы",
+            account: "Аккаунт",
+            billing: "Биллинг",
+            shops: "Мои магазины"
+        },
+        en: {
+            dashboard: "Dashboard",
+            servers: "My servers",
+            account: "Account",
+            billing: "Billing",
+            shops: "My shops"
+        }
+    },
+
 
     "footer.about": {
         ru: "О нас",
@@ -89,6 +112,60 @@ const globalLocale = {
         }
     },
 
+    funcLvlPlayerServer: {
+        ru: (players, levels)=>{
+            let str=""+players
+            let cplayers=players%10
+            switch (cplayers) {
+                case 1:
+                    str+=" игрок"
+                    break
+                case 2:
+                case 3:
+                case 4:
+                    str+=" игрока"
+                    break
+                default:
+                    str+=" игроков"
+            }
+            str+=" • "+levels
+            let clevels=levels%10
+            switch (clevels) {
+                case 1:
+                    str+=" уровень"
+                    break
+                case 2:
+                case 3:
+                case 4:
+                    str+=" уровня"
+                    break
+                default:
+                    str+=" уровней"
+            }
+            return str
+        },
+        en: (players, levels)=>{
+            let str=""+players
+            let cplayers=players%10
+            switch (cplayers) {
+                case 1:
+                    str+=" player"
+                    break
+                default:
+                    str+=" players"
+            }
+            str+=" • "+levels
+            let clevels=levels%10
+            switch (clevels) {
+                case 1:
+                    str+=" level"
+                    break
+                default:
+                    str+=" levels"
+            }
+            return str
+        }
+    },
 
     funcParseErr: {
         ru: (err)=>{

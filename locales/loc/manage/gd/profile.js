@@ -1,0 +1,7 @@
+
+
+const gdProfileLocale = {
+
+}
+
+export {gdProfileLocale}

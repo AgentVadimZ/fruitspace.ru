@@ -7,9 +7,12 @@ import QuestionMark from '../assets/icons/cross.png'
 import RightSvg from "../assets/icons/right.svg";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Link from "next/link";
+import {useGlobalLocale} from "../../locales/useLocale";
 
 
 export default function ServerItem(props) {
+
+    const localeGlobal = useGlobalLocale(props.router)
 
     const Types = {
         "gd": GDLogo.src,
@@ -20,7 +23,7 @@ export default function ServerItem(props) {
         <Link href={"/product/order/"+props.type}>
             <div className={styles.ServerCard}>
                 <AddCircleIcon className={styles.AddIcon}/>
-                <h3 className={styles.AddText}>Создать</h3>
+                <h3 className={styles.AddText}>{localeGlobal.get('create')}</h3>
             </div>
         </Link>
     ):(

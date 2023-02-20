@@ -13,8 +13,8 @@ import {Visibility, VisibilityOff} from "@mui/icons-material";
 import toast, {Toaster} from "react-hot-toast";
 import {useRouter} from "next/router";
 import {useCookies} from "react-cookie";
-import ParseError from "../../components/ErrParser";
 import useEffectOnce from "../../components/Hooks";
+import useLocale, {useGlobalLocale} from "../../locales/useLocale";
 
 
 
@@ -39,6 +39,11 @@ export default function Login(props) {
         lang: "ru"  //! change in .one version to en
     })
 
+    const locale = useLocale(props.router)
+    const localeGlobal = useGlobalLocale(props.router)
+
+    const ParseError = localeGlobal.get('funcParseErr')
+
     useEffectOnce(()=>{
         toast.dismiss()
     })
@@ -50,14 +55,14 @@ export default function Login(props) {
             method: 'POST', body: JSON.stringify(formData)
         }).then(r => r.json())
         if (resp.status==="ok") {
-            toast("На почту было отправлено письмо с подтверждением", {
+            toast(locale.get('confirmationSent'), {
                 duration: 5000,
                 style: {
                     color: "white",
                     backgroundColor: "var(--btn-color)"
                 }
             })
-            toast.success("Регистрация прошла успешно", {
+            toast.success(locale.get('regSuccess'), {
                 duration: 5000,
                 style: {
                     color: "white",
@@ -65,7 +70,7 @@ export default function Login(props) {
                 }
             })
         }else{
-            toast.error("Произошла ошибка: "+ParseError(resp.message), {
+            toast.error(locale.get('err')+ParseError(resp.message), {
                 duration: 10000,
                 style: {
                     color: "white",
@@ -82,7 +87,7 @@ export default function Login(props) {
             method: 'POST', body: JSON.stringify(formData), credentials: "include"
         }).then(r => r.json())
         if (resp.status==="ok") {
-            toast.success("Вход произошел успешно", {
+            toast.success(locale.get('loginSuccess'), {
                 duration: 1000,
                 style: {
                     color: "white",
@@ -93,7 +98,7 @@ export default function Login(props) {
                 {path:"/",expires:new Date(new Date().getTime()+(1000*60*60*24*30)), secure:true})
             setTimeout(()=>router.push("/profile/"),1000)
         }else{
-            toast.error("Произошла ошибка: "+ParseError(resp.message), {
+            toast.error(locale.get('err')+ParseError(resp.message), {
                 duration: 10000,
                 style: {
                     color: "white",
@@ -111,7 +116,7 @@ export default function Login(props) {
             method: 'POST', body: JSON.stringify(formData), credentials: "include"
         }).then(r => r.json())
         if (resp.status==="ok") {
-            toast.success("Пароль успешно сброшен. Проверьте почту", {
+            toast.success(locale.get('passResetSuccess'), {
                 duration: 1000,
                 style: {
                     color: "white",
@@ -119,7 +124,7 @@ export default function Login(props) {
                 }
             })
         }else{
-            toast.error("Произошла ошибка: "+ParseError(resp.message), {
+            toast.error(locale.get('err')+ParseError(resp.message), {
                 duration: 10000,
                 style: {
                     color: "white",
@@ -133,14 +138,13 @@ export default function Login(props) {
 
     return (
         <>
-            <GlobalHead title="Игровой хостинг"/>
-            {/*<Script src="//code.jivo.ru/widget/QDbblcMLJ0" strategy="lazyOnload"/>*/}
+            <GlobalHead title={localeGlobal.get('navName')}/>
             <GlobalNav />
             <Toaster/>
             <div className={styles.main}>
                 <div className={styles.form}>
                     <img src={logo.src} />
-                    <h3>{regMode?"Зарегистрироваться":(forgotPass?"Восстановить пароль":"Войти")}</h3>
+                    <h3>{regMode?locale.get('loginO')[0]:locale.get('loginO')[forgotPass?1:2]}</h3>
                     <form>
                         {!forgotPass && <FruitTextField fullWidth label="@username" type="text" variant="outlined" style={{margin:".5rem"}}
                                         value={formData.uname||''} onChange={(evt)=>{setFormData({
@@ -155,19 +159,19 @@ export default function Login(props) {
                             email: evt.target.value.replaceAll(/[^a-zA-Z0-9!#$%&'*+\-/=?^_`{|}~.@]/g,'')
                         })}} />}
 
-                        {regMode && <FruitTextField fullWidth label="Имя (англ)" type="text" variant="outlined" style={{margin:".5rem"}}
+                        {regMode && <FruitTextField fullWidth label={(locale.get('regField')[0])} type="text" variant="outlined" style={{margin:".5rem"}}
                                         value={formData.name||''} onChange={(evt)=>{setFormData({
                             ...formData,
                             name: evt.target.value.replaceAll(/[^a-zA-Z]/g,'')
                         })}} />}
 
-                        {regMode && <FruitTextField fullWidth label="Фамилия (англ)" type="text" variant="outlined" style={{margin:".5rem"}}
+                        {regMode && <FruitTextField fullWidth label={(locale.get('regField')[1])} type="text" variant="outlined" style={{margin:".5rem"}}
                                                     value={formData.surname||''} onChange={(evt)=>{setFormData({
                             ...formData,
                             surname: evt.target.value.replaceAll(/[^a-zA-Z]/g,'')
                         })}} />}
 
-                        {!forgotPass && <FruitTextField fullWidth label="Пароль" type={formData.showPassword?"text":"password"}
+                        {!forgotPass && <FruitTextField fullWidth label={(locale.get('regField')[2])} type={formData.showPassword?"text":"password"}
                                         variant="outlined"
                                         style={{margin:".5rem"}} value={formData.password||''}
                                         onChange={(evt)=>{setFormData({
@@ -193,14 +197,15 @@ export default function Login(props) {
                             theme="dark"
                         />
                         <LoadingButton loading={loading} className={styles.formButton} onClick={(regMode?register:(forgotPass?resetPassword:login))}>
-                            {regMode?"Зарегистрироваться":"Войти"}
+                            {regMode?locale.get('loginO')[0]:locale.get('loginO')[forgotPass?1:2]}
                         </LoadingButton>
-                        { !forgotPass && <p style={{margin:".5rem"}}>{regMode?"Уже есть аккаунт?":"Нет аккаунта?"}
+
+                        { !forgotPass && <p style={{margin:".5rem"}}>{locale.get('accPass')[regMode?0:1]}
                             <span style={{cursor:"pointer", color:"#0d6efd", fontWeight:"bolder"}}
-                            onClick={()=>setRegMode(!regMode)}> {regMode?"Войти":"Зарегистрироваться"}</span></p>}
-                        {!regMode && <p style={{margin:".5rem"}}>{forgotPass?"А нет,":"Хуже,"}
+                            onClick={()=>setRegMode(!regMode)}> {locale.get('loginO')[regMode?2:0]}</span></p>}
+                        {!regMode && <p style={{margin:".5rem"}}>{locale.get('accPass')[forgotPass?4:5]}
                             <span style={{cursor:"pointer", color:"#0d6efd", fontWeight:"bolder"}}
-                                  onClick={()=>setForgotPass(!forgotPass)}> {forgotPass?"я вспомнил пароль":" я забыл пароль"}</span></p>}
+                                  onClick={()=>setForgotPass(!forgotPass)}> {locale.get('accPass')[forgotPass?2:3]}</span></p>}
 
                     </form>
                 </div>

@@ -1,0 +1,7 @@
+
+
+const gdActionsLocale = {
+
+}
+
+export {gdActionsLocale}

@@ -403,7 +403,16 @@ img.adornments {
     margin: 0 .5rem;
 }
 
+.MusicSearchBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
+.MusicSearchSlick {
+    display: flex;
+    align-items: center;
+}
 
 
 
@@ -506,5 +515,11 @@ img.adornments {
     }
     .PlayerVolumeBox > span {
         padding: 13px 0 !important;
+    }
+
+
+    .MusicSearchBox {
+        flex-direction: column;
+        justify-content: center;
     }
 }

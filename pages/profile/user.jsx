@@ -5,6 +5,7 @@ import PanelContent from "../../components/Global/PanelContent";
 import UserProfileCard from "../../components/Panel/UserProfileCard";
 import toast, {Toaster} from "react-hot-toast";
 import useEffectOnce from "../../components/Hooks";
+import useLocale from "../../locales/useLocale";
 
 
 export default function User(props) {
@@ -12,14 +13,16 @@ export default function User(props) {
         toast.dismiss()
     })
 
+    const locale = useLocale(props.router)
+
     return (
         <>
-            <GlobalHead title="Аккаунт"/>
+            <GlobalHead title={locale.get('nav')}/>
             <GlobalNav />
             <PanelSideNav />
             <div><Toaster/></div>
             <PanelContent>
-                <UserProfileCard/>
+                <UserProfileCard router={props.router}/>
             </PanelContent>
         </>
     )

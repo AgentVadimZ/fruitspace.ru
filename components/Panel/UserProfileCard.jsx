@@ -12,9 +12,9 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import LockPersonIcon from '@mui/icons-material/LockPerson';
 import PasswordIcon from '@mui/icons-material/Password';
 import {useCookies} from "react-cookie";
-import ParseError from "../ErrParser";
 import toast from "react-hot-toast";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
+import useLocale, {useGlobalLocale} from "../../locales/useLocale";
 
 export default function UserProfileCard(props) {
 
@@ -38,6 +38,11 @@ export default function UserProfileCard(props) {
         code: ""
     })
 
+    const locale = useLocale(props.router)
+    const localeGlobal = useGlobalLocale(props.router)
+
+    const ParseError = localeGlobal.get('funcParseErr')
+
     const getTOTP = ()=> {
         fetch("https://api.fruitspace.one/v1/user/totp",
             {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
@@ -45,7 +50,7 @@ export default function UserProfileCard(props) {
             if(resp.status==="ok") {
                 setTotp(resp)
             }else{
-                toast.error("Произошла ошибка: "+ParseError(resp.message), {
+                toast.error(locale.get('err')+ParseError(resp.message), {
                     duration: 10000,
                     style: {
                         color: "white",
@@ -61,7 +66,7 @@ export default function UserProfileCard(props) {
             {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
                 body: JSON.stringify({name:user.name, surname:user.surname})}).then(resp=>resp.json()).then((resp)=>{
             if(resp.status==="ok") {
-                toast.success("Профиль обновлен успешно", {
+                toast.success(locale.get('profileUpdateSuccess'), {
                     duration: 1000,
                     style: {
                         color: "white",
@@ -69,7 +74,7 @@ export default function UserProfileCard(props) {
                     }
                 })
             }else{
-                toast.error("Произошла ошибка: "+ParseError(resp.message), {
+                toast.error(locale.get('err')+ParseError(resp.message), {
                     duration: 10000,
                     style: {
                         color: "white",
@@ -82,7 +87,7 @@ export default function UserProfileCard(props) {
 
     const updatePassword = ()=> {
         if (pwdResetData.newpass!==pwdResetData.newpassConfirm) {
-            toast.error("Новые пароли не совпадают", {
+            toast.error(locale.get('passDontMatch'), {
                 duration: 10000,
                 style: {
                     color: "white",
@@ -95,7 +100,7 @@ export default function UserProfileCard(props) {
             {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
                 body: JSON.stringify({password:pwdResetData.current, newPassword: pwdResetData.newpass})}).then(resp=>resp.json()).then((resp)=>{
             if(resp.status==="ok") {
-                toast.success("Пароль обновлен успешно", {
+                toast.success(locale.get('passChangeSuccess'), {
                     duration: 1000,
                     style: {
                         color: "white",
@@ -103,7 +108,7 @@ export default function UserProfileCard(props) {
                     }
                 })
             }else{
-                toast.error("Произошла ошибка: "+ParseError(resp.message), {
+                toast.error(locale.get('err')+ParseError(resp.message), {
                     duration: 10000,
                     style: {
                         color: "white",
@@ -126,7 +131,7 @@ export default function UserProfileCard(props) {
                 {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
                     body: datax}).then(resp=>resp.json()).then((resp)=>{
                 if(resp.status==="ok") {
-                    toast.success("Аватар обновлен успешно", {
+                    toast.success(locale.get('picChangeSuccess'), {
                         duration: 1000,
                         style: {
                             color: "white",
@@ -135,7 +140,7 @@ export default function UserProfileCard(props) {
                     })
                     setUser((usr)=>({...usr, profilePic: resp.profilePic}))
                 }else{
-                    toast.error("Произошла ошибка: "+ParseError(resp.message), {
+                    toast.error(locale.get('err')+ParseError(resp.message), {
                         duration: 10000,
                         style: {
                             color: "white",
@@ -153,7 +158,7 @@ export default function UserProfileCard(props) {
                 {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
                     body: datax}).then(resp=>resp.json()).then((resp)=>{
                 if(resp.status==="ok") {
-                    toast.success("Аватар обновлен успешно", {
+                    toast.success(locale.get('picChangeSuccess'), {
                         duration: 1000,
                         style: {
                             color: "white",
@@ -162,7 +167,7 @@ export default function UserProfileCard(props) {
                     })
                     setUser((usr)=>({...usr, profilePic: resp.profilePic}))
                 }else{
-                    toast.error("Произошла ошибка: "+ParseError(resp.message), {
+                    toast.error(locale.get('err')+ParseError(resp.message), {
                         duration: 10000,
                         style: {
                             color: "white",
@@ -180,7 +185,7 @@ export default function UserProfileCard(props) {
             <div className={styles.ProfileBox}>
                 <div className={styles.ProfilePic}>
                     <img src={user.profilePic} />
-                    <Tooltip title="Изменить фотографию (Max: 5MB)" placement="right" arrow open={showEditPicHint}>
+                    <Tooltip title={locale.get('picChange')} placement="right" arrow open={showEditPicHint}>
                         <EditIcon onMouseEnter={()=>setPicEditHint(true)} onMouseLeave={()=>setPicEditHint(false)}
                         onClick={updateProfilePic}/>
                     </Tooltip>
@@ -188,12 +193,12 @@ export default function UserProfileCard(props) {
 
                 <div className={styles.UnameBox}>
                     <div className={styles.UnameNameBox}>
-                        <FruitTextField fullWidth label="Имя (англ)" type="text" variant="outlined" style={{margin:".5rem"}}
+                        <FruitTextField fullWidth label={locale.get('accInfo')[0]} type="text" variant="outlined" style={{margin:".5rem"}}
                                     value={user.name} onChange={(evt)=>{setUser({
                         ...user,
                         name: evt.target.value.replaceAll(/[^a-zA-Z]/g,'')
                         })}} />
-                        <FruitTextField fullWidth label="Фамилия (англ)" type="text" variant="outlined" style={{margin:".5rem"}}
+                        <FruitTextField fullWidth label={locale.get('accInfo')[1]} type="text" variant="outlined" style={{margin:".5rem"}}
                                     value={user.surname} onChange={(evt)=>{setUser({
                         ...user,
                         surname: evt.target.value.replaceAll(/[^a-zA-Z]/g,'')
@@ -201,23 +206,23 @@ export default function UserProfileCard(props) {
                     </div>
                     <h3>@{user.uname}</h3>
                     <div className={styles.UnameBoxButtons}>
-                        <Button variant="contained" className={`${styles.cardButton} btnError`} onClick={(e)=>updateProfilePic(e,true)}>Сбросить фотографию</Button>
-                        <Button variant="contained" className={styles.cardButton} onClick={updateName}>Сохранить</Button>
+                        <Button variant="contained" className={`${styles.cardButton} btnError`} onClick={(e)=>updateProfilePic(e,true)}>{locale.get('reset')}</Button>
+                        <Button variant="contained" className={styles.cardButton} onClick={updateName}>{locale.get('save')}</Button>
                     </div>
                 </div>
             </div>
 
             <div className={styles.SettingsBox}>
-                <SettingsItem text="Изменить пароль" onClick={()=>setBackdrop("password")}><PasswordIcon className={styles2.AddIcon}/></SettingsItem>
-                <SettingsItem text={user.is2fa?"Отключить 2ФА":"Включить 2ФА"} onClick={()=>setBackdrop("2fa")}><LockPersonIcon className={styles2.AddIcon}/></SettingsItem>
+                <SettingsItem text={locale.get('options')[0]} onClick={()=>setBackdrop("password")}><PasswordIcon className={styles2.AddIcon}/></SettingsItem>
+                <SettingsItem text={locale.get('options')[user.is2fa?1:2]} onClick={()=>setBackdrop("2fa")}><LockPersonIcon className={styles2.AddIcon}/></SettingsItem>
             </div>
 
             <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={backdrop!="none"} onClick={()=>setBackdrop("none")}>
 
                 {backdrop==="password" && <div className={styles3.BackdropBox} onClick={(e)=>e.stopPropagation()}>
-                    <h3>Изменить пароль</h3>
-                    <FruitThinField fullWidth label="Текущий пароль" type={pwdResetData.showCurrent?"text":"password"} variant="outlined" value={pwdResetData.current} style={{margin:".5rem 0"}}
+                    <h3>{locale.get('chPassword')[0]}</h3>
+                    <FruitThinField fullWidth label={locale.get('chPassword')[1]} type={pwdResetData.showCurrent?"text":"password"} variant="outlined" value={pwdResetData.current} style={{margin:".5rem 0"}}
                     onChange={(evt)=>setPwdResetData({...pwdResetData, current: evt.target.value})}
                                     InputProps={{
                                         endAdornment: (
@@ -229,7 +234,7 @@ export default function UserProfileCard(props) {
                                             </InputAdornment>
                                         )
                                     }}/>
-                    <FruitThinField fullWidth label="Новый пароль" type={pwdResetData.showNew?"text":"password"} variant="outlined" value={pwdResetData.newpass} style={{margin:".5rem 0"}}
+                    <FruitThinField fullWidth label={locale.get('chPassword')[2]} type={pwdResetData.showNew?"text":"password"} variant="outlined" value={pwdResetData.newpass} style={{margin:".5rem 0"}}
                                     onChange={(evt)=>setPwdResetData({...pwdResetData, newpass: evt.target.value})}
                                     InputProps={{
                                         endAdornment: (
@@ -241,27 +246,27 @@ export default function UserProfileCard(props) {
                                             </InputAdornment>
                                         )
                                     }}/>
-                    <FruitThinField fullWidth label="Подтвердите новый пароль" type={pwdResetData.showNew?"text":"password"} variant="outlined" value={pwdResetData.newpassConfirm} style={{margin:".5rem 0"}}
+                    <FruitThinField fullWidth label={locale.get('chPassword')[3]} type={pwdResetData.showNew?"text":"password"} variant="outlined" value={pwdResetData.newpassConfirm} style={{margin:".5rem 0"}}
                                     onChange={(evt)=>setPwdResetData({...pwdResetData, newpassConfirm: evt.target.value})}/>
                     <div className={styles3.CardBottom}>
-                        <Button variant="contained" className={styles3.SlimButton} onClick={updatePassword}>Изменить пароль</Button>
+                        <Button variant="contained" className={styles3.SlimButton} onClick={updatePassword}>{locale.get('chPassword')[0]}</Button>
                         <Button variant="contained" className={`${styles3.SlimButton} ${styles3.btnError}`}
-                                onClick={()=>setBackdrop("none")}>Отмена</Button>
+                                onClick={()=>setBackdrop("none")}>{locale.get('cancel')}</Button>
                     </div>
                 </div>}
 
                 {backdrop==="2fa" && <div className={styles3.BackdropBox} onClick={(e)=>e.stopPropagation()}>
-                    <h3>Двухфакторная аутентификация</h3>
+                    <h3>{locale.get('twoFA')[0]}</h3>
                     {totp.image!=="" && <>
                         <img src={totp.image} style={{borderRadius:"4px", margin:"0 auto", display:"block"}} />
-                        <p>Секрет: <span className={styles3.CodeBlock}>{totp.secret}</span></p>
-                        <FruitThinField fullWidth label="Введите код (ничего не делает)" type="text" variant="outlined" value={totp.code} style={{margin:".5rem 0"}}
+                        <p>{locale.get('twoFA')[3]}: <span className={styles3.CodeBlock}>{totp.secret}</span></p>
+                        <FruitThinField fullWidth label={locale.get('twoFA')[1]} type="text" variant="outlined" value={totp.code} style={{margin:".5rem 0"}}
                                         onChange={(evt)=>setTotp({...totp, code: evt.target.value.replaceAll(/[^0-9]/g,'')})}/>
                     </>}
                     <div className={styles3.CardBottom}>
-                        <Button variant="contained" className={`${styles3.SlimButton}`} onClick={()=>getTOTP()}>Запросить код</Button>
+                        <Button variant="contained" className={`${styles3.SlimButton}`} onClick={()=>getTOTP()}>{locale.get('twoFA')[2]}</Button>
                         <Button variant="contained" className={`${styles3.SlimButton} ${styles3.btnError}`}
-                                onClick={()=>setBackdrop("none")}>Выйти</Button>
+                                onClick={()=>setBackdrop("none")}>{locale.get('cancel')}</Button>
                     </div>
                 </div>}
             </Backdrop>

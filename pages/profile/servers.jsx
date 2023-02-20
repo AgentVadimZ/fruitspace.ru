@@ -14,6 +14,7 @@ import {UserState} from "../../states/user";
 import {useCookies} from "react-cookie";
 import useEffectOnce from "../../components/Hooks";
 import toast from "react-hot-toast";
+import useLocale, {useGlobalLocale} from "../../locales/useLocale";
 
 
 export default function Servers(props) {
@@ -30,6 +31,11 @@ export default function Servers(props) {
         mc: [],
         gta: []
     })
+
+    const locale = useLocale(props.router)
+    const localeGlobal = useGlobalLocale(props.router)
+
+    const ParseDesc = localeGlobal.get('funcLvlPlayerServer')
 
     useEffectOnce(()=>{
         toast.dismiss()
@@ -48,7 +54,7 @@ export default function Servers(props) {
     useEffect(()=>{setTab(s?s:"gd")},[s])
     return (
         <>
-            <GlobalHead title="Мои серверы"/>
+            <GlobalHead title={locale.get('nav')}/>
             <GlobalNav />
             <PanelSideNav />
             <PanelContent>
@@ -62,22 +68,22 @@ export default function Servers(props) {
                     </TabsList>
                     <TabPanel value="gd">
                         {servers.gd?servers.gd.map((val, i)=>(
-                            <ServerItem key={i} type="gd" name={val.srvname} plan={GetGDPlan(val.plan)}
+                            <ServerItem key={i} type="gd" name={val.srvname} plan={GetGDPlan(val.plan)} router={props.router}
                                         desc={ParseDesc(val.userCount, val.levelCount)} uuid={val.srvid} icon={val.icon} />
                             )):""}
-                        <ServerItem type="gd" add/>
+                        <ServerItem router={props.router} type="gd" add/>
                     </TabPanel>
                     <TabPanel value="mc">
                         {/*<ServerItem type="mc"/>*/}
                         {/*<ServerItem type="mc"/>*/}
                         {/*<ServerItem type="mc"/>*/}
-                        <ServerItem type="mc" add/>
+                        <ServerItem router={props.router} type="mc" add/>
                     </TabPanel>
                     <TabPanel value="gta">
                         {/*<ServerItem type="gta"/>*/}
                         {/*<ServerItem type="gta"/>*/}
                         {/*<ServerItem type="gta"/>*/}
-                        <ServerItem type="gta" add/>
+                        <ServerItem router={props.router} type="gta" add/>
                     </TabPanel>
                 </TabsUnstyled>
             </PanelContent>
@@ -99,36 +105,4 @@ const GetGDPlan=(plan)=> {
                 case 4: return "Overkill"
                 default: return "???"
             }
-}
-
-const ParseDesc=(players, levels)=>{
-    let str=""+players
-    let cplayers=players%10
-    switch (cplayers) {
-        case 1:
-            str+=" игрок"
-            break
-        case 2:
-        case 3:
-        case 4:
-            str+=" игрока"
-            break
-        default:
-            str+=" игроков"
-    }
-    str+=" • "+levels
-    let clevels=levels%10
-    switch (clevels) {
-        case 1:
-            str+=" уровень"
-            break
-        case 2:
-        case 3:
-        case 4:
-            str+=" уровня"
-            break
-        default:
-            str+=" уровней"
-    }
-    return str
 }

@@ -1,0 +1,7 @@
+
+
+const gdQuestsLocale = {
+
+}
+
+export {gdQuestsLocale}

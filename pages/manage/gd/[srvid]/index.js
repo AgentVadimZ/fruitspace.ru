@@ -26,6 +26,7 @@ import toast, {Toaster} from "react-hot-toast";
 import {useRecoilState} from "recoil";
 import GDServer from "../../../../states/gd_server";
 import useEffectOnce from "../../../../components/Hooks";
+import useLocale from "../../../../locales/useLocale";
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -44,7 +45,6 @@ ChartJS.register(
 
 
 export default function ManageGD(props) {
-    const router = useRouter()
 
     const [userStatTab, setUserStatTab] = useState("7d")
     const [lvlStatTab, setLvlStatTab] = useState("7d")
@@ -55,8 +55,10 @@ export default function ManageGD(props) {
         toast.dismiss()
     })
 
+    const locale = useLocale(props.router)
+
     const copyValueR=()=>{
-        toast.success("Скопировано", {
+        toast.success(locale.get('copied'), {
             duration: 1000,
             style: {
                 color: "white",
@@ -67,21 +69,21 @@ export default function ManageGD(props) {
 
     return (
         <>
-            <GlobalHead title="Игровой хостинг"/>
+            <GlobalHead title={locale.get('nav')}/>
             <GlobalNav />
             <GDNavBar />
             <Toaster/>
             <PanelContent>
                 <div className={styles.Smallbanner}>
                     <div></div>
-                    <p>Панель в разработке. Так что сильно не привыкайте</p>
+                    <p>{locale.get("development")}</p>
                 </div>
 
                 <div className={styles.CardBox}>
-                    <h3>Вот ссылочки на скачивание, скопируй их.</h3>
-                    <p align="center">Автообновление в комплекте</p>
+                    <h3>{locale.get("links")}</h3>
+                    <p align="center">{locale.get("autoupdate")}</p>
                     <div className={styles.CardInbox}>
-                    <FruitTextField fullWidth label="Android" value={encodeURI(srv.clientAndroidURL)}
+                    <FruitTextField fullWidth label={locale.get("platform")[0]} value={encodeURI(srv.clientAndroidURL)}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -92,7 +94,7 @@ export default function ManageGD(props) {
                                         )
                                     }}
                                     disabled/>
-                    <FruitTextField fullWidth label="Windows (Лаунчер)" value={encodeURI(srv.clientWindowsURL)}
+                    <FruitTextField fullWidth label={locale.get("platform")[1]} value={encodeURI(srv.clientWindowsURL)}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -103,6 +105,17 @@ export default function ManageGD(props) {
                                         )
                                     }}
                                     disabled/>
+                        <FruitTextField fullWidth label={locale.get("platform")[2]} value={encodeURI(srv.clientIOSURL)}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText(encodeURI(srv.clientIOSURL));copyValueR()}}>
+                                                        <ContentPasteIcon/>
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            )
+                                        }}
+                                        disabled/>
                         <a href="https://telegra.ph/Dokumentaciya-dlya-ochen-umnyh-09-29"
                            style={{
                                padding: ".75rem 2rem",
@@ -110,8 +123,7 @@ export default function ManageGD(props) {
                                borderRadius: "8px",
                                margin: "0 auto",
 
-                           }}
-                        >Документация</a>
+                           }}>{locale.get("docs")}</a>
                     </div>
                 </div>
                 {/*<div className={styles.chartBox}>*/}
