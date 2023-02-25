@@ -304,7 +304,7 @@ export default function MusicGD(props) {
                                             InputProps={{
                                                 endAdornment: (
                                                     <InputAdornment position="end">
-                                                        <IconButton edge="end" onClick={searchMusic}>
+                                                        <IconButton edge="end" onClick={()=>searchMusic(sortMode)}>
                                                             <Search />
                                                         </IconButton>
                                                     </InputAdornment>

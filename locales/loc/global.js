@@ -48,6 +48,33 @@ const globalLocale = {
         }
     },
 
+    panelGDPSNav: {
+        ru: {
+            analytics: "Аналитика",
+            music: "Музыка",
+            roles: "Игроки и роли",
+            chests: "Сундуки",
+            quests: "Уровни и квесты",
+            levelpacks: "Маппаки и испытания",
+            settings: "Настройки",
+            profile: "?Профиль игрока",
+            actions: "Действия",
+            shops: "Мои магазины"
+        },
+        en: {
+            analytics: "Analytics",
+            music: "Music",
+            roles: "Players and Roles",
+            chests: "Chests",
+            quests: "Levels and Quests",
+            levelpacks: "Mappacks and Gauntlets",
+            settings: "Settings",
+            profile: "?Player profile",
+            actions: "Actions",
+            shops: "My shops"
+        }
+    },
+
 
     "footer.about": {
         ru: "О нас",

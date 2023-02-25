@@ -14,7 +14,7 @@ const gdChestsLocale = {
         en: "Failed to save chests settings"
     },
     small: {
-        ru: "Маленький сундуке",
+        ru: "Маленький сундук",
         en: "Small chest"
     },
     big: {

@@ -49,14 +49,14 @@ import {Tab, TabsList} from "../../../../components/Global/TinyTab";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAndroid, faApple, faWindows} from "@fortawesome/free-brands-svg-icons";
 import {useCookies} from "react-cookie";
-import ParseError from "../../../../components/ErrParser";
+import useLocale, {useGlobalLocale} from "../../../../locales/useLocale";
 
 
 const aligns = ["left","center","right"]
 const topSizes = [10,25,50,100,200,250,500]
 var saveToast=null;
 const deleteCode=""+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)
-export default function SettingsGD() {
+export default function SettingsGD(props) {
     const router = useRouter()
     const [srv, setSrv] = useRecoilState(GDServer)
     const [cookies, setCookie, delCookie] = useCookies(["token"])
@@ -101,6 +101,14 @@ export default function SettingsGD() {
         textureObj: null,
     })
 
+
+    const locale = useLocale(props.router)
+    const localeGlobal = useGlobalLocale(props.router)
+
+    const ParseError = localeGlobal.get('funcParseErr')
+
+
+
     useEffect(()=>{
         srv.coreConfig&&setSettings({
             description: {
@@ -125,12 +133,12 @@ export default function SettingsGD() {
             {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
                 body: JSON.stringify({id:srv.srvid})}).then(resp=>resp.json()).then((resp)=>{
             if(resp.status==="ok") {
-                toast.success("Пароль успешно сброшен, обновите страницу",{style: {
+                toast.success(locale.get('dbPassResetSuccess'),{style: {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})
             }else{
-                toast.error("Не удалось сбросить пароль",{style: {
+                toast.error(locale.get('dbPassResetErr'),{style: {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})
@@ -139,7 +147,7 @@ export default function SettingsGD() {
         setBackdrop("none")
     }
     const copyValueR=()=>{
-        toast.success("Скопировано", {
+        toast.success(locale.get('copy'), {
             duration: 1000,
             style: {
                 color: "white",
@@ -153,17 +161,17 @@ export default function SettingsGD() {
             {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
                 body: JSON.stringify({...settings,id:srv.srvid})}).then(resp=>resp.json()).then((resp)=>{
             if(resp.status==="ok") {
-                toast.success("Настройки сохранены, обновите страницу",{style: {
+                toast.success(locale.get('saveSuccess'),{style: {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})
             }else{
-                toast.error("Не удалось сохранить настройки",{style: {
+                toast.error(locale.get('saveErr'),{style: {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})
             }
-        }).catch(()=>toast.error("Не удалось сохранить настройки",{style: {
+        }).catch(()=>toast.error(locale.get('saveErr'),{style: {
                 color: "white",
                 backgroundColor: "var(--btn-color)"
             }}))
@@ -178,7 +186,7 @@ export default function SettingsGD() {
                 body: datax}).then(resp=>resp.json()).catch(()=>{})
 
                 if(cl.status==="ok") {
-                    toast.success("Логотип обновлен успешно", {
+                    toast.success(locale.get('logoUpd'), {
                         duration: 1000,
                         style: {
                             color: "white",
@@ -186,7 +194,7 @@ export default function SettingsGD() {
                         }
                     })
                 }else{
-                    toast.error("Произошла ошибка: "+ParseError(cl.message), {
+                    toast.error(locale.get('universalErr')+ParseError(cl.message), {
                         duration: 10000,
                         style: {
                             color: "white",
@@ -197,7 +205,7 @@ export default function SettingsGD() {
                 return cl.status==="ok"
     }
     const goBuildLab = async () => {
-        let loader = toast.loading("Таак, собираем ваши установщики...",{style: {
+        let loader = toast.loading(locale.get('goBuildLab'),{style: {
                 color: "white",
                 backgroundColor: "var(--btn-color)"
             }})
@@ -217,19 +225,19 @@ export default function SettingsGD() {
                 })}).then(resp=>resp.json()).then((resp)=>{
                     toast.dismiss(loader)
             if(resp.status==="ok"){
-                toast.success("Все готово, скоро ваши установщики будут доступны для всех",{style: {
+                toast.success(locale.get('goBuildLabSuccess'),{style: {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})
             }else{
-                toast.error("Что-то пошло не так: "+resp.error,{style: {
+                toast.error(locale.get('universalErr')+resp.error,{style: {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})
             }
         }).catch(()=>{
             toast.dismiss(loader)
-            toast.error("Проблемы с подключением",{style: {
+            toast.error(locale.get('connectionErr'),{style: {
                 color: "white",
                 backgroundColor: "var(--btn-color)"
             }})
@@ -247,13 +255,13 @@ export default function SettingsGD() {
                     }})
                 setTimeout(()=>router.push("/profile/servers/"), 5000)
             }else{
-                toast.error("Что-то пошло не так: "+resp.error,{style: {
+                toast.error(locale.get('universalErr')+resp.error,{style: {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})
             }
         }).catch(()=>{
-            toast.error("Проблемы с подключением",{style: {
+            toast.error(locale.get('connectionErr'),{style: {
                     color: "white",
                     backgroundColor: "var(--btn-color)"
                 }})
@@ -283,9 +291,9 @@ export default function SettingsGD() {
     useEffect(()=>{
         toast((
             <div>
-                <span><IconButton><SaveIcon style={{fill:"white"}}/></IconButton>Не забудьте сохранить изменения</span>
+                <span><IconButton><SaveIcon style={{fill:"white"}}/></IconButton>{locale.get('dontForget')}</span>
                 <Button variant="contained" className={`${styles.SlimButton} ${styles.btnSuccess}`}
-                        fullWidth onClick={saveData}>Сохранить</Button>
+                        fullWidth onClick={saveData}>{locale.get('save')}</Button>
             </div>),{
             duration: Infinity,
             id: "save",
@@ -298,16 +306,16 @@ export default function SettingsGD() {
 
     return (
         <>
-            <GlobalHead title="Игровой хостинг"/>
+            <GlobalHead title={locale.get('nav')}/>
             <GlobalNav />
             <GDNavBar />
             <Toaster/>
             <PanelContent>
                 <div className={styles.CardGrid}>
                     <div className={styles.CardBox}>
-                        <h3>База данных</h3>
+                        <h3>{locale.get('db')}</h3>
                         <div className={styles.CardInbox}>
-                            <FruitTextField fullWidth label="Логин" value={"halgd_"+srv.srvid||''}
+                            <FruitTextField fullWidth label={locale.get('dbFields')[0]} value={"halgd_"+srv.srvid||''}
                                             InputProps={{
                                                 endAdornment: (
                                                     <InputAdornment position="end">
@@ -318,7 +326,7 @@ export default function SettingsGD() {
                                                 )
                                             }}
                                             disabled/>
-                            <FruitTextField fullWidth label="Пароль" type={showPass?"text":"password"}
+                            <FruitTextField fullWidth label={locale.get('dbFields')[1]} type={showPass?"text":"password"}
                                             InputProps={{
                                                 endAdornment: (
                                                     <InputAdornment position="end">
@@ -336,27 +344,27 @@ export default function SettingsGD() {
                         </div>
                         <div className={styles.CardBottom}>
                             <Button variant="contained" className={`${styles.SlimButton} ${styles.btnError}`}
-                                    onClick={()=>setBackdrop("dbreset")}>Сбросить пароль</Button>
+                                    onClick={()=>setBackdrop("dbreset")}>{locale.get('dbSettings')[0]}</Button>
                             <Link href="https://db.fruitspace.one">
-                                <Button variant="contained" className={styles.SlimButton}>Перейти в БД</Button>
+                                <Button variant="contained" className={styles.SlimButton}>{locale.get('dbSettings')[1]}</Button>
                             </Link>
                         </div>
                     </div>
 
                     <div className={styles.CardBox}>
-                        <h3>Настройки ядра</h3>
+                        <h3>{locale.get('coreSettings')[0]}</h3>
                         <div className={styles.CardInbox}>
                             <div className={styles.SettingsPlato}>
-                                <p>Размер топа игроков</p>
+                                <p>{locale.get('coreSettings')[1]}</p>
                                 <FruitTextField
-                                    select label="Лидерборды" value={settings.topSize}
+                                    select label={locale.get('coreSettings')[2]} value={settings.topSize}
                                     sx={{minWidth:"8rem"}}
                                     onChange={(evt)=>setSettings({
                                         ...settings, topSize: evt.target.value,
                                     })}>
                                     {topSizes.map((option) => (
                                         <MenuItem key={option} value={option}>
-                                            {option} игроков
+                                            {option} {locale.get('coreSettings')[3]}
                                         </MenuItem>
                                     ))}
                                 </FruitTextField>
@@ -364,35 +372,31 @@ export default function SettingsGD() {
                             {srv.tariffConfig && srv.tariffConfig.CustomMusic
                             && <div className={styles.SettingsPlato}>
                                     <p>
-                                        <Tooltip title={(<span style={{fontSize:"11pt"}}>Кастомная музыка из NewGrounds, YouTube, VK и др. добавляется через панель.<br/>
-                                    В отключенном состоянии используется музыка с NewGrounds напрямую (с обходом вайтлиста)<br/>
-                                    ⚠️ Можно включить один раз, так как треки будут преобразованы</span>)}>
+                                        <Tooltip title={locale.get('tips')[0]}>
                                             <IconButton><HelpIcon/></IconButton>
                                         </Tooltip>
 
-                                        Музыка FruitSpace</p>
+                                        {locale.get('coreSettings')[5]}</p>
                                     <FruitSwitch checked={settings.spaceMusic} onChange={(e, val)=>setSettings({
                                         ...settings, spaceMusic: val,
                                     })} disabled={!!srv.isSpaceMusic} />
                                 </div>
                             }
                             <fieldset className={styles.SettingsFieldset}>
-                                <legend> <Tooltip title={(<span style={{fontSize:"11pt"}}>Кулдаун сообщений, комментариев, защита от накрутки и спама уровнями<br/><br/>
-                                • Защита от спама уровнями работает на основе частоты выкладывания уровней, поэтому иногда может по ошибке банить игроков
-                                    (например после рекламы игроки начинают строить очень много уровней за сутки). <b>Отключите, если это является проблемой</b></span>)}>
+                                <legend> <Tooltip title={locale.get('tips')[1]}>
                                     <IconButton><HelpIcon/></IconButton></Tooltip>
-                                    Aнтибот <FruitSwitch checked={settings.security.enabled} onChange={(e, val)=>setSettings({
+                                    {locale.get('coreSettings')[4]} <FruitSwitch checked={settings.security.enabled} onChange={(e, val)=>setSettings({
                                     ...settings, security: {...settings.security, enabled: val},
                                 })} />
                                 </legend>
                                 <div className={styles.SettingsPlato}>
-                                    <p>Автоактивация аккаунтов</p>
+                                    <p>{locale.get('coreSettings')[6]}</p>
                                     <FruitSwitch checked={settings.security.autoActivate} onChange={(e, val)=>setSettings({
                                         ...settings, security: {...settings.security, autoActivate: val},
                                     })} disabled={!settings.security.enabled}/>
                                 </div>
                                 <div className={styles.SettingsPlato}>
-                                    <p>Защита от спама уровнями</p>
+                                    <p>{locale.get('coreSettings')[7]}</p>
                                     <FruitSwitch checked={settings.security.levelLimit} onChange={(e, val)=>setSettings({
                                         ...settings, security: {...settings.security, levelLimit: val},
                                     })} disabled={!settings.security.enabled}/>
@@ -402,18 +406,18 @@ export default function SettingsGD() {
                     </div>
 
                     <div className={styles.CardBox}>
-                        <h3>Кастомизация сервера</h3>
+                        <h3>{locale.get('customSettings')[0]}</h3>
                         <div className={styles.CardInbox}>
                         <FruitTextField
-                            label="Описание" multiline fullWidth
+                            label={locale.get('customSettings')[1]} multiline fullWidth
                             value={settings.description.text||''}
                             onChange={(evt)=>{setSettings({...settings,
                                 description: {...settings.description, text: evt.target.value}
                             })}}
                             inputProps={{style:{textAlign: aligns[settings.description.align]}}}
                         />
-                            <p>Используйте <span className={styles.CodeBlock}>#players#</span> и <span className={styles.CodeBlock}>#levels#</span> чтобы
-                                подставить количество игроков и уровней прямо на странице загрузки</p>
+                            <p>{locale.get('aboutSectDesc')[0]} <span className={styles.CodeBlock}>#players#</span> {locale.get('aboutSectDesc')[1]} <span className={styles.CodeBlock}>#levels#</span>
+                                {' '+locale.get('aboutSectDesc')[2]}</p>
 
                         </div>
 
@@ -458,24 +462,24 @@ export default function SettingsGD() {
                     </div>
 
                     <div className={styles.CardBox}>
-                        <h3>Системные настройки</h3>
+                        <h3>{locale.get('systemSettings')[0]}</h3>
                         <div className={styles.CardInbox}>
-                            <p>Ядро <span className={styles.CodeBlock}>GhostCore | v2.X (Hybrid)</span></p>
+                            <p>{locale.get('systemSettings')[1]} <span className={styles.CodeBlock}>GhostCore | v2.X (Hybrid)</span></p>
                             <div className={styles.SettingsPlato}>
-                                <b>Управление</b>
+                                <b>{locale.get('systemSettings')[2]}</b>
                                 <span>
                                     <Button variant="contained" className={`${styles.SlimButton} ${styles.btnError}`}
-                                            onClick={()=>setBackdrop("delete")}>Удалить GDPS</Button>
+                                            onClick={()=>setBackdrop("delete")}>{locale.get('systemSettings')[3]}</Button>
                                     {srv.tariffConfig && srv.tariffConfig.Backups
                                         && <Button variant="contained" className={styles.SlimButton}
-                                            onClick={()=>setBackdrop("backups")}>Резервные копии</Button>}
+                                            onClick={()=>setBackdrop("backups")}>{locale.get('systemSettings')[4]}</Button>}
                                 </span>
                             </div>
                             <fieldset className={styles.SettingsFieldset} disabled>
-                                <legend>Модули ядра <FruitSwitch
+                                <legend>{locale.get('systemSettings')[5]} <FruitSwitch
                                     checked={!!(srv.tariffConfig && srv.tariffConfig.Modules)}/></legend>
                                 <div className={styles.SettingsPlato}>
-                                    <span><IconButton><img src={discordLogo.src} className={styles.adornments}/></IconButton>Бот Discord</span>
+                                    <span><IconButton><img src={discordLogo.src} className={styles.adornments}/></IconButton>{locale.get('systemSettings')[6]}</span>
                                     <IconButton><SettingsIcon/></IconButton>
                                 </div>
                                 <div className={styles.SettingsPlato}>
@@ -494,22 +498,18 @@ export default function SettingsGD() {
                 open={backdrop!="none"} onClick={()=>setBackdrop("none")}>
 
                 {backdrop==="dbreset" && <div className={styles.BackdropBox} onClick={(e)=>e.stopPropagation()}>
-                    <h3>⛔ Стоп-стоп-стоп!</h3>
-                    <p><b>Вы точно хотите сбросить пароль?</b><br/>Обычно сброс необходим в случае, если пароль базы данных оказался
-                    в плохих руках.</p>
-                    <p>Вы в любой момент можете узнать пароль в настройках, но мы все-равно хотим убедиться, что вы знаете, что делаете</p>
+                    {locale.get('dbResetConfirm')[0]}
                     <div className={styles.CardBottom}>
                         <Button variant="contained" className={`${styles.SlimButton} ${styles.btnError}`}
-                                onClick={ResetDBPassword}>Сбросить пароль</Button>
+                                onClick={ResetDBPassword}>{locale.get('dbResetConfirm')[1]}</Button>
                         <Button variant="contained" className={styles.SlimButton}
-                                onClick={()=>setBackdrop("none")}>Пожалуй, нет</Button>
+                                onClick={()=>setBackdrop("none")}>{locale.get('dbResetConfirm')[2]}</Button>
                     </div>
                 </div>}
 
                 {backdrop==="linksocial" && <div className={styles.BackdropBox} onClick={(e)=>e.stopPropagation()}>
-                    <h3>💬 Ссылки на медиа</h3>
-                    <p>Инвайт для Discord сервера генерируйте <b style={{color:"var(--primary-color)"} }>бессрочным</b></p>
-                    <FruitTextField fullWidth label="Паблик ВКонтакте" value={settings.description.vk||''}
+                    {locale.get('socials')[0]}
+                    <FruitTextField fullWidth label={locale.get('socials')[1]} value={settings.description.vk||''}
                                     onChange={(evt)=>setSettings({...settings, description: {
                                             ...settings.description, vk: evt.target.value
                                         }})}
@@ -530,7 +530,7 @@ export default function SettingsGD() {
                                             </InputAdornment>
                                         )
                                     }}/>
-                    <FruitTextField fullWidth label="Сервер Discord" value={settings.description.discord||''}
+                    <FruitTextField fullWidth label={locale.get('socials')[0]} value={settings.description.discord||''}
                                     onChange={(evt)=>setSettings({...settings, description: {
                                             ...settings.description, discord: evt.target.value
                                         }})}
@@ -553,38 +553,37 @@ export default function SettingsGD() {
                                     }}/>
                     <div className={styles.CardBottom}>
                         <Button variant="contained" className={styles.cardButton}
-                                onClick={()=>setBackdrop("none")}>Готово</Button>
+                                onClick={()=>setBackdrop("none")}>{locale.get('socials')[3]}</Button>
                     </div>
                 </div>}
 
                 {backdrop==="delete" && <div className={styles.BackdropBox} style={{padding:0}} onClick={(e)=>e.stopPropagation()}>
                     <div className={styles.deleteBox}>
-                        <h3>🧨Удаляем сервер?🧨</h3>
-                        <p><b>Вы точно хотите удалить сервер?</b><br/>Мы не сохраним резервные копии и сервер удалится навсгда без возврата средств.<br/></p>
+                        {locale.get('deleteConfirm')[0]}
                         <div className={styles.CardBottom}>
-                            <FruitThinField label={"Введите "+deleteCode} value={userDelCode}
+                            <FruitThinField label={locale.get('deleteConfirm')[1]+deleteCode} value={userDelCode}
                             onChange={(evt)=>setUserDelCode(evt.target.value.replaceAll(/[^0-9]/g,'').substring(0,4))}/>
                             <Button variant="contained" className={`${styles.SlimButton} ${styles.btnError}`}
                                     onClick={()=>{userDelCode===deleteCode?deleteServer()
-                                        :toast.error("Код неверный",{style: {
+                                        :toast.error(locale.get('deleteConfirm')[2],{style: {
                                                 color: "white",
                                                 backgroundColor: "var(--btn-color)"
                                             }})
-                                    }}>Удалить</Button>
+                                    }}>{locale.get('deleteConfirm')[3]}</Button>
                             <Button variant="contained" className={`${styles.SlimButton} ${styles.btnSuccess}`}
-                                    onClick={()=>setBackdrop("none")}>Отмена</Button>
+                                    onClick={()=>setBackdrop("none")}>{locale.get('deleteConfirm')[4]}</Button>
                         </div>
                     </div>
 
                 </div>}
 
                 {backdrop==="backups" && <div className={styles.BackdropBox} onClick={(e)=>e.stopPropagation()}>
-                    <h3>☁️ Резервные копии</h3>
+                    <h3>{locale.get('backups')[0]}</h3>
                     <List>
                         {srv.backups.map((val,i)=>(
                                 <ListItem key={i} className={styles.hoverable} secondaryAction={
                                     <IconButton edge="end">
-                                        <CloudUploadIcon onClick={()=>toast.success("Сделаем вид, что копия "+val.date+" восстановлена",{style: {
+                                        <CloudUploadIcon onClick={()=>toast.success(locale.get('backups')[1]+val.date+locale.get('backups')[2],{style: {
                                                 color: "white",
                                                 backgroundColor: "var(--btn-color)"
                                             }})} />
@@ -597,11 +596,10 @@ export default function SettingsGD() {
                                 </ListItem>
                             ))}
                     </List>
-                    <p>Здесь хранятся последние резервные копии (делаются раз в 3 дня).<br/>
-                    Нажмите на значок облака, чтобы восстановить</p>
+                    {locale.get('backups')[3]}
                     <div className={styles.CardBottom}>
                         <Button variant="contained" className={styles.SlimButton}
-                                onClick={()=>setBackdrop("none")}>Выйти</Button>
+                                onClick={()=>setBackdrop("none")}>{locale.get('backups')[4]}</Button>
                     </div>
                 </div>}
 
@@ -625,7 +623,7 @@ export default function SettingsGD() {
                         <input type="file" accept=".png, .jpg, .jpeg" hidden ref={uploadRef} onChange={changeIcon}/>
                         <div>
                             {srv.tariffConfig && srv.tariffConfig.GDLab.V22
-                                && <FruitThinField fullWidth label="Название" value={buildlab.srvname||srv.srvname} onChange={(evt)=>setBuildlab({
+                                && <FruitThinField fullWidth label={locale.get('buildLab')[0]} value={buildlab.srvname||srv.srvname} onChange={(evt)=>setBuildlab({
                                 ...buildlab, srvname: evt.target.value
                             })} style={{marginBottom: ".5rem"}} InputProps={{
                                 endAdornment: (
@@ -651,7 +649,7 @@ export default function SettingsGD() {
                     </div>
 
                     <fieldset className={styles.SettingsFieldset}>
-                        <legend>Установщики</legend>
+                        <legend>{locale.get('buildLab')[7]}</legend>
                         <div className={styles.SettingsPlato}>
                             <p>{buildlab.version==="2.2" && <><Chip color="warning" icon={<Warning />} label="Unstable"/>&nbsp;</>}
                                 <FontAwesomeIcon icon={faWindows}/> Windows</p>
@@ -674,17 +672,16 @@ export default function SettingsGD() {
                         </div>}
                     </fieldset>
 
-                    {buildlab.version==="2.2"&& <Alert severity="warning" style={{backgroundColor:"#ed6c02",color:"#fff",marginTop:"1rem"}}>
-                        Версия 2.2 не является официальной, поэтому может содержать баги</Alert>}
+                    {buildlab.version==="2.2"&& <Alert severity="warning" style={{backgroundColor:"#ed6c02",color:"#fff",marginTop:"1rem"}}>{locale.get('buildLab')[1]}</Alert>}
 
                     {buildlab.textures!=="default"&& <Alert severity="warning" style={{backgroundColor:"#ed6c02",color:"#fff",marginTop:"1rem"}}>
-                        Использование текстурпаков для Android приводит к большому размеру игры</Alert>}
+                        {locale.get('buildLab')[2]}</Alert>}
 
                     {srv.tariffConfig && srv.tariffConfig.GDLab.Textures
                         &&<div className={styles.SettingsPlato} style={{margin:"0 .5rem .5rem .5rem"}}>
                         <input type="file" accept=".zip, .fbundle" hidden ref={uploadTexturesRef} onChange={changeTextures}/>
 
-                        <p>Текстурпак (<span style={{color:"var(--primary-color)"}}>{buildlab.textures==="default"?"Стандартный":buildlab.textures}</span>)</p>
+                        <p>{locale.get('buildLab')[3]} (<span style={{color:"var(--primary-color)"}}>{buildlab.textures==="default"?locale.get('buildLab')[4]:buildlab.textures}</span>)</p>
                         <div style={{display:"flex"}}>
                             <IconButton className={`${styles.SquareIcon} ${styles.SquareIconGreen}`}
                                         onClick={()=>uploadTexturesRef.current.click()}>
@@ -697,9 +694,9 @@ export default function SettingsGD() {
 
                     <div className={styles.CardBottom} style={{margin:".5rem 0 0 0"}}>
                         <Button variant="contained" className={`${styles.SlimButton} ${styles.btnSuccess}`}
-                                onClick={goBuildLab}>Запуск сборки</Button>
+                                onClick={goBuildLab}>{locale.get('buildLab')[5]}</Button>
                         <Button variant="contained" className={styles.SlimButton}
-                                onClick={()=>setBackdrop("none")}>Отмена</Button>
+                                onClick={()=>setBackdrop("none")}>{locale.get('buildLab')[6]}</Button>
                     </div>
                 </div>}
             </Backdrop>
