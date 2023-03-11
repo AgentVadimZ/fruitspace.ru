@@ -11,7 +11,7 @@ export default function AuthProvider(props) {
     const [user,setUser] = useRecoilState(UserState)
     const [cookies, setCookie, delCookie] = useCookies(["token"])
     const router = useRouter()
-    useEffectOnce(()=>{
+    useEffect(()=>{
         fetch("https://api.fruitspace.one/v1/user/sso",
             {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]}}
         ).then(resp=>resp.json()).then((resp)=>{
@@ -30,8 +30,8 @@ export default function AuthProvider(props) {
 
                     servers: resp.servers
                 })
-            }else{props.RequireAuth&&router.reload("/profile/login")}
-        }).catch(()=>{props.RequireAuth&&router.reload("/profile/login")})
+            }else{props.RequireAuth&&router.push("/profile/login")}
+        }).catch(()=>{props.RequireAuth&&router.push("/profile/login")})
     },[cookies,router.pathname])
     return (<>{
         props.RequireAuth
