@@ -96,7 +96,7 @@ export default function Login(props) {
             })
             setCookie("token",resp.token,
                 {path:"/",expires:new Date(new Date().getTime()+(1000*60*60*24*30)), secure:true})
-            setTimeout(()=>router.push("/profile/"),1000)
+            setTimeout(()=>router.reload("/profile/"),1000)
         }else{
             toast.error(locale.get('err')+ParseError(resp.message), {
                 duration: 10000,

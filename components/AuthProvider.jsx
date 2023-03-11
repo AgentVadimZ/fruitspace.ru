@@ -30,8 +30,8 @@ export default function AuthProvider(props) {
 
                     servers: resp.servers
                 })
-            }else{props.RequireAuth&&router.push("/profile/login")}
-        }).catch(()=>{props.RequireAuth&&router.push("/profile/login")})
+            }else{props.RequireAuth&&router.reload("/profile/login")}
+        }).catch(()=>{props.RequireAuth&&router.reload("/profile/login")})
     },[cookies,router.pathname])
     return (<>{
         props.RequireAuth

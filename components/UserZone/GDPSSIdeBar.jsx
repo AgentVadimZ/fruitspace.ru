@@ -1,5 +1,5 @@
-import NavItem from "../../NavBar/NavItem";
-import SideBar from "../../NavBar/SideBar";
+import NavItem from "../NavBar/NavItem";
+import SideBar from "../NavBar/SideBar";
 
 import PersonIcon from '@mui/icons-material/Person';
 
@@ -23,7 +23,7 @@ import {useCookies} from "react-cookie";
 import useEffectOnce from "../Hooks";
 
 
-export default function GDNavBar(props) {
+export default function GDPSNavBar(props) {
 
     const router = useRouter();
     const srvid = router.query.srvid
@@ -35,14 +35,14 @@ export default function GDNavBar(props) {
 
 
 
-    useEffectOnce(()=>{
-        fetch("https://api.fruitspace.one/v1/manage/gd/get",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                body: JSON.stringify({id:srvid})}).then(resp=>resp.json()).then((resp)=>{
-            if(resp.srvid) setSrv(resp);
-            else router.push("/profile/servers");
-        })
-    })
+    // useEffectOnce(()=>{
+    //     fetch("https://api.fruitspace.one/v1/manage/gd/get",
+    //         {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
+    //             body: JSON.stringify({id:srvid})}).then(resp=>resp.json()).then((resp)=>{
+    //         if(resp.srvid) setSrv(resp);
+    //         else router.push("/profile/servers");
+    //     })
+    // })
 
     return srv.tariffConfig?(
         <SideBar>

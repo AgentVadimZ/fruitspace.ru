@@ -24,6 +24,7 @@ import {useRouter} from "next/router";
 import {useRecoilState} from "recoil";
 import {UserState} from "../../states/user";
 import {useCookies} from "react-cookie";
+import {useGlobalLocale} from "../../locales/useLocale";
 
 
 export default function GlobalGDPSNav(props) {
@@ -32,6 +33,9 @@ export default function GlobalGDPSNav(props) {
 
     const [cookies, setCookie, delCookie] = useCookies(["token"])
     const router = useRouter()
+
+    const globalLocale = useGlobalLocale(router)
+    const getRegionalPostfix = globalLocale.get('funcShowServers')
 
     const logout = () => {
         delCookie("token", { path: '/' })
@@ -92,8 +96,8 @@ export default function GlobalGDPSNav(props) {
                         <Link href="/profile/billing">
                             <DropdownItem leftIcon={<MonetizationOnIcon/>} rightIcon={<AddCircleIcon/>}>
                                 <p className={styles.BalBox}>
-                                    <span><AccountBalanceWalletIcon/> {prettyPrint(user.bal)}</span>
-                                    <span><StoreIcon/> {prettyPrint(user.shop_bal)}</span>
+                                    <span><AccountBalanceWalletIcon/> {user.bal}</span>
+                                    <span><StoreIcon/> {user.shop_bal}</span>
                                 </p>
                             </DropdownItem>
                         </Link>

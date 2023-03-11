@@ -8,6 +8,7 @@ import styles from "../../../../components/Manage/GDManage.module.css";
 import {useRecoilState} from "recoil";
 import GDServer from "../../../../states/gd_server";
 import {GDUserState} from "../../../../states/gd_user";
+import GDPSNavBar from "../../../../components/UserZone/GDPSSIdeBar";
 
 
 export default function FrontPage(props) {
@@ -20,7 +21,7 @@ export default function FrontPage(props) {
     return <>
         <GlobalHead title="DefaultGDPS"/>
         <GlobalGDPSNav name={"DefaultGDPS"}/>
-        {/*<GDNavBar />*/}
+        <GDPSNavBar/>
         <Toaster/>
         <PanelContent>
             <div className={styles.CardGrid}>
