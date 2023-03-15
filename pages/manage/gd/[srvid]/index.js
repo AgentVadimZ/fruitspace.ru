@@ -27,6 +27,8 @@ import {useRecoilState} from "recoil";
 import GDServer from "../../../../states/gd_server";
 import useEffectOnce from "../../../../components/Hooks";
 import useLocale from "../../../../locales/useLocale";
+import ProgressCard from "../../../../components/Cards/ProgressCard";
+import GDPSCard, {DownloadCard} from "../../../../components/Cards/GDPSCard";
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -57,9 +59,15 @@ export default function ManageGD(props) {
 
     const locale = useLocale(props.router)
 
+    let expire = new Date(srv.expireDate)
+    let expireDate = (expire.getTime() - new Date().getTime()) /1000/60/60/24
+    let expireText = `${expire.getDate()}.${expire.getMonth()+1}.${expire.getFullYear()}`+(expireDate<=0?" ❄️":"")
+    let preMax = Math.min(expireDate,365)
+
     const copyValueR=()=>{
         toast.success(locale.get('copied'), {
             duration: 1000,
+            position: "bottom-center",
             style: {
                 color: "white",
                 backgroundColor: "var(--btn-color)"
@@ -74,48 +82,22 @@ export default function ManageGD(props) {
             <GDNavBar />
             <Toaster/>
             <PanelContent>
-                <div className={styles.Smallbanner}>
-                    <div></div>
-                    <p>{locale.get("development")}</p>
+                {/*<div className={styles.Smallbanner}>*/}
+                {/*    <div></div>*/}
+                {/*    <p>{locale.get("development")}</p>*/}
+                {/*</div>*/}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 w-full md:w-auto">
+                    <GDPSCard name={srv.srvname} plan={GetGDPlan(srv.plan)} id={<span style={{color:"white"}} className={styles.CodeBlock}>{srv.srvid}</span>} icon={"https://cdn.fruitspace.one/server_icons/"+srv.icon}/>
+                    <ProgressCard color max={srv.coreConfig&&srv.coreConfig.ServerConfig.MaxUsers} now={srv.userCount} text={locale.get('chips')[0]} />
+                    <ProgressCard color max={srv.coreConfig&&srv.coreConfig.ServerConfig.MaxLevels} now={srv.levelCount} text={locale.get('chips')[1]} />
+                    <ProgressCard color date max={preMax>30?365:30} now={expireDate} text={locale.get('chips')[2]+expireText} />
+                    <DownloadCard android={srv.clientAndroidURL} windows={srv.clientWindowsURL} ios={srv.clientIOSURL} copyR={copyValueR} />
                 </div>
 
                 <div className={styles.CardBox}>
-                    <h3>{locale.get("links")}</h3>
-                    <p align="center">{locale.get("autoupdate")}</p>
+                    <h3>{locale.get("nav")}</h3>
                     <div className={styles.CardInbox}>
-                    <FruitTextField fullWidth label={locale.get("platform")[0]} value={encodeURI(srv.clientAndroidURL)}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText(encodeURI(srv.clientAndroidURL));copyValueR()}}>
-                                                    <ContentPasteIcon/>
-                                                </IconButton>
-                                            </InputAdornment>
-                                        )
-                                    }}
-                                    disabled/>
-                    <FruitTextField fullWidth label={locale.get("platform")[1]} value={encodeURI(srv.clientWindowsURL)}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText(encodeURI(srv.clientWindowsURL));copyValueR()}}>
-                                                    <ContentPasteIcon/>
-                                                </IconButton>
-                                            </InputAdornment>
-                                        )
-                                    }}
-                                    disabled/>
-                        <FruitTextField fullWidth label={locale.get("platform")[2]} value={encodeURI(srv.clientIOSURL)}
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText(encodeURI(srv.clientIOSURL));copyValueR()}}>
-                                                        <ContentPasteIcon/>
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            )
-                                        }}
-                                        disabled/>
+                        <p className="text-sm" dangerouslySetInnerHTML={{__html: locale.get("note")}}></p>
                         <a href="https://telegra.ph/Dokumentaciya-dlya-ochen-umnyh-09-29"
                            style={{
                                padding: ".75rem 2rem",
@@ -302,3 +284,14 @@ const FruitTextField = styled(TextField)({
         marginBottom: "1rem"
     },
 });
+
+const GetGDPlan=(plan)=> {
+    switch (plan) {
+        case 0:
+        case 1: return "Press Start"
+        case 2: return "Singularity"
+        case 3: return "Takeoff"
+        case 4: return "Overkill"
+        default: return "???"
+    }
+}

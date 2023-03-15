@@ -12,7 +12,7 @@
     width: 2rem;
     height: 2rem;
     background: var(--active-color);
-    z-index: 1;
+    z-index: -9;
     left: var(--nav-height);
     top: var(--nav-height);
 }
@@ -22,4 +22,10 @@
     background-color: var(--bkg-color);
     width: 100%;
     height: 100%;
+}
+
+@media screen and (max-width: 720px) {
+    .panelContent {
+        margin: 1rem 1rem 1rem calc(var(--nav-height) + 1rem);
+    }
 }

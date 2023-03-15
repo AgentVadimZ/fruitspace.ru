@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
     --bkg-color: #191921;
@@ -13,6 +16,7 @@
     --nav-height: 60px;
     font-family: Helvetica, serif;
     color-scheme: dark;
+
 }
 
 ul {

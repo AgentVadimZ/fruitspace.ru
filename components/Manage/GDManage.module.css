@@ -522,4 +522,8 @@ img.adornments {
         flex-direction: column;
         justify-content: center;
     }
+
+    .Smallbanner {
+        width: 100%;
+    }
 }
