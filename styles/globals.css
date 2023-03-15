@@ -30,6 +30,11 @@ a,p {
     color: white;
 }
 
+.svg-inline--fa {
+    display: inline-block;
+    height: 1em;
+}
+
 body {
     margin: 0;
     background-color: var(--bkg-color);
