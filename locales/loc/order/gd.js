@@ -33,7 +33,7 @@ const orderGDPSLocale = {
             ru: [
                 "Месяц",
                 "Год",
-                "Насвегда"
+                "Навсегда"
             ],
             en: [
                 "Monthly",

@@ -170,7 +170,7 @@ export default function Order(props) {
                         <ListItemText primary={<span className="text-sm">{locale.get('tSingularity').perks[3]}</span>}/>
                     </ListItem>
                 </TariffCard>}
-                {barrier <=3 && <TariffCard card={locale.get('cardPack')} discount={discount} i={suffix} name={tariffs['3'].Title} price={prc[duration](tariffs['3'])}
+                {barrier<=3 && <TariffCard card={locale.get('cardPack')} discount={discount} i={suffix} name={tariffs['3'].Title} price={prc[duration](tariffs['3'])}
                                             img="https://img.freepik.com/free-vector/modern-colorful-flow-poster-wave-liquid-shape-blue-color-background-art-design-your-design-project-vector-illustration_1142-7676.jpg"
                                             desc={locale.get('tTakeoff').desc} onClick={()=>createServer(3)}>
                     <ListItem className="py-0">
