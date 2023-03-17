@@ -13,7 +13,7 @@ const Tab = styled(TabUnstyled)`
   color: white;
   cursor: pointer;
   font-size: 12pt;
-  font-weight: bold;
+  font-weight: normal;
   background-color: transparent;
   width: 6rem;
   padding: 10px;

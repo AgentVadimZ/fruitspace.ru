@@ -31,11 +31,11 @@ export default function ProgressCard(props) {
             <div className="h-3 rounded-xl" style={{backgroundColor: "var(--btn-color)"}}>
                 <div className="h-full rounded-xl" style={{background: clr, width: width+"%"}} />
             </div>
-            <div className="flex flex-col lg:flex-row justify-between items-center">
+            <div className="flex flex-col lg:flex-col xl:flex-row justify-between items-center">
                 {props.date
                     ?<p className="text-gray-400 m-2 text-lg">{props.text}</p>
                 :<><h2 className="text-gray-400 m-2 text-3xl flex items-center">{props.now}/{props.max===-1
-                        ?<span className={"text-5xl inline-block"} style={{margin:"-0.5rem 0"}}>∞</span>:props.max}</h2>
+                        ?<span className={"text-3xl lg:text-5xl inline-block"} style={{margin:"-0.5rem 0"}}>∞</span>:props.max}</h2>
                     <p className="text-gray-400 m-2 text-lg">{props.text}</p></>}
             </div>
         </div>

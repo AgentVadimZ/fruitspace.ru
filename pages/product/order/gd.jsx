@@ -3,26 +3,43 @@ import GlobalNav from "../../../components/GlobalNav";
 import styles from "../../../components/Index.module.css";
 import {useRouter} from "next/router";
 import {styled} from "@mui/system";
-import {MenuItem, TextField} from "@mui/material";
+import {ListItem, ListItemIcon, ListItemText, MenuItem, TextField} from "@mui/material";
 import {useEffect, useState} from "react";
-import {Tab, TabsList} from "../../../components/Global/TinyTab";
+import {Tab, TabsList, TabPanel} from "../../../components/Global/Tab";
 import useEffectOnce from "../../../components/Hooks";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
 import {LoadingButton} from "@mui/lab";
 import toast, {Toaster} from "react-hot-toast";
 import {useCookies} from "react-cookie";
 import useLocale, {useGlobalLocale} from "../../../locales/useLocale";
+import TariffCard from "../../../components/Cards/TariffCard";
+import PersonIcon from "@mui/icons-material/Person";
+import MusicNoteIcon from "@mui/icons-material/MusicNote";
+import CloseIcon from "@mui/icons-material/Close";
+import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
+import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturing";
+import DesktopMacIcon from "@mui/icons-material/DesktopMac";
+import AddIcon from "@mui/icons-material/Add";
+import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
+import CloudDoneIcon from "@mui/icons-material/CloudDone";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import {useRecoilState} from "recoil";
+import GDServer from "../../../states/gd_server";
 
 
 export default function Order(props) {
 
     const router = useRouter()
     const [srv, setSrv] = useState({
+        srvid: router.query.id||"",
         name: "",
-        tariff: router.query.t||2,
         payDuration: "yr",
         promocode: ""
     })
+    const [payDurLock, setPayDurLock] = useState(false)
+    const [srvData, setSrvData] = useRecoilState(GDServer)
+
+
     const [tariffs,setTariffs] = useState({});
     const [loading, setLoading] = useState(false)
     const [cookies, setCookie, delCookie] = useCookies(["token"])
@@ -32,11 +49,11 @@ export default function Order(props) {
 
     const ParseError = localeGlobal.get('funcParseErr')
 
-    const createServer = ()=> {
+    const createServer = (tariff)=> {
         setLoading(true)
         fetch("https://api.fruitspace.one/v1/manage/gd/new",
             {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                body: JSON.stringify({name: srv.name, tariff: parseInt(srv.tariff), duration: srv.payDuration, promocode: srv.promocode})}).then(resp=>resp.json()).then((resp)=>{
+                body: JSON.stringify({srvid:srv.srvid, name: srv.name, tariff: parseInt(tariff), duration: srv.payDuration, promocode: srv.promocode})}).then(resp=>resp.json()).then((resp)=>{
                     setLoading(false)
                     if(resp.status==="ok") {
                 toast.success(locale.get('createSuccess'),{style: {
@@ -60,18 +77,130 @@ export default function Order(props) {
             }})
     })
 
+    useEffect(()=> {
+        if (srv.srvid.length===4) {
+            fetch("https://api.fruitspace.one/v1/manage/gd/get",
+                {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
+                    body: JSON.stringify({id:srv.srvid})}).then(resp=>resp.json()).then((resp)=>{
+                if(resp.srvid) {
+                    setSrvData(resp);
+                    let payDur = "yr"
+                    if (new Date(resp.expireDate).getFullYear()>2040) {
+                        payDur = "all"
+                        setPayDurLock(true)
+                    }
+                    setSrv({...srv, name: resp.srvname, payDuration: payDur})
+                }
+                else setSrv({...srv, srvid: ""})
+            }).catch(()=>setSrv({...srv, srvid: ""}))
+        }
+    }, [srv.srvid])
+
     const getLocalPrice = (tariff) => {
         if (locale.locale==="ru")
-            return ""+(tariff.PriceRUB===0?0:tariff.PriceRUB-1)+"₽"
+            return (tariff.PriceRUB===0?0:tariff.PriceRUB-1)
         else
-            return "$"+(tariff.PriceUSD===0?0:tariff.PriceUSD-0.01)
+            return (tariff.PriceUSD===0?0:tariff.PriceUSD-0.01)
     }
     const getLocalPriceYear = (tariff) => {
         if (locale.locale==="ru")
-            return ""+(tariff.PriceRUB===0?0:tariff.PriceRUB*10-1)+"₽"
+            return (tariff.PriceRUB===0?0:tariff.PriceRUB*10-1)
         else
-            return "$"+(tariff.PriceUSD===0?0:tariff.PriceUSD*10-0.01)
+            return (tariff.PriceUSD===0?0:tariff.PriceUSD*10-0.01)
     }
+    const getLocalPriceForever = (tariff) => {
+        if (locale.locale==="ru")
+            return (tariff.PriceRUB===0?0:tariff.PriceRUB*30-1)
+        else
+            return (tariff.PriceUSD===0?0:tariff.PriceUSD*30-0.01)
+    }
+
+
+
+
+
+    const createCards = (duration)=> {
+        if (Object.keys(tariffs).length===0) return;
+
+        let suffix = (locale.locale==="ru"?"₽":"$")+locale.get('period')[duration]
+        let prc = {
+            mo: getLocalPrice,
+            yr: getLocalPriceYear,
+            all: getLocalPriceForever
+        }
+        let discount = (duration==="yr"?15:0)
+        let barrier = 0
+        if(srvData.plan) barrier = srvData.plan
+
+        return (
+            <div className="flex flex-col lg:flex-row gap-8">
+                {barrier<=1 && <TariffCard card={locale.get('cardPack')} discount={discount} i={suffix} name={tariffs['1'].Title} price={prc[duration](tariffs['1'])}
+                                           img="https://img.freepik.com/free-vector/abstract-background-with-wavy-shapes_23-2148534078.jpg"
+                                           desc={locale.get('tPressStart').desc} onClick={()=>createServer(1)}>
+                    <ListItem className="py-0">
+                        <ListItemIcon><PersonIcon className="text-white"/></ListItemIcon>
+                        <ListItemText primary={<span className="text-sm">{locale.get('tPressStart').perks[0]}</span>}/>
+                    </ListItem>
+                    <ListItem className="py-0">
+                        <ListItemIcon><MusicNoteIcon className="text-white"/></ListItemIcon>
+                        <ListItemText primary={<span className="text-sm">{locale.get('tPressStart').perks[1]}</span>}/>
+                    </ListItem>
+                    <ListItem className="py-0">
+                        <ListItemIcon><CloseIcon className="text-white"/></ListItemIcon>
+                        <ListItemText primary={<span className="text-sm">{locale.get('tPressStart').perks[2]}</span>}/>
+                    </ListItem>
+                </TariffCard>}
+                {barrier<=2 && <TariffCard card={locale.get('cardPack')} discount={discount} i={suffix} name={tariffs['2'].Title} price={prc[duration](tariffs['2'])}
+                                           img="https://img.freepik.com/free-vector/gradient-wavy-background_23-2149115482.jpg"
+                                           desc={locale.get('tSingularity').desc} onClick={()=>createServer(2)}>
+                    <ListItem className="py-0">
+                        <ListItemIcon><AllInclusiveIcon className="text-white"/></ListItemIcon>
+                        <ListItemText primary={<span className="text-sm">{locale.get('tSingularity').perks[0]}</span>}/>
+                    </ListItem>
+                    <ListItem className="py-0">
+                        <ListItemIcon><MusicNoteIcon className="text-white"/></ListItemIcon>
+                        <ListItemText primary={<span className="text-sm">{locale.get('tSingularity').perks[1]}</span>}/>
+                    </ListItem>
+                    <ListItem className="py-0">
+                        <ListItemIcon><PrecisionManufacturingIcon className="text-white"/></ListItemIcon>
+                        <ListItemText primary={<span className="text-sm">{locale.get('tSingularity').perks[2]}</span>}/>
+                    </ListItem>
+                    <ListItem className="py-0">
+                        <ListItemIcon><DesktopMacIcon className="text-white"/></ListItemIcon>
+                        <ListItemText primary={<span className="text-sm">{locale.get('tSingularity').perks[3]}</span>}/>
+                    </ListItem>
+                </TariffCard>}
+                {barrier <=3 && <TariffCard card={locale.get('cardPack')} discount={discount} i={suffix} name={tariffs['3'].Title} price={prc[duration](tariffs['3'])}
+                                            img="https://img.freepik.com/free-vector/modern-colorful-flow-poster-wave-liquid-shape-blue-color-background-art-design-your-design-project-vector-illustration_1142-7676.jpg"
+                                            desc={locale.get('tTakeoff').desc} onClick={()=>createServer(3)}>
+                    <ListItem className="py-0">
+                        <ListItemIcon><AddIcon className="text-white"/></ListItemIcon>
+                        <ListItemText primary={<span className="text-sm">{locale.get('tTakeoff').perks[0]} <span className="text-base">Singularity</span></span>}/>
+                    </ListItem>
+                    <ListItem className="py-0">
+                        <ListItemIcon><MusicNoteIcon className="text-white"/></ListItemIcon>
+                        <ListItemText primary={<span className="text-sm">{locale.get('tTakeoff').perks[1]}</span>}/>
+                    </ListItem>
+                    <ListItem className="py-0">
+                        <ListItemIcon><SettingsSuggestIcon className="text-white"/></ListItemIcon>
+                        <ListItemText primary={<span className="text-sm">{locale.get('tTakeoff').perks[2]}</span>}/>
+                    </ListItem>
+                    <ListItem className="py-0">
+                        <ListItemIcon><CloudDoneIcon className="text-white"/></ListItemIcon>
+                        <ListItemText primary={<span className="text-sm">{locale.get('tTakeoff').perks[3]}</span>}/>
+                    </ListItem>
+                    <ListItem className="py-0">
+                        <ListItemIcon><AttachMoneyIcon className="text-white"/></ListItemIcon>
+                        <ListItemText primary={<span className="text-sm">{locale.get('tTakeoff').perks[4]}</span>}/>
+                    </ListItem>
+                </TariffCard>}
+            </div>
+        )
+    }
+
+
+    //---------------------------------------------------------------------------
+    //---------------------------------------------------------------------------
 
     return (
         <>
@@ -79,73 +208,41 @@ export default function Order(props) {
             <GlobalNav router={props.router} />
             <Toaster/>
             <div className={styles.main}>
-                <div className={styles.form}>
-                    <h3>{locale.get('createTitle')}</h3>
-                    <div style={{display:"flex",alignItems:"center",width:"100%"}}>
-                        <FruitTextField label={locale.get('createGDPSTitle')} type="text" variant="outlined" style={{margin:".5rem",flex:1}}
-                                        value={srv.name||''} onChange={(evt)=>{setSrv({
-                            ...srv, name: evt.target.value.replaceAll(/[^a-zA-Z\d .\-_]/g,'')
-                        })}} />
-                        <FruitTextField
-                            select label={locale.get('createTariff')} value={srv.tariff}
-                            sx={{minWidth:"8rem"}}
-                            onChange={(evt)=>setSrv({
-                                ...srv, tariff: evt.target.value,
-                            })}>
-                            {tariffs&&Object.keys(tariffs).map((i) => {
-                                return (
-                                    <MenuItem key={i} value={i}>
-                                        {tariffs[i].Title} [{getLocalPrice(tariffs[i])}]
-                                    </MenuItem>
-                                )
-                            })}
-                        </FruitTextField>
-                    </div>
-                    <TabsUnstyled value={srv.payDuration} onChange={(e,val)=>setSrv({
-                        ...srv, payDuration: val
-                    })}>
-                        <TabsList>
-                            <Tab value="mo">{locale.get('createDurationMonth')}</Tab>
-                            <Tab value="yr">{locale.get('createDurationYear')}</Tab>
-                        </TabsList>
-                    </TabsUnstyled>
 
-                    {tariffs[srv.tariff] && <p>{locale.get('descInter')[0]} <b>{srv.name||locale.get('nameless')}</b>
-                        {' '}{locale.get('descInter')[1]} <b>{tariffs[srv.tariff].Title}</b> {locale.get('descInter')[2]}
-                        {' '}<b>{getLocalPrice(tariffs[srv.tariff])}</b>.
-                        {' '}{locale.get('descInter')[4]} {tariffs[srv.tariff].Players===-1?"∞":tariffs[srv.tariff].Players} {locale.get('descInter')[5]},
-                        {' '}{tariffs[srv.tariff].Levels===-1?"∞":tariffs[srv.tariff].Levels} {locale.get('descInter')[6]}. <br/><br/>
-
-                        {locale.get('descInter')[7]}: {locale.get('createFeatures')[0]},
-                        {tariffs[srv.tariff].ACL&&locale.get('createFeatures')[1]}{tariffs[srv.tariff].Shops&&locale.get('createFeatures')[2]}
-                        {tariffs[srv.tariff].Roles&&locale.get('createFeatures')[3]}{tariffs[srv.tariff].CustomChests&&locale.get('createFeatures')[4]}
-                        {tariffs[srv.tariff].Modules&&locale.get('createFeatures')[5]}{tariffs[srv.tariff].Backups&&locale.get('createFeatures')[6]}
-                        {tariffs[srv.tariff].Logs&&locale.get('createFeatures')[7]}{tariffs[srv.tariff].Levelpacks&&locale.get('createFeatures')[8]}
-                        {tariffs[srv.tariff].Quests&&locale.get('createFeatures')[9]}<br/><br/>
-
-                        GDLab: {tariffs[srv.tariff].GDLab.Enabled?locale.get('createFeatures')[10]:locale.get('createFeatures')[11]} {tariffs[srv.tariff].GDLab.IOS&&locale.get('createFeatures')[12]}
-                        {tariffs[srv.tariff].GDLab.MacOS&&locale.get('createFeatures')[13]}{tariffs[srv.tariff].GDLab.Icons&&locale.get('createFeatures')[14]}
-                        {tariffs[srv.tariff].GDLab.Textures&&locale.get('createFeatures')[15]}{tariffs[srv.tariff].GDLab.V22&&locale.get('createFeatures')[16]}<br/><br/>
-                        {locale.get('descInter')[8]}: NewGrounds,{tariffs[srv.tariff].Music.YouTube&&" YouTube,"}{tariffs[srv.tariff].Music.Deezer&&" Deezer,"}{tariffs[srv.tariff].Music.VK&&" VK,"}{tariffs[srv.tariff].Music.Files&&" Dropbox,"}</p>}
-
-
-                    <div style={{display:'flex',alignItems:"center",justifyContent:"space-between",width:"100%"}}>
-                        {tariffs[srv.tariff] && <p style={{padding:"1rem .5rem",borderRadius:"8px",backgroundColor:"var(--btn-color)", margin: 0}}>
-                            {srv.payDuration==="yr"
-                                ?getLocalPriceYear(tariffs[srv.tariff])
-                                :getLocalPrice(tariffs[srv.tariff])}/
-                                    {locale.get('createTime')[srv.payDuration==="yr"?0:1]}</p>}
-
-                        <FruitThinField label={locale.get('createPromo')} type="text" variant="outlined" style={{margin:".5rem"}}
-                                        value={srv.promocode||''} onChange={(evt)=>{setSrv({
-                            ...srv, promocode: evt.target.value.toUpperCase().replaceAll(/[^a-zA-Z\d\-_]/g,'')
-                        })}} />
-
-                        <LoadingButton loading={loading} className={styles.formButton} style={{width:"fit-content"}} onClick={createServer}>
-                            {locale.get('createCreate')}
-                        </LoadingButton>
-                    </div>
+                <h2 className="text-center">{locale.get('createTitle')}</h2>
+                <div className="mx-auto w-fit grid grid-cols-1 lg:grid-cols-3">
+                    <FruitTextField label={locale.get('createGDPSTitle')} type="text" variant="outlined" style={{margin:".5rem",flex:1}}
+                                    value={srv.name||''} onChange={(evt)=>{setSrv({
+                        ...srv, name: evt.target.value.replaceAll(/[^a-zA-Z\d .\-_]/g,'')
+                    })}} className="col-span-2" disabled={srv.srvid.length===4}/>
+                    <FruitTextField label={locale.get('createPromo')} type="text" variant="outlined" style={{margin:".5rem"}}
+                                    value={srv.promocode||''} onChange={(evt)=>{setSrv({
+                        ...srv, promocode: evt.target.value.toUpperCase().replaceAll(/[^a-zA-Z\d\-_]/g,'')
+                    })}} />
                 </div>
+
+                <TabsUnstyled value={srv.payDuration} onChange={(e,val)=>setSrv({...srv, payDuration: val})} className="my-8 w-fit mx-auto">
+                    <TabsList className="mx-auto">
+                        {!(srv.payDuration!=="mo"&&payDurLock) && <Tab value="mo">{locale.get('tTabs')[0]}</Tab>}
+                        {!(srv.payDuration!=="yr"&&payDurLock) &&<Tab value="yr" className="flex items-center">
+                            {locale.get('tTabs')[1]} <span className="text-xs font-normal ml-1 rounded-md px-1 py-0.5" style={{backgroundColor:(srv.payDuration==="yr"?"var(--btn-color)":"var(--primary-color)")}}>-15%</span>
+                        </Tab>}
+                        <Tab value="all">{locale.get('tTabs')[2]}</Tab>
+                    </TabsList>
+
+                    <TabPanel value="mo" className="border-none !p-0">
+                        {createCards('mo')}
+                    </TabPanel>
+                    <TabPanel value="yr" className="border-none !p-0">
+                        {createCards('yr')}
+                    </TabPanel>
+                    <TabPanel value="all" className="border-none !p-0">
+                        {createCards('all')}
+                    </TabPanel>
+                </TabsUnstyled>
+
+
+
             </div>
         </>
     )

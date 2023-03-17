@@ -1,5 +1,5 @@
 import {faAndroid, faApple, faWindows} from "@fortawesome/free-brands-svg-icons";
-import {faFloppyDisk, faLink} from "@fortawesome/free-solid-svg-icons";
+import {faArrowUpFromBracket, faFloppyDisk, faLink} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
@@ -9,7 +9,14 @@ export default function GDPSCard(props) {
             <img src={props.icon} className="rounded-lg h-20 mr-2" />
             <div className="">
                 <h2 className="my-2">{props.name}</h2>
-                <p className="m-0 text-gray-400 flex items-center gap-2">{props.id} • {props.plan}</p>
+                <p className="m-0 text-gray-400 flex items-center gap-2">
+                    {props.id} •
+                    <span className="text-white rounded-lg cursor-pointer flex gap-2 items-center group border-solid box-border border-2 hover:!border-blue-800"
+                          style={{borderColor: "var(--primary-color)"}} onClick={props.onClick}>
+                        <FontAwesomeIcon icon={faArrowUpFromBracket} className="rounded-l-md p-1.5 aspect-square group-hover:!bg-blue-800" style={{backgroundColor: "var(--primary-color)"}} />
+                        <span className="inline pr-2 text-sm md:text-base">{props.plan}</span>
+                    </span>
+                </p>
             </div>
         </div>
     )

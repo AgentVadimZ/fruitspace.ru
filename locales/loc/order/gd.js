@@ -29,75 +29,109 @@ const orderGDPSLocale = {
             en: "1 year (2 free months)"
         },
 
-        descInter: {
+        tTabs: {
             ru: [
-                "Вы получаете GDPS с названием",
-                "с тарифом",
-                "по цене",
-                "руб",
-                "А именно возможность иметь",
-                "игроков",
-                "уровней",
-                "Функионал в панели",
-                "Возможности музыки"
+                "Месяц",
+                "Год",
+                "Насвегда"
             ],
             en: [
-                "You'll get GDPS named",
-                "with tariff",
-                "for",
-                "usd",
-                "That is ability to have",
-                "players",
-                "levels",
-                "Panel features",
-                "Music sources"
+                "Monthly",
+                "Yearly",
+                "Forever"
             ]
         },
-        nameless: {
-            ru: "Безымянный",
-            en: "Unnamed"
+
+        period: {
+            ru: {
+                mo: "/мес",
+                yr: "/год",
+                all: ""
+            },
+            en: {
+                mo: "/mo",
+                yr: "/yr",
+                all: ""
+            },
         },
 
-        createFeatures: {
-            ru: [
-                " настройка сундуков,",
-                " ACL,",
-                " магазины,",
-                " удобная настройка ролей,",
-                " кастомные сундуки для ролей,",
-                " модули ядра,",
-                " резервные копии,",
-                " логи,",
-                " удобная настройка маппаков и гаунтлетов,",
-                " удобная настройка дейли/викли и квестов,",
-                " Доступен. Android, Windows,",
-                " нет.",
-                " iOS,",
-                " MacOS,",
-                " кастомная иконка,",
-                " кастомные текстуры,",
-                " поддержка 2.2"
-            ],
-            en: [
-                "chest configuration",
-                " ACL",
-                " shops,",
-                " easy roles configuration,",
-                " custom chests for roles,",
-                " core modules,",
-                " backups,",
-                " logs,",
-                " easy mappacks and gauntlets configuration,",
-                " easy daily/weekly and quests configuration,",
-                " Available. Android, Windows,",
-                " none.",
-                " iOS,",
-                " MacOS,",
-                " custom icon,",
-                " custom texturepack,",
-                " 2.2 support"
-            ],
+        cardPack: {
+            ru: {
+                free: "Бесплатно",
+                what: "Что вы получаете?",
+                select: "Выбрать"
+            },
+            en: {
+                free: "Free",
+                what: "What do you get?",
+                select: "Select"
+            }
         },
+
+        tPressStart: {
+            ru: {
+                desc: "Базовый набор для знакомства с миром GDPS",
+                perks: [
+                    "100 игроков • 500 уровней",
+                    "Музыка из NewGrounds без ограничений",
+                    "Нет классной панели управления"
+                ]
+            },
+            en: {
+                desc: "Basic set for exploring the world of GDPS",
+                perks: [
+                    "100 players • 500 levels",
+                    "Unlimited Newgrounds music",
+                    "No cool control panel"
+                ]
+            }
+        },
+
+        tSingularity: {
+            ru: {
+                desc: "Отличный выбор для небольших сообществ и энтузиастов",
+                perks: [
+                    "Безлимит игроков и уровней",
+                    "Музыка из NewGrounds и YouTube",
+                    "Конфигуратор установщиков: иконки и 2.2",
+                    "Удобная и функциональная панель управления"
+                ]
+            },
+            en: {
+                desc: "Great choice for small communities and enthusiasts",
+                perks: [
+                    "Unlimited players & levels",
+                    "Custom music from Newgrounds and YouTube",
+                    "Installers configurator: app icon and 2.2",
+                    "Intuitive and functional control panel"
+                ]
+            }
+        },
+
+        tTakeoff: {
+            ru: {
+                desc: "Идеален для больших серверов и ютуберов",
+                perks: [
+                    "Все что есть в ",
+                    "Музыка из NG, YT, Deezer, VK и из файлов",
+                    "Встроенная поддержка iOS, текстурпаков и модов",
+                    "Автоматические резервные копии",
+                    "Возможность создания магазинов"
+                ]
+            },
+            en: {
+                desc: "Ideal for big servers and youtubers",
+                perks: [
+                    "Everything in ",
+                    "Custom music from NG, YT, Deezer, VK and files",
+                    "Integrated support for iOS, texturepacks and mods",
+                    "Automatic backups",
+                    "Ability to create shops"
+                ]
+            }
+        },
+
+
 
 
         createPromo: {
@@ -107,16 +141,6 @@ const orderGDPSLocale = {
         createCreate: {
             ru: "Создать",
             en: "Create"
-        },
-        createTime: {
-            ru: [
-                "год",
-                "мес"
-                ],
-            en: [
-                "yr",
-                "mo"
-            ]
         }
     }
 }

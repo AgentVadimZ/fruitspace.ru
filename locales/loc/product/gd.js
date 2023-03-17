@@ -28,12 +28,12 @@ const productGDLocale = {
 
         tPressStart: {
             ru: [
-                "100 игроков/ 500 уровней",
+                "100 игроков • 500 уровней",
                 "Музыка из NewGrounds без ограничений",
                 "Панель с ограниченными возможностями",
             ],
             en: [
-                "100 players/ 500 levels",
+                "100 players • 500 levels",
                 "Unlimited Newgrounds music",
                 "Panel with limited functionality"
             ]
