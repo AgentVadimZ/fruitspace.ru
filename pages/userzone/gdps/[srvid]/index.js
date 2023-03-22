@@ -32,7 +32,7 @@ export default function DownloadPage(props) {
         fetch("https://api.fruitspace.one/v1/gdpshub/getgdps?id="+srvid,
             {credentials:"include", method: "GET"}).then(resp=>resp.json()).then((resp)=>{
             if(resp.id) setSrv(resp);
-            else router.push("/");
+            else window.location.href="https://fruitspace.ru";
         })
     },[srvid])
 
