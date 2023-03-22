@@ -1,0 +1,7 @@
+
+
+const gdpsUserManageLocale = {
+
+}
+
+export {gdpsUserManageLocale}

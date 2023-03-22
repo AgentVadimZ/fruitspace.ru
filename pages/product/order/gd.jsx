@@ -37,7 +37,7 @@ export default function Order(props) {
         promocode: ""
     })
     const [payDurLock, setPayDurLock] = useState(false)
-    const [srvData, setSrvData] = useRecoilState(GDServer)
+    const [srvData,setSrvData] = useRecoilState(GDServer)
 
 
     const [tariffs,setTariffs] = useState({});
@@ -93,6 +93,8 @@ export default function Order(props) {
                 }
                 else setSrv({...srv, srvid: ""})
             }).catch(()=>setSrv({...srv, srvid: ""}))
+        }else{
+            setSrvData({});
         }
     }, [srv.srvid])
 
