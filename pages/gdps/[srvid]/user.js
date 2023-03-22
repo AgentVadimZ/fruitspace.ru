@@ -1,14 +1,14 @@
-import GlobalHead from "../../../../components/GlobalHead";
-import GlobalNav from "../../../../components/GlobalNav";
-import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
+import GlobalHead from "../../../components/GlobalHead";
+import GlobalNav from "../../../components/GlobalNav";
+import GDNavBar from "../../../components/Manage/NavBars/GDNavBar";
 import {Toaster} from "react-hot-toast";
-import PanelContent from "../../../../components/Global/PanelContent";
-import GlobalGDPSNav from "../../../../components/UserZone/GlobalGDPSNav";
-import styles from "../../../../components/Manage/GDManage.module.css";
+import PanelContent from "../../../components/Global/PanelContent";
+import GlobalGDPSNav from "../../../components/UserZone/GlobalGDPSNav";
+import styles from "../../../components/Manage/GDManage.module.css";
 import {useRecoilState} from "recoil";
-import GDServer from "../../../../states/gd_server";
-import {GDUserState} from "../../../../states/gd_user";
-import GDPSNavBar from "../../../../components/UserZone/GDPSSIdeBar";
+import GDServer from "../../../states/gd_server";
+import {GDUserState} from "../../../states/gd_user";
+import GDPSNavBar from "../../../components/UserZone/GDPSSIdeBar";
 
 
 export default function FrontPage(props) {

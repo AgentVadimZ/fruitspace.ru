@@ -1,4 +1,4 @@
-import {useGlobalLocale} from "../../../../locales/useLocale";
+import {useGlobalLocale} from "../../../locales/useLocale";
 import {faCircleInfo, faFloppyDisk, faRightToBracket} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAndroid, faApple, faDiscord, faVk, faWindows} from "@fortawesome/free-brands-svg-icons";
@@ -6,8 +6,8 @@ import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {styled} from "@mui/system";
 import {Backdrop, TextField} from "@mui/material";
-import styles from "../../../../components/Manage/GDManage.module.css";
-import useGDPSLogin from "../../../../components/GDPSLogin";
+import styles from "../../../components/Manage/GDManage.module.css";
+import useGDPSLogin from "../../../components/GDPSLogin";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import toast, {Toaster} from "react-hot-toast";
 
@@ -32,7 +32,7 @@ export default function DownloadPage(props) {
         fetch("https://api.fruitspace.one/v1/gdpshub/getgdps?id="+srvid,
             {credentials:"include", method: "GET"}).then(resp=>resp.json()).then((resp)=>{
             if(resp.id) setSrv(resp);
-            else window.location.href="https://fruitspace.ru";
+            else router.push("/");
         })
     },[srvid])
 
