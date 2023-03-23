@@ -19,7 +19,8 @@
 .logo {
     cursor: pointer;
     height: 75%;
-    margin: auto 0;
+    border-radius: 8px;
+    margin: auto .5rem auto 0;
 }
 
 .MultilineItem {
@@ -73,7 +74,7 @@
 
 .delim {
     height: 80%;
-    width: 0.5px;
+    width: 1px;
     background: linear-gradient(0deg, #8e388e,#5a00ff 70%, #0d6efd);;
     margin: auto 1rem;
 }

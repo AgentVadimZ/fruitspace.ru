@@ -6,7 +6,6 @@ import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {styled} from "@mui/system";
 import {Backdrop, TextField} from "@mui/material";
-import styles from "../../../components/Manage/GDManage.module.css";
 import useGDPSLogin from "../../../components/GDPSLogin";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import toast, {Toaster} from "react-hot-toast";
@@ -21,11 +20,57 @@ export default function DownloadPage(props) {
     const srvid = router.query.srvid
     const [srv, setSrv] = useState({})
 
-    const [user, userCreds, idk] = useGDPSLogin(srvid)
+    const [user, isAuthDone, doLogin, doExec] = useGDPSLogin(srvid)
 
-    const [creds, setCreds] = useState({login:"", password:"", captcha:""})
+    const [creds, setCreds] = useState({uname:"", password:"", captcha:"BypassTheClass"})
     const [backdrop, setBackdrop] = useState("none")
     const [showLogin, setShowLogin] = useState(false)
+
+    const aLogin=()=>{
+        doLogin(creds).then((resp)=>{
+            if (resp.status==="ok") {
+                switch (resp.code) {
+                    case "-1":
+                        toast.error("Неверный логин или пароль", {
+                            duration: 10000,
+                            style: {
+                                color: "white",
+                                backgroundColor: "var(--btn-color)"
+                            }
+                        })
+                        break
+                    case "-12":
+                        toast.error("Ваш аккаунт заблокирован владельцем", {
+                            duration: 10000,
+                            style: {
+                                color: "white",
+                                backgroundColor: "var(--btn-color)"
+                            }
+                        })
+                        break
+                    default:
+                        toast.success("Вход успешен", {
+                            duration: 1000,
+                            style: {
+                                color: "white",
+                                backgroundColor: "var(--btn-color)"
+                            }
+                        })
+                        router.push(srvid+"/panel")
+                        break
+                }
+            }else{
+                toast.error(resp.message, {
+                    duration: 10000,
+                    style: {
+                        color: "white",
+                        backgroundColor: "var(--btn-color)"
+                    }
+                })
+                hcaptcha.reset()
+            }
+        })
+    }
 
     useEffect(()=>{
         if (srvid==null) return
@@ -78,7 +123,9 @@ export default function DownloadPage(props) {
                            onClick={()=>{
                                if(user.uid>0) router.push(srvid+"/panel")
                                else setShowLogin(true)
-                           }}>Войти в панель</a>
+                           }}>{isAuthDone
+                            ?(user.uname?"Войти как "+user.uname:"Войти в панель")
+                            :"Загружаем..."}</a>
 
                         {srv.discord && <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block flex items-center justify-center rounded-xl w-12 mr-2 last:mr-0 aspect-square"
                                            onClick={()=>window.location.href="https://discord.gg/"+srv.discord}><FontAwesomeIcon icon={faDiscord} className="!h-6" /></a>
@@ -92,8 +139,8 @@ export default function DownloadPage(props) {
                         <div className="bg-[var(--subtle-color)] p-2 w-[available] flex flex-col lg:flex-row rounded-2xl mt-4">
                             <FruitTextField
                                 label={"Логин"}
-                                value={creds.login}
-                                onChange={(evt)=>setCreds({...creds, login: evt.target.value})}
+                                value={creds.uname}
+                                onChange={(evt)=>setCreds({...creds, uname: evt.target.value})}
                                 className="mr-0 mb-2 lg:mr-2 lg:mb-0 flex-1"
                             />
                             <FruitTextField
@@ -131,9 +178,7 @@ export default function DownloadPage(props) {
                               captcha: val
                           })} theme="dark"/>
                 <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-lg flex items-center justify-center h-12 rounded-xl flex-1 mt-1"
-                   onClick={()=>{
-                       toast.error("Такого функционала еще нет")
-                   }}>Войти в панель</a>
+                   onClick={aLogin}>Войти в панель</a>
             </div>}
         </Backdrop>
     </>)

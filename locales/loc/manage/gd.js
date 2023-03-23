@@ -19,7 +19,9 @@ const gdManageLocale = {
     "/manage/gd/[srvid]/levelpacks": gdLevelpacksLocale,
     "/manage/gd/[srvid]/profile": gdProfileLocale,
     "/manage/gd/[srvid]/actions": gdActionsLocale,
-    "/manage/gd/[srvid]/store": gdStoreLocale
+    "/manage/gd/[srvid]/store": gdStoreLocale,
+
+    "/gdps/[srvid]/music": gdMusicLocale,
 }
 
 export {gdManageLocale}
