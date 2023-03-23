@@ -450,8 +450,6 @@ export default function MusicGD(props) {
     )
 }
 
-MusicGD.RequireAuth=true
-
 
 
 const FruitThinField = styled(TextField)({

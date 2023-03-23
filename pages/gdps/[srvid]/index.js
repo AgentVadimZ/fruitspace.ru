@@ -22,7 +22,7 @@ export default function DownloadPage(props) {
 
     const [user, isAuthDone, doLogin, doExec] = useGDPSLogin(srvid)
 
-    const [creds, setCreds] = useState({uname:"", password:"", captcha:"BypassTheClass"})
+    const [creds, setCreds] = useState({uname:"", password:"", captcha:""})
     const [backdrop, setBackdrop] = useState("none")
     const [showLogin, setShowLogin] = useState(false)
 
