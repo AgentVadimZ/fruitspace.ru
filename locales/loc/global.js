@@ -57,7 +57,7 @@ const globalLocale = {
             quests: "Уровни и квесты",
             levelpacks: "Маппаки и испытания",
             settings: "Настройки",
-            profile: "?Профиль игрока",
+            profile: "Профиль игрока",
             actions: "Действия",
             shops: "Мои магазины"
         },
@@ -69,7 +69,7 @@ const globalLocale = {
             quests: "Levels and Quests",
             levelpacks: "Mappacks and Gauntlets",
             settings: "Settings",
-            profile: "?Player profile",
+            profile: "Player profile",
             actions: "Actions",
             shops: "My shops"
         }

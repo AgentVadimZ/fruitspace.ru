@@ -1,4 +1,4 @@
-import {useGlobalLocale} from "../../../locales/useLocale";
+import useLocale, {useGlobalLocale} from "../../../locales/useLocale";
 import {faCircleInfo, faFloppyDisk, faRightToBracket} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAndroid, faApple, faDiscord, faVk, faWindows} from "@fortawesome/free-brands-svg-icons";
@@ -9,13 +9,22 @@ import {Backdrop, TextField} from "@mui/material";
 import useGDPSLogin from "../../../components/GDPSLogin";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import toast, {Toaster} from "react-hot-toast";
+import {getBrowserLocale} from "../../../components/Hooks";
 
 
 export default function DownloadPage(props) {
 
     const router = useRouter()
 
+    const lang = getBrowserLocale()
+
     const localeGlobal = useGlobalLocale(router)
+    const locale = useLocale(router)
+    if (lang!=null) {
+        locale.locale = lang==="ru"?"ru":"en"
+        localeGlobal.locale = lang==="ru"?"ru":"en"
+    }
+
     const showPlayers = localeGlobal.get('funcLvlPlayerServer')
     const srvid = router.query.srvid
     const [srv, setSrv] = useState({})
@@ -31,7 +40,7 @@ export default function DownloadPage(props) {
             if (resp.status==="ok") {
                 switch (resp.code) {
                     case "-1":
-                        toast.error("Неверный логин или пароль", {
+                        toast.error(locale.get("errLogin"), {
                             duration: 10000,
                             style: {
                                 color: "white",
@@ -40,7 +49,7 @@ export default function DownloadPage(props) {
                         })
                         break
                     case "-12":
-                        toast.error("Ваш аккаунт заблокирован владельцем", {
+                        toast.error(locale.get('errBanned'), {
                             duration: 10000,
                             style: {
                                 color: "white",
@@ -49,7 +58,7 @@ export default function DownloadPage(props) {
                         })
                         break
                     default:
-                        toast.success("Вход успешен", {
+                        toast.success(locale.get('success'), {
                             duration: 1000,
                             style: {
                                 color: "white",
@@ -100,7 +109,7 @@ export default function DownloadPage(props) {
                     {srv.desc}
                     </pre>
                         <div className="flex items-center justify-between flex-col lg:flex-row">
-                            <p className="my-0 mx-4 text-lg">Скачать</p>
+                            <p className="my-0 mx-4 text-lg">{locale.get('download')}</p>
                             {srv.downloads &&
                                 <span className="flex">
                             {srv.downloads.windows && <span className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
@@ -124,8 +133,8 @@ export default function DownloadPage(props) {
                                if(user.uid>0) router.push(srvid+"/panel")
                                else setShowLogin(true)
                            }}>{isAuthDone
-                            ?(user.uname?"Войти как "+user.uname:"Войти в панель")
-                            :"Загружаем..."}</a>
+                            ?(user.uname?locale.get('loginas')+user.uname:locale.get('login'))
+                            :locale.get('logload')}</a>
 
                         {srv.discord && <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block flex items-center justify-center rounded-xl w-12 mr-2 last:mr-0 aspect-square"
                                            onClick={()=>window.location.href="https://discord.gg/"+srv.discord}><FontAwesomeIcon icon={faDiscord} className="!h-6" /></a>
@@ -138,13 +147,13 @@ export default function DownloadPage(props) {
                     {showLogin && <>
                         <div className="bg-[var(--subtle-color)] p-2 w-[available] flex flex-col lg:flex-row rounded-2xl mt-4">
                             <FruitTextField
-                                label={"Логин"}
+                                label={locale.get("logfield")[0]}
                                 value={creds.uname}
                                 onChange={(evt)=>setCreds({...creds, uname: evt.target.value})}
                                 className="mr-0 mb-2 lg:mr-2 lg:mb-0 flex-1"
                             />
                             <FruitTextField
-                                label={"Пароль"} type="password"
+                                label={locale.get("logfield")[1]} type="password"
                                 value={creds.password}
                                 onChange={(evt)=>setCreds({...creds, password: evt.target.value})}
                                 className="mr-0 mb-2 lg:mr-2 lg:mb-0 flex-1"
@@ -164,7 +173,7 @@ export default function DownloadPage(props) {
 
                     <div className="p-2 w-[available] flex mt-4 items-center justify-center">
                         <FontAwesomeIcon icon={faCircleInfo} className="mr-2" />
-                        Для активации аккаунта требуется войти в панель хотя бы один раз
+                        {locale.get("lognote")}
                     </div>
                 </div>
             </div>
@@ -178,7 +187,7 @@ export default function DownloadPage(props) {
                               captcha: val
                           })} theme="dark"/>
                 <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-lg flex items-center justify-center h-12 rounded-xl flex-1 mt-1"
-                   onClick={aLogin}>Войти в панель</a>
+                   onClick={aLogin}>{locale.get('login')}</a>
             </div>}
         </Backdrop>
     </>)

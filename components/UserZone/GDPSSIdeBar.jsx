@@ -22,6 +22,7 @@ import {useEffect} from "react";
 import {useCookies} from "react-cookie";
 import useEffectOnce from "../Hooks";
 import useGDPSLogin from "../GDPSLogin";
+import {useGlobalLocale} from "../../locales/useLocale";
 
 
 export default function GDPSNavBar(props) {
@@ -31,16 +32,18 @@ export default function GDPSNavBar(props) {
     let action = router.pathname.split("/")
     action = action[action.length-1]
 
+    const globalLocale = useGlobalLocale(router)
+
     return (
         <SideBar>
             <Link href={"/gdps/"+srvid+"/panel"}>
                 <NavItem icon={<PersonIcon/>} acetone square active={action==="panel"}>
-                    <Tooltip title="Профиль игрока" placement="right" arrow open><span /></Tooltip>
+                    <Tooltip title={globalLocale.get('panelGDPSNav').profile} placement="right" arrow open><span /></Tooltip>
                 </NavItem>
             </Link>
             {props.music && <Link href={"/gdps/"+srvid+"/music"} passHref>
                 <NavItem icon={<MusicIcon/>} acetone square active={action==="music"}>
-                    <Tooltip title="Музыка" placement="right" arrow open><span /></Tooltip>
+                    <Tooltip title={globalLocale.get('panelGDPSNav').music} placement="right" arrow open><span /></Tooltip>
                 </NavItem>
             </Link>}
             {/*{srv.tariffConfig.Roles && <Link href={"/manage/gd/"+srvid+"/roles"}>*/}

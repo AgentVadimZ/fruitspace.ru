@@ -26,3 +26,12 @@ export default function useEffectOnce(effect) {
         }
     }, [])
 }
+
+
+export const getBrowserLocale = () => {
+    if (typeof window !== 'undefined' && window.navigator) {
+        const lang = window.navigator.language || window.navigator.browserLanguage;
+        return lang.split('-')[0];
+    }
+    return null;
+};

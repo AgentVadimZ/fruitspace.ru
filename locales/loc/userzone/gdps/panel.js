@@ -1,0 +1,6 @@
+
+
+const userzoneGDPSPanelLocale = {
+}
+
+export {userzoneGDPSPanelLocale}
