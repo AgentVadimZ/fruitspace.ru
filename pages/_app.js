@@ -5,6 +5,7 @@ import AuthProvider from "../components/AuthProvider";
 import {Router, useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import useEffectOnce from "../components/Hooks";
+import { Analytics } from '@vercel/analytics/react';
 import LoadingAnim from "../components/ProgressBar";
 
 export default function WebApp({ Component, pageProps }) {
@@ -21,6 +22,7 @@ export default function WebApp({ Component, pageProps }) {
               {isL &&<LoadingAnim />}
               <AuthProvider RequireAuth={Component.RequireAuth}>
                   <Component {...pageProps} router={router} />
+                  <Analytics />
               </AuthProvider>
           </StyledEngineProvider>
       </RecoilRoot>
