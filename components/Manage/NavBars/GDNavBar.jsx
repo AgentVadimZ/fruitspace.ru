@@ -90,11 +90,11 @@ export default function GDNavBar(props) {
                     <Tooltip title={globalLocale.get('panelGDPSNav').profile} placement="right" arrow open><span /></Tooltip>
                 </NavItem>
             </Link> */}
-            {/* {srv.tariffConfig.Logs && <Link href={"/manage/gd/"+srvid+"/actions"}>
+            {srv.tariffConfig.Logs && <Link href={"/manage/gd/"+srvid+"/actions"}>
                 <NavItem icon={<ActionsIcon/>} acetone square active={action==="actions"}>
                     <Tooltip title={globalLocale.get('panelGDPSNav').actions} placement="right" arrow open><span /></Tooltip>
                 </NavItem>
-            </Link>} */}
+            </Link>}
             {/* {srv.tariffConfig.Shops && <Link href={"/manage/gd/"+srvid+"/store"}>
                 <NavItem icon={<StoreIcon/>} acetone square active={action==="store"}>
                     <Tooltip title={globalLocale.get('panelGDPSNav').shops} placement="right" arrow open><span /></Tooltip>
