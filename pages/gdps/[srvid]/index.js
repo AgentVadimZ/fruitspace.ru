@@ -10,6 +10,7 @@ import useGDPSLogin from "../../../components/GDPSLogin";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import toast, {Toaster} from "react-hot-toast";
 import {getBrowserLocale} from "../../../components/Hooks";
+import Linkify from "linkify-react";
 
 
 export default function DownloadPage(props) {
@@ -105,9 +106,10 @@ export default function DownloadPage(props) {
                             </span>
                             </div>
                         </div>
-                        <pre className="bg-[var(--active-color)] p-2 rounded-xl mt-2 text-sm whitespace-normal">
+                        <Linkify as="pre" className="bg-[var(--active-color)] p-2 rounded-xl mt-2 text-sm whitespace-normal"
+                                 options={{className:"text-[var(--primary-color)]"}}>
                     {srv.desc}
-                    </pre>
+                    </Linkify>
                         <div className="flex items-center justify-between flex-col lg:flex-row">
                             <p className="my-0 mx-4 text-lg">{locale.get('download')}</p>
                             {srv.downloads &&

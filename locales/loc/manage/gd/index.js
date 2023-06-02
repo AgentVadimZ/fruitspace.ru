@@ -13,9 +13,13 @@ const gdAnalyticsLocale = {
         ru: "Панель в разработке. Так что сильно не привыкайте",
         en: "The panel is under development. Don't get used to it"
     },
-    links: {
-        ru: "Вот ссылочки на скачивание, скопируй их.",
-        en: "These are download links, copy them."
+    download: {
+        ru: "Скачать",
+        en: "Download"
+    },
+    platforms: {
+        ru: "Платформы",
+        en: "Platforms"
     },
     autoupdate: {
         ru: "Автообновление в комплекте",

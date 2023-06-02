@@ -110,12 +110,12 @@ export default function ManageGD(props) {
                 {/*    <p>{locale.get("development")}</p>*/}
                 {/*</div>*/}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 w-full md:w-auto">
-                    <GDPSCard name={srv.srvname} plan={GetGDPlan(srv.plan)} id={<span style={{color:"white"}} className={styles.CodeBlock}>{srv.srvid}</span>}
+                    <GDPSCard name={srv.srvname} planid={srv.plan} plan={GetGDPlan(srv.plan)} id={<span style={{color:"white"}} className={styles.CodeBlock}>{srv.srvid}</span>}
                               icon={"https://cdn.fruitspace.one/server_icons/"+srv.icon} onClick={()=>props.router.push("/product/order/gd?id="+srv.srvid)}/>
                     <ProgressCard color max={srv.coreConfig&&srv.coreConfig.ServerConfig.MaxUsers} now={srv.userCount} text={locale.get('chips')[0]} />
                     <ProgressCard color max={srv.coreConfig&&srv.coreConfig.ServerConfig.MaxLevels} now={srv.levelCount} text={locale.get('chips')[1]} />
                     <ProgressCard color date max={preMax>30?365:30} now={expireDate} text={locale.get('chips')[2]+expireText} />
-                    <DownloadCard android={srv.clientAndroidURL} windows={srv.clientWindowsURL} ios={srv.clientIOSURL} copyR={copyValueR} />
+                    <DownloadCard srvid={srv.srvid} locale={locale} srv={srv} copyR={copyValueR} />
                 </div>
 
                 <div className={styles.CardBox}>

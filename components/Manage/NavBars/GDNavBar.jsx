@@ -59,47 +59,47 @@ export default function GDNavBar(props) {
                     <Tooltip title={globalLocale.get('panelGDPSNav').music} placement="right" arrow open><span /></Tooltip>
                 </NavItem>
             </Link>}
-            {/* {srv.tariffConfig.Roles && <Link href={"/manage/gd/"+srvid+"/roles"}>
+            {srv.tariffConfig.Roles && <Link href={"/manage/gd/"+srvid+"/roles"}>
                 <NavItem icon={<RolesIcon/>} acetone square active={action==="roles"}>
                     <Tooltip title={globalLocale.get('panelGDPSNav').roles} placement="right" arrow open><span /></Tooltip>
                 </NavItem>
-            </Link>} */}
+            </Link>}
             <Link href={"/manage/gd/"+srvid+"/chests"}>
                 <NavItem icon={<ChestsIcon/>} acetone square active={action==="chests"}>
                     <Tooltip title={globalLocale.get('panelGDPSNav').chests} placement="right" arrow open><span /></Tooltip>
                 </NavItem>
             </Link>
-            {/* {srv.tariffConfig.Quests && <Link href={"/manage/gd/"+srvid+"/quests"}>
+            {srv.tariffConfig.Quests && <Link href={"/manage/gd/"+srvid+"/quests"}>
                 <NavItem icon={<QuestsIcon/>} acetone square active={action==="quests"}>
                     <Tooltip title={globalLocale.get('panelGDPSNav').quests} placement="right" arrow open><span /></Tooltip>
                 </NavItem>
-            </Link>} */}
-            {/* {srv.tariffConfig.Levelpacks && <Link href={"/manage/gd/"+srvid+"/levelpacks"}>
+            </Link>}
+            {srv.tariffConfig.Levelpacks && <Link href={"/manage/gd/"+srvid+"/levelpacks"}>
                 <NavItem icon={<LevelpacksIcon/>} acetone square active={action==="levelpacks"}>
                     <Tooltip title={globalLocale.get('panelGDPSNav').levelpacks} placement="right" arrow open><span /></Tooltip>
                 </NavItem>
-            </Link>} */}
+            </Link>}
             <Link href={"/manage/gd/"+srvid+"/settings"}>
                 <NavItem icon={<SettingsIcon/>} acetone square active={action==="settings"}>
                     <Tooltip title={globalLocale.get('panelGDPSNav').settings} placement="right" arrow open><span /></Tooltip>
                 </NavItem>
             </Link>
 
-            {/* <Link href={"/manage/gd/"+srvid+"/profile"}>
+            <Link href={"/manage/gd/"+srvid+"/profile"}>
                 <NavItem icon={<PersonIcon/>} acetone square active={action==="profile"}>
                     <Tooltip title={globalLocale.get('panelGDPSNav').profile} placement="right" arrow open><span /></Tooltip>
                 </NavItem>
-            </Link> */}
+            </Link>
             {srv.tariffConfig.Logs && <Link href={"/manage/gd/"+srvid+"/actions"}>
                 <NavItem icon={<ActionsIcon/>} acetone square active={action==="actions"}>
                     <Tooltip title={globalLocale.get('panelGDPSNav').actions} placement="right" arrow open><span /></Tooltip>
                 </NavItem>
             </Link>}
-            {/* {srv.tariffConfig.Shops && <Link href={"/manage/gd/"+srvid+"/store"}>
+            {srv.tariffConfig.Shops && <Link href={"/manage/gd/"+srvid+"/store"}>
                 <NavItem icon={<StoreIcon/>} acetone square active={action==="store"}>
                     <Tooltip title={globalLocale.get('panelGDPSNav').shops} placement="right" arrow open><span /></Tooltip>
                 </NavItem>
-            </Link>} */}
+            </Link>}
         </SideBar>
     ):(<></>)
 }
