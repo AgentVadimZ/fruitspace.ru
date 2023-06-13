@@ -213,6 +213,14 @@ export default function SettingsGD(props) {
         let rc = true
         if (buildlab.icon==="custom") rc = await updateIcon()
         if (rc===false) toast.dismiss(loader)
+        let res=buildlab.textures
+        if (buildlab.textureObj!==null) {
+            let cdata = new FormData()
+            cdata.append("reqtype","fileupload")
+            cdata.append("time","12h")
+            cdata.append("fileToUpload",buildlab.textureObj)
+            res = await fetch("https://litterbox.catbox.moe/resources/internals/api.php", {method:"POST", body: cdata}).then(res=>res.text())
+        }
 
         fetch("https://api.fruitspace.one/v1/manage/gd/buildlab",
             {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
@@ -221,7 +229,8 @@ export default function SettingsGD(props) {
                     iconData:"",
                     id: srv.srvid,
                     iconObj: "",
-                    textureObj: ""
+                    textureObj: "",
+                    textures: res
                 })}).then(resp=>resp.json()).then((resp)=>{
                     toast.dismiss(loader)
             if(resp.status==="ok"){
@@ -679,7 +688,7 @@ export default function SettingsGD(props) {
 
                     {srv.tariffConfig && srv.tariffConfig.GDLab.Textures
                         &&<div className={styles.SettingsPlato} style={{margin:"0 .5rem .5rem .5rem"}}>
-                        <input type="file" accept=".zip, .fbundle" hidden ref={uploadTexturesRef} onChange={changeTextures}/>
+                        <input type="file" accept=".fpack" hidden ref={uploadTexturesRef} onChange={changeTextures}/>
 
                         <p>{locale.get('buildLab')[3]} (<span style={{color:"var(--primary-color)"}}>{buildlab.textures==="default"?locale.get('buildLab')[4]:buildlab.textures}</span>)</p>
                         <div style={{display:"flex"}}>
