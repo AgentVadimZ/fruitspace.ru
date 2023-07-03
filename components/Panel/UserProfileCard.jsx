@@ -207,7 +207,7 @@ export default function UserProfileCard(props) {
             <div className={styles.SettingsBox}>
                 <SettingsItem text={locale.get('options')[0]} onClick={()=>setBackdrop("password")}><PasswordIcon className={styles2.AddIcon}/></SettingsItem>
                 <SettingsItem text={locale.get('options')[user.is2fa?1:2]} onClick={()=>setBackdrop("2fa")}><LockPersonIcon className={styles2.AddIcon}/></SettingsItem>
-                <SettingsItem text={locale.get('options')[user.discord_id?4:3]} onClick={()=>setBackdrop("2fa")}><FontAwesomeIcon icon={faDiscord} className={styles2.AddIcon} /></SettingsItem>
+                <SettingsItem text={locale.get('options')[user.discord_id!="0"?4:3]} onClick={()=>api.auth.discord()}><FontAwesomeIcon icon={faDiscord} className={styles2.AddIcon} /></SettingsItem>
             </div>
 
             <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
