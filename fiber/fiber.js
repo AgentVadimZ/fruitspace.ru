@@ -29,6 +29,8 @@ const useFiberAPI = ()=> {
     api.authorization = cookies.token
     api.auth = auth
     auth.logout=()=>delCookie("token", { path: '/' })
+    auth.setCookieToken=(token)=>setCookie("token",token,
+        {path:"/",expires:new Date(new Date().getTime()+(1000*60*60*24*30)), secure:true})
     auth._api = api
     api.user = user
     user._api = api
