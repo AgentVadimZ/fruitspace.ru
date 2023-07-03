@@ -21,14 +21,15 @@ import {useState} from "react";
 import Link from "next/link";
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";
 import {loader} from "next/dist/build/webpack/config/helpers";
+import useFiberAPI from "../../fiber/fiber";
 
 
 
 export default function Index(props){
 
-    const [user,setUser] = useRecoilState(UserState)
-    const [cookies, setCookie, delCookie] = useCookies(["token"])
-    const [serverInfo, setServerInfo] = useState({srvid:""})
+    const api = useFiberAPI()
+
+    const [user,setUser] = api.user.useUser()
 
     const locale = useLocale(props.router)
     const localeGlobal = useGlobalLocale(props.router)
@@ -37,9 +38,6 @@ export default function Index(props){
 
     useEffectOnce(()=>{
         toast.dismiss()
-        fetch("https://api.fruitspace.one/v1/user/topserver",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]}}).then(resp=>resp.json())
-            .then((resp)=>setServerInfo(resp)).catch(()=>{})
     })
 
     return (
@@ -55,20 +53,20 @@ export default function Index(props){
                         <p>
                             <Link href="/profile/user">
                             <div className={ustyles.probox}>
-                                <img src={user.profilePic} />
+                                <img src={user.profile_pic} />
                                 <h3>@{user.uname}</h3>
                             </div>
                             </Link>
                             <h3 className={ustyles.pointer}>👈 {locale.get('itsYou')}</h3>
                         </p>
 
-                        {serverInfo.srvid ? <p>
+                        {user.top_servers.gd ? <p>
                             <div className={ustyles.probox}>
-                                <img src={serverInfo.icon} />
-                                <Link href={"/manage/gd/"+serverInfo.srvid}>
+                                <img src={user.top_servers.gd.icon} />
+                                <Link href={"/manage/gd/"+user.top_servers.gd.srvid}>
                                 <div className={ustyles.databox}>
-                                    <h3>{serverInfo.name}</h3>
-                                    <span>{ParseDesc(serverInfo.players,serverInfo.levels)}</span>
+                                    <h3>{user.top_servers.gd.srv_name}</h3>
+                                    <span>{ParseDesc(user.top_servers.gd.user_count,user.top_servers.gd.level_count)}</span>
                                 </div>
                                 </Link>
                             </div>

@@ -6,7 +6,7 @@ import {useRef, useState} from "react";
 
 import logo from "../../components/assets/logo.png"
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-import {IconButton, InputAdornment, TextField} from "@mui/material";
+import {Button, IconButton, InputAdornment, TextField} from "@mui/material";
 import {LoadingButton} from "@mui/lab"
 import {styled} from "@mui/system";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
@@ -15,19 +15,20 @@ import {useRouter} from "next/router";
 import {useCookies} from "react-cookie";
 import useEffectOnce from "../../components/Hooks";
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";
+import useFiberAPI from "../../fiber/fiber";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faDiscord} from "@fortawesome/free-brands-svg-icons";
 
 
 
 
 
 export default function Login(props) {
-    const [cookies, setCookie, removeCookie] = useCookies(['token'])
     const router = useRouter()
 
     const [regMode, setRegMode] = useState(false)
     const [forgotPass, setForgotPass] = useState(false)
     const [loading, setLoading] = useState(false)
-
     const [formData, setFormData] = useState({
         uname: "",
         name: "",
@@ -35,12 +36,11 @@ export default function Login(props) {
         surname: "",
         password: "",
         hCaptchaToken: "",
-        showPassword: false,
-        lang: "ru"  //! change in .one version to en
+        showPassword: false
     })
 
     const locale = useLocale(props.router)
-    const localeGlobal = useGlobalLocale(props.router)
+    const localeGlobal= useGlobalLocale(props.router)
 
     const ParseError = localeGlobal.get('funcParseErr')
 
@@ -48,12 +48,12 @@ export default function Login(props) {
         toast.dismiss()
     })
 
+    const api = useFiberAPI()
+
 
     const register = async ()=> {
         setLoading(true)
-        let resp = await fetch("https://api.fruitspace.one/v1/auth/register", {
-            method: 'POST', body: JSON.stringify(formData)
-        }).then(r => r.json())
+        let resp = await api.auth.register(formData.uname, formData.name, formData.surname, formData.email, formData.password, formData.hCaptchaToken, locale.locale)
         if (resp.status==="ok") {
             toast(locale.get('confirmationSent'), {
                 duration: 5000,
@@ -70,7 +70,7 @@ export default function Login(props) {
                 }
             })
         }else{
-            toast.error(locale.get('err')+ParseError(resp.message), {
+            toast.error(locale.get('err')+ParseError(resp.code), {
                 duration: 10000,
                 style: {
                     color: "white",
@@ -83,9 +83,7 @@ export default function Login(props) {
 
     const login = async ()=> {
         setLoading(true)
-        let resp = await fetch("https://api.fruitspace.one/v1/auth/login", {
-            method: 'POST', body: JSON.stringify(formData), credentials: "include"
-        }).then(r => r.json())
+        let resp = await api.auth.login(formData.uname, formData.password, formData.hCaptchaToken)
         if (resp.status==="ok") {
             toast.success(locale.get('loginSuccess'), {
                 duration: 1000,
@@ -96,9 +94,9 @@ export default function Login(props) {
             })
             setCookie("token",resp.token,
                 {path:"/",expires:new Date(new Date().getTime()+(1000*60*60*24*30)), secure:true})
-            setTimeout(()=>router.push("/profile/"),1000)
+            setTimeout(()=>router.replace("/profile/"),1000)
         }else{
-            toast.error(locale.get('err')+ParseError(resp.message), {
+            toast.error(locale.get('err')+ParseError(resp.code), {
                 duration: 10000,
                 style: {
                     color: "white",
@@ -112,9 +110,7 @@ export default function Login(props) {
 
     const resetPassword = async ()=> {
         setLoading(true)
-        let resp = await fetch("https://api.fruitspace.one/v1/auth/recover", {
-            method: 'POST', body: JSON.stringify(formData), credentials: "include"
-        }).then(r => r.json())
+        let resp = await api.auth.recover(formData.email, formData.hCaptchaToken, locale.locale)
         if (resp.status==="ok") {
             toast.success(locale.get('passResetSuccess'), {
                 duration: 1000,
@@ -139,7 +135,7 @@ export default function Login(props) {
     return (
         <>
             <GlobalHead title={localeGlobal.get('navName')}/>
-            <GlobalNav />
+            <GlobalNav api={api} />
             <Toaster/>
             <div className={styles.main}>
                 <div className={styles.form}>
@@ -199,6 +195,7 @@ export default function Login(props) {
                         <LoadingButton loading={loading} className={styles.formButton} onClick={(regMode?register:(forgotPass?resetPassword:login))}>
                             {regMode?locale.get('loginO')[0]:locale.get('loginO')[forgotPass?1:2]}
                         </LoadingButton>
+                        <Button className={styles.formButton} startIcon={<FontAwesomeIcon icon={faDiscord} />} onClick={()=>api.auth.discord()}>DISCORD</Button>
 
                         { !forgotPass && <p style={{margin:".5rem"}}>{locale.get('accPass')[regMode?0:1]}
                             <span style={{cursor:"pointer", color:"#0d6efd", fontWeight:"bolder"}}

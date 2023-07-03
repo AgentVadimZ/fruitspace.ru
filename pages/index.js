@@ -60,7 +60,7 @@ export default function Home(props) {
             </Carousel>
 
             <div className={styles.productCardGrid}>
-                <ProductCard logo={MinecraftLogo.src} title="Minecraft" btnText={locale.get('soon')} disabled>
+                <ProductCard logo={MinecraftLogo.src} title="Minecraft" btnText={locale.get('soon')} btnTopText={locale.get('top_servers')}  disabled>
                     <ListItem>
                         <ListItemIcon><BoltIcon/></ListItemIcon>
                         <ListItemText primary={locale.get('cardMinecraft')[0]}/>
@@ -82,7 +82,7 @@ export default function Home(props) {
                         <ListItemText primary={locale.get('cardMinecraft')[4]}/>
                     </ListItem>
                 </ProductCard>
-                <ProductCard logo={GDLogo.src} title="GDPS" btnText={locale.get('startingZero')} link="/product/gd">
+                <ProductCard logo={GDLogo.src} title="GDPS" btnText={locale.get('startingZero')} btnTopText={locale.get('top_servers')} link="gd">
                     <ListItem>
                         <ListItemIcon><AllInclusiveIcon/></ListItemIcon>
                         <ListItemText primary={locale.get('cardGDPS')[0]}/>
@@ -109,7 +109,7 @@ export default function Home(props) {
                         <ListItemText primary={locale.get('cardGDPS')[5]}/>
                     </ListItem>
                 </ProductCard>
-                <ProductCard logo={RockstarLogo.src} title="GTA SA/IV/V" btnText={locale.get('soon')} disabled>
+                <ProductCard logo={RockstarLogo.src} title="GTA SA/IV/V" btnText={locale.get('soon')} btnTopText={locale.get('top_servers')} disabled>
                     <ListItem>
                         <ListItemIcon><AllInclusiveIcon/></ListItemIcon>
                         <ListItemText primary={locale.get('cardGTA')[0]}/>

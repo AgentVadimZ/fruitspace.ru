@@ -154,12 +154,16 @@ const profileLocale = {
             ru: [
                 "Изменить пароль",
                 "Отключить 2ФА",
-                "Включить 2ФА"
+                "Включить 2ФА",
+                "Привязать Discord",
+                "Discord привязан"
             ],
             en: [
                 "Change password",
                 "Disable 2FA",
-                "Enable 2FA"
+                "Enable 2FA",
+                "Connect Discord",
+                "Discord connected"
             ]
         },
         cancel: {

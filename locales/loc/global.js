@@ -75,6 +75,11 @@ const globalLocale = {
         }
     },
 
+    "loadmore": {
+        ru: "Загрузить еще",
+        en: "Load more"
+    },
+
 
     "footer.about": {
         ru: "О нас",

@@ -1,5 +1,9 @@
 const indexLocale = {
     "/": {
+        top_servers: {
+            ru: "Топ серверов",
+            en: "Top servers"
+        },
         "carousel.1.title": {
             ru: "Мы любим строителей на GDPS",
             en: "We love builders on GDPS"

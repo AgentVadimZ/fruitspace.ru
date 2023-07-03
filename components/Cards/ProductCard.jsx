@@ -16,9 +16,14 @@ export default function ProductCard(props) {
                     {props.children}
                 </List>
             </div>
-            <Link href={props.link?props.link:"#"}>
+            <Link href={props.link?("/product/"+props.link):"#"}>
                 <Button variant="contained" className={styles.cardButton} disabled={props.disabled}>
                     {props.btnText}
+                </Button>
+            </Link>
+            <Link href={props.link?("/top/"+props.link):"#"}>
+                <Button variant="contained" className={styles.cardButton} disabled={props.disabled} style={{marginTop:"0"}}>
+                    {props.btnTopText}
                 </Button>
             </Link>
         </div>

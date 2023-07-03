@@ -26,26 +26,29 @@ import {useRecoilState} from "recoil";
 import {UserState} from "../states/user";
 import {useCookies} from "react-cookie";
 import {useGlobalLocale} from "../locales/useLocale";
+import useFiberAPI from "../fiber/fiber";
+import {userModel} from "../fiber/fiber.model";
 
 
 
 export default function GlobalNav(props) {
 
-    const [user,setUser] = useRecoilState(UserState)
+    const api = useFiberAPI()
 
-    const [cookies, setCookie, delCookie] = useCookies(["token"])
+    const [user,setUser] = api.user.useUser()
+    // const user = userModel
     const router = useRouter()
 
     const localeGlobal = useGlobalLocale(router)
 
     const logout = () => {
-        delCookie("token", { path: '/' })
+        api.auth.logout()
         router.reload()
     }
 
     const deleteNotification = (notif)=> {
         fetch("https://api.fruitspace.one/v1/user/del_notification",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
+            {credentials:"include", method: "POST", headers: {"Authorization": api.authorization},
                 body: JSON.stringify({uuid: notif})}).then(()=>{
                     let not = structuredClone(user.notifications)
                     for (let i=0;i<not.length;i++)
@@ -65,7 +68,7 @@ export default function GlobalNav(props) {
         <NavBar>
             <Link href={"/"}><img src={logo.src} alt="logo" className={styles.logo}></img></Link>
             <span style={{flex:1}}></span>
-            { user.uname && (<><NavItem icon={<ServerSvg/>}>
+            { user.status && (<><NavItem icon={<ServerSvg/>}>
                 <DropdownMenu centered>
                     <Link href="/profile/servers?s=mc">
                     <DropdownItem leftIcon={<img src={MinecraftLogo.src}/>} rightIcon={<RightSvg/>}>
@@ -116,18 +119,18 @@ export default function GlobalNav(props) {
             </NavItem> </>)}
 
 
-            {user.uname ? (
-                <NavItem profile icon={<img src={user.profilePic}/>}>
+            {user.status ? (
+                <NavItem profile icon={<img src={user.profile_pic}/>}>
                     <DropdownMenu>
                     <Link href="/profile/">
-                        <DropdownItem leftIcon={<img src={user.profilePic}/>}
+                        <DropdownItem leftIcon={<img src={user.profile_pic}/>}
                                                     rightIcon={<RightSvg />}>{user.uname}</DropdownItem>
                     </Link>
                     <Link href="/profile/billing">
                         <DropdownItem leftIcon={<MonetizationOnIcon/>} rightIcon={<AddCircleIcon/>}>
                             <p className={styles.BalBox}>
-                                <span><AccountBalanceWalletIcon/> {prettyPrint(user.bal)}</span>
-                                <span><StoreIcon/> {prettyPrint(user.shop_bal)}</span>
+                                <span><AccountBalanceWalletIcon/> {prettyPrint(user.balance)}</span>
+                                <span><StoreIcon/> {prettyPrint(user.shop_balance)}</span>
                             </p>
                         </DropdownItem>
                     </Link>

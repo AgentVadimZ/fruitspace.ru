@@ -1,8 +1,7 @@
 
 
 const ParseError = (err)=>{
-    let errc = err.split("|")[1] || err
-    switch (errc){
+    switch (err){
         case "eml": return "Неверный формат email"
         case "uname_shrt": return "Слишком короткий логин (необходимо 5+ символов)"
         case "uname_long": return "Слишком длинный логин (необходимо меньше 32 символов)"

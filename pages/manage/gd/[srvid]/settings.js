@@ -56,6 +56,7 @@ const aligns = ["left","center","right"]
 const topSizes = [10,25,50,100,200,250,500]
 var saveToast=null;
 const deleteCode=""+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)
+
 export default function SettingsGD(props) {
     const router = useRouter()
     const [srv, setSrv] = useRecoilState(GDServer)

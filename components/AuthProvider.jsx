@@ -4,35 +4,22 @@ import {useEffect} from "react";
 import {useCookies} from "react-cookie";
 import {UserState} from "../states/user";
 import useEffectOnce from "./Hooks";
+import useFiberAPI from "../fiber/fiber";
+import {userAtom} from "../fiber/fiber.model";
 
 
 
 export default function AuthProvider(props) {
-    const [user,setUser] = useRecoilState(UserState)
-    const [cookies, setCookie, delCookie] = useCookies(["token"])
+    const api = useFiberAPI()
     const router = useRouter()
+    const [user, setUser] = useRecoilState(userAtom)
     useEffectOnce(()=>{
-        fetch("https://api.fruitspace.one/v1/user/sso",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]}}
-        ).then(resp=>resp.json()).then((resp)=>{
+        api.user.sso().then((resp)=>{
             if (resp.status==="ok") {
-                setUser({
-                    uname: resp.uname,
-                    name: resp.name,
-                    surname: resp.surname,
-                    is2fa: !!resp.is2fa,
-                    profilePic: resp.profilePic,
-                    bal: resp.bal,
-                    shop_bal: resp.shop_bal,
-                    usd: false,
-
-                    notifications: resp.notifications?resp.notifications:[],
-
-                    servers: resp.servers
-                })
+                setUser(resp)
             }else{props.RequireAuth&&router.push("/profile/login")}
         }).catch(()=>{props.RequireAuth&&router.push("/profile/login")})
-    },[cookies,router.pathname])
+    },[router.pathname])
     return (<>{
         props.RequireAuth
             ?(user.uname?props.children:"Redirecting...")

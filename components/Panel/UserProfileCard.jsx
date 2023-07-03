@@ -15,12 +15,16 @@ import {useCookies} from "react-cookie";
 import toast from "react-hot-toast";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faDiscord} from "@fortawesome/free-brands-svg-icons";
+import useFiberAPI from "../../fiber/fiber";
 
 export default function UserProfileCard(props) {
 
-    const [user,setUser] = useRecoilState(UserState)
+    const api = useFiberAPI()
+
+    const [user,setUser] = api.user.useUser()
     const [showEditPicHint, setPicEditHint] = useState(false)
-    const [cookies, setCookie, delCookie] = useCookies(["token"])
     const [backdrop, setBackdrop] = useState("none")
 
     const [pwdResetData, setPwdResetData] = useState({
@@ -33,8 +37,8 @@ export default function UserProfileCard(props) {
     })
 
     const [totp, setTotp] = useState({
-        secret: "",
-        image: "",
+        totp_secret: "",
+        totp_image: "",
         code: ""
     })
 
@@ -44,13 +48,11 @@ export default function UserProfileCard(props) {
     const ParseError = localeGlobal.get('funcParseErr')
 
     const getTOTP = ()=> {
-        fetch("https://api.fruitspace.one/v1/user/totp",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                body: JSON.stringify({verify: "regen"})}).then(resp=>resp.json()).then((resp)=>{
+        api.user.updateTOTP("regen").then((resp)=>{
             if(resp.status==="ok") {
                 setTotp(resp)
             }else{
-                toast.error(locale.get('err')+ParseError(resp.message), {
+                toast.error(locale.get('err')+ParseError(resp.code), {
                     duration: 10000,
                     style: {
                         color: "white",
@@ -62,9 +64,7 @@ export default function UserProfileCard(props) {
     }
 
     const updateName = ()=> {
-        fetch("https://api.fruitspace.one/v1/user/update/name",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                body: JSON.stringify({name:user.name, surname:user.surname})}).then(resp=>resp.json()).then((resp)=>{
+        api.user.updateName(user.name, user.surname).then((resp)=>{
             if(resp.status==="ok") {
                 toast.success(locale.get('profileUpdateSuccess'), {
                     duration: 1000,
@@ -74,7 +74,7 @@ export default function UserProfileCard(props) {
                     }
                 })
             }else{
-                toast.error(locale.get('err')+ParseError(resp.message), {
+                toast.error(locale.get('err')+ParseError(resp.code), {
                     duration: 10000,
                     style: {
                         color: "white",
@@ -96,9 +96,7 @@ export default function UserProfileCard(props) {
             })
             return
         }
-        fetch("https://api.fruitspace.one/v1/user/update/password",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                body: JSON.stringify({password:pwdResetData.current, newPassword: pwdResetData.newpass})}).then(resp=>resp.json()).then((resp)=>{
+        api.user.updatePassword(pwdResetData.current, pwdResetData.newpass).then((resp)=>{
             if(resp.status==="ok") {
                 toast.success(locale.get('passChangeSuccess'), {
                     duration: 1000,
@@ -108,7 +106,7 @@ export default function UserProfileCard(props) {
                     }
                 })
             }else{
-                toast.error(locale.get('err')+ParseError(resp.message), {
+                toast.error(locale.get('err')+ParseError(resp.code), {
                     duration: 10000,
                     style: {
                         color: "white",
@@ -125,11 +123,7 @@ export default function UserProfileCard(props) {
         input.type = "file"
         input.accept="image/png, image/jpeg"
         input.onchange=(e)=>{
-            var datax = new FormData()
-            datax.append("profile_pic", e.target.files[0])
-            fetch("https://api.fruitspace.one/v1/user/update/avatar",
-                {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                    body: datax}).then(resp=>resp.json()).then((resp)=>{
+            api.user.updateAvatar(e.target.files[0]).then((resp)=>{
                 if(resp.status==="ok") {
                     toast.success(locale.get('picChangeSuccess'), {
                         duration: 1000,
@@ -140,7 +134,7 @@ export default function UserProfileCard(props) {
                     })
                     setUser((usr)=>({...usr, profilePic: resp.profilePic}))
                 }else{
-                    toast.error(locale.get('err')+ParseError(resp.message), {
+                    toast.error(locale.get('err')+ParseError(resp.code), {
                         duration: 10000,
                         style: {
                             color: "white",
@@ -154,9 +148,7 @@ export default function UserProfileCard(props) {
         if (reset) {
             var datax = new FormData()
             datax.append("reset","reset")
-            fetch("https://api.fruitspace.one/v1/user/update/avatar",
-                {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                    body: datax}).then(resp=>resp.json()).then((resp)=>{
+            api.user.resetAvatar().then((resp)=>{
                 if(resp.status==="ok") {
                     toast.success(locale.get('picChangeSuccess'), {
                         duration: 1000,
@@ -167,7 +159,7 @@ export default function UserProfileCard(props) {
                     })
                     setUser((usr)=>({...usr, profilePic: resp.profilePic}))
                 }else{
-                    toast.error(locale.get('err')+ParseError(resp.message), {
+                    toast.error(locale.get('err')+ParseError(resp.code), {
                         duration: 10000,
                         style: {
                             color: "white",
@@ -184,7 +176,7 @@ export default function UserProfileCard(props) {
         <>
             <div className={styles.ProfileBox}>
                 <div className={styles.ProfilePic}>
-                    <img src={user.profilePic} />
+                    <img src={user.profile_pic} />
                     <Tooltip title={locale.get('picChange')} placement="right" arrow open={showEditPicHint}>
                         <EditIcon onMouseEnter={()=>setPicEditHint(true)} onMouseLeave={()=>setPicEditHint(false)}
                         onClick={updateProfilePic}/>
@@ -215,6 +207,7 @@ export default function UserProfileCard(props) {
             <div className={styles.SettingsBox}>
                 <SettingsItem text={locale.get('options')[0]} onClick={()=>setBackdrop("password")}><PasswordIcon className={styles2.AddIcon}/></SettingsItem>
                 <SettingsItem text={locale.get('options')[user.is2fa?1:2]} onClick={()=>setBackdrop("2fa")}><LockPersonIcon className={styles2.AddIcon}/></SettingsItem>
+                <SettingsItem text={locale.get('options')[user.discord_id?4:3]} onClick={()=>setBackdrop("2fa")}><FontAwesomeIcon icon={faDiscord} className={styles2.AddIcon} /></SettingsItem>
             </div>
 
             <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -257,9 +250,9 @@ export default function UserProfileCard(props) {
 
                 {backdrop==="2fa" && <div className={styles3.BackdropBox} onClick={(e)=>e.stopPropagation()}>
                     <h3>{locale.get('twoFA')[0]}</h3>
-                    {totp.image!=="" && <>
-                        <img src={totp.image} style={{borderRadius:"4px", margin:"0 auto", display:"block"}} />
-                        <p>{locale.get('twoFA')[3]}: <span className={styles3.CodeBlock}>{totp.secret}</span></p>
+                    {totp.totp_image!=="" && <>
+                        <img src={totp.totp_image} style={{borderRadius:"4px", margin:"0 auto", display:"block"}} />
+                        <p>{locale.get('twoFA')[3]}: <span className={styles3.CodeBlock}>{totp.totp_secret}</span></p>
                         <FruitThinField fullWidth label={locale.get('twoFA')[1]} type="text" variant="outlined" value={totp.code} style={{margin:".5rem 0"}}
                                         onChange={(evt)=>setTotp({...totp, code: evt.target.value.replaceAll(/[^0-9]/g,'')})}/>
                     </>}
