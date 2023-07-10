@@ -169,7 +169,7 @@ export default function DownloadPage(props) {
                             {srv.client_windows_url &&
                                 <span className="flex">
                             {srv.client_windows_url && <span className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
-                                                            onClick={()=>window.location.href=srv.client_ios_url}><FontAwesomeIcon icon={faWindows} className="mr-2" /> Windows
+                                                            onClick={()=>window.location.href=srv.client_windows_url}><FontAwesomeIcon icon={faWindows} className="mr-2" /> Windows
                             </span>}
                                     {srv.client_android_url && <span className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
                                                                     onClick={()=>window.location.href=srv.client_android_url}>
