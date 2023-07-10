@@ -44,6 +44,7 @@ import GlobalGDPSNav from "../../../components/UserZone/GlobalGDPSNav";
 import GDPSNavBar from "../../../components/UserZone/GDPSSIdeBar";
 import {useRouter} from "next/router";
 import useGDPSLogin from "../../../components/GDPSLogin";
+import useFiberAPI from "../../../fiber/fiber";
 
 
 export default function MusicGD(props) {
@@ -65,12 +66,20 @@ export default function MusicGD(props) {
     const srvid = router.query.srvid
     const [srv, setSrv] = useState({})
 
-    const [user, isAuthDone, doLogin, doExec] = useGDPSLogin(srvid)
+    const [user, setUser] = useState({})
+
+    const api = useFiberAPI(`acc${srvid}`)
+
+    useEffect(()=> {
+        srvid&&api.gdps_users.get(srvid).then(resp=>{
+            setUser({...resp, vessels: JSON.parse(resp.vessels)})
+        })
+    }, [srvid])
+
     useEffect(()=>{
         if (srvid==null) return
-        fetch("https://api.fruitspace.one/v1/gdpshub/getgdps?id="+srvid,
-            {credentials:"include", method: "GET"}).then(resp=>resp.json()).then((resp)=>{
-            if(resp.id) setSrv(resp);
+        api.fetch.gdpsGet(srvid).then((resp)=>{
+            if(resp.srvid) setSrv(resp);
             else router.push("/");
         })
     },[srvid])
@@ -104,10 +113,10 @@ export default function MusicGD(props) {
     const locale = useLocale(props.router)
 
     const searchMusic = (mode) => {
-            doExec("https://api.fruitspace.one/sched/gdps/get_music", {page: page, query: search, mode: mode}).then((resp)=>{
+            api.gdps_users.getMusic(srvid,mode, search, page).then((resp)=>{
             if(resp.status==="ok") {
                 setMusic(resp.music)
-                setPageCount(Math.ceil(resp.total/10))
+                setPageCount(Math.ceil(resp.count/10))
             }else{
                 console.error(resp)
             }
@@ -133,7 +142,7 @@ export default function MusicGD(props) {
             case "db": url=musUrl.db; break;
         }
         setLoading(true)
-            doExec("https://api.fruitspace.one/sched/gdps/add_music", {type: type, url: url}).then((resp)=>{
+            api.gdps_users.addMusic(srvid,type, url).then((resp)=>{
             if(resp.status==="ok") {
                 setMusUploadData({id: resp.music.id, name: resp.music.name, artist: resp.music.artist})
             }else{
@@ -147,14 +156,14 @@ export default function MusicGD(props) {
 
 
     useEffect(()=>{
-        srv.id&&searchMusic(sortMode)
+        srv.srvid&&searchMusic(sortMode)
     },[srv, page])
 
     return (
         <>
-            <GlobalHead title="Игровой хостинг"/>
-            <GlobalGDPSNav name={srv.name} icon={srv.icon}/>
-            <GDPSNavBar music={srv.t>1}/>
+            <GlobalHead title={srv.srv_name}/>
+            <GlobalGDPSNav name={srv.srv_name} icon={srv.icon}/>
+            <GDPSNavBar music={srv.plan>1}/>
             <PanelContent>
                 <div className={`${styles.CardBox} ${styles.MusicSlider}`}>
                     <ReactPlayer style={{display:"none"}} url={playerData.src||''} playing={playerData.playing}
@@ -165,10 +174,10 @@ export default function MusicGD(props) {
                         <AddCircleIcon />
                         <KeyboardArrowRightIcon />
                         <img src={LogoNG.src} onClick={()=>setBackdrop("add-ng")} />
-                        {srv.t>1 && <img src={LogoYT.src} onClick={()=>setBackdrop("add-yt")} /> }
-                        {srv.t>2 &&<img src={LogoDZ.src} onClick={()=>setBackdrop("add-dz")} /> }
-                        {srv.t>2 &&<img src={LogoVK.src} onClick={()=>setBackdrop("add-vk")} /> }
-                        {srv.t>2 &&<img src={LogoDBox.src} onClick={()=>setBackdrop("add-db")} /> }
+                        {srv.plan>1 && <img src={LogoYT.src} onClick={()=>setBackdrop("add-yt")} /> }
+                        {srv.plan>2 &&<img src={LogoDZ.src} onClick={()=>setBackdrop("add-dz")} /> }
+                        {srv.plan>2 &&<img src={LogoVK.src} onClick={()=>setBackdrop("add-vk")} /> }
+                        {srv.plan>2 &&<img src={LogoDBox.src} onClick={()=>setBackdrop("add-db")} /> }
                     </div>
                     <span className={styles.SliderDelimiter} />
                     <div className={styles.MusicSliderPlayer}>

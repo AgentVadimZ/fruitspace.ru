@@ -52,14 +52,14 @@ export function DownloadCard(props) {
             </span>
             <p className="text-center mb-1">{props.locale.get('platforms')}</p>
             <div className="flex justify-center rounded-lg bg-[var(--btn-color)]">
-                {props.srv.clientWindowsURL && <FontAwesomeIcon className="rounded-lg p-2 hover:bg-[var(--primary-color)] cursor-pointer aspect-square" icon={faWindows}
-                       onClick={()=>window.location.href=props.srv.clientWindowsURL}/>}
-                {props.srv.clientAndroidURL && <FontAwesomeIcon className="rounded-lg p-2 hover:bg-[var(--primary-color)] cursor-pointer aspect-square" icon={faAndroid}
-                       onClick={()=>window.location.href=props.srv.clientAndroidURL}/>}
-                {props.srv.clientIOSURL && <FontAwesomeIcon className="rounded-lg p-2 hover:bg-[var(--primary-color)] cursor-pointer aspect-square" icon={faApple}
-                       onClick={()=>window.location.href=props.srv.clientIOSURL}/>}
-                {props.srv.clientMacOSURL &&  <img src="/macbook-48.png" className="rounded-lg h-[1.75em] p-0.5 hover:bg-[var(--primary-color)] cursor-pointer aspect-square"
-                       onClick={()=>window.location.href=props.srv.clientMacOSURL} />}
+                {props.srv.client_windows_url && <FontAwesomeIcon className="rounded-lg p-2 hover:bg-[var(--primary-color)] cursor-pointer aspect-square" icon={faWindows}
+                       onClick={()=>window.location.href=props.srv.client_windows_url}/>}
+                {props.srv.client_android_url && <FontAwesomeIcon className="rounded-lg p-2 hover:bg-[var(--primary-color)] cursor-pointer aspect-square" icon={faAndroid}
+                       onClick={()=>window.location.href=props.srv.client_android_url}/>}
+                {props.srv.client_ios_url && <FontAwesomeIcon className="rounded-lg p-2 hover:bg-[var(--primary-color)] cursor-pointer aspect-square" icon={faApple}
+                       onClick={()=>window.location.href=props.srv.client_ios_url}/>}
+                {props.srv.client_macos_url &&  <img src="/macbook-48.png" className="rounded-lg h-[1.75em] p-0.5 hover:bg-[var(--primary-color)] cursor-pointer aspect-square"
+                       onClick={()=>window.location.href=props.srv.client_macos_url} />}
             </div>
 
         </div>

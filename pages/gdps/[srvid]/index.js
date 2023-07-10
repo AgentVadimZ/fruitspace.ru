@@ -11,6 +11,8 @@ import HCaptcha from "@hcaptcha/react-hcaptcha";
 import toast, {Toaster} from "react-hot-toast";
 import {getBrowserLocale} from "../../../components/Hooks";
 import Linkify from "linkify-react";
+import useFiberAPI from "../../../fiber/fiber";
+import GlobalHead from "../../../components/GlobalHead";
 
 
 export default function DownloadPage(props) {
@@ -30,14 +32,20 @@ export default function DownloadPage(props) {
     const srvid = router.query.srvid
     const [srv, setSrv] = useState({})
 
-    const [user, isAuthDone, doLogin, doExec] = useGDPSLogin(srvid)
+    const [user, setUser] = useState({})
 
-    const [creds, setCreds] = useState({uname:"", password:"", captcha:""})
+    const api = useFiberAPI(`acc${srvid}`)
+
+    const [creds, setCreds] = useState({uname:"", password:"", captcha:"", email: ""})
     const [backdrop, setBackdrop] = useState("none")
     const [showLogin, setShowLogin] = useState(false)
 
+    useEffect(()=> {
+        srvid&&api.gdps_users.get(srvid).then(resp=>setUser(resp))
+    }, [srvid])
+
     const aLogin=()=>{
-        doLogin(creds).then((resp)=>{
+        api.gdps_users.login(srvid, creds.uname, creds.password, creds.captcha).then((resp)=>{
             if (resp.status==="ok") {
                 switch (resp.code) {
                     case "-1":
@@ -66,7 +74,53 @@ export default function DownloadPage(props) {
                                 backgroundColor: "var(--btn-color)"
                             }
                         })
+                        api.auth.setCookieToken(resp.token)
                         router.push(srvid+"/panel")
+                        break
+                }
+            }else{
+                toast.error(resp.message, {
+                    duration: 10000,
+                    style: {
+                        color: "white",
+                        backgroundColor: "var(--btn-color)"
+                    }
+                })
+                hcaptcha.reset()
+            }
+        })
+    }
+
+    const aRecover=()=>{
+        api.gdps_users.forgotPassword(srvid, creds.email, creds.captcha).then((resp)=>{
+            if (resp.status==="ok") {
+                switch (resp.code) {
+                    case "-1":
+                        toast.error(locale.get("errLogin"), {
+                            duration: 10000,
+                            style: {
+                                color: "white",
+                                backgroundColor: "var(--btn-color)"
+                            }
+                        })
+                        break
+                    case "-12":
+                        toast.error(locale.get('errBanned'), {
+                            duration: 10000,
+                            style: {
+                                color: "white",
+                                backgroundColor: "var(--btn-color)"
+                            }
+                        })
+                        break
+                    default:
+                        toast.success(locale.get('success'), {
+                            duration: 1000,
+                            style: {
+                                color: "white",
+                                backgroundColor: "var(--btn-color)"
+                            }
+                        })
                         break
                 }
             }else{
@@ -84,14 +138,14 @@ export default function DownloadPage(props) {
 
     useEffect(()=>{
         if (srvid==null) return
-        fetch("https://api.fruitspace.one/v1/gdpshub/getgdps?id="+srvid,
-            {credentials:"include", method: "GET"}).then(resp=>resp.json()).then((resp)=>{
-            if(resp.id) setSrv(resp);
+        api.fetch.gdpsGet(srvid).then((resp)=>{
+            if(resp.srvid) setSrv(resp);
             else router.push("/");
         })
     },[srvid])
 
     return (<>
+            <GlobalHead title={srv.srv_name}/>
             <Toaster/>
             <div className="h-[100vh] flex justify-center items-center flex-col">
                 <div className="w-fit max-w-full lg:max-w-xl">
@@ -99,30 +153,30 @@ export default function DownloadPage(props) {
                         <div className="flex items-center flex-col lg:flex-row">
                             <img className="h-40 rounded-xl" src={srv.icon}/>
                             <div className="ml-4 text-center lg:text-left">
-                                <h2 className="text-2xl my-2">{srv.name}</h2>
+                                <h2 className="text-2xl my-2">{srv.srv_name}</h2>
                                 <span>
-                                {showPlayers(srv.players,srv.levels)}
-                                    <span className="py-0.5 px-2 bg-[var(--primary-color)] ml-2 rounded-md">by {srv.owner}</span>
+                                {showPlayers(srv.user_count,srv.level_count)}
+                                    <span className="py-0.5 px-2 bg-[var(--primary-color)] ml-2 rounded-md">by {srv.owner_id}</span>
                             </span>
                             </div>
                         </div>
                         <Linkify as="pre" className="bg-[var(--active-color)] p-2 rounded-xl mt-2 text-sm whitespace-normal"
                                  options={{className:"text-[var(--primary-color)]"}}>
-                    {srv.desc}
+                    {srv.description}
                     </Linkify>
                         <div className="flex items-center justify-between flex-col lg:flex-row">
                             <p className="my-0 mx-4 text-lg">{locale.get('download')}</p>
-                            {srv.downloads &&
+                            {srv.client_windows_url &&
                                 <span className="flex">
-                            {srv.downloads.windows && <span className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
-                                                            onClick={()=>window.location.href=srv.downloads.windows}><FontAwesomeIcon icon={faWindows} className="mr-2" /> Windows
+                            {srv.client_windows_url && <span className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
+                                                            onClick={()=>window.location.href=srv.client_ios_url}><FontAwesomeIcon icon={faWindows} className="mr-2" /> Windows
                             </span>}
-                                    {srv.downloads.android && <span className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
-                                                                    onClick={()=>window.location.href=srv.downloads.android}>
+                                    {srv.client_android_url && <span className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
+                                                                    onClick={()=>window.location.href=srv.client_android_url}>
                                 <FontAwesomeIcon icon={faAndroid} className="mr-2" /> Android
                             </span>}
-                                    {srv.downloads.ios && <span className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
-                                                                onClick={()=>window.location.href=srv.downloads.ios}>
+                                    {srv.client_ios_url && <span className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
+                                                                onClick={()=>window.location.href=srv.client_ios_url}>
                                 <FontAwesomeIcon icon={faApple} className="mr-2" /> iOS
                             </span>}
 
@@ -133,10 +187,8 @@ export default function DownloadPage(props) {
                         <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-lg flex items-center justify-center h-12 rounded-xl flex-1 mr-2 last:mr-0"
                            onClick={()=>{
                                if(user.uid>0) router.push(srvid+"/panel")
-                               else setShowLogin(true)
-                           }}>{isAuthDone
-                            ?(user.uname?locale.get('loginas')+user.uname:locale.get('login'))
-                            :locale.get('logload')}</a>
+                               else setShowLogin(!showLogin)
+                           }}>{(user.uname?locale.get('loginas')+user.uname:locale.get('login'))}</a>
 
                         {srv.discord && <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block flex items-center justify-center rounded-xl w-12 mr-2 last:mr-0 aspect-square"
                                            onClick={()=>window.location.href="https://discord.gg/"+srv.discord}><FontAwesomeIcon icon={faDiscord} className="!h-6" /></a>
@@ -165,12 +217,10 @@ export default function DownloadPage(props) {
 
                         </div>
 
-                        {/*<div className="bg-[var(--subtle-color)] p-1 w-[available] flex flex-col lg:flex-row rounded-xl mt-4">*/}
-                        {/*    <a className="hover:bg-red-800 cursor-pointer bg-[var(--error-color)] block text-base flex items-center p-1.5 lg:p-0 justify-center h-8 rounded-lg flex-1 mr-0 lg:mr-2 mb-2 lg:mb-0"*/}
-                        {/*       onClick={()=>router.push(srvid+"/panel")}>Я забыл логин</a>*/}
-                        {/*    <a className="hover:bg-red-800 cursor-pointer bg-[var(--error-color)] block text-base flex items-center p-1.5 lg:p-0 justify-center h-8 rounded-lg flex-1 mr-0"*/}
-                        {/*       onClick={()=>router.push(srvid+"/panel")}>Я забыл пароль</a>*/}
-                        {/*</div>*/}
+                        <div className="bg-[var(--subtle-color)] p-1 w-[available] flex flex-col lg:flex-row rounded-xl mt-4">
+                            <a className="hover:bg-red-800 cursor-pointer bg-[var(--error-color)] block text-base flex items-center m-1 justify-center h-8 rounded-lg flex-1"
+                               onClick={()=>setBackdrop("forgot")}>{locale.get('forgot')}</a>
+                        </div>
                     </>}
 
                     <div className="p-2 w-[available] flex mt-4 items-center justify-center">
@@ -190,6 +240,22 @@ export default function DownloadPage(props) {
                           })} theme="dark"/>
                 <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-lg flex items-center justify-center h-12 rounded-xl flex-1 mt-1"
                    onClick={aLogin}>{locale.get('login')}</a>
+            </div>}
+            {backdrop==="forgot" && <div className="bg-[var(--subtle-color)] p-2 rounded-xl"
+                                        onClick={(e)=>e.stopPropagation()}>
+                <FruitTextField
+                    label="Email" type="email" fullWidth
+                    value={creds.email}
+                    onChange={(evt)=>setCreds({...creds, email: evt.target.value})}
+                    className="mb-1"
+                />
+                <HCaptcha sitekey="c17bb027-5ed7-4e3d-9f67-6f3ed2d78090"
+                          onVerify={(val,idk)=>setCreds({
+                              ...creds,
+                              captcha: val
+                          })} theme="dark"/>
+                <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-lg flex items-center justify-center h-12 rounded-xl flex-1 mt-1"
+                   onClick={aRecover}>{locale.get('forgotAction')}</a>
             </div>}
         </Backdrop>
     </>)

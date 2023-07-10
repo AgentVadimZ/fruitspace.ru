@@ -17,8 +17,6 @@ import useLocale, {useGlobalLocale} from "../../locales/useLocale";
 export default function PayBox(props) {
 
     const [user,setUser] = useRecoilState(UserState)
-    const router = useRouter()
-    const [cookies, setCookie, delCookie] = useCookies(["token"])
     const [backdrop, openBackdrop] = useState(false)
     const [paymentParam, setPaymentParam] = useState({
         amount: 0,
@@ -51,12 +49,9 @@ export default function PayBox(props) {
             })
             return
         }
-        fetch("https://api.fruitspace.one/v1/user/create_payment",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                body: JSON.stringify(paymentParam)}
-        ).then(resp=>resp.json()).then((resp)=>{
+        props.api.payments.new(parseInt(paymentParam.amount), paymentParam.merchant).then((resp)=>{
             if (resp.status==="ok") {
-                router.push(encodeURI(resp.payUrl))
+                props.router.push(encodeURI(resp.pay_url))
             }else {
                 toast.error(locale.get('err')+ParseError(resp.message), {
                     duration: 10000,

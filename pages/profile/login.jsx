@@ -4,7 +4,7 @@ import styles from "../../components/Index.module.css";
 import Footer from "../../components/Global/Footer";
 import {useRef, useState} from "react";
 
-import logo from "../../components/assets/logo.png"
+import logo from "../../components/assets/Fruitspace2.png"
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import {Button, IconButton, InputAdornment, TextField} from "@mui/material";
 import {LoadingButton} from "@mui/lab"
@@ -28,6 +28,7 @@ export default function Login(props) {
 
     const [regMode, setRegMode] = useState(false)
     const [forgotPass, setForgotPass] = useState(false)
+    const [show2FA, setShow2FA] = useState(false)
     const [loading, setLoading] = useState(false)
     const [formData, setFormData] = useState({
         uname: "",
@@ -36,7 +37,8 @@ export default function Login(props) {
         surname: "",
         password: "",
         hCaptchaToken: "",
-        showPassword: false
+        showPassword: false,
+        TOTP: ""
     })
 
     const locale = useLocale(props.router)
@@ -83,7 +85,7 @@ export default function Login(props) {
 
     const login = async ()=> {
         setLoading(true)
-        let resp = await api.auth.login(formData.uname, formData.password, formData.hCaptchaToken)
+        let resp = await api.auth.login(formData.uname, formData.password, formData.hCaptchaToken, formData.TOTP)
         if (resp.status==="ok") {
             toast.success(locale.get('loginSuccess'), {
                 duration: 1000,
@@ -95,6 +97,11 @@ export default function Login(props) {
             api.auth.setCookieToken(resp.token)
             setTimeout(()=>router.replace("/profile/"),1000)
         }else{
+            if(resp.code=="2fa_req") {
+                setShow2FA(true)
+                setLoading(false)
+                return
+            }
             toast.error(locale.get('err')+ParseError(resp.code), {
                 duration: 10000,
                 style: {
@@ -134,7 +141,7 @@ export default function Login(props) {
     return (
         <>
             <GlobalHead title={localeGlobal.get('navName')}/>
-            <GlobalNav api={api} />
+            <GlobalNav />
             <Toaster/>
             <div className={styles.main}>
                 <div className={styles.form}>
@@ -183,6 +190,14 @@ export default function Login(props) {
                                                 </InputAdornment>
                                             )
                                         }}/>}
+
+                        {show2FA && <FruitTextField fullWidth label={(locale.get('regField')[3])} type="text" variant="outlined"
+                                                    style={{margin:".5rem",border:"4px solid var(--error-color)",borderRadius:"12px"}}
+                                                    value={formData.TOTP||''} onChange={(evt)=>{setFormData({
+                            ...formData,
+                            TOTP: evt.target.value.replaceAll(/[^0-9]/g,'')
+                        })}} />}
+
                         <HCaptcha
                             sitekey="c17bb027-5ed7-4e3d-9f67-6f3ed2d78090"
                             onVerify={(val,idk)=>setFormData({

@@ -99,7 +99,11 @@ const serverGDModel = {
 
 const serverGDAtom = atom({
     key: 'server',
-    default: serverGDModel
+    default: {
+        Srv: serverGDModel,
+        Tariff: null,
+        CoreConfig: null
+    }
 })
 
 // NOTIFICATION ----

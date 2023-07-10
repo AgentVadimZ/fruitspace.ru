@@ -50,6 +50,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAndroid, faApple, faWindows} from "@fortawesome/free-brands-svg-icons";
 import {useCookies} from "react-cookie";
 import useLocale, {useGlobalLocale} from "../../../../locales/useLocale";
+import useFiberAPI from "../../../../fiber/fiber";
+import {faMusic, faStar, faUpload, faUser} from "@fortawesome/free-solid-svg-icons";
 
 
 const aligns = ["left","center","right"]
@@ -59,13 +61,14 @@ const deleteCode=""+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)+Ma
 
 export default function SettingsGD(props) {
     const router = useRouter()
-    const [srv, setSrv] = useRecoilState(GDServer)
-    const [cookies, setCookie, delCookie] = useCookies(["token"])
     const [showPass, setShowPass] = useState(false)
     const [backdrop, setBackdrop] = useState("none")
     const [userDelCode, setUserDelCode] = useState("")
     const uploadRef = useRef()
     const uploadTexturesRef = useRef()
+
+    const api = useFiberAPI()
+    const [srv, setSrv] = api.servers.useGDPS()
 
     const [settings, setSettings] = useState({
         id: "",
@@ -102,6 +105,8 @@ export default function SettingsGD(props) {
         textureObj: null,
     })
 
+    const [discordbot, setDiscordbot] = useState({rate:"",newuser:"",newlevel:"",newmusic:""})
+
 
     const locale = useLocale(props.router)
     const localeGlobal = useGlobalLocale(props.router)
@@ -111,28 +116,27 @@ export default function SettingsGD(props) {
 
 
     useEffect(()=>{
-        srv.coreConfig&&setSettings({
+        srv.CoreConfig&&setSettings({
             description: {
-                text: srv.description,
-                align: srv.textAlign,
-                discord: srv.discord,
-                vk: srv.vk,
+                text: srv.Srv.description,
+                align: srv.Srv.text_align,
+                discord: srv.Srv.discord,
+                vk: srv.Srv.vk,
             },
-            spaceMusic: srv.isSpaceMusic,
-            topSize: srv.coreConfig.ServerConfig.TopSize,
+            spaceMusic: srv.Srv.is_space_music,
+            topSize: srv.CoreConfig.ServerConfig.TopSize,
             security: {
-                enabled: !srv.coreConfig.SecurityConfig.DisableProtection,
-                autoActivate: srv.coreConfig.SecurityConfig.AutoActivate,
-                levelLimit: !srv.coreConfig.SecurityConfig.NoLevelLimits
+                enabled: !srv.CoreConfig.SecurityConfig.DisableProtection,
+                autoActivate: srv.CoreConfig.SecurityConfig.AutoActivate,
+                levelLimit: !srv.CoreConfig.SecurityConfig.NoLevelLimits
             },
-            modules: srv.coreConfig.ServerConfig.EnableModules
+            modules: srv.CoreConfig.ServerConfig.EnableModules
         })
+        srv.Srv&&setDiscordbot(srv.Srv.m_stat_history)
     },[srv])
 
     const ResetDBPassword = ()=> {
-        fetch("https://api.fruitspace.one/v1/manage/gd/dbreset",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                body: JSON.stringify({id:srv.srvid})}).then(resp=>resp.json()).then((resp)=>{
+        api.gdps_manage.dbreset(srv.Srv.srvid).then((resp)=>{
             if(resp.status==="ok") {
                 toast.success(locale.get('dbPassResetSuccess'),{style: {
                         color: "white",
@@ -158,9 +162,7 @@ export default function SettingsGD(props) {
     }
     const saveData = ()=>{
         toast.dismiss("save")
-        fetch("https://api.fruitspace.one/v1/manage/gd/set_settings",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                body: JSON.stringify({...settings,id:srv.srvid})}).then(resp=>resp.json()).then((resp)=>{
+        api.gdps_manage.updateSettings(srv.Srv.srvid, settings).then((resp)=>{
             if(resp.status==="ok") {
                 toast.success(locale.get('saveSuccess'),{style: {
                         color: "white",
@@ -176,15 +178,11 @@ export default function SettingsGD(props) {
                 color: "white",
                 backgroundColor: "var(--btn-color)"
             }}))
+        api.gdps_manage.moduleDiscord(srv.Srv.srvid,!!settings.modules.discord, {...discordbot}).then(()=>{})
     }
 
     const updateIcon = async ()=> {
-        var datax = new FormData()
-        datax.append("id", srv.srvid)
-        datax.append("icon", buildlab.iconObj)
-        let cl = await fetch("https://api.fruitspace.one/v1/manage/gd/update_icon",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                body: datax}).then(resp=>resp.json()).catch(()=>{})
+        let cl = await api.gdps_manage.updateLogo(srv.Srv.srvid, buildlab.iconObj)
 
                 if(cl.status==="ok") {
                     toast.success(locale.get('logoUpd'), {
@@ -195,7 +193,7 @@ export default function SettingsGD(props) {
                         }
                     })
                 }else{
-                    toast.error(locale.get('universalErr')+ParseError(cl.message), {
+                    toast.error(locale.get('universalErr')+ParseError(cl.code), {
                         duration: 10000,
                         style: {
                             color: "white",
@@ -222,17 +220,14 @@ export default function SettingsGD(props) {
             cdata.append("fileToUpload",buildlab.textureObj)
             res = await fetch("https://litterbox.catbox.moe/resources/internals/api.php", {method:"POST", body: cdata}).then(res=>res.text())
         }
-
-        fetch("https://api.fruitspace.one/v1/manage/gd/buildlab",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                body: JSON.stringify({
-                    ...buildlab,
-                    iconData:"",
-                    id: srv.srvid,
-                    iconObj: "",
-                    textureObj: "",
-                    textures: res
-                })}).then(resp=>resp.json()).then((resp)=>{
+            api.gdps_manage.buildlabPush(srv.Srv.srvid, {
+                ...buildlab,
+                iconData:"",
+                id: srv.srvid,
+                iconObj: "",
+                textureObj: "",
+                textures: res
+            }).then((resp)=>{
                     toast.dismiss(loader)
             if(resp.status==="ok"){
                 toast.success(locale.get('goBuildLabSuccess'),{style: {
@@ -255,9 +250,7 @@ export default function SettingsGD(props) {
     }
 
     const deleteServer=()=>{
-        fetch("https://api.fruitspace.one/v1/manage/gd/delete",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                body: JSON.stringify({id: srv.srvid})}).then(resp=>resp.json()).then((resp)=>{
+        api.gdps_manage.delete(srv.Srv.srvid).then((resp)=>{
             if(resp.status==="ok"){
                 toast.success("Сервер удален успешно",{style: {
                         color: "white",
@@ -295,7 +288,7 @@ export default function SettingsGD(props) {
     const srvIcon = (()=>{
         if(buildlab.icon==="custom") return buildlab.iconData
         if(srv.icon==="gd_default.png") return GDLogo.src
-        return "https://cdn.fruitspace.one/server_icons/"+srv.icon
+        return "https://cdn.fruitspace.one/server_icons/"+srv.Srv.icon
     })()
 
     useEffect(()=>{
@@ -303,7 +296,7 @@ export default function SettingsGD(props) {
             <div>
                 <span><IconButton><SaveIcon style={{fill:"white"}}/></IconButton>{locale.get('dontForget')}</span>
                 <Button variant="contained" className={`${styles.SlimButton} ${styles.btnSuccess}`}
-                        fullWidth onClick={saveData}>{locale.get('save')}</Button>
+                        fullWidth onClick={()=>saveData()}>{locale.get('save')}</Button>
             </div>),{
             duration: Infinity,
             id: "save",
@@ -312,7 +305,7 @@ export default function SettingsGD(props) {
                 color: "white",
                 backgroundColor: "var(--btn-color)",
             }})
-    },[settings])
+    },[settings, discordbot])
 
     return (
         <>
@@ -325,11 +318,11 @@ export default function SettingsGD(props) {
                     <div className={styles.CardBox}>
                         <h3>{locale.get('db')}</h3>
                         <div className={styles.CardInbox}>
-                            <FruitTextField fullWidth label={locale.get('dbFields')[0]} value={"halgd_"+srv.srvid||''}
+                            <FruitTextField fullWidth label={locale.get('dbFields')[0]} value={"halgd_"+srv.Srv.srvid||''}
                                             InputProps={{
                                                 endAdornment: (
                                                     <InputAdornment position="end">
-                                                        <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText("halgd_"+srv.srvid);copyValueR()}}>
+                                                        <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText("halgd_"+srv.Srv.srvid);copyValueR()}}>
                                                             <ContentPasteIcon/>
                                                         </IconButton>
                                                     </InputAdornment>
@@ -343,13 +336,13 @@ export default function SettingsGD(props) {
                                                         <IconButton edge="end" onClick={()=>setShowPass(!showPass)}>
                                                             {showPass ? <VisibilityOff /> : <Visibility />}
                                                         </IconButton>
-                                                        <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText(srv.dbPassword);copyValueR()}}>
+                                                        <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText(srv.Srv.db_password);copyValueR()}}>
                                                             <ContentPasteIcon/>
                                                         </IconButton>
                                                     </InputAdornment>
                                                 )
                                             }}
-                                            value={srv.dbPassword||''}
+                                            value={srv.Srv.db_password||''}
                             disabled/>
                         </div>
                         <div className={styles.CardBottom}>
@@ -379,7 +372,7 @@ export default function SettingsGD(props) {
                                     ))}
                                 </FruitTextField>
                             </div>
-                            {srv.tariffConfig && srv.tariffConfig.CustomMusic
+                            {srv.Tariff && srv.Tariff.CustomMusic
                             && <div className={styles.SettingsPlato}>
                                     <p>
                                         <Tooltip title={locale.get('tips')[0]}>
@@ -389,7 +382,7 @@ export default function SettingsGD(props) {
                                         {locale.get('coreSettings')[5]}</p>
                                     <FruitSwitch checked={settings.spaceMusic} onChange={(e, val)=>setSettings({
                                         ...settings, spaceMusic: val,
-                                    })} disabled={!!srv.isSpaceMusic} />
+                                    })} disabled={!!srv.Srv.is_space_music} />
                                 </div>
                             }
                             <fieldset className={styles.SettingsFieldset}>
@@ -434,7 +427,7 @@ export default function SettingsGD(props) {
 
                         <div className={styles.CardBottom}>
 
-                            {srv.tariffConfig && srv.tariffConfig.GDLab.Enabled && <Button variant="contained"
+                            {srv.Tariff && srv.Tariff.GDLab.Enabled && <Button variant="contained"
                                 className={`${styles.cardButton} ${styles.btnSuccess}`} style={{height:40}}
                                 onClick={()=>setBackdrop("buildlab")}>🔨 BuildLab™</Button>}
 
@@ -480,21 +473,19 @@ export default function SettingsGD(props) {
                                 <span>
                                     <Button variant="contained" className={`${styles.SlimButton} ${styles.btnError}`}
                                             onClick={()=>setBackdrop("delete")}>{locale.get('systemSettings')[3]}</Button>
-                                    {srv.tariffConfig && srv.tariffConfig.Backups
+                                    {srv.Tariff && srv.Tariff.Backups
                                         && <Button variant="contained" className={styles.SlimButton}
                                             onClick={()=>setBackdrop("backups")}>{locale.get('systemSettings')[4]}</Button>}
                                 </span>
                             </div>
-                            <fieldset className={styles.SettingsFieldset} disabled>
-                                <legend>{locale.get('systemSettings')[5]} <FruitSwitch
-                                    checked={!!(srv.tariffConfig && srv.tariffConfig.Modules)}/></legend>
+                            <fieldset className={styles.SettingsFieldset} disabled={srv.Srv.plan<3}>
+                                <legend>{locale.get('systemSettings')[5]}
+                                    <FruitSwitch  checked={!!(settings.modules&&settings.modules.discord)}
+                                    onChange={(e, val)=>setSettings({...settings, modules: {...settings.modules, discord: val}})}/>
+                                </legend>
                                 <div className={styles.SettingsPlato}>
                                     <span><IconButton><img src={discordLogo.src} className={styles.adornments}/></IconButton>{locale.get('systemSettings')[6]}</span>
-                                    <IconButton><SettingsIcon/></IconButton>
-                                </div>
-                                <div className={styles.SettingsPlato}>
-                                    <span><IconButton><Face3Icon/></IconButton>M41dss </span>
-                                    <IconButton><SettingsIcon/></IconButton>
+                                    <IconButton onClick={()=>setBackdrop("gdpsbot")}><SettingsIcon/></IconButton>
                                 </div>
                             </fieldset>
                         </div>
@@ -632,8 +623,8 @@ export default function SettingsGD(props) {
                         <img src={srvIcon} />
                         <input type="file" accept=".png, .jpg, .jpeg" hidden ref={uploadRef} onChange={changeIcon}/>
                         <div>
-                            {srv.tariffConfig && srv.tariffConfig.GDLab.V22
-                                && <FruitThinField fullWidth label={locale.get('buildLab')[0]} value={buildlab.srvname||srv.srvname} onChange={(evt)=>setBuildlab({
+                            {srv.Tariff && srv.Tariff.GDLab.V22
+                                && <FruitThinField fullWidth label={locale.get('buildLab')[0]} value={buildlab.srvname||srv.Srv.srv_name} onChange={(evt)=>setBuildlab({
                                 ...buildlab, srvname: evt.target.value
                             })} style={{marginBottom: ".5rem"}} InputProps={{
                                 endAdornment: (
@@ -645,7 +636,7 @@ export default function SettingsGD(props) {
                                 )
                             }}/>}
 
-                            {srv.tariffConfig && srv.tariffConfig.GDLab.Icons && <div style={{width:"100%"}}>
+                            {srv.Tariff && srv.Tariff.GDLab.Icons && <div style={{width:"100%"}}>
                                 <IconButton className={`${styles.SquareIcon} ${styles.SquareIconGreen}`}
                                 onClick={()=>uploadRef.current.click()}>
                                     <AddPhotoAlternate/></IconButton>
@@ -660,13 +651,12 @@ export default function SettingsGD(props) {
 
                     <fieldset className={styles.SettingsFieldset}>
                         <legend>{locale.get('buildLab')[7]}</legend>
-                        <div className={styles.SettingsPlato}>
-                            <p>{buildlab.version==="2.2" && <><Chip color="warning" icon={<Warning />} label="Unstable"/>&nbsp;</>}
-                                <FontAwesomeIcon icon={faWindows}/> Windows</p>
-                            <FruitSwitch checked={buildlab.windows} onChange={(e, val)=>setBuildlab({
+                        {buildlab.version==="2.1" && <div className={styles.SettingsPlato}>
+                            <p><FontAwesomeIcon icon={faWindows}/> Windows</p>
+                            <FruitSwitch checked={buildlab.windows} onChange={(e, val) => setBuildlab({
                                 ...buildlab, windows: val,
                             })}/>
-                        </div>
+                        </div>}
                         <div className={styles.SettingsPlato}>
                             <p>{buildlab.version==="2.2" && <><Chip color="warning" icon={<Warning />} label="Unstable"/>&nbsp;</>}
                                 <FontAwesomeIcon icon={faAndroid}/> Android</p>
@@ -674,7 +664,7 @@ export default function SettingsGD(props) {
                                 ...buildlab, android: val,
                             })}/>
                         </div>
-                        {srv.tariffConfig && srv.tariffConfig.GDLab.IOS && buildlab.version==="2.1" && <div className={styles.SettingsPlato}>
+                        {srv.Tariff && srv.Tariff.GDLab.IOS && buildlab.version==="2.1" && <div className={styles.SettingsPlato}>
                             <p><FontAwesomeIcon icon={faApple}/> iOS</p>
                             <FruitSwitch checked={buildlab.ios} onChange={(e, val)=>setBuildlab({
                                 ...buildlab, ios: val,
@@ -687,7 +677,7 @@ export default function SettingsGD(props) {
                     {buildlab.textures!=="default"&& <Alert severity="warning" style={{backgroundColor:"#ed6c02",color:"#fff",marginTop:"1rem"}}>
                         {locale.get('buildLab')[2]}</Alert>}
 
-                    {srv.tariffConfig && srv.tariffConfig.GDLab.Textures
+                    {srv.Tariff && srv.Tariff.GDLab.Textures
                         &&<div className={styles.SettingsPlato} style={{margin:"0 .5rem .5rem .5rem"}}>
                         <input type="file" accept=".fpack" hidden ref={uploadTexturesRef} onChange={changeTextures}/>
 
@@ -707,6 +697,74 @@ export default function SettingsGD(props) {
                                 onClick={goBuildLab}>{locale.get('buildLab')[5]}</Button>
                         <Button variant="contained" className={styles.SlimButton}
                                 onClick={()=>setBackdrop("none")}>{locale.get('buildLab')[6]}</Button>
+                    </div>
+                </div>}
+
+                {backdrop==="gdpsbot" && <div className={styles.BackdropBox} onClick={(e)=>e.stopPropagation()}>
+                    {locale.get('gdpsbot')[0]}
+                    <FruitTextField fullWidth label={locale.get('gdpsbot')[2]} value={discordbot.rate||''}
+                                    onChange={(evt)=>setDiscordbot({...discordbot, rate:evt.target.value})}
+                                    placeholder={locale.get('gdpsbot')[1]}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start"><FontAwesomeIcon icon={faStar} className="text-white mr-2" /></InputAdornment>
+                                        ),
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton edge="end" onClick={()=>setDiscordbot({...discordbot, rate:""})}>
+                                                    <DeleteIcon className={styles.redsvg}/>
+                                                </IconButton>
+                                            </InputAdornment>
+                                        )
+                                    }}/>
+                    <FruitTextField fullWidth label={locale.get('gdpsbot')[3]} value={discordbot.newlevel||''}
+                                    onChange={(evt)=>setDiscordbot({...discordbot, newlevel:evt.target.value})}
+                                    placeholder={locale.get('gdpsbot')[1]}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start"><FontAwesomeIcon icon={faUpload} className="text-white mr-2" /></InputAdornment>
+                                        ),
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton edge="end" onClick={()=>setDiscordbot({...discordbot, newlevel:""})}>
+                                                    <DeleteIcon className={styles.redsvg}/>
+                                                </IconButton>
+                                            </InputAdornment>
+                                        )
+                                    }}/>
+                    <FruitTextField fullWidth label={locale.get('gdpsbot')[4]} value={discordbot.newuser||''}
+                                    onChange={(evt)=>setDiscordbot({...discordbot, newuser:evt.target.value})}
+                                    placeholder={locale.get('gdpsbot')[1]}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start"><FontAwesomeIcon icon={faUser} className="text-white mr-2" /></InputAdornment>
+                                        ),
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton edge="end" onClick={()=>setDiscordbot({...discordbot, newuser:""})}>
+                                                    <DeleteIcon className={styles.redsvg}/>
+                                                </IconButton>
+                                            </InputAdornment>
+                                        )
+                                    }}/>
+                    <FruitTextField fullWidth label={locale.get('gdpsbot')[5]} value={discordbot.newmusic||''}
+                                    onChange={(evt)=>setDiscordbot({...discordbot, newmusic:evt.target.value})}
+                                    placeholder={locale.get('gdpsbot')[1]}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start"><FontAwesomeIcon icon={faMusic} className="text-white mr-2" /></InputAdornment>
+                                        ),
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton edge="end" onClick={()=>setDiscordbot({...discordbot, newmusic:""})}>
+                                                    <DeleteIcon className={styles.redsvg}/>
+                                                </IconButton>
+                                            </InputAdornment>
+                                        )
+                                    }}/>
+                    <div className={styles.CardBottom}>
+                        <Button variant="contained" className={styles.cardButton}
+                                onClick={()=>setBackdrop("none")}>{locale.get('socials')[3]}</Button>
                     </div>
                 </div>}
             </Backdrop>

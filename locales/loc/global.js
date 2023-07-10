@@ -59,7 +59,8 @@ const globalLocale = {
             settings: "Настройки",
             profile: "Профиль игрока",
             actions: "Действия",
-            shops: "Мои магазины"
+            shops: "Мои магазины",
+            gdlab: "GDLab"
         },
         en: {
             analytics: "Analytics",
@@ -71,7 +72,8 @@ const globalLocale = {
             settings: "Settings",
             profile: "Player profile",
             actions: "Actions",
-            shops: "My shops"
+            shops: "My shops",
+            gdlab: "GDLab"
         }
     },
 
@@ -226,6 +228,7 @@ const globalLocale = {
                 case "act": return "Данный аккаунт не активирован"
                 case "nopwd": return "Неверный пароль"
                 case "2fa": return "Неверный токен 2ФА"
+                case "2fa_enabled": return "2ФА уже включен"
                 case "form": return "Не удалось прочитать запрос"
                 case "file": return "Ошибка чтения файла"
                 case "type": return "Неверный тип файла"
@@ -262,6 +265,7 @@ const globalLocale = {
                 case "act": return "Account is not activated"
                 case "nopwd": return "Invalid password"
                 case "2fa": return "Invalid 2FA code"
+                case "2fa_enabled": return "2FA is already enabled"
                 case "form": return "Unable to read request"
                 case "file": return "Unable to read file"
                 case "type": return "Invalid file type"

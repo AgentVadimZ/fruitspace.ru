@@ -40,12 +40,14 @@ const profileLocale = {
             ru: [
                 "Имя (англ)",
                 "Фамилия (англ)",
-                "Пароль"
+                "Пароль",
+                "Код 2ФА"
             ],
             en: [
                 "Name",
                 "Surname",
-                "Password"
+                "Password",
+                "2FA code"
             ]
         },
         accPass: {
@@ -187,15 +189,19 @@ const profileLocale = {
         twoFA: {
             ru: [
                 "Двухфакторная аутентификация",
-                "Введите код (ничего не делает)",
+                "Введите код",
                 "Запросить код",
-                "Секрет"
+                "Секрет",
+                "Подтвердить",
+                "2ФА успешно включена, не потеряйте код!"
                 ],
             en: [
                 "Two-factor authentication",
-                "Enter 2FA code (does nothing)",
+                "Enter 2FA code",
                 "Request code",
-                "Secret"
+                "Secret",
+                "Confirm",
+                "2FA is enabled, don't lose you code!"
             ]
         }
     },

@@ -31,6 +31,14 @@ const userzoneGDPSIndexLocale = {
             "Password"
         ]
     },
+    forgot: {
+        ru: "Я забыл логин или пароль",
+        en: "I forgot username or password"
+    },
+    forgotAction : {
+        ru: "Восстановить",
+        en: "Recover"
+    },
 
     errLogin: {
         ru: "Неверный логин или пароль",

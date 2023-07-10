@@ -24,7 +24,7 @@ export default function GD(props) {
     const ParseDesc = localeGlobal.get('funcLvlPlayerServer')
 
     const fetchMore =()=> {
-        api.fetch.gdps_top(page).then(res=>{
+        api.fetch.gdpsTop(page).then(res=>{
             setServers([...servers, ...res.servers])
             setPage(page+10)
         })

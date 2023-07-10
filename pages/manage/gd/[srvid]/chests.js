@@ -31,6 +31,7 @@ import {useRecoilState} from "recoil";
 import GDServer from "../../../../states/gd_server";
 import toast, {Toaster} from "react-hot-toast";
 import useLocale from "../../../../locales/useLocale";
+import useFiberAPI from "../../../../fiber/fiber";
 
 
 const darkTheme = createTheme({
@@ -40,9 +41,6 @@ const darkTheme = createTheme({
 });
 
 export default function ChestsGD(props) {
-
-    const [srv, setSrv] = useRecoilState(GDServer)
-    const [cookies, setCookie, delCookie] = useCookies(["token"])
     const [chestConfig, setChestConfig] = useState({
         ChestSmallOrbsMin: 200,
         ChestSmallOrbsMax: 400,
@@ -71,17 +69,19 @@ export default function ChestsGD(props) {
     }
     const locale = useLocale(props.router)
 
+    const api = useFiberAPI()
+
+    const [srv, setSrv] = api.servers.useGDPS()
+
 
     const saveChests = ()=>{
-        fetch("https://api.fruitspace.one/v1/manage/gd/set_chests",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                body: JSON.stringify({id:srv.srvid, chests: chestConfig})}).then(resp=>resp.json()).then((resp)=>{
+        api.gdps_manage.updateChests(srv.Srv.srvid, chestConfig).then((resp)=>{
             if(resp.status==="ok") {
                 toast.success(locale.get("updSuccess"),{style: {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})
-                setSrv({...srv, coreConfig: {...srv.coreConfig, ChestConfig: chestConfig}})
+                setSrv({...srv, CoreConfig: {...srv.CoreConfig, ChestConfig: chestConfig}})
             }else{
                 toast.error(locale.get("updFailed"),{style: {
                         color: "white",
@@ -92,7 +92,7 @@ export default function ChestsGD(props) {
     }
 
     useEffect(()=>{
-        srv.coreConfig&&setChestConfig(srv.coreConfig.ChestConfig)
+        srv.CoreConfig&&setChestConfig(srv.CoreConfig.ChestConfig)
     }, [srv])
 
     return (

@@ -22,12 +22,13 @@ import PayBox from "../../components/Panel/PayBox";
 import Link from "next/link";
 import useEffectOnce from "../../components/Hooks";
 import useLocale from "../../locales/useLocale";
+import useFiberAPI from "../../fiber/fiber";
 
 
 export default function Billing(props) {
+
+    const api = useFiberAPI()
     const [tab, setTab] = useState("wallet")
-    const [user,setUser] = useRecoilState(UserState)
-    const [cookies, setCookie, delCookie] = useCookies(["token"])
 
     const [transactions, setTransactions] = useState([])
 
@@ -38,18 +39,16 @@ export default function Billing(props) {
     })
 
     useEffect(()=>{
-        fetch("https://api.fruitspace.one/v1/user/payments",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]}}
-        ).then(resp=>resp.json()).then((resp)=>{
+        api.payments.get().then((resp)=>{
             if (resp.status==="ok") {
                 setTransactions(resp.transactions?resp.transactions:[])
             }
         })
-    },[user,Router.pathname])
+    },[Router.pathname])
 
 
-    const prettyPrint = (num)=>new Intl.NumberFormat(user.usd?'en-US':'ru-RU',
-        {style: 'currency',currency: user.usd?"USD":"RUB"}).format(num).replace(/[.|,]00/g, '')
+    const prettyPrint = (num)=>new Intl.NumberFormat(false?'en-US':'ru-RU',
+        {style: 'currency',currency: false?"USD":"RUB"}).format(num).replace(/[.|,]00/g, '')
 
     return (
         <>
@@ -65,14 +64,14 @@ export default function Billing(props) {
                         <Tab value="shops">{locale.get('tabs')[1]}</Tab>
                     </TabsList>
                     <TabPanel value="wallet">
-                        <PayBox router={props.router}/>
+                        <PayBox router={props.router} api={api}/>
 
                         {transactions.length===0
                             ?(<p style={{textAlign:"center",fontSize:"14pt"}}>{locale.get('noPayments')}</p>)
                         :(<List className={styles.MrWhite}>
                                 {transactions.map((tr, i)=>(
                                         <ListItem className={styles.buttonHover} key={i} secondaryAction={
-                                            tr.is_active&&<Link href={tr.gopay_url}><IconButton edge="end"><SendIcon /></IconButton></Link>}>
+                                            tr.is_active&&<Link href={tr.go_pay_url}><IconButton edge="end"><SendIcon /></IconButton></Link>}>
                                             <ListItemAvatar>
                                                 <Avatar style={{backgroundColor:"var(--btn-color)"}}>
                                                     {tr.is_active?<TimerIcon/>:<CreditScoreIcon/>}

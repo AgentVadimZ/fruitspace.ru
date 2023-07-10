@@ -50,11 +50,10 @@ import {LoadingButton} from "@mui/lab";
 import {Tooltip} from "@mui/material"
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import useLocale from "../../../../locales/useLocale";
+import useFiberAPI from "../../../../fiber/fiber";
 
 
 export default function MusicGD(props) {
-    const [srv, setSrv] = useRecoilState(GDServer)
-    const [cookies, setCookie, delCookie] = useCookies(["token"])
     const playerRef = useRef(null)
     const [playerData, setPlayerData] = useState({
         title: "Hmmmmmm",
@@ -86,6 +85,9 @@ export default function MusicGD(props) {
         return `${minute}:${secondLeft < 10 ? `0${secondLeft}` : secondLeft}`;
     }
 
+    const api = useFiberAPI()
+    const [srv, setSrv] = api.servers.useGDPS()
+
     const [sortShow, setSortShow] = useState(false)
     const [sortMode, setSortModeX] = useState("downloads")
     const setSortMode=(mode)=>{
@@ -97,12 +99,10 @@ export default function MusicGD(props) {
     const locale = useLocale(props.router)
 
     const searchMusic = (mode) => {
-        fetch("https://api.fruitspace.one/v1/manage/gd/get_music",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                body: JSON.stringify({id: srv.srvid, page: page, query: search, mode: mode})}).then(resp=>resp.json()).then((resp)=>{
+            api.gdps_manage.getMusic(srv.Srv.srvid, mode, search, page).then((resp)=>{
             if(resp.status==="ok") {
                 setMusic(resp.music)
-                setPageCount(Math.ceil(resp.total/10))
+                setPageCount(Math.ceil(resp.count/10))
             }else{
                 console.error(resp)
             }
@@ -128,9 +128,7 @@ export default function MusicGD(props) {
             case "db": url=musUrl.db; break;
         }
         setLoading(true)
-        fetch("https://api.fruitspace.one/v1/manage/gd/add_music",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                body: JSON.stringify({id: srv.srvid, type: type, url: url})}).then(resp=>resp.json()).then((resp)=>{
+        api.gdps_manage.addMusic(srv.Srv.srvid, type, url).then((resp)=>{
             if(resp.status==="ok") {
                 setMusUploadData({id: resp.music.id, name: resp.music.name, artist: resp.music.artist})
             }else{
@@ -144,7 +142,7 @@ export default function MusicGD(props) {
 
 
     useEffect(()=>{
-        srv.srvid&&searchMusic(sortMode)
+        srv.Srv.srvid&&searchMusic(sortMode)
     },[srv, page])
 
     return (
@@ -162,10 +160,10 @@ export default function MusicGD(props) {
                         <AddCircleIcon />
                         <KeyboardArrowRightIcon />
                         <img src={LogoNG.src} onClick={()=>setBackdrop("add-ng")} />
-                        {srv.tariffConfig && srv.tariffConfig.Music.YouTube && <img src={LogoYT.src} onClick={()=>setBackdrop("add-yt")} /> }
-                        {srv.tariffConfig && srv.tariffConfig.Music.Deezer &&<img src={LogoDZ.src} onClick={()=>setBackdrop("add-dz")} /> }
-                        {srv.tariffConfig && srv.tariffConfig.Music.VK &&<img src={LogoVK.src} onClick={()=>setBackdrop("add-vk")} /> }
-                        {srv.tariffConfig && srv.tariffConfig.Music.Files &&<img src={LogoDBox.src} onClick={()=>setBackdrop("add-db")} /> }
+                        {srv.Tariff && srv.Tariff.Music.YouTube && <img src={LogoYT.src} onClick={()=>setBackdrop("add-yt")} /> }
+                        {srv.Tariff && srv.Tariff.Music.Deezer &&<img src={LogoDZ.src} onClick={()=>setBackdrop("add-dz")} /> }
+                        {srv.Tariff && srv.Tariff.Music.VK &&<img src={LogoVK.src} onClick={()=>setBackdrop("add-vk")} /> }
+                        {srv.Tariff && srv.Tariff.Music.Files &&<img src={LogoDBox.src} onClick={()=>setBackdrop("add-db")} /> }
                     </div>
                     <span className={styles.SliderDelimiter} />
                     <div className={styles.MusicSliderPlayer}>

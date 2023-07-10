@@ -39,6 +39,7 @@ import GDServer from "../../../../states/gd_server";
 import {useCookies} from "react-cookie";
 import Skeleton from '@mui/material/Skeleton';
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import useFiberAPI from "../../../../fiber/fiber";
 
 
 const SqBadge = (text) => <span className="rounded-md bg-[var(--btn-color)] group-hover:bg-[var(--active-color)] px-2 py-1 ml-2">{text}</span>
@@ -131,7 +132,7 @@ const GetLevelActionText = (data) => {
     switch (pd.action.toLowerCase()) {
         case "upload":
         case "update":
-            prim = <>Загружен {pd.name}{SqBadge("v"+pd.version)}{SqBadge(pd.uname)}</>
+            prim = <>Загружен {pd.name}{SqBadge("v"+(pd.version?pd.version:"0"))}{SqBadge(pd.uname)}</>
             sec = data.date+" | ID: "+data.target_id+" | Объектов: "+pd.objects
             break
         case "delete":
@@ -227,13 +228,13 @@ const GetActionText = (data) => {
 
 export default function ActionsGD(props) {
     const router = useRouter()
-    const [srv, setSrv] = useRecoilState(GDServer)
-    const [cookies, setCookie, delCookie] = useCookies(["token"])
     const [Logs, setLogs] = useState({count:0, results:[]})
-
     const [sortShow, setSortShow] = useState(false)
-
     const [logFilter, setLogFilter] = useState({page:0,type:-1})
+
+
+    const api = useFiberAPI()
+    const [srv, setSrv] = api.servers.useGDPS()
 
     const setSortMode = (mode) => {
         setLogFilter({type: mode, page: 0})
@@ -243,15 +244,13 @@ export default function ActionsGD(props) {
 
     const getLogs = ()=>{
         setLogs({count:0, results:[]})
-        fetch("https://api.fruitspace.one/v1/manage/gd/get_logs",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                body: JSON.stringify({...logFilter, id:srv.srvid})}).then(resp=>resp.json()).then((resp)=>{
+       api.gdps_manage.getLogs(srv.Srv.srvid, logFilter.type, logFilter.page).then((resp)=>{
                     setLogs(resp)
         })
     }
 
     useEffect(()=>{
-        srv.srvid&&getLogs()
+        srv.Srv.srvid&&getLogs()
     }, [srv, logFilter])
 
     return (
@@ -340,11 +339,11 @@ export default function ActionsGD(props) {
                                 </Tooltip>
                             </div>
                         </ClickAwayListener>
-                        <Pagination count={Logs.Count} page={logFilter.page+1} onChange={(e,val)=>setLogFilter({...logFilter, page: val-1})} shape="rounded" sx={{"& *": {color:"white !important"}}} />
+                        <Pagination count={Logs.count} page={logFilter.page+1} onChange={(e,val)=>setLogFilter({...logFilter, page: val-1})} shape="rounded" sx={{"& *": {color:"white !important"}}} />
                     </div>
                     <List dense>
-                        {Logs.Results
-                            ?Logs.Results.map((val,i)=>{
+                        {(Logs.results&&Logs.results.length>0)
+                            ?Logs.results.map((val,i)=>{
                             //
                             // console.log(val)
                             // try {val.data = JSON.parse(val.data)}catch (e){}

@@ -1,5 +1,5 @@
 import GlobalHead from "../../../components/GlobalHead";
-import {Toaster} from "react-hot-toast";
+import toast, {Toaster} from "react-hot-toast";
 import PanelContent from "../../../components/Global/PanelContent";
 import GlobalGDPSNav from "../../../components/UserZone/GlobalGDPSNav";
 import GDPSNavBar from "../../../components/UserZone/GDPSSIdeBar";
@@ -15,6 +15,12 @@ import diamondsImg from "../../../components/assets/gd/diamond.png"
 import orbsImg from "../../../components/assets/gd/orbs.png"
 import demonImg from "../../../components/assets/gd/demon.png"
 import playImg from "../../../components/assets/gd/play.png"
+import useFiberAPI from "../../../fiber/fiber";
+import {getBrowserLocale} from "../../../components/Hooks";
+import useLocale, {useGlobalLocale} from "../../../locales/useLocale";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
+import {Backdrop, TextField} from "@mui/material";
+import {styled} from "@mui/system";
 
 export default function FrontPage(props) {
 
@@ -22,8 +28,20 @@ export default function FrontPage(props) {
 
     const srvid = router.query.srvid
     const [srv, setSrv] = useState({})
+    const [user, setUser] = useState({})
 
-    const [user, isAuthDone, doLogin, doExec] = useGDPSLogin(srvid)
+    const [backdrop, setBackdrop] = useState("none")
+
+    const api = useFiberAPI(`acc${srvid}`)
+
+    const [creds, setCreds] = useState({uname:user.uname, password: "", email: user.email})
+
+    useEffect(()=> {
+        srvid&&api.gdps_users.get(srvid).then(resp=>{
+            setUser({...resp, vessels: JSON.parse(resp.vessels||"{}")})
+            setCreds({uname:resp.uname, password: "", email: resp.email})
+        })
+    }, [srvid])
 
     const fastIconLink = (type, id) => {
         id = Math.max(1, id)
@@ -32,21 +50,91 @@ export default function FrontPage(props) {
 
     useEffect(()=>{
         if (srvid==null) return
-        fetch("https://api.fruitspace.one/v1/gdpshub/getgdps?id="+srvid,
-            {credentials:"include", method: "GET"}).then(resp=>resp.json()).then((resp)=>{
-            if(resp.id) setSrv(resp);
+        api.fetch.gdpsGet(srvid).then((resp)=>{
+            if(resp.srvid) setSrv(resp);
             else router.push("/");
         })
     },[srvid])
 
+    const lang = getBrowserLocale()
+
+    const locale = useLocale(router)
+    if (lang!=null) {
+        locale.locale = lang==="ru"?"ru":"en"
+    }
+
+    const changeLogin = () => {
+        api.gdps_users.updateUsername(srvid, creds.uname).then(resp=>{
+            if (resp.status==="ok") {
+                toast.success(locale.get('success'), {
+                    duration: 1000,
+                    style: {
+                        color: "white",
+                        backgroundColor: "var(--btn-color)"
+                    }
+                })
+            } else {
+                toast.error(resp.message, {
+                    duration: 10000,
+                    style: {
+                        color: "white",
+                        backgroundColor: "var(--btn-color)"
+                    }
+                })
+            }
+        })
+    }
+    const changeEmail = () => {
+        api.gdps_users.updateEmail(srvid, creds.email).then(resp=>{
+            if (resp.status==="ok") {
+                toast.success(locale.get('success'), {
+                    duration: 1000,
+                    style: {
+                        color: "white",
+                        backgroundColor: "var(--btn-color)"
+                    }
+                })
+            } else {
+                toast.error(resp.message, {
+                    duration: 10000,
+                    style: {
+                        color: "white",
+                        backgroundColor: "var(--btn-color)"
+                    }
+                })
+            }
+        })
+    }
+    const changePassword = () => {
+        api.gdps_users.updatePassword(srvid, creds.password).then(resp=>{
+            if (resp.status==="ok") {
+                toast.success(locale.get('success'), {
+                    duration: 1000,
+                    style: {
+                        color: "white",
+                        backgroundColor: "var(--btn-color)"
+                    }
+                })
+            } else {
+                toast.error(resp.message, {
+                    duration: 10000,
+                    style: {
+                        color: "white",
+                        backgroundColor: "var(--btn-color)"
+                    }
+                })
+            }
+        })
+    }
+
     const type = getIconTypeById(user.icon_type)
 
     return <>
-        <GlobalHead title={srv.name}/>
-        <GlobalGDPSNav name={srv.name} icon={srv.icon}/>
-        <GDPSNavBar music={srv.t>1}/>
+        <GlobalHead title={srv.srv_name}/>
+        <GlobalGDPSNav name={srv.srv_name} icon={srv.icon}/>
+        <GDPSNavBar music={srv.plan>1}/>
         <Toaster/>
-        {isAuthDone && <PanelContent>
+        {user.uname && <PanelContent>
             <div>
                 <div className="bg-[var(--subtle-color)] p-2 rounded-xl flex flex-col w-fit">
                     <h3 className="flex items-center mx-auto my-2">
@@ -99,24 +187,73 @@ export default function FrontPage(props) {
 
                     <div className="flex justify-center items-center bg-[var(--bkg-color)] rounded-lg mx-auto mt-4 flex-col lg:flex-row">
                         <span className="flex">
-                            <img src={fastIconLink("cube",user.cube)} className={`w-12 p-2 rounded-lg aspect-square object-contain ${type==="cube"&&"bg-[var(--primary-color)]"}`} />
-                        <img src={fastIconLink("ship",user.ship)} className={`w-12 p-2 rounded-lg aspect-square object-contain ${type==="ship"&&"bg-[var(--primary-color)]"}`} />
-                        <img src={fastIconLink("ball",user.ball)} className={`w-12 p-2 rounded-lg aspect-square object-contain ${type==="ball"&&"bg-[var(--primary-color)]"}`} />
+                            <img src={fastIconLink("cube",user.vessels.cube)} className={`w-12 p-2 rounded-lg aspect-square object-contain ${type==="cube"&&"bg-[var(--primary-color)]"}`} />
+                        <img src={fastIconLink("ship",user.vessels.ship)} className={`w-12 p-2 rounded-lg aspect-square object-contain ${type==="ship"&&"bg-[var(--primary-color)]"}`} />
+                        <img src={fastIconLink("ball",user.vessels.ball)} className={`w-12 p-2 rounded-lg aspect-square object-contain ${type==="ball"&&"bg-[var(--primary-color)]"}`} />
                         </span>
 
                         <span className="flex">
-                            <img src={fastIconLink("ufo",user.ufo)} className={`w-12 p-2 rounded-lg aspect-square object-contain ${type==="ufo"&&"bg-[var(--primary-color)]"}`} />
-                        <img src={fastIconLink("wave",user.wave)} className={`w-12 p-2 rounded-lg aspect-square object-contain ${type==="wave"&&"bg-[var(--primary-color)]"}`} />
-                        <img src={fastIconLink("robot",user.robot)} className={`w-12 p-2 rounded-lg aspect-square object-contain ${type==="robot"&&"bg-[var(--primary-color)]"}`} />
+                            <img src={fastIconLink("ufo",user.vessels.ufo)} className={`w-12 p-2 rounded-lg aspect-square object-contain ${type==="ufo"&&"bg-[var(--primary-color)]"}`} />
+                        <img src={fastIconLink("wave",user.vessels.wave)} className={`w-12 p-2 rounded-lg aspect-square object-contain ${type==="wave"&&"bg-[var(--primary-color)]"}`} />
+                        <img src={fastIconLink("robot",user.vessels.robot)} className={`w-12 p-2 rounded-lg aspect-square object-contain ${type==="robot"&&"bg-[var(--primary-color)]"}`} />
                         </span>
 
                         <span className="flex">
-                            <img src={fastIconLink("spider",user.spider)} className={`w-12 p-2 rounded-lg aspect-square object-contain ${type==="spider"&&"bg-[var(--primary-color)]"}`} />
-                        <img src={fastIconLink("swing",user.swing)} className={`w-12 p-2 rounded-lg aspect-square object-contain ${type==="swing"&&"bg-[var(--primary-color)]"}`} />
+                            <img src={fastIconLink("spider",user.vessels.spider)} className={`w-12 p-2 rounded-lg aspect-square object-contain ${type==="spider"&&"bg-[var(--primary-color)]"}`} />
+                        <img src={fastIconLink("swing",user.vessels.swing)} className={`w-12 p-2 rounded-lg aspect-square object-contain ${type==="swing"&&"bg-[var(--primary-color)]"}`} />
                         </span>
-                         </div>
+                    </div>
+                </div>
+                <div className="bg-[var(--subtle-color)] p-1 w-[available] flex flex-col rounded-xl mt-4">
+                    <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-base flex items-center m-1 justify-center h-8 rounded-lg flex-1"
+                       onClick={()=>setBackdrop("chusername")}>{locale.get('changeUsername')}</a>
+                    <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-base flex items-center m-1 justify-center h-8 rounded-lg flex-1"
+                       onClick={()=>setBackdrop("chemail")}>{locale.get('changeEmail')}</a>
+                    <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-base flex items-center m-1 justify-center h-8 rounded-lg flex-1"
+                       onClick={()=>setBackdrop("chpassword")}>{locale.get('changePassword')}</a>
                 </div>
             </div>
+            <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                      open={backdrop!="none"} onClick={()=>setBackdrop("none")}>
+
+                {backdrop==="chusername" && <div className="bg-[var(--subtle-color)] p-2 rounded-xl"
+                                             onClick={(e)=>e.stopPropagation()}>
+                    <h3 className="text-center">{locale.get('changeUsername')}</h3>
+                    <FruitTextField
+                        label="Username" type="text" fullWidth
+                        value={creds.uname}
+                        onChange={(evt)=>setCreds({...creds, uname: evt.target.value})}
+                        className="mb-1"
+                    />
+                    <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-lg flex items-center justify-center h-12 rounded-xl flex-1 mt-1"
+                       onClick={()=>changeLogin()}>{locale.get('change')}</a>
+                </div>}
+                {backdrop==="chemail" && <div className="bg-[var(--subtle-color)] p-2 rounded-xl"
+                                                 onClick={(e)=>e.stopPropagation()}>
+                    <h3 className="text-center">{locale.get('changeEmail')}</h3>
+                    <FruitTextField
+                        label="Email" type="email" fullWidth
+                        value={creds.email}
+                        onChange={(evt)=>setCreds({...creds, email: evt.target.value})}
+                        className="mb-1"
+                    />
+                    <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-lg flex items-center justify-center h-12 rounded-xl flex-1 mt-1"
+                       onClick={()=>changeEmail()}>{locale.get('change')}</a>
+                </div>}
+                {backdrop==="chpassword" && <div className="bg-[var(--subtle-color)] p-2 rounded-xl"
+                    onClick={(e)=>e.stopPropagation()}>
+                <h3 className="text-center">{locale.get('changePassword')}</h3>
+                <FruitTextField
+                    label="Password" type="password" fullWidth
+                    value={creds.password}
+                    onChange={(evt)=>setCreds({...creds, password: evt.target.value})}
+                    className="mb-1"
+                />
+                <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-lg flex items-center justify-center h-12 rounded-xl flex-1 mt-1"
+                   onClick={()=>changePassword()}>{locale.get('change')}</a>
+            </div>}
+
+            </Backdrop>
         </PanelContent> }
     </>
 }
@@ -133,3 +270,26 @@ const getIconTypeById = (id)=>{
         default: return "cube"
     }
 }
+
+
+const FruitTextField = styled(TextField)({
+    '& label.Mui-focused': {
+        color: '#0d6efd',
+    },
+    '& .MuiInput-underline:after': {
+        borderBottomColor: 'green',
+    },
+    '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+            borderColor: 'white !important',
+        },
+        '&:hover fieldset': {
+            borderColor: '#cacad0',
+        },
+        '&.Mui-focused fieldset': {
+            borderColor: '#0d6efd',
+        },
+        borderRadius: "8px",
+        color: "white",
+    },
+});

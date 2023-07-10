@@ -38,18 +38,7 @@ import useEffectOnce from "../../../../components/Hooks";
 import useLocale from "../../../../locales/useLocale";
 import ProgressCard from "../../../../components/Cards/ProgressCard";
 import GDPSCard, {DownloadCard} from "../../../../components/Cards/GDPSCard";
-import TariffCard from "../../../../components/Cards/TariffCard";
-import PersonIcon from "@mui/icons-material/Person";
-import MusicNoteIcon from "@mui/icons-material/MusicNote";
-import CloseIcon from "@mui/icons-material/Close";
-import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
-import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturing";
-import DesktopMacIcon from "@mui/icons-material/DesktopMac";
-import CloudDoneIcon from "@mui/icons-material/CloudDone";
-import AppleIcon from "@mui/icons-material/Apple";
-import AddIcon from '@mui/icons-material/Add';
-import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import useFiberAPI from "../../../../fiber/fiber";
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -72,7 +61,8 @@ export default function ManageGD(props) {
     const [userStatTab, setUserStatTab] = useState("7d")
     const [lvlStatTab, setLvlStatTab] = useState("7d")
 
-    const [srv, setSrv] = useRecoilState(GDServer)
+    const api = useFiberAPI()
+    const [srv, setSrv] = api.servers.useGDPS()
 
     useEffectOnce(()=>{
         toast.dismiss()
@@ -81,7 +71,7 @@ export default function ManageGD(props) {
     const locale = useLocale(props.router)
 
 
-    let expire = new Date(srv.expireDate)
+    let expire = new Date(srv.Srv.expire_date)
     let expireDate = (expire.getTime() - new Date().getTime()) /1000/60/60/24
     let expireText = `${expire.getDate()}.${expire.getMonth()+1}.${expire.getFullYear()}`+(expireDate<=0?" ❄️":"")
     let preMax = Math.min(expireDate,365)
@@ -110,12 +100,12 @@ export default function ManageGD(props) {
                 {/*    <p>{locale.get("development")}</p>*/}
                 {/*</div>*/}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 w-full md:w-auto">
-                    <GDPSCard name={srv.srvname} planid={srv.plan} plan={GetGDPlan(srv.plan)} id={<span style={{color:"white"}} className={styles.CodeBlock}>{srv.srvid}</span>}
-                              icon={"https://cdn.fruitspace.one/server_icons/"+srv.icon} onClick={()=>props.router.push("/product/order/gd?id="+srv.srvid)}/>
-                    <ProgressCard color max={srv.coreConfig&&srv.coreConfig.ServerConfig.MaxUsers} now={srv.userCount} text={locale.get('chips')[0]} />
-                    <ProgressCard color max={srv.coreConfig&&srv.coreConfig.ServerConfig.MaxLevels} now={srv.levelCount} text={locale.get('chips')[1]} />
+                    <GDPSCard name={srv.Srv.srv_name} planid={srv.Srv.plan} plan={GetGDPlan(srv.Srv.plan)} id={<span style={{color:"white"}} className={styles.CodeBlock}>{srv.Srv.srvid}</span>}
+                              icon={"https://cdn.fruitspace.one/server_icons/"+srv.Srv.icon} onClick={()=>props.router.push("/product/order/gd?id="+srv.Srv.srvid)}/>
+                    <ProgressCard color max={srv.CoreConfig&&srv.CoreConfig.ServerConfig.MaxUsers} now={srv.Srv.user_count} text={locale.get('chips')[0]} />
+                    <ProgressCard color max={srv.CoreConfig&&srv.CoreConfig.ServerConfig.MaxLevels} now={srv.Srv.level_count} text={locale.get('chips')[1]} />
                     <ProgressCard color date max={preMax>30?365:30} now={expireDate} text={locale.get('chips')[2]+expireText} />
-                    <DownloadCard srvid={srv.srvid} locale={locale} srv={srv} copyR={copyValueR} />
+                    <DownloadCard srvid={srv.Srv.srvid} locale={locale} srv={srv.Srv} copyR={copyValueR} />
                 </div>
 
                 <div className={styles.CardBox}>

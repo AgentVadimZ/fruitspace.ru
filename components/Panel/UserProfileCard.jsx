@@ -48,6 +48,29 @@ export default function UserProfileCard(props) {
     const ParseError = localeGlobal.get('funcParseErr')
 
     const getTOTP = ()=> {
+        if (totp.code) {
+            api.user.updateTOTP(totp.code).then((resp)=>{
+                if(resp.status==="ok") {
+                    toast.success(locale.get('twoFA')[5], {
+                        duration: 10000,
+                        style: {
+                            color: "white",
+                            backgroundColor: "var(--btn-color)"
+                        }
+                    })
+                    setUser({...user, is_2fa: true})
+                }else{
+                    toast.error(locale.get('err')+ParseError(resp.code), {
+                        duration: 10000,
+                        style: {
+                            color: "white",
+                            backgroundColor: "var(--btn-color)"
+                        }
+                    })
+                }
+            })
+            return
+        }
         api.user.updateTOTP("regen").then((resp)=>{
             if(resp.status==="ok") {
                 setTotp(resp)
@@ -206,7 +229,7 @@ export default function UserProfileCard(props) {
 
             <div className={styles.SettingsBox}>
                 <SettingsItem text={locale.get('options')[0]} onClick={()=>setBackdrop("password")}><PasswordIcon className={styles2.AddIcon}/></SettingsItem>
-                <SettingsItem text={locale.get('options')[user.is2fa?1:2]} onClick={()=>setBackdrop("2fa")}><LockPersonIcon className={styles2.AddIcon}/></SettingsItem>
+                <SettingsItem text={locale.get('options')[user.is_2fa?1:2]} onClick={()=>setBackdrop("2fa")}><LockPersonIcon className={styles2.AddIcon}/></SettingsItem>
                 <SettingsItem text={locale.get('options')[user.discord_id!="0"?4:3]} onClick={()=>api.auth.discord()}><FontAwesomeIcon icon={faDiscord} className={styles2.AddIcon} /></SettingsItem>
             </div>
 
@@ -257,7 +280,7 @@ export default function UserProfileCard(props) {
                                         onChange={(evt)=>setTotp({...totp, code: evt.target.value.replaceAll(/[^0-9]/g,'')})}/>
                     </>}
                     <div className={styles3.CardBottom}>
-                        <Button variant="contained" className={`${styles3.SlimButton}`} onClick={()=>getTOTP()}>{locale.get('twoFA')[2]}</Button>
+                        <Button variant="contained" className={`${styles3.SlimButton}`} onClick={()=>getTOTP()}>{totp.code?locale.get('twoFA')[4]:locale.get('twoFA')[2]}</Button>
                         <Button variant="contained" className={`${styles3.SlimButton} ${styles3.btnError}`}
                                 onClick={()=>setBackdrop("none")}>{locale.get('cancel')}</Button>
                     </div>

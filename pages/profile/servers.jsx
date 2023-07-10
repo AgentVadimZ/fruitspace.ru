@@ -15,16 +15,16 @@ import {useCookies} from "react-cookie";
 import useEffectOnce from "../../components/Hooks";
 import toast from "react-hot-toast";
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";
+import useFiberAPI from "../../fiber/fiber";
 
 
 export default function Servers(props) {
     const router = useRouter()
     const {s} = router.query;
     var route = "gd";
-    const [tab, setTab] = useState(route);
+    const [tab, setTab] = useState(route)
 
-    const [user,setUser] = useRecoilState(UserState)
-    const [cookies, setCookie, delCookie] = useCookies(["token"])
+    const api = useFiberAPI()
 
     const [servers, setServers] = useState({
         gd: [],
@@ -42,9 +42,7 @@ export default function Servers(props) {
     })
 
     useEffectOnce(()=>{
-        fetch("https://api.fruitspace.one/v1/manage/list",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]}}
-        ).then(resp=>resp.json()).then((resp)=>{
+        api.servers.list().then((resp)=>{
             if (resp.status==="ok") {
                 setServers(resp)
             }
@@ -68,8 +66,8 @@ export default function Servers(props) {
                     </TabsList>
                     <TabPanel value="gd">
                         {servers.gd?servers.gd.map((val, i)=>(
-                            <ServerItem key={i} type="gd" name={val.srvname} plan={GetGDPlan(val.plan)} router={props.router}
-                                        desc={ParseDesc(val.userCount, val.levelCount)} uuid={val.srvid} icon={val.icon} />
+                            <ServerItem key={i} type="gd" name={val.srv_name} plan={GetGDPlan(val.plan)} router={props.router}
+                                        desc={ParseDesc(val.user_count, val.level_count)} uuid={val.srvid} icon={val.icon} />
                             )):""}
                         <ServerItem router={props.router} type="gd" add/>
                     </TabPanel>

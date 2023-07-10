@@ -25,6 +25,7 @@ import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import {useRecoilState} from "recoil";
 import GDServer from "../../../states/gd_server";
+import useFiberAPI from "../../../fiber/fiber";
 
 
 export default function Order(props) {
@@ -37,7 +38,11 @@ export default function Order(props) {
         promocode: ""
     })
     const [payDurLock, setPayDurLock] = useState(false)
-    const [srvData,setSrvData] = useRecoilState(GDServer)
+
+    const api = useFiberAPI()
+
+
+    const [srvData,setSrvData] = api.servers.useGDPS()
 
 
     const [tariffs,setTariffs] = useState({});
@@ -51,9 +56,7 @@ export default function Order(props) {
 
     const createServer = (tariff)=> {
         setLoading(true)
-        fetch("https://api.fruitspace.one/v1/manage/gd/new",
-            {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                body: JSON.stringify({srvid:srv.srvid, name: srv.name, tariff: parseInt(tariff), duration: srv.payDuration, promocode: srv.promocode})}).then(resp=>resp.json()).then((resp)=>{
+        api.servers.createGDPS(srv.name, parseInt(tariff),srv.payDuration,srv.promocode,srv.srvid).then((resp)=>{
                     setLoading(false)
                     if(resp.status==="ok") {
                 toast.success(locale.get('createSuccess'),{style: {
@@ -70,8 +73,7 @@ export default function Order(props) {
     }
 
     useEffectOnce(()=>{
-        fetch("https://api.fruitspace.one/v1/fetch/tariffs",
-            {credentials:"include"}).then(resp=>resp.json()).then((resp)=>{
+        api.fetch.gdpsTariffs().then((resp)=>{
             if(resp.status==="ok") {
                 setTariffs(resp.Tariffs)
             }})
@@ -79,24 +81,23 @@ export default function Order(props) {
 
     useEffect(()=> {
         if (srv.srvid.length===4) {
-            fetch("https://api.fruitspace.one/v1/manage/gd/get",
-                {credentials:"include", method: "POST", headers: {"Authorization": cookies["token"]},
-                    body: JSON.stringify({id:srv.srvid})}).then(resp=>resp.json()).then((resp)=>{
-                if(resp.srvid) {
+            api.gdps_manage.get(srv.srvid).then((resp)=>{
+                if(resp.Srv) {
                     setSrvData(resp);
                     let payDur = "yr"
-                    if (new Date(resp.expireDate).getFullYear()>2040) {
+                    if (new Date(resp.Srv.expire_date).getFullYear()>2040) {
                         payDur = "all"
-                        setPayDurLock(true)
+                        if(resp.Srv.plan!=1)
+                            setPayDurLock(true)
                     }
-                    setSrv({...srv, name: resp.srvname, payDuration: payDur})
+                    setSrv({...srv, name: resp.Srv.srv_name, payDuration: payDur})
                 }
                 else setSrv({...srv, srvid: ""})
             }).catch(()=>setSrv({...srv, srvid: ""}))
         }else{
             setSrvData({});
         }
-    }, [srv.srvid])
+    }, [])
 
     const getLocalPrice = (tariff) => {
         if (locale.locale==="ru")
@@ -132,7 +133,7 @@ export default function Order(props) {
         }
         let discount = (duration==="yr"?15:0)
         let barrier = 0
-        if(srvData.plan) barrier = srvData.plan
+        if(srvData.Srv) barrier = srvData.Srv.plan
 
         return (
             <div className="flex flex-col lg:flex-row gap-8">

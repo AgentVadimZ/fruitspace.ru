@@ -21,11 +21,11 @@ export default function ProductCard(props) {
                     {props.btnText}
                 </Button>
             </Link>
-            <Link href={props.link?("/top/"+props.link):"#"}>
+            {props.btnTopText && <Link href={props.link?("/top/"+props.link):"#"}>
                 <Button variant="contained" className={styles.cardButton} disabled={props.disabled} style={{marginTop:"0"}}>
                     {props.btnTopText}
                 </Button>
-            </Link>
+            </Link>}
         </div>
     )
 }
