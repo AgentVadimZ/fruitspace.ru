@@ -20,7 +20,7 @@ api.do = async (endpoint, method="GET", body=null) => {
 }
 api.doForm = async (endpoint, method="GET", body=null) => {
     return fetch(api.base_url+endpoint,
-        {method: method, body: body, headers:{"Authorization":api.authorization,"Content-Type":"multipart/form-data"}}
+        {method: method, body: body, headers:{"Authorization":api.authorization}}
     ).then(r=>r.json()).catch(e=>({status:"error", message:e.message, code:"conn"}))
 }
 
