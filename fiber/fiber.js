@@ -184,7 +184,7 @@ gdps_manage.addMusic = async (srvid, type, url)=> {
 gdps_manage.updateLogo = async (srvid, avatar_file) => {
     var datax = new FormData()
     datax.append("profile_pic", avatar_file)
-    return await user._api.doForm(`servers/gd/${srvid}/logs`,"POST", datax)
+    return await user._api.doForm(`servers/gd/${srvid}/icon`,"POST", datax)
 }
 gdps_manage.updateSettings = async (srvid, settings)=> {
     return await gdps_manage._api.do(`servers/gd/${srvid}/settings`, "POST", settings)
