@@ -48,7 +48,7 @@ const useFiberAPI = (cookie="token")=> {
     return api
 }
 
-const useServerFiberAPI = (ctx, cookie="token")=> {
+const serverFiberAPI = (ctx, cookie="token")=> {
     const cookies = parseCookies(ctx.req)
     api.authorization = cookies[cookie]
     api.auth = auth
@@ -252,4 +252,4 @@ gdps_users.addMusic = async (srvid, type, url)=> {
 //endregion
 
 export default useFiberAPI
-export {useServerFiberAPI}
+export {serverFiberAPI}

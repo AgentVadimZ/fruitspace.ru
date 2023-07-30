@@ -17,7 +17,7 @@ import GlobalHead from "../../../components/GlobalHead";
 
 export async function getServerSideProps(ctx) {
     let srvid = ctx.params.srvid
-    const api = useServerFiberAPI(ctx, `acc${srvid}`)
+    const api = serverFiberAPI(ctx, `acc${srvid}`)
     let srv = await api.fetch.gdpsGet(srvid)
     if (srv.srvid){
         let user= await api.gdps_users.get(srvid)
