@@ -11,9 +11,30 @@ import HCaptcha from "@hcaptcha/react-hcaptcha";
 import toast, {Toaster} from "react-hot-toast";
 import {getBrowserLocale} from "../../../components/Hooks";
 import Linkify from "linkify-react";
-import useFiberAPI from "../../../fiber/fiber";
+import useFiberAPI, {useServerFiberAPI} from "../../../fiber/fiber";
 import GlobalHead from "../../../components/GlobalHead";
 
+
+export async function getServerSideProps(ctx) {
+    let srvid = ctx.params.srvid
+    const api = useServerFiberAPI(ctx, `acc${srvid}`)
+    let srv = await api.fetch.gdpsGet(srvid)
+    if (srv.srvid){
+        let user= await api.gdps_users.get(srvid)
+        return {
+            props: {
+                srv: srv,
+                user: user
+            }
+        }
+    }
+    return {
+        redirect: {
+            destination: "/",
+            permanent: false
+        }
+    }
+}
 
 export default function DownloadPage(props) {
 
@@ -30,9 +51,9 @@ export default function DownloadPage(props) {
 
     const showPlayers = localeGlobal.get('funcLvlPlayerServer')
     const srvid = router.query.srvid
-    const [srv, setSrv] = useState({})
+    const srv = props.srv
 
-    const [user, setUser] = useState({})
+    const user = props.user
 
     const api = useFiberAPI(`acc${srvid}`)
 
@@ -40,9 +61,9 @@ export default function DownloadPage(props) {
     const [backdrop, setBackdrop] = useState("none")
     const [showLogin, setShowLogin] = useState(false)
 
-    useEffect(()=> {
-        srvid&&api.gdps_users.get(srvid).then(resp=>setUser(resp))
-    }, [srvid])
+    // useEffect(()=> {
+    //     srvid&&api.gdps_users.get(srvid).then(resp=>setUser(resp))
+    // }, [srvid])
 
     const aLogin=()=>{
         api.gdps_users.login(srvid, creds.uname, creds.password, creds.captcha).then((resp)=>{
@@ -135,14 +156,6 @@ export default function DownloadPage(props) {
             }
         })
     }
-
-    useEffect(()=>{
-        if (srvid==null) return
-        api.fetch.gdpsGet(srvid).then((resp)=>{
-            if(resp.srvid) setSrv(resp);
-            else router.push("/");
-        })
-    },[srvid])
 
     return (<>
             <GlobalHead title={srv.srv_name}/>

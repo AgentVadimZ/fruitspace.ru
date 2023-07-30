@@ -3,6 +3,7 @@
 import {useCookies} from "react-cookie";
 import {useRecoilState} from "recoil";
 import {serverGDAtom, userAtom} from "./fiber.model.js";
+import {parseCookies} from "./cockie_parser";
 
 const DISCORD_AUTH = "https://discord.com/oauth2/authorize?client_id=1119240313605734410&response_type=code&scope=identify%20guilds%20guilds.join&state="
 
@@ -46,7 +47,28 @@ const useFiberAPI = (cookie="token")=> {
     gdps_users._api = api
     return api
 }
+
+const useServerFiberAPI = (ctx, cookie="token")=> {
+    const cookies = parseCookies(ctx.req)
+    api.authorization = cookies[cookie]
+    api.auth = auth
+    auth._api = api
+    api.user = user
+    user._api = api
+    api.payments = payments
+    payments._api = api
+    api.fetch = ufetch
+    ufetch._api = api
+    api.servers = servers
+    servers._api = api
+    api.gdps_manage = gdps_manage
+    gdps_manage._api = api
+    api.gdps_users = gdps_users
+    gdps_users._api = api
+    return api
+}
 // endregion
+
 
 // region  Auth API
 const auth = {_api: api}
@@ -230,3 +252,4 @@ gdps_users.addMusic = async (srvid, type, url)=> {
 //endregion
 
 export default useFiberAPI
+export {useServerFiberAPI}
