@@ -11,7 +11,7 @@ import HCaptcha from "@hcaptcha/react-hcaptcha";
 import toast, {Toaster} from "react-hot-toast";
 import {getBrowserLocale} from "../../../components/Hooks";
 import Linkify from "linkify-react";
-import useFiberAPI, {useServerFiberAPI} from "../../../fiber/fiber";
+import useFiberAPI, {serverFiberAPI} from "../../../fiber/fiber";
 import GlobalHead from "../../../components/GlobalHead";
 
 
@@ -158,7 +158,7 @@ export default function DownloadPage(props) {
     }
 
     return (<>
-            <GlobalHead title={srv.srv_name}/>
+            <GlobalHead title={srv.srv_name} description={srv.description} image={srv.icon}/>
             <Toaster/>
             <div className="h-[100vh] flex justify-center items-center flex-col">
                 <div className="w-fit max-w-full lg:max-w-xl">
