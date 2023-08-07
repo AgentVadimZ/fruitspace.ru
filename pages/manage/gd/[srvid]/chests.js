@@ -91,6 +91,8 @@ export default function ChestsGD(props) {
         })
     }
 
+
+
     useEffect(()=>{
         srv.CoreConfig&&setChestConfig(srv.CoreConfig.ChestConfig)
     }, [srv])

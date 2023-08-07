@@ -5,7 +5,7 @@
 }
 
 .innerMain {
-    background-color: var(--active-color);
+    background-color: var(--bkg-color);
     border-radius: 12px;
     padding: .5rem;
     margin-bottom: 2rem;

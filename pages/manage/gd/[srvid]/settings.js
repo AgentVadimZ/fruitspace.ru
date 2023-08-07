@@ -235,7 +235,7 @@ export default function SettingsGD(props) {
                         backgroundColor: "var(--btn-color)"
                     }})
             }else{
-                toast.error(locale.get('universalErr')+resp.error,{style: {
+                toast.error(locale.get('universalErr')+resp.message,{style: {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})
@@ -258,7 +258,7 @@ export default function SettingsGD(props) {
                     }})
                 setTimeout(()=>router.push("/profile/servers/"), 5000)
             }else{
-                toast.error(locale.get('universalErr')+resp.error,{style: {
+                toast.error(locale.get('universalErr')+resp.message,{style: {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})

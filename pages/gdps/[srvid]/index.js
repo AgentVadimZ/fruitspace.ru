@@ -68,6 +68,17 @@ export default function DownloadPage(props) {
     const aLogin=()=>{
         api.gdps_users.login(srvid, creds.uname, creds.password, creds.captcha).then((resp)=>{
             if (resp.status==="ok") {
+
+                        toast.success(locale.get('success'), {
+                            duration: 1000,
+                            style: {
+                                color: "white",
+                                backgroundColor: "var(--btn-color)"
+                            }
+                        })
+                        api.auth.setCookieToken(resp.token)
+                        router.push(srvid+"/panel")
+            }else{
                 switch (resp.code) {
                     case "-1":
                         toast.error(locale.get("errLogin"), {
@@ -88,26 +99,15 @@ export default function DownloadPage(props) {
                         })
                         break
                     default:
-                        toast.success(locale.get('success'), {
-                            duration: 1000,
+                        toast.error(`Error: ${resp.message} (c_${resp.code})`, {
+                            duration: 10000,
                             style: {
                                 color: "white",
                                 backgroundColor: "var(--btn-color)"
                             }
                         })
-                        api.auth.setCookieToken(resp.token)
-                        router.push(srvid+"/panel")
-                        break
+                        hcaptcha.reset()
                 }
-            }else{
-                toast.error(resp.message, {
-                    duration: 10000,
-                    style: {
-                        color: "white",
-                        backgroundColor: "var(--btn-color)"
-                    }
-                })
-                hcaptcha.reset()
             }
         })
     }

@@ -126,7 +126,7 @@ export default function Login(props) {
                 }
             })
         }else{
-            toast.error(locale.get('err')+ParseError(resp.message), {
+            toast.error(locale.get('err')+ParseError(resp.code), {
                 duration: 10000,
                 style: {
                     color: "white",

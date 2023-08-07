@@ -201,6 +201,38 @@ const globalLocale = {
         }
     },
 
+    funcLvlsServer: {
+        ru: (levels)=>{
+            let str=""+levels
+            let clevels=levels%10
+            switch (clevels) {
+                case 1:
+                    str+=" уровень"
+                    break
+                case 2:
+                case 3:
+                case 4:
+                    str+=" уровня"
+                    break
+                default:
+                    str+=" уровней"
+            }
+            return str
+        },
+        en: (levels)=>{
+            let str=""+levels
+            let clevels=levels%10
+            switch (clevels) {
+                case 1:
+                    str+=" level"
+                    break
+                default:
+                    str+=" levels"
+            }
+            return str
+        }
+    },
+
     funcParseErr: {
         ru: (err)=>{
             let errc = err.split("|")[1] || err

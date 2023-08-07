@@ -5,6 +5,7 @@ import NavItem from "./NavBar/NavItem";
 import {DropdownItem, DropdownMenu} from "./NavBar/DropDown";
 
 import RightSvg from "./assets/icons/right.svg";
+import logo_sm from "./assets/ava.png";
 import logo from "./assets/Fruitspace2.png";
 import ServerSvg from "./assets/icons/server.svg";
 import NotificationSvg from "./assets/icons/notification.svg";
@@ -65,8 +66,8 @@ export default function GlobalNav(props) {
         {style: 'currency',currency: user.usd?"USD":"RUB"}).format(num).replace(/[.|,]00/g, '')
 
     return (
-        <NavBar>
-            <Link href={"/"}><img src={logo.src} alt="logo" className={styles.logo}></img></Link>
+        <NavBar mainpage={props.mainpage}>
+            <Link href={"/"}><img src={props.mainpage?logo_sm.src:logo.src} alt="logo" className={styles.logo}></img></Link>
             <span style={{flex:1}}></span>
             { user.status && (<><NavItem icon={<ServerSvg/>}>
                 <DropdownMenu centered>

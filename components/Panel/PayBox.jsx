@@ -53,7 +53,7 @@ export default function PayBox(props) {
             if (resp.status==="ok") {
                 props.router.push(encodeURI(resp.pay_url))
             }else {
-                toast.error(locale.get('err')+ParseError(resp.message), {
+                toast.error(locale.get('err')+ParseError(resp.code), {
                     duration: 10000,
                     style: {
                         color: "white",

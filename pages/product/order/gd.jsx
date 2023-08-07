@@ -65,7 +65,7 @@ export default function Order(props) {
                     }})
                 router.push("/profile/servers")
             }else{
-                toast.error(locale.get('createFailed')+ParseError(resp.error),{style: {
+                toast.error(locale.get('createFailed')+ParseError(resp.code),{style: {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})

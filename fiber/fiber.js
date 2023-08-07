@@ -153,6 +153,11 @@ payments.get = async ()=>{
 
 // region Fetch API
 const ufetch = {_api: api}
+
+ufetch.stats = async () => {
+    return await ufetch._api.do("fetch/stats","GET")
+}
+
 ufetch.gdpsTariffs = async () => {
     return await ufetch._api.do("fetch/gd/tariffs","GET")
 }
@@ -216,6 +221,16 @@ gdps_manage.buildlabPush = async (srvid, blab)=> {
 }
 gdps_manage.moduleDiscord = async (srvid, enable, module)=> {
     return await gdps_manage._api.do(`servers/gd/${srvid}/modules/discord`, "PUT", {...module, enable: enable})
+}
+gdps_manage.getRoles = async (srvid)=> {
+    return await gdps_manage._api.do(`servers/gd/${srvid}/roles`, "GET")
+}
+gdps_manage.setRole = async (srvid, role)=> {
+    return await gdps_manage._api.do(`servers/gd/${srvid}/roles`, "POST", role)
+}
+
+gdps_manage.searchUsers = async (srvid, keyword)=> {
+    return await gdps_manage._api.do(`servers/gd/${srvid}/get/users?user=${encodeURI(keyword)}`, "GET")
 }
 // endregion
 
