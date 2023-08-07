@@ -145,7 +145,7 @@ export default function RolesGD(props) {
                                 {roles.map((v,i)=>{
                                     if(i===roleid&&crole) {
                                         return (
-                                            <div className="bg-[var(--subtle-color)] rounded-lg">
+                                            <div key={i} className="bg-[var(--subtle-color)] rounded-lg">
                                                 <ListItem className="rounded-lg" sx={{background:"var(--subtle-color)"}} secondaryAction={
                                                     <div className="flex flex-col xl:flex-row gap-2">
                                                         <IconButton edge="end" className="bg-[var(--error-color)] hover:bg-red-800 mr-2" onClick={reset_role}>
