@@ -285,6 +285,10 @@ export default function RolesGD(props) {
                                                             <FruitSwitch checked={crole.privs.aRateStars} onChange={(e, val)=>setCRole({...crole, privs:{...crole.privs, aRateStars: val?1:0}})}/>
                                                         </div>
                                                         <div className={styles.SettingsPlato}>
+                                                            <span>Отправка рейта главным модераторам</span>
+                                                            <FruitSwitch checked={crole.privs.aRateReq} onChange={(e, val)=>setCRole({...crole, privs:{...crole.privs, aRateReq: val?1:0}})}/>
+                                                        </div>
+                                                        <div className={styles.SettingsPlato}>
                                                             <span>Запретить оценку на демона (10⭐)</span>
                                                             <FruitSwitch checked={crole.privs.aRateNoDemon} onChange={(e, val)=>setCRole({...crole, privs:{...crole.privs, aRateNoDemon: val?1:0}})}/>
                                                         </div>
