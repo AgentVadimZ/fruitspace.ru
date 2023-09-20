@@ -107,6 +107,9 @@ export default function SettingsGD(props) {
 
     const [discordbot, setDiscordbot] = useState({rate:"",newuser:"",newlevel:"",newmusic:""})
 
+    const dbRef = useRef()
+
+
 
     const locale = useLocale(props.router)
     const localeGlobal = useGlobalLocale(props.router)
@@ -135,6 +138,10 @@ export default function SettingsGD(props) {
         srv.Srv&&setDiscordbot(srv.Srv.m_stat_history)
     },[srv])
 
+
+    const redirectToDB = () => {
+        dbRef.current?.requestSubmit()
+    }
     const ResetDBPassword = ()=> {
         api.gdps_manage.dbreset(srv.Srv.srvid).then((resp)=>{
             if(resp.status==="ok") {
@@ -348,9 +355,14 @@ export default function SettingsGD(props) {
                         <div className={styles.CardBottom}>
                             <Button variant="contained" className={`${styles.SlimButton} ${styles.btnError}`}
                                     onClick={()=>setBackdrop("dbreset")}>{locale.get('dbSettings')[0]}</Button>
-                            <Link href="https://db.fruitspace.one">
-                                <Button variant="contained" className={styles.SlimButton}>{locale.get('dbSettings')[1]}</Button>
-                            </Link>
+                            <form method="post" action="https://db.fruitspace.one" target="_blank" ref={dbRef}>
+                                <input type="hidden" name="auth[server]" value="FruitSpace GDPS Database" />
+                                <input type="hidden" name="auth[username]" value={"halgd_"+srv.Srv.srvid||''} />
+                                <input type="hidden" name="auth[password]" value={srv.Srv.db_password||''} />
+                                <input type="hidden" name="auth[db]" value={"gdps_"+srv.Srv.srvid||''} />
+                                <p>SEX</p>
+                                <Button variant="contained" className={styles.SlimButton} onClick={()=>redirectToDB()}>{locale.get('dbSettings')[1]}</Button>
+                            </form>
                         </div>
                     </div>
 

@@ -41,7 +41,8 @@ const nextConfig = {
         defaultLocale: 'en'
       }
     ]
-  }
+  },
+  output: "standalone"
 }
 
 const sentryWebpackPluginOptions = {
