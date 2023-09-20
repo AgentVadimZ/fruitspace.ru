@@ -1,7 +1,6 @@
 import styles from "./PayBox.module.css"
 import {useRecoilState} from "recoil";
 import {UserState} from "../../states/user";
-import {useCookies} from "react-cookie";
 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import {useState} from "react";
@@ -10,7 +9,6 @@ import QiwiLogo from "../assets/logos/qiwi_logo.png"
 import YooMoneyLogo from "../assets/logos/yoomoney_logo.svg"
 import EnotLogo from "../assets/logos/enot_logo.svg"
 import {styled} from "@mui/system";
-import {Router, useRouter} from "next/router";
 import toast from "react-hot-toast";
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";
 

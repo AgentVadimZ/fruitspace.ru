@@ -3,25 +3,11 @@ import SideBar from "../NavBar/SideBar";
 
 import PersonIcon from '@mui/icons-material/Person';
 
-import StoreIcon from '@mui/icons-material/Store';
-import AnalyticsIcon from "../assets/icons/panel_analytics.svg"
 import MusicIcon from "../assets/icons/panel_music.svg"
-import RolesIcon from "../assets/icons/panel_roles.svg"
-import ChestsIcon from "../assets/icons/panel_chests.svg"
-import QuestsIcon from "../assets/icons/panel_quests.svg"
-import LevelpacksIcon from "../assets/icons/panel_levelpacks.svg"
-import SettingsIcon from "../assets/icons/panel_settings.svg"
-import ActionsIcon from "../assets/icons/panel_actions.svg"
 
 import Link from "next/link";
 import {useRouter} from "next/router";
 import {Tooltip} from "@mui/material";
-import {useRecoilState} from "recoil";
-import GDServer from "../../states/gd_server";
-import {useEffect} from "react";
-import {useCookies} from "react-cookie";
-import useEffectOnce from "../Hooks";
-import useGDPSLogin from "../GDPSLogin";
 import {useGlobalLocale} from "../../locales/useLocale";
 
 

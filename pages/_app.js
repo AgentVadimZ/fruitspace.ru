@@ -4,7 +4,6 @@ import {RecoilRoot} from "recoil";
 import AuthProvider from "../components/AuthProvider";
 import {Router, useRouter} from "next/router";
 import {useEffect, useState} from "react";
-import useEffectOnce from "../components/Hooks";
 import { Analytics } from '@vercel/analytics/react';
 import LoadingAnim from "../components/ProgressBar";
 

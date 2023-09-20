@@ -2,16 +2,12 @@
 import styles from "./UserProfileCard.module.css"
 import styles2 from "../Cards/ServerItem.module.css"
 import styles3 from "../Manage/GDManage.module.css"
-import {useRecoilState} from "recoil";
-import {UserState} from "../../states/user";
 import {styled} from "@mui/system";
 import {Backdrop, Button, IconButton, InputAdornment, TextField, Tooltip} from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import {useState} from "react";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import LockPersonIcon from '@mui/icons-material/LockPerson';
 import PasswordIcon from '@mui/icons-material/Password';
-import {useCookies} from "react-cookie";
 import toast from "react-hot-toast";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";

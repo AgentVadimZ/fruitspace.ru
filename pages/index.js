@@ -1,41 +1,17 @@
-import Script from "next/script";
-
 import GlobalNav from "../components/GlobalNav";
-import MetaCard from "../components/Cards/MetaCard";
 import Carousel from "../components/Global/Carousel";
-import {CarouselItem} from "../components/Global/Carousel";
-import ProductCard from "../components/Cards/ProductCard";
-import LineCard from "../components/Cards/LineCard";
 
 import styles from "../components/Index.module.css"
 
-import NightR from "../components/assets/NightRider.webp"
-import ProtoFlicker from "../components/assets/ProtoFlicker.png"
-import sImg from "../components/assets/img.png"
 import MinecraftLogo from "../components/assets/logos/minecraft.png"
 import GDLogo from "../components/assets/logos/geometrydash.png"
-import RockstarLogo from "../components/assets/logos/rockstargames.png"
 import CSLogo from "../components/assets/logos/counterstrike.png"
 
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import WebhookIcon from '@mui/icons-material/Webhook';
-import BoltIcon from '@mui/icons-material/Bolt';
-import BuildIcon from '@mui/icons-material/Build';
-import CloudDoneIcon from '@mui/icons-material/CloudDone';
-import StorageIcon from '@mui/icons-material/Storage';
-import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
-import MusicNoteIcon from '@mui/icons-material/MusicNote';
-import SmartToyIcon from '@mui/icons-material/SmartToy';
-import LanguageIcon from '@mui/icons-material/Language';
-import EqualizerIcon from '@mui/icons-material/Equalizer';
-import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
-import AppleIcon from '@mui/icons-material/Apple';
 import RightIcon from '../components/assets/icons/right.svg'
 
 
 import Footer from "../components/Global/Footer";
 import GlobalHead from "../components/GlobalHead";
-import {ListItem, ListItemIcon, ListItemText} from "@mui/material";
 import useLocale, {useGlobalLocale} from "../locales/useLocale";
 import Link from "next/link";
 import {serverFiberAPI} from "../fiber/fiber";

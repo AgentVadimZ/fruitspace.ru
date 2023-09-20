@@ -1,12 +1,11 @@
 import useLocale, {useGlobalLocale} from "../../../locales/useLocale";
-import {faCircleInfo, faFloppyDisk, faRightToBracket} from "@fortawesome/free-solid-svg-icons";
+import {faCircleInfo, faRightToBracket} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAndroid, faApple, faDiscord, faVk, faWindows} from "@fortawesome/free-brands-svg-icons";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useRouter} from "next/router";
 import {styled} from "@mui/system";
 import {Backdrop, TextField} from "@mui/material";
-import useGDPSLogin from "../../../components/GDPSLogin";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import toast, {Toaster} from "react-hot-toast";
 import {getBrowserLocale} from "../../../components/Hooks";

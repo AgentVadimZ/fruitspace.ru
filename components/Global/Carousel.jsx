@@ -1,5 +1,5 @@
 import {Swiper, SwiperSlide} from "swiper/react";
-import {Navigation, Pagination, Virtual, Controller} from "swiper";
+import {Navigation, Pagination, Controller} from "swiper";
 
 import 'swiper/css/bundle';
 import styles from "./Carousel.module.css"

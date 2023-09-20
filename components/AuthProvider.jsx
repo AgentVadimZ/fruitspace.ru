@@ -1,8 +1,5 @@
-import {atom, useRecoilState} from "recoil";
+import {useRecoilState} from "recoil";
 import {useRouter} from "next/router";
-import {useEffect} from "react";
-import {useCookies} from "react-cookie";
-import {UserState} from "../states/user";
 import useEffectOnce from "./Hooks";
 import useFiberAPI from "../fiber/fiber";
 import {userAtom} from "../fiber/fiber.model";

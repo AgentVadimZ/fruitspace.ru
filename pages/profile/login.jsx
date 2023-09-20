@@ -2,7 +2,7 @@ import GlobalHead from "../../components/GlobalHead";
 import GlobalNav from "../../components/GlobalNav";
 import styles from "../../components/Index.module.css";
 import Footer from "../../components/Global/Footer";
-import {useRef, useState} from "react";
+import {useState} from "react";
 
 import logo from "../../components/assets/Fruitspace2.png"
 import HCaptcha from "@hcaptcha/react-hcaptcha";
@@ -12,7 +12,6 @@ import {styled} from "@mui/system";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import toast, {Toaster} from "react-hot-toast";
 import {useRouter} from "next/router";
-import {useCookies} from "react-cookie";
 import useEffectOnce from "../../components/Hooks";
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";
 import useFiberAPI from "../../fiber/fiber";

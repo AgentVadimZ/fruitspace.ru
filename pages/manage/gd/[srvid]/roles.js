@@ -2,13 +2,13 @@ import GlobalHead from "../../../../components/GlobalHead";
 import GlobalNav from "../../../../components/GlobalNav";
 import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
 import PanelContent from "../../../../components/Global/PanelContent";
-import {Router, useRouter} from "next/router";
+import {useRouter} from "next/router";
 import styles from "../../../../components/Manage/GDManage.module.css";
 import {useEffect, useState} from "react";
 import {
     Autocomplete,
     Avatar,
-    Badge, Button, ClickAwayListener,
+    ClickAwayListener,
     IconButton, InputAdornment,
     List,
     ListItem,
@@ -24,16 +24,14 @@ import {
     faCancel,
     faCheck, faCircleDot,
     faCirclePlus,
-    faGhost, faHammer,
+    faHammer,
     faPen,
-    faQuestion,
-    faStar, faXmark
+    faXmark
 } from "@fortawesome/free-solid-svg-icons";
 
 import modBadge from "../../../../components/assets/gd/mod.png"
 import modElderBadge from "../../../../components/assets/gd/mod-elder.png"
 import toast, {Toaster} from "react-hot-toast";
-import Right from "../../../../components/assets/icons/right.svg"
 import {styled} from "@mui/system";
 import {Restore} from "@mui/icons-material";
 import dynamic from "next/dynamic";

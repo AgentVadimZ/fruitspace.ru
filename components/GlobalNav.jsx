@@ -23,13 +23,8 @@ import MinecraftLogo from "./assets/logos/minecraft.png"
 import GDLogo from "./assets/logos/geometrydash.png"
 import RockstarLogo from "./assets/logos/rockstargames.png"
 import {useRouter} from "next/router";
-import {useRecoilState} from "recoil";
-import {UserState} from "../states/user";
-import {useCookies} from "react-cookie";
 import {useGlobalLocale} from "../locales/useLocale";
 import useFiberAPI from "../fiber/fiber";
-import {userModel} from "../fiber/fiber.model";
-
 
 
 export default function GlobalNav(props) {

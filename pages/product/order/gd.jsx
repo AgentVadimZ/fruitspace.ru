@@ -3,12 +3,11 @@ import GlobalNav from "../../../components/GlobalNav";
 import styles from "../../../components/Index.module.css";
 import {useRouter} from "next/router";
 import {styled} from "@mui/system";
-import {ListItem, ListItemIcon, ListItemText, MenuItem, TextField} from "@mui/material";
+import {ListItem, ListItemIcon, ListItemText, TextField} from "@mui/material";
 import {useEffect, useState} from "react";
 import {Tab, TabsList, TabPanel} from "../../../components/Global/Tab";
 import useEffectOnce from "../../../components/Hooks";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
-import {LoadingButton} from "@mui/lab";
 import toast, {Toaster} from "react-hot-toast";
 import {useCookies} from "react-cookie";
 import useLocale, {useGlobalLocale} from "../../../locales/useLocale";
@@ -23,8 +22,6 @@ import AddIcon from "@mui/icons-material/Add";
 import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import {useRecoilState} from "recoil";
-import GDServer from "../../../states/gd_server";
 import useFiberAPI from "../../../fiber/fiber";
 
 

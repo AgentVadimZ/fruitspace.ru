@@ -5,36 +5,26 @@ import Footer from "../../components/Global/Footer";
 import BannerGD from "../../components/assets/BannerGD.png"
 import ProductHeader from "../../components/Global/ProductHeader";
 import ProductCard from "../../components/Cards/ProductCard";
-import MinecraftLogo from "../../components/assets/logos/minecraft.png";
 import {
     ListItem,
     ListItemIcon,
     ListItemText,
-    Paper, Table, TableBody,
+    Table, TableBody,
     TableCell,
     TableContainer,
     TableHead,
     TableRow
 } from "@mui/material";
-import BoltIcon from "@mui/icons-material/Bolt";
-import BuildIcon from "@mui/icons-material/Build";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
-import StorageIcon from "@mui/icons-material/Storage";
-import EqualizerIcon from "@mui/icons-material/Equalizer";
-import GDLogo from "../../components/assets/logos/geometrydash.png";
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
-import SmartToyIcon from "@mui/icons-material/SmartToy";
 import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturing";
 import AppleIcon from "@mui/icons-material/Apple";
-import RockstarLogo from "../../components/assets/logos/rockstargames.png";
-import LanguageIcon from "@mui/icons-material/Language";
 import DesktopMacIcon from '@mui/icons-material/DesktopMac';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import PersonIcon from '@mui/icons-material/Person';
 
-import GhostIcon from "../../components/assets/icons/ghost.svg"
 import FeatureCard from "../../components/Cards/FeatureCard";
 
 import FeatureCoreImg from "../../components/assets/features/core_3d-sm.png"

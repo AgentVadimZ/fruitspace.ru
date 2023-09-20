@@ -2,9 +2,7 @@ import styles from './Footer.module.css'
 
 import HalogenLogoB from './../assets/logos/halogenlogo_b.png'
 import discordLogo from './../assets/social/discord.png'
-import twitterLogo from './../assets/social/twitter.png'
 import vkLogo from './../assets/social/vkontakte.png'
-import telegramLogo from './../assets/social/telegram.png'
 import Link from "next/link";
 import {useGlobalLocale} from "../../locales/useLocale";
 

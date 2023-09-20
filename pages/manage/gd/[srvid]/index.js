@@ -2,12 +2,8 @@ import GlobalHead from "../../../../components/GlobalHead";
 import GlobalNav from "../../../../components/GlobalNav";
 import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
 import PanelContent from "../../../../components/Global/PanelContent";
-import {useRouter} from "next/router";
 import styles from "../../../../components/Manage/GDManage.module.css"
-import {Tab, TabPanel, TabsList} from "../../../../components/Global/Tab";
-import TabsUnstyled from "@mui/base/TabsUnstyled";
-import {useMemo, useState} from "react";
-import ContentPasteIcon from '@mui/icons-material/ContentPaste';
+import {useState} from "react";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -22,18 +18,9 @@ import {
 import { Line } from 'react-chartjs-2';
 import {styled} from "@mui/system";
 import {
-    Backdrop,
-    Button,
-    IconButton,
-    InputAdornment,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
     TextField
 } from "@mui/material";
 import toast, {Toaster} from "react-hot-toast";
-import {useRecoilState} from "recoil";
-import GDServer from "../../../../states/gd_server";
 import useEffectOnce from "../../../../components/Hooks";
 import useLocale from "../../../../locales/useLocale";
 import ProgressCard from "../../../../components/Cards/ProgressCard";

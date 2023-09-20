@@ -2,12 +2,11 @@ import GlobalHead from "../../../../components/GlobalHead";
 import GlobalNav from "../../../../components/GlobalNav";
 import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
 import PanelContent from "../../../../components/Global/PanelContent";
-import {Router, useRouter} from "next/router";
+import {useRouter} from "next/router";
 import styles from "../../../../components/Manage/GDManage.module.css"
 import {
     Avatar,
     Badge, Button, ClickAwayListener,
-    IconButton,
     List,
     ListItem,
     ListItemText,
@@ -17,12 +16,9 @@ import {
     Tooltip
 } from "@mui/material";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FolderIcon from "@mui/icons-material/Folder"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-    faArrowDown19,
-    faArrowDownAZ, faArrowDownWideShort, faAsterisk,
+    faAsterisk,
     faBan,
     faBolt, faCalendarDay, faCalendarWeek,
     faGamepad, faGhost,
@@ -32,11 +28,7 @@ import {
     faUserSlash, faWarning
 } from "@fortawesome/free-solid-svg-icons";
 import {faContao} from "@fortawesome/free-brands-svg-icons";
-import toast from "react-hot-toast";
 import {useEffect, useState} from "react";
-import {useRecoilState} from "recoil";
-import GDServer from "../../../../states/gd_server";
-import {useCookies} from "react-cookie";
 import Skeleton from '@mui/material/Skeleton';
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import useFiberAPI from "../../../../fiber/fiber";

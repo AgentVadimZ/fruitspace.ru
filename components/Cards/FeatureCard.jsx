@@ -1,6 +1,5 @@
 
 import styles from "./FeatureCard.module.css"
-import Link from "next/link";
 
 
 export default function FeatureCard(props) {

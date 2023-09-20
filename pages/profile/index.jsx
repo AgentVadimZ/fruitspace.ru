@@ -1,9 +1,5 @@
-import Head from "next/head";
 import GlobalNav from "../../components/GlobalNav";
-import SideBar from "../../components/NavBar/SideBar";
-import NavItem from "../../components/NavBar/NavItem";
 
-import WalletIcon from '@mui/icons-material/Wallet';
 import styles from '../../components/Manage/GDManage.module.css'
 import ustyles from  '../../components/Panel/PanelPage.module.css'
 import PanelSideNav from "../../components/PanelSideNav";
@@ -13,14 +9,8 @@ import toast, {Toaster} from "react-hot-toast";
 import PanelContent from "../../components/Global/PanelContent";
 
 import cardImg from '../../components/assets/bg_2.jpeg'
-import {useRecoilState} from "recoil";
-import {UserState} from "../../states/user";
-import {useCookies} from "react-cookie";
-import ParseError from "../../components/ErrParser";
-import {useState} from "react";
 import Link from "next/link";
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";
-import {loader} from "next/dist/build/webpack/config/helpers";
 import useFiberAPI from "../../fiber/fiber";
 
 
