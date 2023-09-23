@@ -49,8 +49,8 @@ const useFiberAPI = (cookie="token")=> {
 }
 
 const serverFiberAPI = (ctx, cookie="token")=> {
-    const cookies = parseCookies(ctx.req)
-    api.authorization = cookies[cookie]
+    const cookies = ctx?parseCookies(ctx.req):{}
+    api.authorization = cookies[cookie]||""
     api.auth = auth
     auth._api = api
     api.user = user

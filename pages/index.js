@@ -1,12 +1,10 @@
 import GlobalNav from "../components/GlobalNav";
 import Carousel from "../components/Global/Carousel";
-
 import styles from "../components/Index.module.css"
 
 import MinecraftLogo from "../components/assets/logos/minecraft.png"
 import GDLogo from "../components/assets/logos/geometrydash.png"
 import CSLogo from "../components/assets/logos/counterstrike.png"
-
 import RightIcon from '../components/assets/icons/right.svg'
 
 
@@ -20,10 +18,11 @@ import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
 import {useRef} from "react";
 import {Rating} from "@mui/lab";
 
-export async function getServerSideProps(ctx) {
-    const api = serverFiberAPI(ctx)
+export async function getStaticProps(ctx) {
+    const api = serverFiberAPI(null)
     let stats = await api.fetch.stats()
     return {
+        revalidate: 60,
         props: {
             stats: stats
         }

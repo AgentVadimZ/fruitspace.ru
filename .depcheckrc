@@ -1,1 +1,1 @@
-ignores: ["autoprefixer", "depcheck", "postcss", "tailwindcss"]
+ignores: ["autoprefixer", "depcheck", "postcss", "tailwindcss", "csstype"]
