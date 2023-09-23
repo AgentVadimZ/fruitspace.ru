@@ -69,7 +69,6 @@ const serverFiberAPI = (ctx, cookie="token")=> {
 }
 // endregion
 
-
 // region  Auth API
 const auth = {_api: api}
 auth.logout = ()=>{}
