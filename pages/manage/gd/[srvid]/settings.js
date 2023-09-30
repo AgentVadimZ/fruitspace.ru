@@ -355,7 +355,6 @@ export default function SettingsGD(props) {
                                 <input type="hidden" name="auth[username]" value={"halgd_"+srv.Srv.srvid||''} />
                                 <input type="hidden" name="auth[password]" value={srv.Srv.db_password||''} />
                                 <input type="hidden" name="auth[db]" value={"gdps_"+srv.Srv.srvid||''} />
-                                <p>SEX</p>
                                 <Button variant="contained" className={styles.SlimButton} onClick={()=>redirectToDB()}>{locale.get('dbSettings')[1]}</Button>
                             </form>
                         </div>

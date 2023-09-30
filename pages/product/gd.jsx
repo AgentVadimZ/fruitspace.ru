@@ -51,7 +51,7 @@ export default function GD(props) {
 
                 <h2 style={{textAlign:'center',margin:"3rem 0",color:"white"}}>{locale.get('prodgd.tariffs')}</h2>
                 <div className={styles.productCardGrid} id="cloud">
-                    <ProductCard title="Press Start" btnText={locale.get('freeA')} link="/order/gd?t=1">
+                    <ProductCard title="Press Start" btnText={locale.get('freeA')} link="order/gd?t=1">
                         <ListItem>
                             <ListItemIcon><PersonIcon/></ListItemIcon>
                             <ListItemText primary={locale.get('tPressStart')[0]}/>
@@ -65,7 +65,7 @@ export default function GD(props) {
                             <ListItemText primary={locale.get('tPressStart')[2]}/>
                         </ListItem>
                     </ProductCard>
-                    <ProductCard title="Singularity" btnText={locale.get('tSingularityPrice')} link="/order/gd?t=2">
+                    <ProductCard title="Singularity" btnText={locale.get('tSingularityPrice')} link="order/gd?t=2">
                         <ListItem>
                             <ListItemIcon><AllInclusiveIcon/></ListItemIcon>
                             <ListItemText primary={locale.get('tSingualrity')[0]}/>
@@ -83,7 +83,7 @@ export default function GD(props) {
                             <ListItemText primary={locale.get('tSingualrity')[3]}/>
                         </ListItem>
                     </ProductCard>
-                    <ProductCard  title="Takeoff" btnText={locale.get('tTakeoffPrice')} link="/order/gd?t=3">
+                    <ProductCard  title="Takeoff" btnText={locale.get('tTakeoffPrice')} link="order/gd?t=3">
                         <ListItem>
                             <ListItemIcon><AllInclusiveIcon/></ListItemIcon>
                             <ListItemText primary={locale.get('tTakeoff')[0]}/>
