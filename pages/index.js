@@ -31,8 +31,6 @@ export async function getStaticProps(ctx) {
 
 export default function Home(props) {
 
-    console.log(props)
-
     const locale = useLocale(props.router)
     const localeGlobal = useGlobalLocale(props.router)
 

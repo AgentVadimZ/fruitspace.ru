@@ -25,13 +25,15 @@ import RockstarLogo from "./assets/logos/rockstargames.png"
 import {useRouter} from "next/router";
 import {useGlobalLocale} from "../locales/useLocale";
 import useFiberAPI from "../fiber/fiber";
+import {useRecoilState} from "recoil";
+import {userAtom} from "../fiber/fiber.model";
 
 
 export default function GlobalNav(props) {
 
     const api = useFiberAPI()
 
-    const [user,setUser] = api.user.useUser()
+    const [user,setUser] = useRecoilState(userAtom)
     // const user = userModel
     const router = useRouter()
 
@@ -64,7 +66,7 @@ export default function GlobalNav(props) {
         <NavBar mainpage={props.mainpage}>
             <Link href={"/"}><img src={props.mainpage?logo_sm.src:logo.src} alt="logo" className={styles.logo}></img></Link>
             <span style={{flex:1}}></span>
-            { user.status && (<><NavItem icon={<ServerSvg/>}>
+            { user.uname && (<><NavItem icon={<ServerSvg/>}>
                 <DropdownMenu centered>
                     <Link href="/profile/servers?s=mc">
                     <DropdownItem leftIcon={<img src={MinecraftLogo.src}/>} rightIcon={<RightSvg/>}>
