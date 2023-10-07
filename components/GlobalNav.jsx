@@ -40,6 +40,7 @@ export default function GlobalNav(props) {
     const localeGlobal = useGlobalLocale(router)
 
     const logout = () => {
+        setUser({})
         api.auth.logout()
         router.reload()
     }
@@ -66,7 +67,7 @@ export default function GlobalNav(props) {
         <NavBar mainpage={props.mainpage}>
             <Link href={"/"}><img src={props.mainpage?logo_sm.src:logo.src} alt="logo" className={styles.logo}></img></Link>
             <span style={{flex:1}}></span>
-            { user.uname && (<><NavItem icon={<ServerSvg/>}>
+            {user.uname && (<><NavItem icon={<ServerSvg/>}>
                 <DropdownMenu centered>
                     <Link href="/profile/servers?s=mc">
                     <DropdownItem leftIcon={<img src={MinecraftLogo.src}/>} rightIcon={<RightSvg/>}>
