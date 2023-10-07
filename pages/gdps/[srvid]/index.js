@@ -21,6 +21,7 @@ export async function getServerSideProps(ctx) {
     if (srv.srvid){
         let user= await api.gdps_users.get(srvid)
         return {
+            revalidate: 120,
             props: {
                 srv: srv,
                 user: user

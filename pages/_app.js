@@ -4,7 +4,6 @@ import {RecoilRoot} from "recoil";
 import AuthProvider from "../components/AuthProvider";
 import {Router, useRouter} from "next/router";
 import {useEffect, useState} from "react";
-import { Analytics } from '@vercel/analytics/react';
 import LoadingAnim from "../components/ProgressBar";
 
 export default function WebApp({ Component, pageProps }) {
@@ -19,9 +18,8 @@ export default function WebApp({ Component, pageProps }) {
       <RecoilRoot>
           <StyledEngineProvider injectFirst>
               {isL &&<LoadingAnim />}
-              <AuthProvider RequireAuth={Component.RequireAuth}>
+              <AuthProvider RequireAuth={Component.RequireAuth} router={router}>
                   <Component {...pageProps} router={router} />
-                  <Analytics />
               </AuthProvider>
           </StyledEngineProvider>
       </RecoilRoot>

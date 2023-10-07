@@ -1,6 +1,6 @@
 import styles from "./PayBox.module.css"
 import {useRecoilState} from "recoil";
-import {UserState} from "../../states/user";
+import {userAtom} from "../../fiber/fiber.model";
 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import {useState} from "react";
@@ -14,7 +14,7 @@ import useLocale, {useGlobalLocale} from "../../locales/useLocale";
 
 export default function PayBox(props) {
 
-    const [user,setUser] = useRecoilState(UserState)
+    const [user,setUser] = useRecoilState(userAtom)
     const [backdrop, openBackdrop] = useState(false)
     const [paymentParam, setPaymentParam] = useState({
         amount: 0,
@@ -67,7 +67,7 @@ export default function PayBox(props) {
 
     return (
         <div className={styles.paybox}>
-            <h3>{prettyPrint(user.bal)}</h3>
+            <h3>{prettyPrint(user.balance)}</h3>
             <span />
             <div className={styles.innerbox} onClick={()=>openBackdrop(true)}>
                 <AddCircleIcon/>

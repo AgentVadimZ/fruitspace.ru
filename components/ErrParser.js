@@ -1,6 +1,6 @@
 
 
-const ParseError = (err)=>{
+const ParseError = (err, message="")=> {
     switch (err){
         case "eml": return "Неверный формат email"
         case "uname_shrt": return "Слишком короткий логин (необходимо 5+ символов)"
@@ -32,7 +32,7 @@ const ParseError = (err)=>{
         case "promo_invalid": return "Неверный промокод"
         case "promo_expire": return "Срок действия промокода истек"
         case "promo_limit": return "Количество использований промокода достигло своего предела"
-        default: return err
+        default: return `${err} (${message})`
     }
 }
 

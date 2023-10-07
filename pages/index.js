@@ -105,13 +105,13 @@ export default function Home(props) {
                         </div>
                     </div>
 
-                    <div className="absolute hidden xl:flex flex-col rounded-full bottom-32 bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] p-0.5">
-                        <div className="rounded-full bg-[var(--bkg-color)] cursor-pointer" onClick={()=>scrollRef.current?.scrollIntoView({behavior:"smooth"})}>
-                            <div className="bg-[#cacad0] rounded-full h-10 w-10 mt-6 flex justify-center items-center">
-                                <FontAwesomeIcon  icon={faChevronDown} className="text-black" />
-                            </div>
-                        </div>
-                    </div>
+                    {/*<div className="absolute hidden xl:flex flex-col rounded-full bottom-32 bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] p-0.5">*/}
+                    {/*    <div className="rounded-full bg-[var(--bkg-color)] cursor-pointer" onClick={()=>scrollRef.current?.scrollIntoView({behavior:"smooth"})}>*/}
+                    {/*        <div className="bg-[#cacad0] rounded-full h-10 w-10 mt-6 flex justify-center items-center">*/}
+                    {/*            <FontAwesomeIcon  icon={faChevronDown} className="text-black" />*/}
+                    {/*        </div>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                 </div>
 
                 <p className="text-4xl text-center m-0 mt-8 font-[Helvetica]" ref={scrollRef}>На грани возможного</p>
