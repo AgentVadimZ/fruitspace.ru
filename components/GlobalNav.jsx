@@ -117,7 +117,7 @@ export default function GlobalNav(props) {
             </NavItem> </>)}
 
 
-            {user.status ? (
+            {user.uname ? (
                 <NavItem profile icon={<img src={user.profile_pic}/>}>
                     <DropdownMenu>
                     <Link href="/profile/">
