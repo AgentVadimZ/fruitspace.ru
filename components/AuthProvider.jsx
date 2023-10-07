@@ -21,7 +21,8 @@ export default function AuthProvider({RequireAuth, children, router}) {
         return "Loading..."
     }
 
-    if(error || !user.uname) {
+    if(error || (!user.uname && !data.uname)) {
+        console.log(data, isLoading, !!error, !user.uname)
         router.push(`/profile/login?redirect=${router.pathname}`)
         return "Redirecting..."
     }

@@ -25,6 +25,7 @@ import {faDiscord} from "@fortawesome/free-brands-svg-icons";
 export default function Login(props) {
     const router = useRouter()
 
+
     const [regMode, setRegMode] = useState(false)
     const [forgotPass, setForgotPass] = useState(false)
     const [show2FA, setShow2FA] = useState(false)
@@ -94,7 +95,7 @@ export default function Login(props) {
                 }
             })
             api.auth.setCookieToken(resp.token)
-            setTimeout(()=>router.push("/profile/"),1000)
+            setTimeout(()=>router.push(router.query.redirect||"/profile/"),1000)
         }else{
             if(resp.code=="2fa_req") {
                 setShow2FA(true)
