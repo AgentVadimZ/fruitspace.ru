@@ -12,7 +12,7 @@ export default function AuthProvider({RequireAuth, children, router}) {
 
     const {data, isLoading, error} = useSWR("/user",api.user.sso)
 
-    data.uname&&setUser(data)
+    data&&setUser(data)
 
     if(!RequireAuth)
         return children
