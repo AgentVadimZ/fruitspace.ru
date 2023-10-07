@@ -13,7 +13,6 @@ export default function AuthProvider({RequireAuth, children, router}) {
     const {data, isLoading, error} = useSWR("/user",api.user.sso)
 
     data&&setUser(data)
-    data&&console.log(data)
 
     if(!RequireAuth)
         return children
@@ -22,7 +21,7 @@ export default function AuthProvider({RequireAuth, children, router}) {
         return "Loading..."
     }
 
-    if(error||!user.uname) {
+    if(error || !user.uname) {
         router.push(`/profile/login?redirect=${router.pathname}`)
         return "Redirecting..."
     }
