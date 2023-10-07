@@ -137,7 +137,6 @@ export default function UserProfileCard(props) {
     }
 
     const updateProfilePic = (evt, reset=false)=> {
-        console.log(reset)
         var input = document.createElement("input")
         input.type = "file"
         input.accept="image/png, image/jpeg"

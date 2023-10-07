@@ -10,7 +10,7 @@ export default function AuthProvider({RequireAuth, children, router}) {
     const api = useFiberAPI()
     const [user, setUser] = useRecoilState(userAtom)
 
-    const {data, isLoading, error} = useSWR("/user",api.user.sso)
+    const {data, isLoading, error} = useSWR("/user",api.user.sso, {revalidateOnMount:true})
 
     data&&setUser(data)
 

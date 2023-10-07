@@ -95,7 +95,7 @@ export default function Login(props) {
                 }
             })
             api.auth.setCookieToken(resp.token)
-            setTimeout(()=>router.push(router.query.redirect||"/profile/"),1000)
+            setTimeout(()=>router.replace(router.query.redirect||"/profile/"),1000)
         }else{
             if(resp.code=="2fa_req") {
                 setShow2FA(true)
