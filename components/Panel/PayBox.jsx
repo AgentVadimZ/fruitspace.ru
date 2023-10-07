@@ -15,6 +15,7 @@ import useLocale, {useGlobalLocale} from "../../locales/useLocale";
 export default function PayBox(props) {
 
     const [user,setUser] = useRecoilState(userAtom)
+    console.log(user)
     const [backdrop, openBackdrop] = useState(false)
     const [paymentParam, setPaymentParam] = useState({
         amount: 0,
