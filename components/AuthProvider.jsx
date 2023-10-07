@@ -22,7 +22,7 @@ export default function AuthProvider({RequireAuth, children, router}) {
         return "Loading..."
     }
 
-    if(error||!user) {
+    if(error||!user.uname) {
         router.push(`/profile/login?redirect=${router.pathname}`)
         return "Redirecting..."
     }

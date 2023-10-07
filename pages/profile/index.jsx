@@ -43,14 +43,14 @@ export default function Index(props){
                         <p>
                             <Link href="/profile/user">
                             <div className={ustyles.probox}>
-                                <img src={user.profile_pic} />
-                                <h3>@{user.uname}</h3>
+                                <img src={user?.profile_pic} />
+                                <h3>@{user?.uname}</h3>
                             </div>
                             </Link>
                             <h3 className={ustyles.pointer}>👈 {locale.get('itsYou')}</h3>
                         </p>
 
-                        {user.top_servers.gd ? <p>
+                        {user.top_servers?.gd ? <p>
                             <div className={ustyles.probox}>
                                 <img src={user.top_servers.gd.icon} />
                                 <Link href={"/manage/gd/"+user.top_servers.gd.srvid}>
