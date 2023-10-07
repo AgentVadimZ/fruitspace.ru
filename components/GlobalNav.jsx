@@ -27,6 +27,7 @@ import {useGlobalLocale} from "../locales/useLocale";
 import useFiberAPI from "../fiber/fiber";
 import {useRecoilState} from "recoil";
 import {userAtom} from "../fiber/fiber.model";
+import {mutate} from "swr";
 
 
 export default function GlobalNav(props) {
@@ -40,7 +41,7 @@ export default function GlobalNav(props) {
     const localeGlobal = useGlobalLocale(router)
 
     const logout = () => {
-        setUser({})
+        mutate("/user")
         api.auth.logout()
         router.push("/")
     }
