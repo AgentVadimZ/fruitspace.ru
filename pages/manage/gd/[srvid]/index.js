@@ -99,7 +99,7 @@ export default function ManageGD(props) {
                     <h3>{locale.get("nav")}</h3>
                     <div className={styles.CardInbox}>
                         <p className="text-sm" dangerouslySetInnerHTML={{__html: locale.get("note")}}></p>
-                        <a href="https://telegra.ph/Dokumentaciya-dlya-ochen-umnyh-09-29"
+                        <a href=" https://fruitspace.gitbook.io/gdps_docs/"
                            style={{
                                padding: ".75rem 2rem",
                                background: "linear-gradient(135deg, #8e388e,#5a00ff 70%, #0d6efd)",
