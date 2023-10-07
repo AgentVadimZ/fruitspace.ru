@@ -42,7 +42,7 @@ export default function GlobalNav(props) {
     const logout = () => {
         setUser({})
         api.auth.logout()
-        router.reload()
+        router.push("/")
     }
 
     const deleteNotification = (notif)=> {
