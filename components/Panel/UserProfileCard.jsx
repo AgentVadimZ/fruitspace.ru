@@ -56,7 +56,7 @@ export default function UserProfileCard(props) {
                     })
                     setUser({...user, is_2fa: true})
                 }else{
-                    toast.error(locale.get('err')+ParseError(resp.code), {
+                    toast.error(locale.get('err')+ParseError(resp.code, resp.message), {
                         duration: 10000,
                         style: {
                             color: "white",
@@ -71,7 +71,7 @@ export default function UserProfileCard(props) {
             if(resp.status==="ok") {
                 setTotp(resp)
             }else{
-                toast.error(locale.get('err')+ParseError(resp.code), {
+                toast.error(locale.get('err')+ParseError(resp.code, resp.message), {
                     duration: 10000,
                     style: {
                         color: "white",
@@ -93,7 +93,7 @@ export default function UserProfileCard(props) {
                     }
                 })
             }else{
-                toast.error(locale.get('err')+ParseError(resp.code), {
+                toast.error(locale.get('err')+ParseError(resp.code, resp.message), {
                     duration: 10000,
                     style: {
                         color: "white",
@@ -125,7 +125,7 @@ export default function UserProfileCard(props) {
                     }
                 })
             }else{
-                toast.error(locale.get('err')+ParseError(resp.code), {
+                toast.error(locale.get('err')+ParseError(resp.code, resp.message), {
                     duration: 10000,
                     style: {
                         color: "white",
@@ -153,7 +153,7 @@ export default function UserProfileCard(props) {
                     })
                     setUser((usr)=>({...usr, profilePic: resp.profilePic}))
                 }else{
-                    toast.error(locale.get('err')+ParseError(resp.code), {
+                    toast.error(locale.get('err')+ParseError(resp.code, resp.message), {
                         duration: 10000,
                         style: {
                             color: "white",
@@ -178,7 +178,7 @@ export default function UserProfileCard(props) {
                     })
                     setUser((usr)=>({...usr, profilePic: resp.profilePic}))
                 }else{
-                    toast.error(locale.get('err')+ParseError(resp.code), {
+                    toast.error(locale.get('err')+ParseError(resp.code, resp.message), {
                         duration: 10000,
                         style: {
                             color: "white",

@@ -72,7 +72,7 @@ export default function Login(props) {
                 }
             })
         }else{
-            toast.error(locale.get('err')+ParseError(resp.code), {
+            toast.error(locale.get('err')+ParseError(resp.code, resp.message), {
                 duration: 10000,
                 style: {
                     color: "white",
@@ -102,7 +102,7 @@ export default function Login(props) {
                 setLoading(false)
                 return
             }
-            toast.error(locale.get('err')+ParseError(resp.code), {
+            toast.error(locale.get('err')+ParseError(resp.code, resp.message), {
                 duration: 10000,
                 style: {
                     color: "white",
@@ -126,7 +126,7 @@ export default function Login(props) {
                 }
             })
         }else{
-            toast.error(locale.get('err')+ParseError(resp.code), {
+            toast.error(locale.get('err')+ParseError(resp.code, resp.message), {
                 duration: 10000,
                 style: {
                     color: "white",
