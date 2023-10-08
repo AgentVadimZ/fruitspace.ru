@@ -1,9 +1,5 @@
-import Head from "next/head";
 import GlobalNav from "../../components/GlobalNav";
-import SideBar from "../../components/NavBar/SideBar";
-import NavItem from "../../components/NavBar/NavItem";
 
-import WalletIcon from '@mui/icons-material/Wallet';
 import styles from '../../components/Manage/GDManage.module.css'
 import ustyles from  '../../components/Panel/PanelPage.module.css'
 import PanelSideNav from "../../components/PanelSideNav";
@@ -13,14 +9,8 @@ import toast, {Toaster} from "react-hot-toast";
 import PanelContent from "../../components/Global/PanelContent";
 
 import cardImg from '../../components/assets/bg_2.jpeg'
-import {useRecoilState} from "recoil";
-import {UserState} from "../../states/user";
-import {useCookies} from "react-cookie";
-import ParseError from "../../components/ErrParser";
-import {useState} from "react";
 import Link from "next/link";
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";
-import {loader} from "next/dist/build/webpack/config/helpers";
 import useFiberAPI from "../../fiber/fiber";
 
 
@@ -53,14 +43,14 @@ export default function Index(props){
                         <p>
                             <Link href="/profile/user">
                             <div className={ustyles.probox}>
-                                <img src={user.profile_pic} />
-                                <h3>@{user.uname}</h3>
+                                <img src={user?.profile_pic} />
+                                <h3>@{user?.uname}</h3>
                             </div>
                             </Link>
                             <h3 className={ustyles.pointer}>👈 {locale.get('itsYou')}</h3>
                         </p>
 
-                        {user.top_servers.gd ? <p>
+                        {user.top_servers?.gd ? <p>
                             <div className={ustyles.probox}>
                                 <img src={user.top_servers.gd.icon} />
                                 <Link href={"/manage/gd/"+user.top_servers.gd.srvid}>

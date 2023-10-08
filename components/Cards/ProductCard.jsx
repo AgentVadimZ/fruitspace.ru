@@ -1,5 +1,5 @@
 import styles from "./ProductCard.module.css"
-import {Button, List, ListItem, ListItemIcon, ListItemText} from "@mui/material";
+import {Button, List} from "@mui/material";
 import Link from "next/link";
 
 

@@ -4,6 +4,7 @@ import {useCookies} from "react-cookie";
 import {useRecoilState} from "recoil";
 import {serverGDAtom, userAtom} from "./fiber.model.js";
 import {parseCookies} from "./cockie_parser";
+import {useEffect, useState} from "react";
 
 const DISCORD_AUTH = "https://discord.com/oauth2/authorize?client_id=1119240313605734410&response_type=code&scope=identify%20guilds%20guilds.join&state="
 
@@ -25,6 +26,24 @@ api.doForm = async (endpoint, method="GET", body=null) => {
     ).then(r=>r.json()).catch(e=>({status:"error", message:e.message, code:"conn"}))
 }
 
+api.registerProvider = (obj, override) => {
+    obj._api = api
+    api[override] = obj
+}
+
+const useLoader = (loader) => {
+    const [loading, setLoading] = useState(true)
+    const [data, setData] = useState({})
+    useEffect(()=>{
+        loader().then((resp)=>{
+            setLoading(false)
+            setData(resp)
+        })
+    })
+
+    return {loading, data}
+}
+
 const useFiberAPI = (cookie="token")=> {
     const [cookies, setCookie, delCookie] = useCookies([cookie])
     api.authorization = cookies[cookie]
@@ -32,43 +51,30 @@ const useFiberAPI = (cookie="token")=> {
     auth.logout=()=>delCookie(cookie, { path: '/' })
     auth.setCookieToken=(token)=>setCookie(cookie,token,
         {path:"/",expires:new Date(new Date().getTime()+(1000*60*60*24*30)), secure:true})
-    auth._api = api
-    api.user = user
-    user._api = api
-    api.payments = payments
-    payments._api = api
-    api.fetch = ufetch
-    ufetch._api = api
-    api.servers = servers
-    servers._api = api
-    api.gdps_manage = gdps_manage
-    gdps_manage._api = api
-    api.gdps_users = gdps_users
-    gdps_users._api = api
+
+    api.registerProvider(auth, "auth")
+    api.registerProvider(user, "user")
+    api.registerProvider(payments, "payments")
+    api.registerProvider(ufetch, "fetch")
+    api.registerProvider(servers, "servers")
+    api.registerProvider(gdps_manage, "gdps_manage")
+    api.registerProvider(gdps_users, "gdps_users")
     return api
 }
 
 const serverFiberAPI = (ctx, cookie="token")=> {
-    const cookies = parseCookies(ctx.req)
-    api.authorization = cookies[cookie]
-    api.auth = auth
-    auth._api = api
-    api.user = user
-    user._api = api
-    api.payments = payments
-    payments._api = api
-    api.fetch = ufetch
-    ufetch._api = api
-    api.servers = servers
-    servers._api = api
-    api.gdps_manage = gdps_manage
-    gdps_manage._api = api
-    api.gdps_users = gdps_users
-    gdps_users._api = api
+    const cookies = ctx?parseCookies(ctx.req):{}
+    api.authorization = cookies[cookie]||""
+    api.registerProvider(auth, "auth")
+    api.registerProvider(user, "user")
+    api.registerProvider(payments, "payments")
+    api.registerProvider(ufetch, "fetch")
+    api.registerProvider(servers, "servers")
+    api.registerProvider(gdps_manage, "gdps_manage")
+    api.registerProvider(gdps_users, "gdps_users")
     return api
 }
 // endregion
-
 
 // region  Auth API
 const auth = {_api: api}
@@ -99,8 +105,10 @@ auth.recover = async (email, hcaptcha, lang) => {
         lang: lang
     })
 }
-auth.discord = () => {
-    window.location.href=DISCORD_AUTH+(auth._api.authorization?auth._api.authorization:"")
+auth.discord = (shallow=false) => {
+    window.location.href=DISCORD_AUTH+(
+        auth._api.authorization&&!shallow
+            ?auth._api.authorization:"")
 }
 // endregion
 
@@ -267,4 +275,4 @@ gdps_users.addMusic = async (srvid, type, url)=> {
 //endregion
 
 export default useFiberAPI
-export {serverFiberAPI}
+export {serverFiberAPI, useLoader, useFiberAPI}

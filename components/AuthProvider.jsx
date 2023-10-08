@@ -1,28 +1,33 @@
-import {atom, useRecoilState} from "recoil";
-import {useRouter} from "next/router";
-import {useEffect} from "react";
-import {useCookies} from "react-cookie";
-import {UserState} from "../states/user";
+import {useRecoilState} from "recoil";
 import useEffectOnce from "./Hooks";
 import useFiberAPI from "../fiber/fiber";
 import {userAtom} from "../fiber/fiber.model";
+import useSWR from "swr";
+import {useEffect} from "react";
 
 
 
-export default function AuthProvider(props) {
+export default function AuthProvider({RequireAuth, children, router}) {
     const api = useFiberAPI()
-    const router = useRouter()
     const [user, setUser] = useRecoilState(userAtom)
-    useEffectOnce(()=>{
-        api.user.sso().then((resp)=>{
-            if (resp.status==="ok") {
-                setUser(resp)
-            }else{props.RequireAuth&&router.push("/profile/login")}
-        }).catch(()=>{props.RequireAuth&&router.push("/profile/login")})
-    },[router.pathname])
-    return (<>{
-        props.RequireAuth
-            ?(user.uname?props.children:"Redirecting...")
-            :props.children}
-    </>)
+
+    const {data, isLoading, error} = useSWR("/user/"+api.authorization,api.user.sso)
+
+    data&&setUser(data)
+
+    if(!RequireAuth)
+        return children
+
+    if(isLoading) {
+        return "Loading..."
+    }
+
+    if(error || (!user.uname && !data.uname)) {
+        console.log(data, isLoading, !!error, !user.uname)
+        router.push(`/profile/login?redirect=${router.pathname}`)
+        return "Redirecting..."
+    }
+
+    return children
+
 }

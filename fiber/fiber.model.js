@@ -28,7 +28,7 @@ const userModel = {
 
 const userAtom = atom({
     key: 'user',
-    default: userModel
+    default: {}
 })
 
 // TRANSACTION ----

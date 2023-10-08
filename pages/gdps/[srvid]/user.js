@@ -1,6 +1,4 @@
 import GlobalHead from "../../../components/GlobalHead";
-import GlobalNav from "../../../components/GlobalNav";
-import GDNavBar from "../../../components/Manage/NavBars/GDNavBar";
 import {Toaster} from "react-hot-toast";
 import PanelContent from "../../../components/Global/PanelContent";
 import GlobalGDPSNav from "../../../components/UserZone/GlobalGDPSNav";

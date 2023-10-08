@@ -1,5 +1,4 @@
 import styles from "./MetaCard.module.css"
-import Image from "next/image";
 
 export default function MetaCard(props) {
     return (

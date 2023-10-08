@@ -4,13 +4,9 @@ import GDLogo from '../assets/logos/geometrydash.png'
 import MCLogo from '../assets/logos/minecraft.png'
 import GTALogo from '../assets/logos/rockstargames.png'
 import QuestionMark from '../assets/icons/cross.png'
-import RightSvg from "../assets/icons/right.svg";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Link from "next/link";
-import {useGlobalLocale} from "../../locales/useLocale";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCrown, faDownload} from "@fortawesome/free-solid-svg-icons";
-import {Badge} from "@mui/material";
 
 
 export default function ServerTopItem(props) {

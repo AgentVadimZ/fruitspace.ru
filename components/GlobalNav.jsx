@@ -23,28 +23,25 @@ import MinecraftLogo from "./assets/logos/minecraft.png"
 import GDLogo from "./assets/logos/geometrydash.png"
 import RockstarLogo from "./assets/logos/rockstargames.png"
 import {useRouter} from "next/router";
-import {useRecoilState} from "recoil";
-import {UserState} from "../states/user";
-import {useCookies} from "react-cookie";
 import {useGlobalLocale} from "../locales/useLocale";
 import useFiberAPI from "../fiber/fiber";
-import {userModel} from "../fiber/fiber.model";
-
+import {useRecoilState} from "recoil";
+import {userAtom} from "../fiber/fiber.model";
+import {mutate} from "swr";
 
 
 export default function GlobalNav(props) {
 
     const api = useFiberAPI()
 
-    const [user,setUser] = api.user.useUser()
+    const [user,setUser] = useRecoilState(userAtom)
     // const user = userModel
     const router = useRouter()
 
     const localeGlobal = useGlobalLocale(router)
 
-    const logout = () => {
+    const logout = async () => {
         api.auth.logout()
-        router.reload()
     }
 
     const deleteNotification = (notif)=> {
@@ -69,7 +66,7 @@ export default function GlobalNav(props) {
         <NavBar mainpage={props.mainpage}>
             <Link href={"/"}><img src={props.mainpage?logo_sm.src:logo.src} alt="logo" className={styles.logo}></img></Link>
             <span style={{flex:1}}></span>
-            { user.status && (<><NavItem icon={<ServerSvg/>}>
+            {user.uname && (<><NavItem icon={<ServerSvg/>}>
                 <DropdownMenu centered>
                     <Link href="/profile/servers?s=mc">
                     <DropdownItem leftIcon={<img src={MinecraftLogo.src}/>} rightIcon={<RightSvg/>}>
@@ -120,7 +117,7 @@ export default function GlobalNav(props) {
             </NavItem> </>)}
 
 
-            {user.status ? (
+            {user.uname ? (
                 <NavItem profile icon={<img src={user.profile_pic}/>}>
                     <DropdownMenu>
                     <Link href="/profile/">

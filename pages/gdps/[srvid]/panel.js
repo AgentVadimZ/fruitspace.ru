@@ -4,10 +4,8 @@ import PanelContent from "../../../components/Global/PanelContent";
 import GlobalGDPSNav from "../../../components/UserZone/GlobalGDPSNav";
 import GDPSNavBar from "../../../components/UserZone/GDPSSIdeBar";
 import {useEffect, useState} from "react";
-import useGDPSLogin from "../../../components/GDPSLogin";
 import {useRouter} from "next/router";
 import starImg from "../../../components/assets/gd/star.png"
-import trophyImg from "../../../components/assets/gd/trophy.png"
 import cpImg from "../../../components/assets/gd/cp.png"
 import ucoinImg from "../../../components/assets/gd/browncoin.png"
 import coinImg from "../../../components/assets/gd/silvercoin.png"
@@ -17,8 +15,7 @@ import demonImg from "../../../components/assets/gd/demon.png"
 import playImg from "../../../components/assets/gd/play.png"
 import useFiberAPI from "../../../fiber/fiber";
 import {getBrowserLocale} from "../../../components/Hooks";
-import useLocale, {useGlobalLocale} from "../../../locales/useLocale";
-import HCaptcha from "@hcaptcha/react-hcaptcha";
+import useLocale from "../../../locales/useLocale";
 import {Backdrop, TextField} from "@mui/material";
 import {styled} from "@mui/system";
 

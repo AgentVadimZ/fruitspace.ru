@@ -2,12 +2,8 @@ import GlobalHead from "../../../../components/GlobalHead";
 import GlobalNav from "../../../../components/GlobalNav";
 import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
 import PanelContent from "../../../../components/Global/PanelContent";
-import {useRouter} from "next/router";
 import styles from "../../../../components/Manage/GDManage.module.css"
-import {Tab, TabPanel, TabsList} from "../../../../components/Global/Tab";
-import TabsUnstyled from "@mui/base/TabsUnstyled";
-import {useMemo, useState} from "react";
-import ContentPasteIcon from '@mui/icons-material/ContentPaste';
+import {useState} from "react";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -22,18 +18,9 @@ import {
 import { Line } from 'react-chartjs-2';
 import {styled} from "@mui/system";
 import {
-    Backdrop,
-    Button,
-    IconButton,
-    InputAdornment,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
     TextField
 } from "@mui/material";
 import toast, {Toaster} from "react-hot-toast";
-import {useRecoilState} from "recoil";
-import GDServer from "../../../../states/gd_server";
 import useEffectOnce from "../../../../components/Hooks";
 import useLocale from "../../../../locales/useLocale";
 import ProgressCard from "../../../../components/Cards/ProgressCard";
@@ -112,7 +99,7 @@ export default function ManageGD(props) {
                     <h3>{locale.get("nav")}</h3>
                     <div className={styles.CardInbox}>
                         <p className="text-sm" dangerouslySetInnerHTML={{__html: locale.get("note")}}></p>
-                        <a href="https://telegra.ph/Dokumentaciya-dlya-ochen-umnyh-09-29"
+                        <a href=" https://fruitspace.gitbook.io/gdps_docs/"
                            style={{
                                padding: ".75rem 2rem",
                                background: "linear-gradient(135deg, #8e388e,#5a00ff 70%, #0d6efd)",

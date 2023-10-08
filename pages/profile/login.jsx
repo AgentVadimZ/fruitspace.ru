@@ -2,7 +2,7 @@ import GlobalHead from "../../components/GlobalHead";
 import GlobalNav from "../../components/GlobalNav";
 import styles from "../../components/Index.module.css";
 import Footer from "../../components/Global/Footer";
-import {useRef, useState} from "react";
+import {useState} from "react";
 
 import logo from "../../components/assets/Fruitspace2.png"
 import HCaptcha from "@hcaptcha/react-hcaptcha";
@@ -12,12 +12,12 @@ import {styled} from "@mui/system";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import toast, {Toaster} from "react-hot-toast";
 import {useRouter} from "next/router";
-import {useCookies} from "react-cookie";
 import useEffectOnce from "../../components/Hooks";
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";
 import useFiberAPI from "../../fiber/fiber";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDiscord} from "@fortawesome/free-brands-svg-icons";
+import {mutate} from "swr";
 
 
 
@@ -25,6 +25,7 @@ import {faDiscord} from "@fortawesome/free-brands-svg-icons";
 
 export default function Login(props) {
     const router = useRouter()
+
 
     const [regMode, setRegMode] = useState(false)
     const [forgotPass, setForgotPass] = useState(false)
@@ -72,7 +73,7 @@ export default function Login(props) {
                 }
             })
         }else{
-            toast.error(locale.get('err')+ParseError(resp.code), {
+            toast.error(locale.get('err')+ParseError(resp.code, resp.message), {
                 duration: 10000,
                 style: {
                     color: "white",
@@ -95,14 +96,14 @@ export default function Login(props) {
                 }
             })
             api.auth.setCookieToken(resp.token)
-            setTimeout(()=>router.replace("/profile/"),1000)
+            setTimeout(()=>router.replace(router.query.redirect||"/profile/"),1000)
         }else{
             if(resp.code=="2fa_req") {
                 setShow2FA(true)
                 setLoading(false)
                 return
             }
-            toast.error(locale.get('err')+ParseError(resp.code), {
+            toast.error(locale.get('err')+ParseError(resp.code, resp.message), {
                 duration: 10000,
                 style: {
                     color: "white",
@@ -126,7 +127,7 @@ export default function Login(props) {
                 }
             })
         }else{
-            toast.error(locale.get('err')+ParseError(resp.code), {
+            toast.error(locale.get('err')+ParseError(resp.code, resp.message), {
                 duration: 10000,
                 style: {
                     color: "white",

@@ -1,5 +1,5 @@
 import {faAndroid, faApple, faWindows} from "@fortawesome/free-brands-svg-icons";
-import {faArrowUpFromBracket, faDownload, faFloppyDisk, faGem, faLink, faZap} from "@fortawesome/free-solid-svg-icons";
+import {faArrowUpFromBracket, faDownload, faGem, faLink, faZap} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 

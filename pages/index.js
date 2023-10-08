@@ -1,41 +1,15 @@
-import Script from "next/script";
-
 import GlobalNav from "../components/GlobalNav";
-import MetaCard from "../components/Cards/MetaCard";
 import Carousel from "../components/Global/Carousel";
-import {CarouselItem} from "../components/Global/Carousel";
-import ProductCard from "../components/Cards/ProductCard";
-import LineCard from "../components/Cards/LineCard";
-
 import styles from "../components/Index.module.css"
 
-import NightR from "../components/assets/NightRider.webp"
-import ProtoFlicker from "../components/assets/ProtoFlicker.png"
-import sImg from "../components/assets/img.png"
 import MinecraftLogo from "../components/assets/logos/minecraft.png"
 import GDLogo from "../components/assets/logos/geometrydash.png"
-import RockstarLogo from "../components/assets/logos/rockstargames.png"
 import CSLogo from "../components/assets/logos/counterstrike.png"
-
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import WebhookIcon from '@mui/icons-material/Webhook';
-import BoltIcon from '@mui/icons-material/Bolt';
-import BuildIcon from '@mui/icons-material/Build';
-import CloudDoneIcon from '@mui/icons-material/CloudDone';
-import StorageIcon from '@mui/icons-material/Storage';
-import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
-import MusicNoteIcon from '@mui/icons-material/MusicNote';
-import SmartToyIcon from '@mui/icons-material/SmartToy';
-import LanguageIcon from '@mui/icons-material/Language';
-import EqualizerIcon from '@mui/icons-material/Equalizer';
-import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
-import AppleIcon from '@mui/icons-material/Apple';
 import RightIcon from '../components/assets/icons/right.svg'
 
 
 import Footer from "../components/Global/Footer";
 import GlobalHead from "../components/GlobalHead";
-import {ListItem, ListItemIcon, ListItemText} from "@mui/material";
 import useLocale, {useGlobalLocale} from "../locales/useLocale";
 import Link from "next/link";
 import {serverFiberAPI} from "../fiber/fiber";
@@ -44,10 +18,11 @@ import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
 import {useRef} from "react";
 import {Rating} from "@mui/lab";
 
-export async function getServerSideProps(ctx) {
-    const api = serverFiberAPI(ctx)
+export async function getStaticProps(ctx) {
+    const api = serverFiberAPI(null)
     let stats = await api.fetch.stats()
     return {
+        revalidate: 60,
         props: {
             stats: stats
         }
@@ -55,8 +30,6 @@ export async function getServerSideProps(ctx) {
 }
 
 export default function Home(props) {
-
-    console.log(props)
 
     const locale = useLocale(props.router)
     const localeGlobal = useGlobalLocale(props.router)
@@ -130,13 +103,13 @@ export default function Home(props) {
                         </div>
                     </div>
 
-                    <div className="absolute hidden xl:flex flex-col rounded-full bottom-32 bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] p-0.5">
-                        <div className="rounded-full bg-[var(--bkg-color)] cursor-pointer" onClick={()=>scrollRef.current?.scrollIntoView({behavior:"smooth"})}>
-                            <div className="bg-[#cacad0] rounded-full h-10 w-10 mt-6 flex justify-center items-center">
-                                <FontAwesomeIcon  icon={faChevronDown} className="text-black" />
-                            </div>
-                        </div>
-                    </div>
+                    {/*<div className="absolute hidden xl:flex flex-col rounded-full bottom-32 bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] p-0.5">*/}
+                    {/*    <div className="rounded-full bg-[var(--bkg-color)] cursor-pointer" onClick={()=>scrollRef.current?.scrollIntoView({behavior:"smooth"})}>*/}
+                    {/*        <div className="bg-[#cacad0] rounded-full h-10 w-10 mt-6 flex justify-center items-center">*/}
+                    {/*            <FontAwesomeIcon  icon={faChevronDown} className="text-black" />*/}
+                    {/*        </div>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                 </div>
 
                 <p className="text-4xl text-center m-0 mt-8 font-[Helvetica]" ref={scrollRef}>На грани возможного</p>

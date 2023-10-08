@@ -2,7 +2,7 @@ import GlobalHead from "../../../../components/GlobalHead";
 import GlobalNav from "../../../../components/GlobalNav";
 import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
 import PanelContent from "../../../../components/Global/PanelContent";
-import {Router, useRouter} from "next/router";
+import {useRouter} from "next/router";
 
 import styles from "../../../../components/Manage/GDManage.module.css"
 import {styled} from "@mui/system";
@@ -24,15 +24,12 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import {AddPhotoAlternate, Restore, Visibility, VisibilityOff, Warning} from "@mui/icons-material";
 import {useEffect, useRef, useState} from "react";
-import Link from "next/link";
 import SaveIcon from '@mui/icons-material/Save';
 
 import discordLogo from '../../../../components/assets/social/discord.png'
 import vkLogo from '../../../../components/assets/social/vkontakte.png'
 import GDLablogo from '../../../../components/assets/logos/geometrydash.png'
 import GDLogo from '../../../../components/assets/logos/gd_icon.png'
-import {useRecoilState} from "recoil";
-import GDServer from "../../../../states/gd_server";
 import toast, {Toaster} from "react-hot-toast";
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
@@ -42,13 +39,11 @@ import {Alert, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import HelpIcon from '@mui/icons-material/Help';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SettingsIcon from '@mui/icons-material/Settings';
-import Face3Icon from '@mui/icons-material/Face3';
 import BackupBox from '../../../../components/assets/icons/backup_box.svg'
 import TabsUnstyled from "@mui/base/TabsUnstyled";
 import {Tab, TabsList} from "../../../../components/Global/TinyTab";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAndroid, faApple, faWindows} from "@fortawesome/free-brands-svg-icons";
-import {useCookies} from "react-cookie";
 import useLocale, {useGlobalLocale} from "../../../../locales/useLocale";
 import useFiberAPI from "../../../../fiber/fiber";
 import {faMusic, faStar, faUpload, faUser} from "@fortawesome/free-solid-svg-icons";
@@ -360,7 +355,6 @@ export default function SettingsGD(props) {
                                 <input type="hidden" name="auth[username]" value={"halgd_"+srv.Srv.srvid||''} />
                                 <input type="hidden" name="auth[password]" value={srv.Srv.db_password||''} />
                                 <input type="hidden" name="auth[db]" value={"gdps_"+srv.Srv.srvid||''} />
-                                <p>SEX</p>
                                 <Button variant="contained" className={styles.SlimButton} onClick={()=>redirectToDB()}>{locale.get('dbSettings')[1]}</Button>
                             </form>
                         </div>

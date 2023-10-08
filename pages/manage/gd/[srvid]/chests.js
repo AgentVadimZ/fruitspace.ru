@@ -3,11 +3,9 @@ import GlobalNav from "../../../../components/GlobalNav";
 import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
 import PanelContent from "../../../../components/Global/PanelContent";
 import styles from "../../../../components/Manage/GDManage.module.css"
-import {useCookies} from "react-cookie";
-import ParseError from "../../../../components/ErrParser";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import {styled} from "@mui/system";
-import {Button, CssBaseline, IconButton, Switch, TextField, ToggleButton, ToggleButtonGroup} from "@mui/material";
+import {Button, IconButton, Switch, TextField, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import {useEffect, useState} from "react";
 
 import shardFire from "../../../../components/assets/shards/fire.webp"
@@ -23,12 +21,6 @@ import {TimePicker} from "@mui/x-date-pickers/TimePicker";
 import {LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
-import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
-import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
-import useEffectOnce from "../../../../components/Hooks";
-import {useRecoilState} from "recoil";
-import GDServer from "../../../../states/gd_server";
 import toast, {Toaster} from "react-hot-toast";
 import useLocale from "../../../../locales/useLocale";
 import useFiberAPI from "../../../../fiber/fiber";

@@ -2,7 +2,6 @@ import GlobalHead from "../../../../components/GlobalHead";
 import GlobalNav from "../../../../components/GlobalNav";
 import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
 import PanelContent from "../../../../components/Global/PanelContent";
-import {Router, useRouter} from "next/router";
 import styles from "../../../../components/Manage/GDManage.module.css"
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -28,23 +27,15 @@ import {
     IconButton,
     Backdrop,
     Button,
-    ClickAwayListener, ButtonGroup, MenuList, MenuItem
+    ClickAwayListener, MenuList, MenuItem
 } from "@mui/material";
 import {PauseRounded, PlayArrowRounded, Search, VolumeUpRounded} from "@mui/icons-material";
 import {useEffect, useRef, useState} from "react";
 import {styled} from "@mui/system";
-import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import ListItem from "@mui/material/ListItem";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import toast from "react-hot-toast";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
-import BackupBox from "../../../../components/assets/icons/backup_box.svg";
 import ListItemText from "@mui/material/ListItemText";
 import List from "@mui/material/List";
-import useEffectOnce from "../../../../components/Hooks";
-import {useCookies} from "react-cookie";
-import {useRecoilState} from "recoil";
-import GDServer from "../../../../states/gd_server";
 import ReactPlayer from "react-player";
 import {LoadingButton} from "@mui/lab";
 import {Tooltip} from "@mui/material"

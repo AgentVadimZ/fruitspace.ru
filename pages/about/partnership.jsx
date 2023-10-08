@@ -2,8 +2,6 @@ import GlobalHead from "../../components/GlobalHead";
 import GlobalNav from "../../components/GlobalNav";
 import styles from "../../components/Index.module.css";
 import Footer from "../../components/Global/Footer";
-import {useRouter} from "next/router";
-import useLocale from "../../locales/useLocale";
 
 
 export default function Partnership(props) {

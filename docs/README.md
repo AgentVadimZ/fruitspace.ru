@@ -1,2 +1,0 @@
-# docs
-FruitSpace official documentation

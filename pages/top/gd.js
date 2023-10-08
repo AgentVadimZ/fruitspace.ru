@@ -2,12 +2,10 @@ import useLocale, {useGlobalLocale} from "../../locales/useLocale";
 import GlobalHead from "../../components/GlobalHead";
 import GlobalNav from "../../components/GlobalNav";
 import styles from '../../components/Cards/ServerItem.module.css'
-import {Tab, TabButton, TabPanel, TabsList} from "../../components/Global/Tab";
-import ServerItem from "../../components/Cards/ServerItem";
+import {Tab, TabPanel, TabsList} from "../../components/Global/Tab";
 import useFiberAPI from "../../fiber/fiber";
 import {useEffect, useState} from "react";
 import ServerTopItem from "../../components/Cards/ServerTopItem";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
 import PanelContent from "../../components/Global/PanelContent";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
