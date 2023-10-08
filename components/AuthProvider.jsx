@@ -3,6 +3,7 @@ import useEffectOnce from "./Hooks";
 import useFiberAPI from "../fiber/fiber";
 import {userAtom} from "../fiber/fiber.model";
 import useSWR from "swr";
+import {useEffect} from "react";
 
 
 
@@ -10,7 +11,7 @@ export default function AuthProvider({RequireAuth, children, router}) {
     const api = useFiberAPI()
     const [user, setUser] = useRecoilState(userAtom)
 
-    const {data, isLoading, error} = useSWR("/user",api.user.sso, {revalidateOnMount:true})
+    const {data, isLoading, error} = useSWR("/user/"+api.authorization,api.user.sso)
 
     data&&setUser(data)
 

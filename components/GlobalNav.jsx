@@ -41,9 +41,7 @@ export default function GlobalNav(props) {
     const localeGlobal = useGlobalLocale(router)
 
     const logout = async () => {
-        await mutate("/user")
         api.auth.logout()
-        await router.push("/")
     }
 
     const deleteNotification = (notif)=> {
