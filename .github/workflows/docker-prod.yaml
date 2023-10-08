@@ -1,0 +1,21 @@
+name: Docker Build
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: docker build . --file Dockerfile-prod --tag cr.yandex/crpr24jcqm2dno6qlm3b/fruce-www
+
+      - name: Log into registry
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} cr.yandex
+
+      - name: Push image
+        run: docker push cr.yandex/crpr24jcqm2dno6qlm3b/fruce-www
