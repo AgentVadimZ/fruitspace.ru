@@ -227,6 +227,9 @@ gdps_manage.updateSettings = async (srvid, settings)=> {
 gdps_manage.buildlabPush = async (srvid, blab)=> {
     return await gdps_manage._api.do(`servers/gd/${srvid}/buildlab`, "POST", blab)
 }
+gdps_manage.fetchBuildStatus = async (srvid)=> {
+    return await gdps_manage._api.do(`servers/gd/${srvid}/buildlab/status`, "GET")
+}
 gdps_manage.moduleDiscord = async (srvid, enable, module)=> {
     return await gdps_manage._api.do(`servers/gd/${srvid}/modules/discord`, "PUT", {...module, enable: enable})
 }
