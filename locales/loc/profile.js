@@ -273,12 +273,12 @@ const profileLocale = {
         paymentSystem: {
             ru: [
                 "Подходит для Qiwi и банковских карт",
-                "SberPay, Тинькофф и ЮMoney",
+                "Qiwi, SberPay, Тинькофф и ЮMoney",
                 "Банковские карты, криптовалюты и PerfectMoney"
                 ],
             en: [
                 "Suitable for Qiwi and bank cards",
-                "SberPay, Tinkoff and ЮMoney",
+                "Qiwi, SberPay, Tinkoff and ЮMoney",
                 "Bank cards, cryptocurrencies and PerfectMoney"
                 ]
         }, //Короче, у нас же для нерусских только Енот, так я хз насчёт перевода, придумай чё нибудь
