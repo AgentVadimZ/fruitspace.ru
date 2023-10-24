@@ -18,7 +18,7 @@ export default function PayBox(props) {
     const [backdrop, openBackdrop] = useState(false)
     const [paymentParam, setPaymentParam] = useState({
         amount: 0,
-        merchant: "qiwi"
+        merchant: "yookassa"
     })
 
     const locale = useLocale(props.router)
@@ -86,9 +86,9 @@ export default function PayBox(props) {
                             name="controlled-radio-buttons-group"
                             value={paymentParam.merchant}
                             onChange={(e,m)=>setPaymentParam({...paymentParam, merchant: m})}>
-                            <FormControlLabel value="qiwi" control={<Radio />} label={<span className={styles.payOption}>
-                                <img src={QiwiLogo.src}/>{locale.get('paymentSystem')[0]}
-                            </span>} />
+                            {/*<FormControlLabel value="qiwi" control={<Radio />} label={<span className={styles.payOption}>*/}
+                            {/*    <img src={QiwiLogo.src}/>{locale.get('paymentSystem')[0]}*/}
+                            {/*</span>} />*/}
                             <FormControlLabel value="yookassa" control={<Radio />} label={<span className={styles.payOption}>
                                 <YooMoneyLogo/>{locale.get('paymentSystem')[1]}
                             </span>}/>
