@@ -30,11 +30,18 @@ export default function Footer(props) {
                     {/*<Link href="https://telegra.ph/Dokumentaciya-dlya-ochen-umnyh-09-29"><p>{locale.get('footer.docs')}</p></Link>*/}
                 </div>
                 <span className="flex-1"></span>
-                <div className="flex flex-col justify-center mx-8">
-                    <p>Developed by</p>
-                    <h3>M41den</h3>
-                    <h5> &copy; {year}</h5>
-                </div>
+                <Link href="https://m41den.com">
+                    <div className="my-auto p-1 h-fit group w-36 flex !items-center bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] transition-all duration-300 hover:w-60">
+                        <div className="h-24 w-[9rem] !m-0 cursor-pointer flex flex-col justify-center transition-all duration-300 bg-black">
+                            <div className="mx-4 my-2">
+                                <p className="m-0 mb-2">Developed by</p>
+                                <p className="my-0 text-xl !text-white">M41den</p>
+                                <p className="text-sm my-0"> &copy; {year}</p>
+                            </div>
+                        </div>
+                        <img className="border-solid border-black border-2 box-border !m-0 h-24 w-0 group-hover:w-24 transition-all duration-300" src="https://cdn.fruitspace.one/profile_pics/c4ca4238a0b923820dcc509a6f75849b.png" />
+                    </div>
+                </Link>
             </div>
             <div className={styles.footerLine}></div>
             <div className="m-2 flex flex-col items-center justify-center lg:flex-row">

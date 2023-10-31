@@ -150,7 +150,7 @@ span.swiper-pagination-bullet-active {
     background-size: 400%;
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
-    animation: FruitAnim 10s linear infinite;
+    animation: FruitAnim 10s linear infinite alternate-reverse;
 }
 
 @keyframes FruitAnim {

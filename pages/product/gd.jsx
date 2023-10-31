@@ -127,7 +127,7 @@ export default function GD(props) {
 
                 <span className={styles.hyperSpan}></span>
                 <h2 style={{textAlign:'center',margin:"3rem 0",color:"white"}} id="selfhosted">{locale.get('selfHost')}</h2>
-                <p style={{textAlign:'center', margin:"0  5rem 1rem"}}>{locale.get('selfHostText')}
+                <p className="text-center mx-auto max-w-3xl">{locale.get('selfHostText')}
                 </p>
                 <TableContainer sx={{borderRadius:"12px",backgroundColor:"var(--btn-color)", width:"fit-content", maxWidth:"100%", margin:"0 auto"}} className={styles.MrWhite}>
                     <Table>

@@ -2,7 +2,7 @@
 
 .card {
     background-color: var(--btn-color);
-    border-radius: 12px;
+    border-radius: 16px;
     width: 320px;
     padding: 1rem;
     display: flex;
@@ -37,7 +37,7 @@
 
 
 .convBox {
-    border-radius: 8px;
+    border-radius: 12px;
     background-color: var(--active-color);
     display: flex;
     flex-direction: column;
