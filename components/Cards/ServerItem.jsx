@@ -2,7 +2,7 @@ import styles from './ServerItem.module.css'
 
 import GDLogo from '../assets/logos/geometrydash.png'
 import MCLogo from '../assets/logos/minecraft.png'
-import GTALogo from '../assets/logos/rockstargames.png'
+import CSLogo from '../assets/logos/counterstrike.png'
 import QuestionMark from '../assets/icons/cross.png'
 import RightSvg from "../assets/icons/right.svg";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -17,7 +17,7 @@ export default function ServerItem(props) {
     const Types = {
         "gd": GDLogo.src,
         "mc": MCLogo.src,
-        "gta": GTALogo.src
+        "cs": CSLogo.src
     }
     return props.add?(
         <Link href={"/product/order/"+props.type}>
@@ -34,7 +34,7 @@ export default function ServerItem(props) {
                     <h3>{props.name}</h3>
                     <p><b>{props.plan}</b> → {props.desc}</p>
                 </div>
-                <RightSvg/>
+                <RightSvg className="w-8"/>
             </div>
         </Link>
     )

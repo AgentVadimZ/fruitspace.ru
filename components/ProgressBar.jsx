@@ -1,15 +1,17 @@
 import {Backdrop, CircularProgress, circularProgressClasses} from "@mui/material";
+import Image from "next/image";
+import logo_sm from "./assets/ava.png";
 
 
 export default function LoadingAnim() {
     return (
         <Backdrop sx={{ color: '#fff', zIndex: 999 }} open>
-        <div className={"loading"}>
-            <div style={{position:"relative"}}>
+        <div className="bg-gray-700 p-8 rounded-lg w-fit glassb bg-opacity-40">
+            <div className="relative">
             <CircularProgress
                 variant="determinate"
                 sx={{
-                    color: "var(--btn-color)"
+                    color: "var(--btn-color)",
                 }}
                 size={64}
                 thickness={4}
@@ -30,6 +32,9 @@ export default function LoadingAnim() {
                 size={64}
                 thickness={4}
             />
+                <div className="absolute top-0">
+                    <Image src={logo_sm.src} alt="progress" width={64} height={64}/>
+                </div>
             </div>
         </div>
         </Backdrop>

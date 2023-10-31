@@ -13,8 +13,6 @@ import GlobalHead from "../components/GlobalHead";
 import useLocale, {useGlobalLocale} from "../locales/useLocale";
 import Link from "next/link";
 import {serverFiberAPI} from "../fiber/fiber";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
 import {useRef} from "react";
 import {Rating} from "@mui/lab";
 
@@ -47,17 +45,6 @@ export default function Home(props) {
             <GlobalNav router={props.router} mainpage />
 
             <div className={styles.main}>
-                {/*<Carousel>*/}
-                {/*    <CarouselItem image={ProtoFlicker.src}*/}
-                {/*                  link="/product/gd/" title={locale.get('carousel.1.title')} text={locale.get('carousel.1.content')}/>*/}
-
-                {/*    <CarouselItem image="https://media.wired.com/photos/60f0f10db3e52be52fcdc042/master/w_1600%2Cc_limit/Minecraft_Middle_Earth_Minas_Tirith_render_SOURCE_Minecraft_Middle-Earth.png"*/}
-                {/*                  link="#" title={locale.get('carousel.2.title')} text={locale.get('carousel.2.content')} />*/}
-                {/*    <CarouselItem image="https://cdn.mos.cms.futurecdn.net/HGJSsb2UnhV2xTYaa9GLGB.png"*/}
-                {/*                  link="#" title={locale.get('carousel.3.title')} text={locale.get('carousel.3.content')} />*/}
-                {/*    /!*<CarouselItem image="https://media.wired.com/photos/60f0f10db3e52be52fcdc042/master/w_1600%2Cc_limit/Minecraft_Middle_Earth_Minas_Tirith_render_SOURCE_Minecraft_Middle-Earth.png"*!/*/}
-                {/*    /!*              link="#" title="Title" text="A sample text that goes below 4" />*!/*/}
-                {/*</Carousel>*/}
 
                 <div className="flex flex-col items-center justify-center h-[100vh] relative">
                     <h1 className="text-5xl xl:text-8xl font-[Coolvetica] tracking-wider font-normal fruitText m-2">FruitSpace</h1>
@@ -103,16 +90,19 @@ export default function Home(props) {
                         </div>
                     </div>
 
-                    {/*<div className="absolute hidden xl:flex flex-col rounded-full bottom-32 bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] p-0.5">*/}
-                    {/*    <div className="rounded-full bg-[var(--bkg-color)] cursor-pointer" onClick={()=>scrollRef.current?.scrollIntoView({behavior:"smooth"})}>*/}
-                    {/*        <div className="bg-[#cacad0] rounded-full h-10 w-10 mt-6 flex justify-center items-center">*/}
-                    {/*            <FontAwesomeIcon  icon={faChevronDown} className="text-black" />*/}
-                    {/*        </div>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
+                    <Link href="/top/gd">
+                        <div className="w-full lg:w-fit mt-4 xl:mt-8 p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] flex flex-col">
+                            <div className="flex-1 bg-[var(--subtle-color)] rounded-2xl p-2 font-[Helvetica] cursor-pointer flex items-center justify-between hover:opacity-90 transition-all max-w-md">
+                                <img alt="prod.logo" className="h-16 lg:mr-2" src="https://img.icons8.com/nolan/96/1A6DFF/C822FF/prize.png" />
+                                <h2 className="m-0 w-fit">Топ серверов</h2>
+                                <RightIcon className="flex-shrink-0 w-8 lg:ml-auto" />
+                            </div>
+                        </div>
+                    </Link>
+
                 </div>
 
-                <p className="text-4xl text-center m-0 mt-8 font-[Helvetica]" ref={scrollRef}>На грани возможного</p>
+                <p className="text-4xl text-center m-0 mt-16 font-[Helvetica]" ref={scrollRef}>На грани возможного</p>
                 <p className="text-center text-lg px-4 xl:px-24">Неважно, любите ли вы добавлять массу модов и плагинов или предпочитаете
                 ванильные версии игр — FruitSpace позволит вам насладиться всеми возможностями игры по максимуму. Музыка из любых источников и быстрые обновления текстур/модов для Geometry Dash.
                 SourceMod и MetaMod для Counter Strike (fastDL в комплекте). Поддержка многопоточных ядер и объединения нескольких серверов для Minecraft.
