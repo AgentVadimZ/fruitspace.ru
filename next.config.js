@@ -37,6 +37,10 @@ const nextConfig = {
         defaultLocale: 'ru',
       },
       {
+        domain: 'beta.fruitspace.ru',
+        defaultLocale: 'ru',
+      },
+      {
         domain: 'fruitspace.one',
         defaultLocale: 'en'
       }
