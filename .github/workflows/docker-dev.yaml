@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build Docker image
-        run: docker build . --file Dockerfile --tag cr.yandex/crpr24jcqm2dno6qlm3b/fruce-www_beta --build-arg MSG=${{ github.event.head_commit.message }}
+        run: docker build . --file Dockerfile --tag cr.yandex/crpr24jcqm2dno6qlm3b/fruce-www_beta --build-arg MSG='${{ github.event.head_commit.message }}'
 
       - name: Log into registry
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} cr.yandex
