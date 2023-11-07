@@ -28,16 +28,12 @@ const nextConfig = {
   },
   i18n: {
     locales: ['en', 'ru'],
-    defaultLocale: 'en',
+    defaultLocale: 'ru',
     localeDetection: false,
 
     domains: [
       {
         domain: 'fruitspace.ru',
-        defaultLocale: 'ru',
-      },
-      {
-        domain: 'beta.fruitspace.ru',
         defaultLocale: 'ru',
       },
       {
