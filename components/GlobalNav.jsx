@@ -21,13 +21,14 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 import MinecraftLogo from "./assets/logos/minecraft.png"
 import GDLogo from "./assets/logos/geometrydash.png"
-import RockstarLogo from "./assets/logos/rockstargames.png"
+import CSLogo from "./assets/logos/counterstrike.png"
 import {useRouter} from "next/router";
 import {useGlobalLocale} from "../locales/useLocale";
 import useFiberAPI from "../fiber/fiber";
 import {useRecoilState} from "recoil";
 import {userAtom} from "../fiber/fiber.model";
 import {mutate} from "swr";
+import {useState} from "react";
 
 
 export default function GlobalNav(props) {
@@ -62,11 +63,15 @@ export default function GlobalNav(props) {
     const prettyPrint = (num)=>new Intl.NumberFormat(user.usd?'en-US':'ru-RU',
         {style: 'currency',currency: user.usd?"USD":"RUB"}).format(num).replace(/[.|,]00/g, '')
 
+
+    const [open, setOpen] = useState(false)
+
     return (
         <NavBar mainpage={props.mainpage}>
             <Link href={"/"}><img src={props.mainpage?logo_sm.src:logo.src} alt="logo" className={styles.logo}></img></Link>
             <span style={{flex:1}}></span>
-            {user.uname && (<><NavItem icon={<ServerSvg/>}>
+            {user.uname && (<>
+            <NavItem icon={<ServerSvg/>} open={open} setOpen={setOpen} name="servers">
                 <DropdownMenu centered>
                     <Link href="/profile/servers?s=mc">
                     <DropdownItem leftIcon={<img src={MinecraftLogo.src}/>} rightIcon={<RightSvg/>}>
@@ -85,16 +90,17 @@ export default function GlobalNav(props) {
                     </DropdownItem>
                     </Link>
                     <Link href="/profile/servers?s=gta">
-                    <DropdownItem leftIcon={<img src={RockstarLogo.src}/>} rightIcon={<RightSvg/>}>
+                    <DropdownItem leftIcon={<img src={CSLogo.src}/>} rightIcon={<RightSvg/>}>
                         <div className={styles.MultilineItem}>
-                            Grand Theft Auto
-                            <span>• {user.servers.gta} {getRegionalPostfix(user.servers.gta)}</span>
+                            Counter Strike
+                            <span>• {user.servers.cs} {getRegionalPostfix(user.servers.cs)}</span>
                         </div>
                     </DropdownItem>
                     </Link>
                 </DropdownMenu>
             </NavItem>
-            <NavItem icon={<NotificationSvg className={user.notifications.length!==0?"notifyAnimate":""} />}>
+            <NavItem icon={<NotificationSvg className={user.notifications.length!==0?"notifyAnimate":""} />}
+            open={open} setOpen={setOpen} name="notifications">
                 <DropdownMenu centered>
                     {user.notifications.length===0? (
                         <DropdownItem leftIcon={<NotificationsOffIcon/>}>
@@ -118,7 +124,7 @@ export default function GlobalNav(props) {
 
 
             {user.uname ? (
-                <NavItem profile icon={<img src={user.profile_pic}/>}>
+                <NavItem profile icon={<img src={user.profile_pic}/>} open={open} setOpen={setOpen} name="profile">
                     <DropdownMenu>
                     <Link href="/profile/">
                         <DropdownItem leftIcon={<img src={user.profile_pic}/>}

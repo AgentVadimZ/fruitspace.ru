@@ -14,6 +14,7 @@ export default function WebApp({ Component, pageProps }) {
         Router.events.on('routeChangeComplete', () => setL(false));
         Router.events.on('routeChangeError', () => setL(false));
     }, [Router])
+
   return (
       <RecoilRoot>
           <StyledEngineProvider injectFirst>

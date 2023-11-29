@@ -227,6 +227,9 @@ gdps_manage.updateSettings = async (srvid, settings)=> {
 gdps_manage.buildlabPush = async (srvid, blab)=> {
     return await gdps_manage._api.do(`servers/gd/${srvid}/buildlab`, "POST", blab)
 }
+gdps_manage.fetchBuildStatus = async (srvid)=> {
+    return await gdps_manage._api.do(`servers/gd/${srvid}/buildlab/status`, "GET")
+}
 gdps_manage.moduleDiscord = async (srvid, enable, module)=> {
     return await gdps_manage._api.do(`servers/gd/${srvid}/modules/discord`, "PUT", {...module, enable: enable})
 }
@@ -244,18 +247,21 @@ gdps_manage.searchUsers = async (srvid, keyword)=> {
 
 // region GDPS Users API
 const gdps_users = {_api: api}
-gdps_users.login = async (srvid, uname, password, hcaptcha) => {
+gdps_users.login = async (srvid, uname, password, fcaptcha) => {
     return await gdps_users._api.do(`servers/gd/${srvid}/u/login`,"POST", {
         uname: uname,
         password: password,
-        hCaptchaToken: hcaptcha
+        fCaptchaToken: fcaptcha,
+        hCaptchaToken: ""
     })
 }
 gdps_users.get = async (srvid) => {
     return await gdps_users._api.do(`servers/gd/${srvid}/u`,"GET")
 }
-gdps_users.forgotPassword = async (srvid, email, hcaptcha) => {
-    return await gdps_users._api.do(`servers/gd/${srvid}/u/recover`,"POST", {hCaptchaToken: hcaptcha, email: email})
+gdps_users.forgotPassword = async (srvid, email, fcaptcha) => {
+    return await gdps_users._api.do(`servers/gd/${srvid}/u/recover`,"POST", {
+        fCaptchaToken: fcaptcha, email: email, hCaptchaToken: ""
+    })
 }
 gdps_users.updateUsername = async (srvid, uname) => {
     return await gdps_users._api.do(`servers/gd/${srvid}/u`,"PUT", {uname: uname, password: "", email: ""})

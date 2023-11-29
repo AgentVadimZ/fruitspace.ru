@@ -4,7 +4,10 @@ import React from "react"
 
 
 const NavItem = React.forwardRef((props,ref)=>{
-    const [open, setOpen] = useState(false);
+
+    const [uopen, usetOpen] = useState(false);
+    const open = props.setOpen? props.open===props.name : uopen;
+    const setOpen = props.setOpen? (v)=> {props.setOpen(v?props.name:v)} : usetOpen;
     return (
         <li className={styles.navItem}>
             <p className={`${props.profile?styles.iconProfileButton:styles.iconButton} ${props.active && styles.active}`}

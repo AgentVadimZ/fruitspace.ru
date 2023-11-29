@@ -1,5 +1,7 @@
 FROM node:18-alpine AS base
 
+ARG MSG
+
 # Install dependencies only when needed
 FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
@@ -24,7 +26,11 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV NODE_ENV development
-
+ENV MSG_ENV=$MSG
+RUN export DATE=$(date +"%d.%m.%Y %H:%M") && \
+    sed -i "s/false/true/g" components/betadata.js && \
+    sed -i "s/DATE/$DATE/g" components/betadata.js && \
+    sed -i "s/MSG/$MSG_ENV/g" components/betadata.js
 RUN yarn build
 
 # If using npm comment out above and use below instead

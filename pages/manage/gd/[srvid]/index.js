@@ -92,7 +92,7 @@ export default function ManageGD(props) {
                     <ProgressCard color max={srv.CoreConfig&&srv.CoreConfig.ServerConfig.MaxUsers} now={srv.Srv.user_count} text={locale.get('chips')[0]} />
                     <ProgressCard color max={srv.CoreConfig&&srv.CoreConfig.ServerConfig.MaxLevels} now={srv.Srv.level_count} text={locale.get('chips')[1]} />
                     <ProgressCard color date max={preMax>30?365:30} now={expireDate} text={locale.get('chips')[2]+expireText} />
-                    <DownloadCard srvid={srv.Srv.srvid} locale={locale} srv={srv.Srv} copyR={copyValueR} />
+                    <DownloadCard api={api} srvid={srv.Srv.srvid} locale={locale} srv={srv.Srv} copyR={copyValueR} />
                 </div>
 
                 <div className={styles.CardBox}>

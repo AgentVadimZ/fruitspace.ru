@@ -1,6 +1,8 @@
 import {faAndroid, faApple, faWindows} from "@fortawesome/free-brands-svg-icons";
 import {faArrowUpFromBracket, faDownload, faGem, faLink, faZap} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import useSWR from "swr";
+import {CircularProgress, circularProgressClasses} from "@mui/material";
 
 
 export default function GDPSCard(props) {
@@ -39,6 +41,9 @@ export default function GDPSCard(props) {
 }
 
 export function DownloadCard(props) {
+    const api = props.api
+    const {data, isLoading, error} = useSWR(props.srvid, api.gdps_manage.fetchBuildStatus)
+
     return (
         <div className="mx-1 my-1.5 md:m-3 p-3 rounded-xl w-auto md:w-fit" style={{backgroundColor: "var(--active-color)"}}>
             <span className="flex rounded-lg" style={{backgroundColor: "var(--primary-color)"}}>
@@ -52,6 +57,24 @@ export function DownloadCard(props) {
             </span>
             <p className="text-center mb-1">{props.locale.get('platforms')}</p>
             <div className="flex justify-center rounded-lg bg-[var(--btn-color)]">
+                {(data&&data.message!=="") ? <span className="flex items-center justify-center h-8 gap-2">
+                    <CircularProgress
+                        variant="indeterminate"
+                        disableShrink
+                        sx={{
+                            color: '#fff',
+                            animationDuration: '550ms',
+                            left: 0,
+                            [`& .${circularProgressClasses.circle}`]: {
+                                strokeLinecap: 'round',
+                            },
+                        }}
+                        size={24}
+                        thickness={6}
+                    />
+                    {data.message=="waiting"&&"Ждем сборки"}
+                    {data.message=="building"&&"Идет сборка"}
+                </span> : (<>
                 {props.srv.client_windows_url && <FontAwesomeIcon className="rounded-lg p-2 hover:bg-[var(--primary-color)] cursor-pointer aspect-square" icon={faWindows}
                        onClick={()=>window.location.href=props.srv.client_windows_url}/>}
                 {props.srv.client_android_url && <FontAwesomeIcon className="rounded-lg p-2 hover:bg-[var(--primary-color)] cursor-pointer aspect-square" icon={faAndroid}
@@ -60,6 +83,7 @@ export function DownloadCard(props) {
                        onClick={()=>window.location.href=props.srv.client_ios_url}/>}
                 {props.srv.client_macos_url &&  <img src="/macbook-48.png" className="rounded-lg h-[1.75em] p-0.5 hover:bg-[var(--primary-color)] cursor-pointer aspect-square"
                        onClick={()=>window.location.href=props.srv.client_macos_url} />}
+            </>) }
             </div>
 
         </div>
