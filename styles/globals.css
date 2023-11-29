@@ -46,6 +46,9 @@ body {
     background-color: var(--bkg-color);
 }
 
+.frc-banner {
+    display: none !important;
+}
 /*input {*/
 /*    border-radius: 8px;*/
 /*    border-width: 0;*/

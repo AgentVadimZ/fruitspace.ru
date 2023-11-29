@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint"
   },
-  
+
   "dependencies": {
     "@aacn.eu/use-friendly-captcha": "^1.2.3",
     "@emotion/react": "^11.10.5",

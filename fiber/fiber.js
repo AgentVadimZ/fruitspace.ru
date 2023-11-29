@@ -251,14 +251,17 @@ gdps_users.login = async (srvid, uname, password, fcaptcha) => {
     return await gdps_users._api.do(`servers/gd/${srvid}/u/login`,"POST", {
         uname: uname,
         password: password,
-        fCaptchaToken: fcaptcha
+        fCaptchaToken: fcaptcha,
+        hCaptchaToken: ""
     })
 }
 gdps_users.get = async (srvid) => {
     return await gdps_users._api.do(`servers/gd/${srvid}/u`,"GET")
 }
 gdps_users.forgotPassword = async (srvid, email, fcaptcha) => {
-    return await gdps_users._api.do(`servers/gd/${srvid}/u/recover`,"POST", {fCaptchaToken: fcaptcha, email: email})
+    return await gdps_users._api.do(`servers/gd/${srvid}/u/recover`,"POST", {
+        fCaptchaToken: fcaptcha, email: email, hCaptchaToken: ""
+    })
 }
 gdps_users.updateUsername = async (srvid, uname) => {
     return await gdps_users._api.do(`servers/gd/${srvid}/u`,"PUT", {uname: uname, password: "", email: ""})
