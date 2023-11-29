@@ -247,18 +247,18 @@ gdps_manage.searchUsers = async (srvid, keyword)=> {
 
 // region GDPS Users API
 const gdps_users = {_api: api}
-gdps_users.login = async (srvid, uname, password, hcaptcha) => {
+gdps_users.login = async (srvid, uname, password, fcaptcha) => {
     return await gdps_users._api.do(`servers/gd/${srvid}/u/login`,"POST", {
         uname: uname,
         password: password,
-        hCaptchaToken: hcaptcha
+        fCaptchaToken: fcaptcha
     })
 }
 gdps_users.get = async (srvid) => {
     return await gdps_users._api.do(`servers/gd/${srvid}/u`,"GET")
 }
-gdps_users.forgotPassword = async (srvid, email, hcaptcha) => {
-    return await gdps_users._api.do(`servers/gd/${srvid}/u/recover`,"POST", {hCaptchaToken: hcaptcha, email: email})
+gdps_users.forgotPassword = async (srvid, email, fcaptcha) => {
+    return await gdps_users._api.do(`servers/gd/${srvid}/u/recover`,"POST", {fCaptchaToken: fcaptcha, email: email})
 }
 gdps_users.updateUsername = async (srvid, uname) => {
     return await gdps_users._api.do(`servers/gd/${srvid}/u`,"PUT", {uname: uname, password: "", email: ""})

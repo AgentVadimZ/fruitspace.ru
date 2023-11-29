@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aacn.eu/use-friendly-captcha": "^1.2.3",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
@@ -30,6 +31,7 @@
     "csstype": "^3.1.2",
     "dayjs": "^1.11.7",
     "depcheck": "^1.4.6",
+    "friendly-challenge": "^0.9.14",
     "linkify-react": "^4.1.1",
     "linkifyjs": "^4.1.1",
     "next": "12.3.1",

@@ -6,12 +6,12 @@ import {useState} from "react";
 import {useRouter} from "next/router";
 import {styled} from "@mui/system";
 import {Backdrop, TextField} from "@mui/material";
-import HCaptcha from "@hcaptcha/react-hcaptcha";
 import toast, {Toaster} from "react-hot-toast";
 import {getBrowserLocale} from "../../../components/Hooks";
 import Linkify from "linkify-react";
 import useFiberAPI, {serverFiberAPI} from "../../../fiber/fiber";
 import GlobalHead from "../../../components/GlobalHead";
+import {useCaptchaHook} from "@aacn.eu/use-friendly-captcha";
 
 
 export async function getServerSideProps(ctx) {
@@ -48,7 +48,13 @@ export default function DownloadPage(props) {
         localeGlobal.locale = lang==="ru"?"ru":"en"
     }
 
+    const funnyCaptcha = useCaptchaHook({
+        siteKey: "FCMN099137D3O0N9",
+        language: "en"
+    })
+
     const showPlayers = localeGlobal.get('funcLvlPlayerServer')
+    const errParse = localeGlobal.get('funcParseErr')
     const srvid = router.query.srvid
     const srv = props.srv
 
@@ -65,7 +71,18 @@ export default function DownloadPage(props) {
     // }, [srvid])
 
     const aLogin=()=>{
-        api.gdps_users.login(srvid, creds.uname, creds.password, creds.captcha).then((resp)=>{
+        const solution = funnyCaptcha.captchaStatus.solution
+        if(!solution) {
+            toast.error(errParse("captcha"), {
+                duration: 10000,
+                style: {
+                    color: "white",
+                    backgroundColor: "var(--btn-color)"
+                }
+            })
+            return
+        }
+        api.gdps_users.login(srvid, creds.uname, creds.password, solution).then((resp)=>{
             if (resp.status==="ok") {
 
                         toast.success(locale.get('success'), {
@@ -105,14 +122,25 @@ export default function DownloadPage(props) {
                                 backgroundColor: "var(--btn-color)"
                             }
                         })
-                        hcaptcha.reset()
+                        // hcaptcha.reset()
                 }
             }
         })
     }
 
     const aRecover=()=>{
-        api.gdps_users.forgotPassword(srvid, creds.email, creds.captcha).then((resp)=>{
+        const solution = funnyCaptcha.captchaStatus.solution
+        if(!solution) {
+            toast.error(errParse("captcha"), {
+                duration: 10000,
+                style: {
+                    color: "white",
+                    backgroundColor: "var(--btn-color)"
+                }
+            })
+            return
+        }
+        api.gdps_users.forgotPassword(srvid, creds.email, solution).then((resp)=>{
             if (resp.status==="ok") {
                 switch (resp.code) {
                     case "-1":
@@ -151,7 +179,7 @@ export default function DownloadPage(props) {
                         backgroundColor: "var(--btn-color)"
                     }
                 })
-                hcaptcha.reset()
+                // hcaptcha.reset()
             }
         })
     }
@@ -243,14 +271,25 @@ export default function DownloadPage(props) {
             </div>
         <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                   open={backdrop!="none"} onClick={()=>setBackdrop("none")}>
-            {backdrop==="login" && <div className="bg-[var(--subtle-color)] p-2 rounded-xl"
+            {backdrop==="login" && <div className="bg-[var(--subtle-color)] p-2 rounded-2xl"
                                         onClick={(e)=>e.stopPropagation()}>
-                <HCaptcha sitekey="c17bb027-5ed7-4e3d-9f67-6f3ed2d78090"
-                          onVerify={(val,idk)=>setCreds({
-                              ...creds,
-                              captcha: val
-                          })} theme="dark"/>
-                <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-lg flex items-center justify-center h-12 rounded-xl flex-1 mt-1"
+                {funnyCaptcha.CaptchaWidget(
+                    {className: "bg-[var(--btn-hover)] rounded-xl p-2"},
+                    {
+                        icon: {color: "white", fill: "white", height: "3rem", width: "3rem"},
+                        button: {
+                            color: "white", background: "#0d6efd", borderRadius:'4px', marginBottom:".5rem", fontWeight:"normal",
+                            fontSize: "11pt", padding:".5rem 0"
+                        },
+                        text: {textAlign:"center", margin:".5rem"}
+                    }
+                )}
+                {/*<HCaptcha sitekey="c17bb027-5ed7-4e3d-9f67-6f3ed2d78090"*/}
+                {/*          onVerify={(val,idk)=>setCreds({*/}
+                {/*              ...creds,*/}
+                {/*              captcha: val*/}
+                {/*          })} theme="dark"/>*/}
+                <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] text-lg flex items-center justify-center h-12 rounded-xl flex-1 mt-1 px-4"
                    onClick={aLogin}>{locale.get('login')}</a>
             </div>}
             {backdrop==="forgot" && <div className="bg-[var(--subtle-color)] p-2 rounded-xl"
@@ -261,11 +300,11 @@ export default function DownloadPage(props) {
                     onChange={(evt)=>setCreds({...creds, email: evt.target.value})}
                     className="mb-1"
                 />
-                <HCaptcha sitekey="c17bb027-5ed7-4e3d-9f67-6f3ed2d78090"
-                          onVerify={(val,idk)=>setCreds({
-                              ...creds,
-                              captcha: val
-                          })} theme="dark"/>
+                {/*<HCaptcha sitekey="c17bb027-5ed7-4e3d-9f67-6f3ed2d78090"*/}
+                {/*          onVerify={(val,idk)=>setCreds({*/}
+                {/*              ...creds,*/}
+                {/*              captcha: val*/}
+                {/*          })} theme="dark"/>*/}
                 <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-lg flex items-center justify-center h-12 rounded-xl flex-1 mt-1"
                    onClick={aRecover}>{locale.get('forgotAction')}</a>
             </div>}
