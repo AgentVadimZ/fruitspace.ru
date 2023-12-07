@@ -29,16 +29,24 @@ export default function FrontPage(props) {
 
     const [backdrop, setBackdrop] = useState("none")
 
-    const api = useFiberAPI(`acc${srvid}`)
+    const api = useFiberAPI(`gdps_token`)
+    let tokens = api.authorization||{}
+    const defaultId = tokens.default?.[srvid] || 0
+    let token = tokens[srvid]?.[defaultId] || ""
+    if(router.query.acc) {
+        token = router.query.acc
+    }
+    api.authorization = token
 
     const [creds, setCreds] = useState({uname:user.uname, password: "", email: user.email})
 
     useEffect(()=> {
         srvid&&api.gdps_users.get(srvid).then(resp=>{
+            if(!resp.uname) router.push(`/gdps/${srvid}/`)
             setUser({...resp, vessels: JSON.parse(resp.vessels||"{}")})
             setCreds({uname:resp.uname, password: "", email: resp.email})
         })
-    }, [srvid])
+    }, [srvid, router.query.acc])
 
     const fastIconLink = (type, id) => {
         id = Math.max(1, id)
@@ -51,7 +59,7 @@ export default function FrontPage(props) {
             if(resp.srvid) setSrv(resp);
             else router.push("/");
         })
-    },[srvid])
+    },[srvid, router.query.acc])
 
     const lang = getBrowserLocale()
 
@@ -126,9 +134,11 @@ export default function FrontPage(props) {
 
     const type = getIconTypeById(user.icon_type)
 
+    console.log(user)
+
     return <>
         <GlobalHead title={srv.srv_name}/>
-        <GlobalGDPSNav name={srv.srv_name} icon={srv.icon}/>
+        <GlobalGDPSNav name={srv.srv_name} icon={srv.icon} users={tokens} />
         <GDPSNavBar music={srv.plan>1}/>
         <Toaster/>
         {user.uname && <PanelContent>

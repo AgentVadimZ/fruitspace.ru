@@ -1,6 +1,3 @@
-
-
-
 const BetaData = {
     date: "DATE",
     description: `MSG`,

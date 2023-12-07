@@ -2,7 +2,7 @@ import useLocale, {useGlobalLocale} from "../../../locales/useLocale";
 import {faCircleInfo, faRightToBracket} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAndroid, faApple, faDiscord, faVk, faWindows} from "@fortawesome/free-brands-svg-icons";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {styled} from "@mui/system";
 import {Backdrop, TextField} from "@mui/material";
@@ -19,11 +19,9 @@ export async function getServerSideProps(ctx) {
     const api = serverFiberAPI(ctx, `acc${srvid}`)
     let srv = await api.fetch.gdpsGet(srvid)
     if (srv.srvid){
-        let user= await api.gdps_users.get(srvid)
         return {
             props: {
-                srv: srv,
-                user: user
+                srv: srv
             }
         }
     }
@@ -58,9 +56,17 @@ export default function DownloadPage(props) {
     const srvid = router.query.srvid
     const srv = props.srv
 
-    const user = props.user
+    const [user, setUser] = useState({})
 
-    const api = useFiberAPI(`acc${srvid}`)
+    const api = useFiberAPI(`gdps_token`)
+    let tokens = api.authorization||{}
+    const defaultId = tokens.default?.[srvid] || 0
+    const token = tokens[srvid]?.[defaultId] || ""
+    api.authorization = token
+
+    useEffect(() => {
+        api.gdps_users.get(srvid).then(r=>setUser(r))
+    }, []);
 
     const [creds, setCreds] = useState({uname:"", password:"", captcha:"", email: ""})
     const [backdrop, setBackdrop] = useState("none")
@@ -85,15 +91,26 @@ export default function DownloadPage(props) {
         api.gdps_users.login(srvid, creds.uname, creds.password, solution).then((resp)=>{
             if (resp.status==="ok") {
 
-                        toast.success(locale.get('success'), {
-                            duration: 1000,
-                            style: {
-                                color: "white",
-                                backgroundColor: "var(--btn-color)"
-                            }
-                        })
-                        api.auth.setCookieToken(resp.token)
-                        router.push(srvid+"/panel")
+                toast.success(locale.get('success'), {
+                    duration: 1000,
+                    style: {
+                        color: "white",
+                        backgroundColor: "var(--btn-color)"
+                    }
+                })
+
+                if (tokens[srvid]) {
+                    tokens[srvid][defaultId] = resp.token
+                } else {
+                    tokens[srvid] = [resp.token]
+                }
+                if (tokens.default) {
+                    tokens.default[srvid] = defaultId
+                } else {
+                    tokens.default = {[srvid]: defaultId}
+                }
+                api.auth.setCookieToken(JSON.stringify(tokens))
+                router.push(srvid+"/panel")
             }else{
                 switch (resp.code) {
                     case "-1":
@@ -115,7 +132,7 @@ export default function DownloadPage(props) {
                         })
                         break
                     default:
-                        toast.error(`Error: ${resp.message} (c_${resp.code})`, {
+                        toast.error(errParse(resp.code, resp.message), {
                             duration: 10000,
                             style: {
                                 color: "white",
@@ -172,7 +189,7 @@ export default function DownloadPage(props) {
                         break
                 }
             }else{
-                toast.error(resp.message, {
+                toast.error(errParse(resp.code, resp.message), {
                     duration: 10000,
                     style: {
                         color: "white",
