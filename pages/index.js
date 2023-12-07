@@ -52,7 +52,9 @@ export default function Home(props) {
                     <span className="text-lg rounded-full px-4 py-1">Что нового? ›</span>
                     <pre className="hidden group-hover:block absolute top-full text-md right-4 rounded-xl p-2 bg-slate-600 z-[9999]">
                         Сборка {BetaData.date}{'\n'}
-                        {BetaData.description.replace("#","\n")}
+                        {BetaData.description.split('#').map((e,i)=>{
+                            return <p key={i}>{e}</p>
+                        })}
                     </pre>
                 </p>
             </div>}
