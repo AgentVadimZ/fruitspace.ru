@@ -243,9 +243,9 @@ export default function DownloadPage(props) {
                     <div className="bg-[var(--subtle-color)] p-2 w-[available] flex rounded-2xl mt-4">
                         <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-lg flex items-center justify-center h-12 rounded-xl flex-1 mr-2 last:mr-0"
                            onClick={()=>{
-                               if(user.uid>0) router.push(srvid+"/panel")
+                               if(user.uname && !router.query.fresh) router.push(srvid+"/panel")
                                else setShowLogin(!showLogin)
-                           }}>{(user.uname?locale.get('loginas')+user.uname:locale.get('login'))}</a>
+                           }}>{((user.uname && !router.query.fresh)?locale.get('loginas')+user.uname:locale.get('login'))}</a>
 
                         {srv.discord && <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block flex items-center justify-center rounded-xl w-12 mr-2 last:mr-0 aspect-square"
                                            onClick={()=>window.location.href="https://discord.gg/"+srv.discord}><FontAwesomeIcon icon={faDiscord} className="!h-6" /></a>

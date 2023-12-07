@@ -118,6 +118,11 @@ const globalLocale = {
         en: "Counter Strike hosting"
     },
 
+    "addaccount": {
+        ru: "Добавить аккаунт",
+        en: "Add account"
+    },
+
 
     funcShowServers: {
         ru: (num)=> {

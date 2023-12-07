@@ -43,6 +43,9 @@ export default function GlobalGDPSNav(props) {
             <NavItem profile icon={<img src={props.icon}/>} open={open} setOpen={setOpen} name="profile">
                 <DropdownMenu>
                     {userList}
+                    <Link href={`/gdps/${router.query.srvid}?fresh=y`} prefetch={false}>
+                        <DropdownItem key="fresh" leftIcon={<LogoutOutlinedIcon/>}>{globalLocale.get('addaccount')}</DropdownItem>
+                    </Link>
                 </DropdownMenu>
             </NavItem>
         </NavBar>
