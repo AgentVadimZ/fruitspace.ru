@@ -105,8 +105,8 @@ export default function Home(props) {
                     </div>
 
                     <Link href="/top/gd">
-                        <div className="w-full lg:w-fit mt-4 xl:mt-8 p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] flex flex-col">
-                            <div className="flex-1 bg-[var(--subtle-color)] rounded-2xl p-2 font-[Helvetica] cursor-pointer flex items-center justify-between hover:opacity-90 transition-all max-w-md">
+                        <div className="w-full md:w-fit mt-4 xl:mt-8 p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] flex flex-col">
+                            <div className="flex-1 bg-[var(--subtle-color)] rounded-2xl p-2 font-[Helvetica] cursor-pointer flex items-center justify-between hover:opacity-90 transition-all md:max-w-md">
                                 <img alt="prod.logo" className="h-16 lg:mr-2" src="https://img.icons8.com/nolan/96/1A6DFF/C822FF/prize.png" />
                                 <h2 className="m-0 w-fit">Топ серверов</h2>
                                 <RightIcon className="flex-shrink-0 w-8 lg:ml-auto" />
@@ -148,7 +148,7 @@ export default function Home(props) {
                                         <pre className="text-md rounded-lg bg-[var(--active-color)] p-2 whitespace-normal">{u.cons}</pre>
                                     </>}
                                     {u.verdict&&<>
-                                        <p className="text-xl">Что не понравилось, чего не хватает?</p>
+                                        <p className="text-xl">Останетесь ли на FruitSpace?</p>
                                         <pre className="text-md rounded-lg bg-[var(--active-color)] p-2 whitespace-normal">{u.verdict}</pre>
                                     </>}
                                 </div>
@@ -159,104 +159,9 @@ export default function Home(props) {
                                </div>
                     })}
                 </Carousel>
-
-                {/*<div className={styles.productCardGrid}>*/}
-                {/*    <ProductCard logo={MinecraftLogo.src} title="Minecraft" btnText={locale.get('soon')} btnTopText={locale.get('top_servers')}  disabled>*/}
-                {/*        <ListItem>*/}
-                {/*            <ListItemIcon><BoltIcon/></ListItemIcon>*/}
-                {/*            <ListItemText primary={locale.get('cardMinecraft')[0]}/>*/}
-                {/*        </ListItem>*/}
-                {/*        <ListItem>*/}
-                {/*            <ListItemIcon><BuildIcon/></ListItemIcon>*/}
-                {/*            <ListItemText primary={locale.get('cardMinecraft')[1]}/>*/}
-                {/*        </ListItem>*/}
-                {/*        <ListItem>*/}
-                {/*            <ListItemIcon><CloudDoneIcon/></ListItemIcon>*/}
-                {/*            <ListItemText primary={locale.get('cardMinecraft')[2]}/>*/}
-                {/*        </ListItem>*/}
-                {/*        <ListItem>*/}
-                {/*            <ListItemIcon><StorageIcon/></ListItemIcon>*/}
-                {/*            <ListItemText primary={locale.get('cardMinecraft')[3]}/>*/}
-                {/*        </ListItem>*/}
-                {/*        <ListItem>*/}
-                {/*            <ListItemIcon><EqualizerIcon/></ListItemIcon>*/}
-                {/*            <ListItemText primary={locale.get('cardMinecraft')[4]}/>*/}
-                {/*        </ListItem>*/}
-                {/*    </ProductCard>*/}
-                {/*    <ProductCard logo={GDLogo.src} title="GDPS" btnText={locale.get('startingZero')} btnTopText={locale.get('top_servers')} link="gd">*/}
-                {/*        <ListItem>*/}
-                {/*            <ListItemIcon><AllInclusiveIcon/></ListItemIcon>*/}
-                {/*            <ListItemText primary={locale.get('cardGDPS')[0]}/>*/}
-                {/*        </ListItem>*/}
-                {/*        <ListItem>*/}
-                {/*            <ListItemIcon><MusicNoteIcon/></ListItemIcon>*/}
-                {/*            <ListItemText primary={locale.get('cardGDPS')[1]}/>*/}
-                {/*            /!*Soundcloud*!/*/}
-                {/*        </ListItem>*/}
-                {/*        <ListItem>*/}
-                {/*            <ListItemIcon><SmartToyIcon/></ListItemIcon>*/}
-                {/*            <ListItemText primary={locale.get('cardGDPS')[2]}/>*/}
-                {/*        </ListItem>*/}
-                {/*        <ListItem>*/}
-                {/*            <ListItemIcon><CloudDoneIcon/></ListItemIcon>*/}
-                {/*            <ListItemText primary={locale.get('cardGDPS')[3]}/>*/}
-                {/*        </ListItem>*/}
-                {/*        <ListItem>*/}
-                {/*            <ListItemIcon><PrecisionManufacturingIcon/></ListItemIcon>*/}
-                {/*            <ListItemText primary={locale.get('cardGDPS')[4]}/>*/}
-                {/*        </ListItem>*/}
-                {/*        <ListItem>*/}
-                {/*            <ListItemIcon><AppleIcon/></ListItemIcon>*/}
-                {/*            <ListItemText primary={locale.get('cardGDPS')[5]}/>*/}
-                {/*        </ListItem>*/}
-                {/*    </ProductCard>*/}
-                {/*    <ProductCard logo={RockstarLogo.src} title="GTA SA/IV/V" btnText={locale.get('soon')} btnTopText={locale.get('top_servers')} disabled>*/}
-                {/*        <ListItem>*/}
-                {/*            <ListItemIcon><AllInclusiveIcon/></ListItemIcon>*/}
-                {/*            <ListItemText primary={locale.get('cardGTA')[0]}/>*/}
-                {/*        </ListItem>*/}
-                {/*        <ListItem>*/}
-                {/*            <ListItemIcon><BuildIcon/></ListItemIcon>*/}
-                {/*            <ListItemText primary={locale.get('cardGTA')[1]}/>*/}
-                {/*        </ListItem>*/}
-                {/*        <ListItem>*/}
-                {/*            <ListItemIcon><CloudDoneIcon/></ListItemIcon>*/}
-                {/*            <ListItemText primary={locale.get('cardGTA')[2]}/>*/}
-                {/*        </ListItem>*/}
-                {/*        <ListItem>*/}
-                {/*            <ListItemIcon><StorageIcon/></ListItemIcon>*/}
-                {/*            <ListItemText primary={locale.get('cardGTA')[3]}/>*/}
-                {/*        </ListItem>*/}
-                {/*        <ListItem>*/}
-                {/*            <ListItemIcon><LanguageIcon/></ListItemIcon>*/}
-                {/*            <ListItemText primary={locale.get('cardGTA')[4]}/>*/}
-                {/*        </ListItem>*/}
-                {/*    </ProductCard>*/}
-                {/*</div>*/}
-
-                {/*<div className={styles.productUtilsBox}>*/}
-                {/*    <LineCard logo={<WebhookIcon/>} title={locale.get('apiButton')}/>*/}
-                {/*    <LineCard logo={<MonetizationOnIcon/>} title={locale.get('adButton')}/>*/}
-                {/*</div>*/}
-
             </div>
         </div>
 
-
-
-
-
-
-        {/*<div style={{display:"flex", justifyContent:"center"}}>*/}
-        {/*    <MetaCard double image={NightR.src}></MetaCard>*/}
-        {/*    <MetaCard double image={"https://i.imgur.com/8KV0PjH.jpg"}></MetaCard>*/}
-        {/*    <MetaCard image={"https://www.gamerevolution.com/wp-content/uploads/sites/2/2019/04/GTAO-XBWire-HeroMain-940x528-hero.jpg"}></MetaCard>*/}
-        {/*</div>*/}
-        {/*<div style={{display:"flex", justifyContent:"center"}}>*/}
-        {/*    <MetaCard image={sImg.src}></MetaCard>*/}
-        {/*    <MetaCard double image={ProtoFlicker.src}></MetaCard>*/}
-        {/*    <MetaCard double image={"https://media.wired.com/photos/60f0f10db3e52be52fcdc042/master/w_1600%2Cc_limit/Minecraft_Middle_Earth_Minas_Tirith_render_SOURCE_Minecraft_Middle-Earth.png"}></MetaCard>*/}
-        {/*</div>*/}
         <Footer router={props.router}/>
     </>
   )
@@ -267,7 +172,7 @@ const reviews = [
         user: "Kenny",
         rating: 4.5,
         date: "18/07/2023",
-        pros: "Все шикарно, интерфейс, лёгкая настройка, личное ядро, скоро ещё другие игры!!! 2.2 хоть и баганый, дешёвый, не пересчитать плюсов. Почему не 10? Потому что модов нит((((",
+        pros: "9/10 Все шикарно, интерфейс, лёгкая настройка, личное ядро, скоро ещё другие игры!!! 2.2 хоть и баганый, дешёвый, не пересчитать плюсов. Почему не 10? Потому что модов нит((((",
         cons: "Хочу моды",
         verdict: "Мой сервер 3 место среди всех, не собираюсь никуда уходить, фрукт навсегда!",
         url: "https://discord.com/channels/1025382676875726898/1130816253284585512/1130817182868197526",

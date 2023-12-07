@@ -26,8 +26,7 @@ export default function Footer(props) {
                     <h3>FruitSpace</h3>
                     <Link href="/product/mc"><p className="hover:text-white hover:underline">{locale.get('footer.hostingmc')}</p></Link>
                     <Link href="/product/gd"><p className="hover:text-white hover:underline">{locale.get('footer.hostinggd')}</p></Link>
-                    <Link href="/product/gta"><p className="hover:text-white hover:underline">{locale.get('footer.hostinggta')}</p></Link>
-                    {/*<Link href="https://telegra.ph/Dokumentaciya-dlya-ochen-umnyh-09-29"><p>{locale.get('footer.docs')}</p></Link>*/}
+                    <Link href="/product/cs"><p className="hover:text-white hover:underline">{locale.get('footer.hostingcs')}</p></Link>
                 </div>
                 <span className="flex-1"></span>
                 <Link href="https://m41den.com">

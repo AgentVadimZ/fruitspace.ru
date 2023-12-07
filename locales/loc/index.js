@@ -21,12 +21,12 @@ const indexLocale = {
             en: "Our servers have been field-tested by lots of tnt and lag-machines. Play without any lags!"
         },
         "carousel.3.title": {
-            ru: "GTA V [RAGE MP]",
-            en: "GTA V [RAGE MP]"
+            ru: "Cs V [RAGE MP]",
+            en: "Cs V [RAGE MP]"
         },
         "carousel.3.content": {
-            ru: "Соберитесь с друзьями в GTA On... от орбитальной пушки отойди",
-            en: "Play GTA Online with your frie... Don't touch that orbital cannon!"
+            ru: "Соберитесь с друзьями в Cs On... от орбитальной пушки отойди",
+            en: "Play Cs Online with your frie... Don't touch that orbital cannon!"
         },
 
         cardMinecraft: {

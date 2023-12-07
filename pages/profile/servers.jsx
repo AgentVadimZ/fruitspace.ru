@@ -25,7 +25,7 @@ export default function Servers(props) {
     const [servers, setServers] = useState({
         gd: [],
         mc: [],
-        gta: []
+        cs: []
     })
 
     const locale = useLocale(props.router)
@@ -57,7 +57,7 @@ export default function Servers(props) {
                     <TabsList>
                         <Tab value="gd">GD</Tab>
                         <Tab value="mc">MC</Tab>
-                        <Tab value="gta">GTA</Tab>
+                        <Tab value="cs">CS</Tab>
                         <TabButton><ExpandMoreIcon/></TabButton>
                     </TabsList>
                     <TabPanel value="gd">
@@ -73,11 +73,11 @@ export default function Servers(props) {
                         {/*<ServerItem type="mc"/>*/}
                         <ServerItem router={props.router} type="mc" add/>
                     </TabPanel>
-                    <TabPanel value="gta">
+                    <TabPanel value="cs">
                         {/*<ServerItem type="gta"/>*/}
                         {/*<ServerItem type="gta"/>*/}
                         {/*<ServerItem type="gta"/>*/}
-                        <ServerItem router={props.router} type="gta" add/>
+                        <ServerItem router={props.router} type="cs" add/>
                     </TabPanel>
                 </TabsUnstyled>
             </PanelContent>

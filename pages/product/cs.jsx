@@ -4,7 +4,7 @@ import styles from "../../components/Index.module.css";
 import Footer from "../../components/Global/Footer";
 
 
-export default function GTA(props) {
+export default function CS(props) {
 
     return (
         <>

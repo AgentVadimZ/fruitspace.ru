@@ -89,7 +89,7 @@ export default function GlobalNav(props) {
                         </div>
                     </DropdownItem>
                     </Link>
-                    <Link href="/profile/servers?s=gta">
+                    <Link href="/profile/servers?s=cs">
                     <DropdownItem leftIcon={<img src={CSLogo.src}/>} rightIcon={<RightSvg/>}>
                         <div className={styles.MultilineItem}>
                             Counter Strike

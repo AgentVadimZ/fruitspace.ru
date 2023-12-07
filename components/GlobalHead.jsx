@@ -8,7 +8,7 @@ export default function GlobalHead(props) {
             <title>{props.title} | FruitSpace</title>
             <meta property="og:title" content={`${props.title} | FruitSpace`} />
             <meta property="og:description" content={props.description?props.description:
-                "Игровой хостинг FruitSpace: сервера Minecraft, Geometry Dash, GTA SA/IV/V"} />
+                "Игровой хостинг FruitSpace: сервера Minecraft, Geometry Dash, Cs SA/IV/V"} />
             {props.image && <meta property="og:image" content={props.image} />}
             <meta name="pandora-tag" content="cdn:edge.halogen.cc;ttl=300;instances=3"/>
         </Head>

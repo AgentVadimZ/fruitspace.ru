@@ -113,9 +113,9 @@ const globalLocale = {
         ru: "Хостинг Geometry Dash",
         en: "Geometry Dash hosting"
     },
-    "footer.hostinggta":{
-        ru: "Хостинг Grand Theft Auto",
-        en: "Grand Theft Auto hosting"
+    "footer.hostingcs":{
+        ru: "Хостинг Counter Strike",
+        en: "Counter Strike hosting"
     },
 
 
