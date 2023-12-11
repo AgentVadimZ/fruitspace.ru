@@ -28,10 +28,8 @@ ENV NEXT_TELEMETRY_DISABLED 1
 ENV NODE_ENV development
 ENV MSG_ENV=$MSG
 RUN export DATE=$(date +"%d.%m.%Y %H:%M") && \
-    export MSG_ENV=`echo $MSG_ENV | tr "\n" '#'` && \
     sed -i "s/false/true/g" components/betadata.js && \
     sed -i "s/DATE/$DATE/g" components/betadata.js && \
-    sed -i "s/MSG/$MSG_ENV/g" components/betadata.js
 RUN yarn build
 
 # If using npm comment out above and use below instead

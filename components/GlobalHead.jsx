@@ -16,7 +16,7 @@ export default function GlobalHead(props) {
     return (
         <Head>
             <link rel="shortcut icon" href="/favicon.ico" />
-            <title>{og.title} | FruitSpace</title>
+            <title>{og.title}</title>
             {Object.keys(og).map((k, i) => <meta key={i} name={`og:${k}`} content={og[k]} />)}
         </Head>
     )

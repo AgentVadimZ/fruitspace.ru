@@ -14,7 +14,7 @@ import useLocale, {useGlobalLocale} from "../locales/useLocale";
 import Link from "next/link";
 import {serverFiberAPI} from "../fiber/fiber";
 import {useRef} from "react";
-import {Rating} from "@mui/lab";
+import {Rating} from "@mui/material";
 import {BetaData} from '../components/betadata';
 
 export async function getStaticProps(ctx) {
@@ -52,12 +52,18 @@ export default function Home(props) {
                 </p>
                 <p className="rounded-full bg-slate-600 mx-2 flex flex-col items-center h-fit z-[9999] group cursor-pointer">
                     <span className="text-lg rounded-full px-4 py-1">Что нового? ›</span>
-                    <pre className="hidden group-hover:block absolute top-full text-md right-4 rounded-xl p-2 bg-slate-600 z-[9999]">
-                        Сборка {BetaData.date}{'\n'}
-                        {BetaData.description.split('•').map((e,i)=>{
-                            return <>•{e}<br/></>
+                    <div className="flex-col gap-2 hidden group-hover:flex absolute top-full text-md right-4 rounded-xl p-2 bg-slate-600 z-[9999]">
+                        {BetaData.description.map((changes,i)=>{
+                            return <div className="rounded-lg p-2 bg-slate-800">
+                                <p className="my-1">Сборка от {changes.date}</p>
+                                <ul className="text-sm">
+                                    {changes.deltas.map((change,j)=>{
+                                        return <li key={j}>• {change}</li>
+                                    })}
+                                </ul>
+                            </div>
                         })}
-                    </pre>
+                    </div>
                 </p>
             </div>}
             <GlobalNav router={props.router} mainpage />
