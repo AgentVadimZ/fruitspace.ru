@@ -54,7 +54,7 @@ export default function Home(props) {
                     <span className="text-lg rounded-full px-4 py-1">Что нового? ›</span>
                     <div className="flex-col gap-2 hidden group-hover:flex absolute top-full text-md right-4 rounded-xl p-2 bg-slate-600 z-[9999]">
                         {BetaData.description.map((changes,i)=>{
-                            return <div className="rounded-lg p-2 bg-slate-800">
+                            return <div key={i} className="rounded-lg p-2 bg-slate-800">
                                 <p className="my-1">Сборка от {changes.date}</p>
                                 <ul className="text-sm">
                                     {changes.deltas.map((change,j)=>{
