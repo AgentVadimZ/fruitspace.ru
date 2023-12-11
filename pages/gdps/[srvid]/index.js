@@ -72,9 +72,6 @@ export default function DownloadPage(props) {
     const [backdrop, setBackdrop] = useState("none")
     const [showLogin, setShowLogin] = useState(false)
 
-    // useEffect(()=> {
-    //     srvid&&api.gdps_users.get(srvid).then(resp=>setUser(resp))
-    // }, [srvid])
 
     const aLogin=()=>{
         const solution = funnyCaptcha.captchaStatus.solution
