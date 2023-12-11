@@ -13,12 +13,11 @@ export default function About(props) {
     return (
         <>
             <GlobalHead title={localeGlobal.get('navName')}/>
-            {/*<Script src="//code.jivo.ru/widget/QDbblcMLJ0" strategy="lazyOnload"/>*/}
             <GlobalNav />
             <div className={styles.main}>
                 <div className={styles.innerMain}>
                     <h2>{locale.get('header')}</h2>
-                    <p style={{margin:"2rem"}}><strong>FruitSpace</strong>{locale.get('description')}</p>
+                    <p className="m-4"><span className="font-bold">FruitSpace</span>{locale.get('description')}</p>
                 </div>
                 <div style={{height:"100vh"}} />
             </div>

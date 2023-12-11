@@ -71,7 +71,7 @@ export default function Home(props) {
             <div className={styles.main}>
 
                 <div className="flex flex-col items-center justify-center h-[100vh] relative">
-                    <h1 className="text-5xl xl:text-8xl font-[Coolvetica] tracking-wider font-normal fruitText m-2">FruitSpace</h1>
+                    <h1 className="text-5xl mt-48 lg:mt-2 xl:text-8xl font-[Coolvetica] tracking-wider font-normal fruitText m-2">FruitSpace</h1>
                     <p className="text-lg text-center xl:text-2xl m-0 font-[Helvetica]">Удобный и надежный хостинг для ваших любимых игр. И ещё немножко магии ✨</p>
 
                     <div className="mt-24 grid grid-cols-1 xl:grid-cols-3 gap-4 xl:gap-16">
