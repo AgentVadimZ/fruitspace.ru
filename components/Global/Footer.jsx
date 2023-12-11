@@ -44,13 +44,13 @@ export default function Footer(props) {
             </div>
             <div className={styles.footerLine}></div>
             <div className="m-2 flex flex-col items-center justify-center lg:flex-row">
-                <a className="flex gap-2 justify-center items-center box-border border-2 border-black hover:border-white transition-all duration-300 border-solid rounded-xl pr-2 m-2"
+                <a className="flex gap-2 justify-center items-center box-border border-2 border-black hover:border-white transition-all duration-300 border-solid rounded-lg pr-2 m-2"
                    href="https://discord.gg/fruitspace">
-                    <img className="invert h-16" src={discordLogo.src} alt="discord"/> FruitSpace
+                    <img className="invert h-10" src={discordLogo.src} alt="discord"/> FruitSpace
                 </a>
-                <a className="flex gap-2 justify-center items-center box-border border-2 border-black hover:border-white transition-all duration-300 border-solid rounded-xl pr-2 m-2"
+                <a className="flex gap-2 justify-center items-center box-border border-2 border-black hover:border-white transition-all duration-300 border-solid rounded-lg pr-2 m-2"
                    href="https://vk.com/fruit_space">
-                    <img className="invert h-16" src={vkLogo.src} alt="discord"/> FruitSpace
+                    <img className="invert h-10" src={vkLogo.src} alt="discord"/> FruitSpace
                 </a>
             </div>
         </div>

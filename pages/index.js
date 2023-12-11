@@ -41,8 +41,10 @@ export default function Home(props) {
 
     return (
     <>
-        <GlobalHead title={localeGlobal.get('navName')}/>
-        <div className="bananaBg">
+        <GlobalHead />
+        <div className="fixed top-0 left-0 w-screen h-screen -z-20 bg-[#191921]"></div>
+        <div className="fixed top-0 left-0 w-screen h-screen -z-10 techBg"></div>
+        <div className="">
             {BetaData.beta && <div className="bg-slate-600 glass bg-opacity-20 h-12 flex items-center justify-between z-[9999] relative">
                 <p className="rounded-full bg-slate-600 mx-2 flex items-center h-fit">
                     <span className="text-lg bg-blue-600 rounded-full px-4 py-1">Бета </span>
@@ -52,7 +54,7 @@ export default function Home(props) {
                     <span className="text-lg rounded-full px-4 py-1">Что нового? ›</span>
                     <pre className="hidden group-hover:block absolute top-full text-md right-4 rounded-xl p-2 bg-slate-600 z-[9999]">
                         Сборка {BetaData.date}{'\n'}
-                        {BetaData.description.split('#').map((e,i)=>{
+                        {BetaData.description.split('•').map((e,i)=>{
                             return <p key={i}>{e}</p>
                         })}
                     </pre>

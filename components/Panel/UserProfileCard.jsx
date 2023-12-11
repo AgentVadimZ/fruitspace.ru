@@ -341,9 +341,9 @@ const FruitThinField = styled(TextField)({
 function SettingsItem(props) {
 
     return (
-        <div className={styles2.ServerCard} onClick={props.onClick}>
+        <div className="bg-[var(--active-color)] rounded-xl p-3 flex items-center cursor-pointer hover:bg-[var(--btn-color)]" onClick={props.onClick}>
             {props.children}
-            <h3 className={styles2.AddText}>{props.text}</h3>
+            <h3 className="mx-auto my-0">{props.text}</h3>
         </div>
     )
 }
