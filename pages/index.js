@@ -55,7 +55,7 @@ export default function Home(props) {
                     <pre className="hidden group-hover:block absolute top-full text-md right-4 rounded-xl p-2 bg-slate-600 z-[9999]">
                         Сборка {BetaData.date}{'\n'}
                         {BetaData.description.split('•').map((e,i)=>{
-                            return <p key={i}>{e}</p>
+                            return <>•{e}<br/></>
                         })}
                     </pre>
                 </p>
