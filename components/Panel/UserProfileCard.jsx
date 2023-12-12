@@ -214,7 +214,7 @@ export default function UserProfileCard(props) {
                         surname: evt.target.value.replaceAll(/[^a-zA-Z]/g,'')
                         })}} />
                     </div>
-                    <h3>@{user.uname}</h3>
+                    <h3 className="font-normal">@{user.uname}</h3>
                     <div className={styles.UnameBoxButtons}>
                         <Button variant="contained" className={`${styles.cardButton} btnError`} onClick={(e)=>updateProfilePic(e,true)}>{locale.get('reset')}</Button>
                         <Button variant="contained" className={styles.cardButton} onClick={updateName}>{locale.get('save')}</Button>

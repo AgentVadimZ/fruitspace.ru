@@ -3,7 +3,7 @@ import Head from 'next/head'
 import banner from "./assets/banner.png"
 
 export default function GlobalHead(props) {
-    const domain = "https://fruitspace.ru"
+    const domain = "https://openbeta.fruitspace.ru"
     let og = {
         title: "FruitSpace",
         description: "Игровой хостинг FruitSpace: сервера Minecraft, Geometry Dash, CS 1.6/GO/2",

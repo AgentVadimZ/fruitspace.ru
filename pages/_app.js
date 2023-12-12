@@ -20,7 +20,7 @@ export default function WebApp({ Component, pageProps }) {
           <StyledEngineProvider injectFirst>
               {isL &&<LoadingAnim />}
               <AuthProvider RequireAuth={Component.RequireAuth} router={router}>
-                  <Component {...pageProps} router={router} />
+                  <Component {...pageProps} router={router} globalLoader={[isL, setL]} />
               </AuthProvider>
           </StyledEngineProvider>
       </RecoilRoot>

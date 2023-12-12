@@ -43,7 +43,7 @@ export default function Order(props) {
 
 
     const [tariffs,setTariffs] = useState({});
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = props.globalLoader
     const [cookies, setCookie, delCookie] = useCookies(["token"])
 
     const locale = useLocale(props.router)
@@ -54,8 +54,8 @@ export default function Order(props) {
     const createServer = (tariff)=> {
         setLoading(true)
         api.servers.createGDPS(srv.name, parseInt(tariff),srv.payDuration,srv.promocode,srv.srvid).then((resp)=>{
-                    setLoading(false)
-                    if(resp.status==="ok") {
+            setLoading(false)
+            if(resp.status==="ok") {
                 toast.success(locale.get('createSuccess'),{style: {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
@@ -66,6 +66,7 @@ export default function Order(props) {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})
+                setLoading(false)
             }})
     }
 
