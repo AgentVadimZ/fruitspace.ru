@@ -17,7 +17,8 @@ export default function GlobalHead(props) {
         <Head>
             <link rel="shortcut icon" href="/favicon.ico" />
             <title>{og.title}</title>
-            {Object.keys(og).map((k, i) => <meta key={i} name={`og:${k}`} content={og[k]} />)}
+            <meta name="description" content={props.description||og.description} />
+            {Object.keys(og).map((k, i) => <meta key={i} property={`og:${k}`} content={og[k]} />)}
         </Head>
     )
 }

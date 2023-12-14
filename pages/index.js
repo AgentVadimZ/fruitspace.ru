@@ -41,7 +41,7 @@ export default function Home(props) {
 
     return (
     <>
-        <GlobalHead />
+        <GlobalHead og={og} />
         <div className="fixed top-0 left-0 w-screen h-screen -z-20 bg-[#191921]"></div>
         <div className="fixed top-0 left-0 w-screen h-screen -z-10 techBg"></div>
         <div className="">
@@ -71,10 +71,10 @@ export default function Home(props) {
             <div className={styles.main}>
 
                 <div className="flex flex-col items-center justify-center h-[100vh] relative">
-                    <h1 className="text-5xl mt-48 lg:mt-2 xl:text-8xl font-[Coolvetica] tracking-wider font-normal fruitText m-2">FruitSpace</h1>
+                    <h1 className="text-5xl mt-48 lg:mt-2 xl:text-8xl font-[Coolvetica] tracking-wider font-normal fruitText m-2 select-none">FruitSpace</h1>
                     <p className="text-lg text-center xl:text-2xl m-0 font-[Helvetica]">Удобный и надежный хостинг для ваших любимых игр. И ещё немножко магии ✨</p>
 
-                    <div className="mt-24 grid grid-cols-1 xl:grid-cols-3 gap-4 xl:gap-16">
+                    <div className="mt-24 grid grid-cols-1 xl:grid-cols-3 gap-4 xl:gap-16 select-none">
                         <Link href="/product/gd">
                             <div className="p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] flex flex-col">
                                 <div className="flex-1 bg-[var(--subtle-color)] rounded-2xl p-4 pr-2 font-[Helvetica] cursor-pointer flex items-center hover:opacity-90 transition-all max-w-md">
@@ -108,7 +108,7 @@ export default function Home(props) {
                                 <img alt="prod.logo" className="h-24 mr-2" src={CSLogo.src} />
                                 <div>
                                     <h2 className="m-0">Counter Strike</h2>
-                                    <p className="m-0">128 тикрейт, быстрая установка модов и fastDL</p>
+                                    <p className="m-0">128 тикрейт, быстрая установка модов и FastDL</p>
                                     <p className="text-sm m-0 mt-2 text-[#cacad0]">Скоро. В 2023</p>
                                 </div>
                                 <RightIcon className="flex-shrink-0 w-8 ml-auto" />
@@ -291,3 +291,8 @@ const reviews = [
         product: "Geometry Dash"
     },
 ]
+
+const og = {
+    title: "FruitSpace - хостинг Minecraft, CS, GDPS",
+    description: "Удобный и надежный хостинг для ваших любимых игр. И ещё немножко магии ✨"
+}

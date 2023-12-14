@@ -55,10 +55,10 @@ export default function GlobalGDPSNav(props) {
 
 const getUserlist = (users, setUserList, api) => {
     let userlist = []
-    Object.keys(users).map((srvid)=>{
+    Object.keys(users).forEach((srvid)=>{
         if (srvid==="default") return
         const accounts = users[srvid]
-        accounts.map((acc, i)=>{
+        accounts.forEach((acc, i)=>{
             api.authorization = acc
             api.gdps_users.get(srvid).then(accinfo=>{
                 if (!accinfo.uname) return
