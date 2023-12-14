@@ -88,7 +88,8 @@ export default function Home(props) {
                                 </div>
                             </div>
                         </Link>
-
+                        
+                        <Link href="/product/mc">
                         <div className="p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] flex flex-col">
                             <div className="flex-1 bg-[var(--subtle-color)] rounded-2xl p-4 pr-2 font-[Helvetica] cursor-pointer flex items-center hover:opacity-90 transition-all max-w-md">
                                 <img alt="prod.logo" className="h-24 mr-2" src={MinecraftLogo.src} />
@@ -100,6 +101,7 @@ export default function Home(props) {
                                 <RightIcon className="flex-shrink-0 w-8 ml-auto" />
                             </div>
                         </div>
+                        </Link>
 
                         <div className="p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] flex flex-col">
                             <div className="flex-1 bg-[var(--subtle-color)] rounded-2xl p-4 pr-2 font-[Helvetica] cursor-pointer flex items-center hover:opacity-90 transition-all max-w-md">

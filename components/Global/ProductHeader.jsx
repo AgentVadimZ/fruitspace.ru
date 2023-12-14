@@ -21,11 +21,13 @@ export default function ProductHeader({title, text, img, primaryText, secondaryT
                             {primaryText}
                         </Button>
                     </Link>
-                    <Link href={secondaryLink||"#"}>
-                        <Button variant="contained" className={styles.cardSecondaryButton} startIcon={<StorageIcon/>}>
-                            {secondaryText}
-                        </Button>
-                    </Link>
+                    {secondaryText && secondaryLink ? (
+                        <Link href={secondaryLink}>
+                            <Button variant="contained" className={styles.cardSecondaryButton} startIcon={<StorageIcon/>}>
+                                {secondaryText}
+                            </Button>
+                        </Link>
+                    ) : null}
                 </div>
             </div>
         </div>
