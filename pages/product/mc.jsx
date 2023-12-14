@@ -41,7 +41,7 @@ export default function MC(props) {
             <ProductHeader img={BannerMC} title={locale.get('prodmc.title')} text={locale.get('prodmc.titletext')}
                 primaryText={locale.get('prodmc.titlecloud')} primaryLink="#cloud"/>
                 <h2 style={{textAlign:'center',margin:"3rem 0",color:"white"}}>{locale.get('prodmc.tariffs')}</h2>
-                <div className={styles.productCardGrid} id="cloud">
+                <div className={`${styles.productCardGrid} ${styles.productCardGrid4}`} id="cloud">
                     <ProductCard title={locale.get('mcplans')[0]} btnText={locale.get('tPrices')[0]} link="order/mc?t=1">
                         <ListItem>
                             <ListItemIcon><MemoryIcon/></ListItemIcon>
