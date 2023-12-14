@@ -15,15 +15,9 @@ import {
     TableHead,
     TableRow
 } from "@mui/material";
-import CloudDoneIcon from "@mui/icons-material/CloudDone";
-import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
-import MusicNoteIcon from "@mui/icons-material/MusicNote";
-import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturing";
-import AppleIcon from "@mui/icons-material/Apple";
+
 import DesktopMacIcon from '@mui/icons-material/DesktopMac';
-import CloseIcon from '@mui/icons-material/Close';
-import CheckIcon from '@mui/icons-material/Check';
-import PersonIcon from '@mui/icons-material/Person';
+import CloudDoneIcon from "@mui/icons-material/CloudDone";
 
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";
 
@@ -142,6 +136,10 @@ export default function MC(props) {
                         <ListItem>
                             <ListItemIcon><PodcastsIcon/></ListItemIcon>
                             <ListItemText primary={locale.get('tPlan4')[5]}/>
+                        </ListItem>
+                        <ListItem>
+                            <ListItemIcon><CloudDoneIcon/></ListItemIcon>
+                            <ListItemText primary={locale.get('tPlan4')[6]}/>
                         </ListItem>
                     </ProductCard>
                     

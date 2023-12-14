@@ -92,7 +92,7 @@ const productMCLocale = {
             "100 GB NVMe SSD",
             "Intuitive and functional control panel",
             "*.gofruit.space domain",
-            "Dedicated IP + Port 25565"
+            "Dedicated IP + 25565 Port"
             ]
         },
         tPlan4: {
@@ -102,7 +102,8 @@ const productMCLocale = {
             "NVMe SSD на 150 ГБ",
             "Удобная и функциональная панель",
             "Домен *.gofruit.space",
-            "Отдельный IP + 25565 Port",
+            "Отдельный IP + Порт 25565",
+            "Автоматические резервные копии"
             ],
             en: [
             "8 CPU Cores at 2.5GHz",
@@ -110,7 +111,8 @@ const productMCLocale = {
             "150 GB NVMe SSD",
             "Intuitive and functional control panel",
             "*.gofruit.space domain",
-            "Dedicated IP + 25565 Port"
+            "Dedicated IP + 25565 Port",
+            "Automatic backups"
             ]
         }
     }
