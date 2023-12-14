@@ -3,7 +3,7 @@ const productMCLocale = {
     "/product/mc" : {
         "prodmc.title": {
             ru: "Хостинг Minecraft",
-            en: "Minecraft hosting"
+            en: "Minecraft Hosting"
         },
         "prodmc.titletext": {
             ru: "Вам нужен стабильный сервер для игры с друзьями, или вы хотите создать крупную сеть серверов на несколько сотен человек? С FruitSpace это проще, чем вы думаете.",
@@ -102,7 +102,7 @@ const productMCLocale = {
             "NVMe SSD на 150 ГБ",
             "Удобная и функциональная панель",
             "Домен *.gofruit.space",
-            "Отдельный IP + Порт 25565",
+            "Отдельный IP + 25565 Port",
             ],
             en: [
             "8 CPU Cores at 2.5GHz",
@@ -110,7 +110,7 @@ const productMCLocale = {
             "150 GB NVMe SSD",
             "Intuitive and functional control panel",
             "*.gofruit.space domain",
-            "Dedicated IP + Port 25565"
+            "Dedicated IP + 25565 Port"
             ]
         }
     }
