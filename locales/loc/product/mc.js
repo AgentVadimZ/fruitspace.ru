@@ -114,6 +114,22 @@ const productMCLocale = {
             "Dedicated IP + 25565 Port",
             "Automatic backups"
             ]
+        },
+        tarifftip: {
+            ru: [
+                <span style={{fontSize:"11pt"}}>🍌 На FruitSpace есть тарифы с двумя видами ресурсов: динамические и статические.<br/>
+                                        🚀 Все динамические ресурсы будут работать только тогда, когда это необходимо.<br/>
+                                        📚 Статические ресурсы гарантируют всю мощность, указанную в тарифе.</span>,
+            ],
+            en: [
+                <span style={{fontSize:"11pt"}}>🍌 There are two types of FruitSpace tariffs: with dynamic resources and with static.<br/>
+                                        🚀 All of dynamic resources will be used only when needed.<br/>
+                                        📚 Static resources are fixed and always equal to that shown in tariff list.</span>,
+            ]
+        },
+        tariffInfo: {
+            ru: "Сомневаетесь, какой тариф выбрать? Вот всё, что вам необходимо знать:",
+            en: "Don't know what plan to choose? Here is everything you need to know:"
         }
     }
 }

@@ -9,12 +9,11 @@ import {
     ListItem,
     ListItemIcon,
     ListItemText,
-    Table, TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow
+    Tooltip,
+    IconButton
 } from "@mui/material";
+
+import HelpIcon from '@mui/icons-material/Help';
 
 import DesktopMacIcon from '@mui/icons-material/DesktopMac';
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
@@ -29,7 +28,6 @@ import PodcastsIcon from '@mui/icons-material/Podcasts';
 
 export default function MC(props) {
     const locale = useLocale(props.router)
-    const localeGlobal = useGlobalLocale(props.router)
 
     return (
         
@@ -40,7 +38,12 @@ export default function MC(props) {
             <div className={styles.main}>
             <ProductHeader img={BannerMC} title={locale.get('prodmc.title')} text={locale.get('prodmc.titletext')}
                 primaryText={locale.get('prodmc.titlecloud')} primaryLink="#cloud"/>
-                <h2 style={{textAlign:'center',margin:"3rem 0",color:"white"}}>{locale.get('prodmc.tariffs')}</h2>
+                    <h2 style={{textAlign:'center',margin:"3rem 0",color:"white"}}>
+                        {locale.get('prodmc.tariffs')}
+                    <Tooltip title={locale.get('tarifftip')[0]}>
+                        <IconButton><HelpIcon className="text-white"/></IconButton>
+                    </Tooltip>
+                    </h2>
                 <div className={`${styles.productCardGrid} ${styles.productCardGrid4}`} id="cloud">
                     <ProductCard title={locale.get('mcplans')[0]} btnText={locale.get('tPrices')[0]} link="order/mc?t=1">
                         <ListItem>
@@ -144,7 +147,7 @@ export default function MC(props) {
                     </ProductCard>
                     
                 </div>
-                <p style={{textAlign:'center', margin:"0  1rem 1rem"}}>{locale.get('onlyOneGDPS')}</p>
+                <h3 class="mt-8" style={{color:"white", textAlign:'center', margin:"3  3rem 1rem"}}>{locale.get('tariffInfo')}</h3>
             </div>
             <Footer router={props.router}/>
         </>
