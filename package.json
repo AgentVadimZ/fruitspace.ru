@@ -24,7 +24,6 @@
     "@mui/x-date-pickers": "5.0.16",
     "@sentry/nextjs": "^7.86.0",
     "@svgr/webpack": "^6.5.1",
-    "antd": "^5.12.1",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.2",
     "chart.js": "^3.9.1",
