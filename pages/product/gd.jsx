@@ -43,14 +43,14 @@ export default function GD(props) {
     return (
         <>
             <GlobalHead title={localeGlobal.get('navName')}/>
-            <GlobalNav router={props.router} />
+            <GlobalNav mainpage router={props.router} />
             <div className={styles.main}>
                 <ProductHeader img={BannerGD} title={locale.get('prodgd.title')} text={locale.get('prodgd.titletext')}
                 primaryText={locale.get('prodgd.titlecloud')} primaryLink="#cloud"
                 secondaryText={locale.get('prodgd.titleselfhosted')} secondaryLink="#selfhosted"/>
                 {/*Insert Halogen Counter*/}
 
-                <h2 style={{textAlign:'center',margin:"3rem 0",color:"white"}}>{locale.get('prodgd.tariffs')}</h2>
+                <h2 className="text-center my-12 text-white text-3xl">{locale.get('prodgd.tariffs')}</h2>
                 <div className={styles.productCardGrid} id="cloud">
                     <ProductCardGD title="Press Start" btnText={locale.get('freeA')} link="order/gd?t=1">
                         <ListItem>

@@ -28,7 +28,8 @@ import useFiberAPI from "../fiber/fiber";
 import {useRecoilState} from "recoil";
 import {userAtom} from "../fiber/fiber.model";
 import {mutate} from "swr";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {HideOn} from "react-hide-on-scroll";
 
 
 export default function GlobalNav(props) {
@@ -69,7 +70,11 @@ export default function GlobalNav(props) {
     return (
         <NavBar mainpage={props.mainpage}>
             <Link href={"/"}><img src={props.mainpage?logo_sm.src:logo.src} alt="logo" className={styles.logo}></img></Link>
-            <span style={{flex:1}}></span>
+            {(!['/',''].includes(router.asPath))&&
+                <HideOn atHeight height={200}>
+                    <h1 className="hidden md:block md:text-xl lg:text-2xl xl:text-3xl font-[Coolvetica] tracking-wider font-normal fruitText m-0 select-none">FruitSpace</h1>
+                </HideOn>
+            }
             {user.uname && (<>
             <NavItem icon={<ServerSvg/>} open={open} setOpen={setOpen} name="servers">
                 <DropdownMenu centered>
