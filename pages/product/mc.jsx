@@ -30,6 +30,8 @@ import StorageIcon from '@mui/icons-material/Storage';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import PodcastsIcon from '@mui/icons-material/Podcasts';
 import ProductCardMC from "../../components/Cards/ProductCardMC";
+import discordLogo from "../../components/assets/social/discord.png";
+import vkLogo from "../../components/assets/social/vkontakte.png";
 
 export default function MC(props) {
     const locale = useLocale(props.router)
@@ -85,7 +87,7 @@ export default function MC(props) {
                         </div>
                         <div className={`${styles.productCardGrid} ${styles.productCardGridMC}`} id="cloud">
                             {tariffs.dynamic.map((tariff, i)=>{
-                                return <ProductCardMC key={i} title={tariff.title} btnText={`${tariff.price}₽/мес`} link={`order/mc?t=${i+1}`}>
+                                return <ProductCardMC key={i} title={tariff.title} id={tariff.id} btnText={`${tariff.price}₽/мес`} link={`order/mc?t=d${i+1}`}>
                                     <ListItem>
                                         <ListItemIcon><MemoryIcon/></ListItemIcon>
                                         <ListItemText primary={`${tariff.cpus} ${corePrint(tariff.cpus)}`}/>
@@ -100,12 +102,14 @@ export default function MC(props) {
                                     </ListItem>
                                 </ProductCardMC>
                             })}
+                            <img src="https://purepng.com/public/uploads/large/purepng.com-donutdonutdoughnutsweetsnack-1411527416158xueuy.png"
+                            className="saturate-0 opacity-10 w-80 hidden lg:block" />
                         </div>
                     </TabPanel>
                     <TabPanel value="static" className="border-none !p-0">
                         <div className={`${styles.productCardGrid} ${styles.productCardGridMC}`} id="cloud">
                             {tariffs.static.map((tariff, i)=>{
-                                return <ProductCardMC key={i} title={tariff.title} btnText={`${tariff.price}₽/мес`} link={`order/mc?t=${i+1}`}>
+                                return <ProductCardMC key={i} title={tariff.title} id={tariff.id} btnText={`${tariff.price}₽/мес`} link={`order/mc?t=s${i+1}`}>
                                     <ListItem>
                                         <ListItemIcon><MemoryIcon/></ListItemIcon>
                                         <ListItemText primary={`${tariff.cpus} ${corePrint(tariff.cpus)}`}/>
@@ -124,7 +128,42 @@ export default function MC(props) {
                     </TabPanel>
                 </TabsUnstyled>
             </div>
-            <h3 className="mt-8" style={{color:"white", textAlign:'center', margin:"3  3rem 1rem"}}>{locale.get('tariffInfo')}</h3>
+
+
+            <div className="flex flex-col lg:flex-row w-fit gap-4 mx-auto justify-around">
+                <div className="bg-[var(--active-color)] glassb rounded-xl flex mx-auto flex-col xl:m-0 w-80">
+                    <p className="m-2">IP + 25565 = 100p</p>
+                </div>
+                <div className="bg-[var(--active-color)] glassb rounded-xl flex mx-auto flex-col xl:m-0 w-80">
+                    <p className="m-2">БИДЕ БЕСПЛАТНА НО Я ЗАБЫЛ</p>
+                </div>
+                <div className="bg-[var(--active-color)] glassb rounded-xl flex mx-auto flex-col xl:m-0 w-80">
+                    <p className="m-2">10гб = 50р</p>
+                </div>
+            </div>
+
+
+
+            <h3 className="mt-8 text-center mb-0">Не знаете какой тариф выбрать? Мы тоже!</h3>
+            <p className="text-center">Напишите нам в поддержку и мы поможем вам с выбором</p>
+            <div className="m-2 flex flex-col items-center justify-center lg:flex-row">
+                <a className="flex gap-2 justify-center items-center box-border border-2 border-transparent hover:border-white transition-all duration-300 border-solid rounded-lg pr-2 m-2"
+                   href="https://discord.gg/fruitspace">
+                    <img className="invert h-10" src={discordLogo.src} alt="discord"/>
+                    <div className="flex flex-col">
+                        <span>FruitSpace</span>
+                        <span className="text-xs ml-1 text-gray-400">/tickets</span>
+                    </div>
+                </a>
+                <a className="flex gap-2 justify-center items-center box-border border-2 border-transparent hover:border-white transition-all duration-300 border-solid rounded-lg pr-2 m-2"
+                   href="https://vk.com/fruit_space">
+                    <img className="invert h-10" src={vkLogo.src} alt="discord"/>
+                    <div className="flex flex-col">
+                        <span>FruitSpace</span>
+                        <span className="text-xs ml-1 text-gray-400">лс паблика</span>
+                    </div>
+                </a>
+            </div>
             <Footer router={props.router}/>
         </>
     )
