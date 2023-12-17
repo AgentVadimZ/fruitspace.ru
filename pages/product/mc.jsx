@@ -5,6 +5,7 @@ import Footer from "../../components/Global/Footer";
 import BannerMC from "../../components/assets/BannerMC.png";
 import ProductHeader from "../../components/Global/ProductHeader";
 import ProductCard from "../../components/Cards/ProductCard";
+
 import {
     ListItem,
     ListItemIcon,
@@ -14,6 +15,10 @@ import {
 } from "@mui/material";
 
 import HelpIcon from '@mui/icons-material/Help';
+import {TabsList, TabPanel, Tab, TabButton} from "../../components/Global/Tab";
+import TabsUnstyled from "@mui/base/TabsUnstyled";
+import {useEffect, useState} from "react";
+import {useRouter} from "next/router";
 
 import DesktopMacIcon from '@mui/icons-material/DesktopMac';
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
@@ -27,8 +32,12 @@ import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import PodcastsIcon from '@mui/icons-material/Podcasts';
 
 export default function MC(props) {
+    const router = useRouter()
     const locale = useLocale(props.router)
-
+    const {s} = router.query;
+    var route = "dynamic";
+    const [tab, setTab] = useState(route)
+    useEffect(()=>{setTab(s?s:"dynamic")},[s])
     return (
         
         <>
@@ -44,111 +53,164 @@ export default function MC(props) {
                         <IconButton><HelpIcon className="text-white"/></IconButton>
                     </Tooltip>
                     </h2>
-                <div className={`${styles.productCardGrid} ${styles.productCardGrid4}`} id="cloud">
-                    <ProductCard title={locale.get('mcplans')[0]} btnText={locale.get('tPrices')[0]} link="order/mc?t=1">
-                        <ListItem>
-                            <ListItemIcon><MemoryIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPlan1')[0]}/>
-                        </ListItem>
-                        <ListItem>
-                        <ListItemIcon><ElectricBoltIcon/></ListItemIcon>
-                        <ListItemText primary={locale.get('tPlan1')[1]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><StorageIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPlan1')[2]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><DesktopMacIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPlan1')[3]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><TravelExploreIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPlan1')[4]}/>
-                        </ListItem>
-                    </ProductCard>
-                    <ProductCard title={locale.get('mcplans')[1]} btnText={locale.get('tPrices')[1]} link="order/mc?t=2">
+                <div class="mx-auto">
+                <TabsUnstyled value={tab} onChange={(e,val)=>setTab(val)} class="my-8 w-fit mx-auto">
+                    <TabsList classname="mx-auto text-center" style={{ display: "flex", justifyContent: "center" }} className="mx-auto">
+                        <Tab value="dynamic">Dynamic</Tab>
+                        <Tab value="static">Static</Tab>
+                    </TabsList>
+                    <TabPanel value="dynamic" className="border-none !p-0">
+                        <div className={`${styles.productCardGrid} ${styles.productCardGridMC}`} id="cloud">
+                            <ProductCard type="mc" title={locale.get('mcPlansDynamic')[0]} btnText={locale.get('tPricesDynamic')[0]} link="order/mc?t=1">
+                            <ListItem>
+                                <ListItemIcon><MemoryIcon/></ListItemIcon>
+                                <ListItemText primary={locale.get('tPlanDynamic1')[0]}/>
+                            </ListItem>
+                            <ListItem>
+                                <ListItemIcon><ElectricBoltIcon/></ListItemIcon>
+                                <ListItemText primary={locale.get('tPlanDynamic1')[1]}/>
+                            </ListItem>
+                            <ListItem>
+                                <ListItemIcon><StorageIcon/></ListItemIcon>
+                                <ListItemText primary={locale.get('tPlanDynamic1')[2]}/>
+                            </ListItem>
+                            </ProductCard>
+                            <ProductCard type="mc" title={locale.get('mcPlansDynamic')[1]} btnText={locale.get('tPricesDynamic')[1]} link="order/mc?t=2">
+                            <ListItem>
+                                <ListItemIcon><MemoryIcon/></ListItemIcon>
+                                <ListItemText primary={locale.get('tPlanDynamic2')[0]}/>
+                            </ListItem>
+                            <ListItem>
+                                <ListItemIcon><ElectricBoltIcon/></ListItemIcon>
+                                <ListItemText primary={locale.get('tPlanDynamic2')[1]}/>
+                            </ListItem>
+                            <ListItem>
+                                <ListItemIcon><StorageIcon/></ListItemIcon>
+                                <ListItemText primary={locale.get('tPlanDynamic2')[2]}/>
+                            </ListItem>
+                            </ProductCard>
+                            <ProductCard type="mc" title={locale.get('mcPlansDynamic')[2]} btnText={locale.get('tPricesDynamic')[2]} link="order/mc?t=3">
+                            <ListItem>
+                                <ListItemIcon><MemoryIcon/></ListItemIcon>
+                                <ListItemText primary={locale.get('tPlanDynamic3')[0]}/>
+                            </ListItem>
+                            <ListItem>
+                                <ListItemIcon><ElectricBoltIcon/></ListItemIcon>
+                                <ListItemText primary={locale.get('tPlanDynamic3')[1]}/>
+                            </ListItem>
+                            <ListItem>
+                                <ListItemIcon><StorageIcon/></ListItemIcon>
+                                <ListItemText primary={locale.get('tPlanDynamic3')[2]}/>
+                            </ListItem>
+                            </ProductCard>
+                            <ProductCard type="mc" title={locale.get('mcPlansDynamic')[3]} btnText={locale.get('tPricesDynamic')[3]} link="order/mc?t=4">
+                            <ListItem>
+                                <ListItemIcon><MemoryIcon/></ListItemIcon>
+                                <ListItemText primary={locale.get('tPlanDynamic4')[0]}/>
+                            </ListItem>
+                            <ListItem>
+                                <ListItemIcon><ElectricBoltIcon/></ListItemIcon>
+                                <ListItemText primary={locale.get('tPlanDynamic4')[1]}/>
+                            </ListItem>
+                            <ListItem>
+                                <ListItemIcon><StorageIcon/></ListItemIcon>
+                                <ListItemText primary={locale.get('tPlanDynamic4')[2]}/>
+                            </ListItem>
+                            </ProductCard>
+                            <ProductCard type="mc" title={locale.get('mcPlansDynamic')[4]} btnText={locale.get('tPricesDynamic')[4]} link="order/mc?t=5">
+                            <ListItem>
+                                <ListItemIcon><MemoryIcon/></ListItemIcon>
+                                <ListItemText primary={locale.get('tPlanDynamic5')[0]}/>
+                            </ListItem>
+                            <ListItem>
+                                <ListItemIcon><ElectricBoltIcon/></ListItemIcon>
+                                <ListItemText primary={locale.get('tPlanDynamic5')[1]}/>
+                            </ListItem>
+                            <ListItem>
+                                <ListItemIcon><StorageIcon/></ListItemIcon>
+                                <ListItemText primary={locale.get('tPlanDynamic5')[2]}/>
+                            </ListItem>
+                            </ProductCard>
+                            </div> 
+                    </TabPanel>
+                    <TabPanel value="static" className="border-none !p-0">
+                    <div className={`${styles.productCardGrid} ${styles.productCardGridMC}`} id="cloud">
+                    <ProductCard type="mc" title={locale.get('mcPlansStatic')[0]} btnText={locale.get('tPricesStatic')[0]} link="order/mc?t=6">
                     <ListItem>
                             <ListItemIcon><MemoryIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPlan2')[0]}/>
+                            <ListItemText primary={locale.get('tPlanStatic1')[0]}/>
                         </ListItem>
                         <ListItem>
                         <ListItemIcon><ElectricBoltIcon/></ListItemIcon>
-                        <ListItemText primary={locale.get('tPlan2')[1]}/>
+                        <ListItemText primary={locale.get('tPlanStatic1')[1]}/>
                         </ListItem>
                         <ListItem>
                             <ListItemIcon><StorageIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPlan2')[2]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><DesktopMacIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPlan2')[3]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><TravelExploreIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPlan2')[4]}/>
+                            <ListItemText primary={locale.get('tPlanStatic1')[2]}/>
                         </ListItem>
                     </ProductCard>
-                    <ProductCard  title={locale.get('mcplans')[2]} btnText={locale.get('tPrices')[2]} link="order/mc?t=3">
+                    <ProductCard type="mc" title={locale.get('mcPlansStatic')[1]} btnText={locale.get('tPricesStatic')[1]} link="order/mc?t=7">
                     <ListItem>
                             <ListItemIcon><MemoryIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPlan3')[0]}/>
+                            <ListItemText primary={locale.get('tPlanStatic2')[0]}/>
                         </ListItem>
                         <ListItem>
                         <ListItemIcon><ElectricBoltIcon/></ListItemIcon>
-                        <ListItemText primary={locale.get('tPlan3')[1]}/>
+                        <ListItemText primary={locale.get('tPlanStatic2')[1]}/>
                         </ListItem>
                         <ListItem>
                             <ListItemIcon><StorageIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPlan3')[2]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><DesktopMacIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPlan3')[3]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><TravelExploreIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPlan3')[4]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><PodcastsIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPlan3')[5]}/>
+                            <ListItemText primary={locale.get('tPlanStatic2')[2]}/>
                         </ListItem>
                     </ProductCard>
-                    <ProductCard  title={locale.get('mcplans')[3]} btnText={locale.get('tPrices')[3]} link="order/mc?t=4">
+                    <ProductCard type="mc" title={locale.get('mcPlansStatic')[2]} btnText={locale.get('tPricesStatic')[2]} link="order/mc?t=8">
                     <ListItem>
                             <ListItemIcon><MemoryIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPlan4')[0]}/>
+                            <ListItemText primary={locale.get('tPlanStatic3')[0]}/>
                         </ListItem>
                         <ListItem>
                         <ListItemIcon><ElectricBoltIcon/></ListItemIcon>
-                        <ListItemText primary={locale.get('tPlan4')[1]}/>
+                        <ListItemText primary={locale.get('tPlanStatic3')[1]}/>
                         </ListItem>
                         <ListItem>
                             <ListItemIcon><StorageIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPlan4')[2]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><DesktopMacIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPlan4')[3]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><TravelExploreIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPlan4')[4]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><PodcastsIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPlan4')[5]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><CloudDoneIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPlan4')[6]}/>
+                            <ListItemText primary={locale.get('tPlanStatic3')[2]}/>
                         </ListItem>
                     </ProductCard>
-                    
+                    <ProductCard type="mc" title={locale.get('mcPlansStatic')[3]} btnText={locale.get('tPricesStatic')[3]} link="order/mc?t=9">
+                    <ListItem>
+                            <ListItemIcon><MemoryIcon/></ListItemIcon>
+                            <ListItemText primary={locale.get('tPlanStatic4')[0]}/>
+                        </ListItem>
+                        <ListItem>
+                        <ListItemIcon><ElectricBoltIcon/></ListItemIcon>
+                        <ListItemText primary={locale.get('tPlanStatic4')[1]}/>
+                        </ListItem>
+                        <ListItem>
+                            <ListItemIcon><StorageIcon/></ListItemIcon>
+                            <ListItemText primary={locale.get('tPlanStatic4')[2]}/>
+                        </ListItem>
+                    </ProductCard>
+                    <ProductCard type="mc" title={locale.get('mcPlansStatic')[4]} btnText={locale.get('tPricesStatic')[4]} link="order/mc?t=10">
+                    <ListItem>
+                            <ListItemIcon><MemoryIcon/></ListItemIcon>
+                            <ListItemText primary={locale.get('tPlanStatic5')[0]}/>
+                        </ListItem>
+                        <ListItem>
+                        <ListItemIcon><ElectricBoltIcon/></ListItemIcon>
+                        <ListItemText primary={locale.get('tPlanStatic5')[1]}/>
+                        </ListItem>
+                        <ListItem>
+                            <ListItemIcon><StorageIcon/></ListItemIcon>
+                            <ListItemText primary={locale.get('tPlanStatic5')[2]}/>
+                        </ListItem>
+                    </ProductCard>
+                    </div>
+                    </TabPanel>
+                </TabsUnstyled> 
+                </div> 
                 </div>
-                <h3 class="mt-8" style={{color:"white", textAlign:'center', margin:"3  3rem 1rem"}}>{locale.get('tariffInfo')}</h3>
-            </div>
+            <h3 class="mt-8" style={{color:"white", textAlign:'center', margin:"3  3rem 1rem"}}>{locale.get('tariffInfo')}</h3>
             <Footer router={props.router}/>
         </>
     )

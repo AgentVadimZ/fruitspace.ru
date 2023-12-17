@@ -37,8 +37,8 @@
     row-gap: 1rem;
 }
 
-.productCardGrid4 {
-    grid-template-columns: repeat(4, 1fr);
+.productCardGridMC {
+    justify-items: center;
 }
 
 .productCardGrid svg {
