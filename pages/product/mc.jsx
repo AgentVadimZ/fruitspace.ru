@@ -44,9 +44,6 @@ export default function MC(props) {
             <div className={styles.main}>
             <ProductHeader img={BannerMC} title={locale.get('prodmc.title')} text={locale.get('prodmc.titletext')}
                 primaryText={locale.get('prodmc.titlecloud')} primaryLink="#cloud"/>
-                {/*<Tooltip title={locale.get('tarifftip')[0]}>*/}
-                {/*    <IconButton><HelpIcon className="text-white"/></IconButton>*/}
-                {/*</Tooltip>*/}
                 <h2 className="text-center mt-12 mb-8 text-white text-3xl">{locale.get('prodmc.tariffs')}</h2>
                 <p className="text-center">Ресурсы</p>
                 <TabsUnstyled value={tab} onChange={(e,val)=>setTab(val)} class=" w-fit mx-auto">
@@ -55,7 +52,7 @@ export default function MC(props) {
                         <Tab value="static" className="!w-fit">Статические</Tab>
                     </TabsList>
                     <TabPanel value="dynamic" className="border-none !p-0">
-                        <div className="bg-[var(--active-color)] glassb rounded-xl flex mx-auto justify-around w-2/3 p-2">
+                        <div className="bg-[var(--active-color)] glassb rounded-xl flex mx-auto justify-around gap-4 lg:gap-2 flex-col w-2/3 md:w-[61rem] md:flex-row p-2">
                             <div className="flex flex-col flex-1 gap-2">
                                 <p className="text-lg text-center my-0 gap-2">🤔 Что это такое?</p>
                                 <span className="ml-2">
