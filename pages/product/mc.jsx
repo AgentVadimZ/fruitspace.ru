@@ -10,7 +10,7 @@ import {
     ListItemIcon,
     ListItemText,
     Tooltip,
-    IconButton
+    IconButton, Accordion, AccordionSummary, AccordionDetails
 } from "@mui/material";
 
 import HelpIcon from '@mui/icons-material/Help';
@@ -32,6 +32,7 @@ import PodcastsIcon from '@mui/icons-material/Podcasts';
 import ProductCardMC from "../../components/Cards/ProductCardMC";
 import discordLogo from "../../components/assets/social/discord.png";
 import vkLogo from "../../components/assets/social/vkontakte.png";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export default function MC(props) {
     const locale = useLocale(props.router)
@@ -126,16 +127,17 @@ export default function MC(props) {
                 </TabsUnstyled>
             </div>
 
+            <p className="text-center">Дополнительные услуги:</p>
 
             <div className="flex flex-col lg:flex-row w-fit gap-4 mx-auto justify-around">
                 <div className="bg-[var(--active-color)] glassb rounded-xl flex mx-auto flex-col xl:m-0 w-80">
-                    <p className="m-2">IP + 25565 = 100p</p>
+                    <p className="m-2">Выделенный IP + Порт 25565 = 100p</p>
                 </div>
                 <div className="bg-[var(--active-color)] glassb rounded-xl flex mx-auto flex-col xl:m-0 w-80">
-                    <p className="m-2">БИДЕ БЕСПЛАТНА НО Я ЗАБЫЛ</p>
+                    <p className="m-2">База Данных = бесплатно</p>
                 </div>
                 <div className="bg-[var(--active-color)] glassb rounded-xl flex mx-auto flex-col xl:m-0 w-80">
-                    <p className="m-2">10гб = 50р</p>
+                    <p className="m-2">+10ГБ на SSD = 50р</p>
                 </div>
             </div>
 
@@ -161,6 +163,30 @@ export default function MC(props) {
                     </div>
                 </a>
             </div>
+
+            <h2 className="text-center mt-12 mb-8 text-white text-3xl">FAQ</h2>
+            <div className="mx-4 rounded-xl">
+                <Accordion className="bg-[var(--active-color)] text-white !rounded-xl glassb">
+                    <AccordionSummary expandIcon={<ExpandMoreIcon className="text-white" />}>Беды с башкой</AccordionSummary>
+                    <AccordionDetails className="bg-[var(--bkg-color)] rounded-lg m-2">
+                        Vanilla
+                        Spigot
+                        Fabric
+                        Quilt
+                        Forge
+                        Magma
+                        SpongeVanilla
+                        SpongeForge
+                        Paper
+                        Folia
+                        Purpur
+                        Spigot
+                    </AccordionDetails>
+                </Accordion>
+            </div>
+
+
+
             <Footer router={props.router}/>
         </>
     )
