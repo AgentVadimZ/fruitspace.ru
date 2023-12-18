@@ -4,35 +4,38 @@ import styles from "../../components/Index.module.css";
 import Footer from "../../components/Global/Footer";
 import BannerMC from "../../components/assets/BannerMC.png";
 import ProductHeader from "../../components/Global/ProductHeader";
-import ProductCardGD from "../../components/Cards/ProductCardGD";
 import {
     ListItem,
     ListItemIcon,
-    ListItemText,
-    Tooltip,
-    IconButton, Accordion, AccordionSummary, AccordionDetails
+    ListItemText,Accordion, AccordionSummary, AccordionDetails
 } from "@mui/material";
 
 import HelpIcon from '@mui/icons-material/Help';
 import {TabsList, TabPanel, Tab, TabButton} from "../../components/Global/Tab";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
-import {useEffect, useState} from "react";
-import {useRouter} from "next/router";
+import {useState} from "react";
 
-import DesktopMacIcon from '@mui/icons-material/DesktopMac';
-import CloudDoneIcon from "@mui/icons-material/CloudDone";
-
-import useLocale, {useGlobalLocale} from "../../locales/useLocale";
+import useLocale from "../../locales/useLocale";
 
 import MemoryIcon from '@mui/icons-material/Memory';
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 import StorageIcon from '@mui/icons-material/Storage';
-import TravelExploreIcon from '@mui/icons-material/TravelExplore';
-import PodcastsIcon from '@mui/icons-material/Podcasts';
 import ProductCardMC from "../../components/Cards/ProductCardMC";
 import discordLogo from "../../components/assets/social/discord.png";
 import vkLogo from "../../components/assets/social/vkontakte.png";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
+import CoreVanilla from "../../components/assets/logos/minecraft.png"
+import CorePaper from "../../components/assets/logos/mccore/paper.png"
+import CoreSpigot from "../../components/assets/logos/mccore/spigot.png"
+import CoreFabric from "../../components/assets/logos/mccore/fabric.png"
+import CoreQuilt from "../../components/assets/logos/mccore/quilt.png"
+import CoreForge from "../../components/assets/logos/mccore/forge.png"
+import CoreSponge from "../../components/assets/logos/mccore/sponge.png"
+import CoreFolia from "../../components/assets/logos/mccore/folia.png"
+import CorePurpur from "../../components/assets/logos/mccore/purpur.png"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPuzzlePiece} from "@fortawesome/free-solid-svg-icons";
 
 export default function MC(props) {
     const locale = useLocale(props.router)
@@ -165,22 +168,81 @@ export default function MC(props) {
             </div>
 
             <h2 className="text-center mt-12 mb-8 text-white text-3xl">FAQ</h2>
-            <div className="mx-4 rounded-xl">
+            <div className="mx-4 rounded-xl mb-24">
                 <Accordion className="bg-[var(--active-color)] text-white !rounded-xl glassb">
-                    <AccordionSummary expandIcon={<ExpandMoreIcon className="text-white" />}>Беды с башкой</AccordionSummary>
-                    <AccordionDetails className="bg-[var(--bkg-color)] rounded-lg m-2">
-                        Vanilla
-                        Spigot
-                        Fabric
-                        Quilt
-                        Forge
-                        Magma
-                        SpongeVanilla
-                        SpongeForge
-                        Paper
-                        Folia
-                        Purpur
-                        Spigot
+                    <AccordionSummary expandIcon={<ExpandMoreIcon className="text-white" />} className="text-lg">Какое ядро мне выбрать?</AccordionSummary>
+                    <AccordionDetails className="bg-[var(--bkg-color)] rounded-lg m-2 flex flex-col gap-4">
+                        <div className="flex gap-4">
+                            <img src={CoreVanilla.src} className="saturate-[25%] w-16 h-16" />
+                            <div className="mt-2">
+                                <p className="text-3xl my-0 font-[Coolvetica]">Vanilla</p>
+                                <p className="ml-2 my-0">fefergege</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-4">
+                            <img src={CoreSpigot.src} className="opacity-80 w-12 h-12 m-2" />
+                            <div className="">
+                                <p className="text-3xl my-0 font-[Coolvetica] flex items-baseline gap-2">Spigot <PluginBadge/></p>
+                                <p className="ml-2 my-0">fefergege</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-4">
+                            <img src={CorePaper.src} className="saturate-[50%] w-16 h-16" />
+                            <div className="">
+                                <p className="text-3xl my-0 font-[Coolvetica] flex items-baseline gap-2">Paper <PluginBadge/></p>
+                                <p className="ml-2 my-0">fefergege</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-4">
+                            <img src={CorePurpur.src} className="saturate-[50%] w-16 h-16" />
+                            <div className="">
+                                <p className="text-3xl my-0 font-[Coolvetica] flex items-baseline gap-2">Purpur <PluginBadge/></p>
+                                <p className="ml-2 my-0">fefergege</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-4">
+                            <img src={CoreFolia.src} className="saturate-[75%] w-16 h-16" />
+                            <div className="">
+                                <p className="text-3xl my-0 font-[Coolvetica] flex items-baseline gap-2">Folia</p>
+                                <p className="ml-2 my-0">fefergege</p>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-4">
+                            <img src={CoreFabric.src} className="saturate-[75%] w-16 h-16" />
+                            <div className="">
+                                <p className="text-3xl my-0 font-[Coolvetica] flex items-baseline gap-2">Fabric <ForgeBadge/></p>
+                                <p className="ml-2 my-0">fefergege</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-4">
+                            <img src={CoreForge.src} className="saturate-[50%] w-12 h-12 m-2" />
+                            <div className="">
+                                <p className="text-3xl my-0 font-[Coolvetica] flex items-baseline gap-2">Forge <ForgeBadge/></p>
+                                <p className="ml-2 my-0">fefergege</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-4">
+                            <img src={CoreQuilt.src} className="saturate-[25%] w-16 h-16" />
+                            <div className="">
+                                <p className="text-3xl my-0 font-[Coolvetica] flex items-baseline gap-2">Quilt <ForgeBadge/></p>
+                                <p className="ml-2 my-0">fefergege</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-4">
+                            <img src={CoreSponge.src} className="saturate-[50%] w-12 h-12 m-2" />
+                            <div className="">
+                                <p className="text-3xl my-0 font-[Coolvetica] flex items-baseline gap-2">Sponge Vanilla <PluginBadge/></p>
+                                <p className="ml-2 my-0">fefergege</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-4">
+                            <img src={CoreSponge.src} className="saturate-[50%] w-12 h-12 m-2" />
+                            <div className="">
+                                <p className="text-3xl my-0 font-[Coolvetica] flex items-baseline gap-2">Sponge Forge <PluginBadge/> <ForgeBadge/></p>
+                                <p className="ml-2 my-0">fefergege</p>
+                            </div>
+                        </div>
                     </AccordionDetails>
                 </Accordion>
             </div>
@@ -190,6 +252,20 @@ export default function MC(props) {
             <Footer router={props.router}/>
         </>
     )
+}
+
+const PluginBadge = ()=>{
+    return <span className="cursor-pointer hover:w-20 transition-all w-4 overflow-hidden rounded-md px-1 bg-yellow-600 h-6 flex items-center font-sans text-sm gap-2">
+        <FontAwesomeIcon className="ml-0.5" icon={faPuzzlePiece} /> Плагины
+    </span>
+}
+
+const ForgeBadge = ()=>{
+    return <span className="cursor-pointer hover:w-16 transition-all w-4 overflow-hidden rounded-md px-1 bg-green-700 h-6 flex items-center font-sans text-sm gap-2">
+        <svg className="!w-4 !h-4 inline min-w-[1rem] fill-white" viewBox="0 0 256 256">
+            <path d="M248,91.3V67H80v8H9c0,0,10.7,40.6,67.3,40.6c30.3,0,34.4,12.7,34.4,19.1c0,8.4-5.1,21.9-36.7,32.8V191h38.7c6.8-5.2,15.3-8.2,24.5-8.2s17.7,3.1,24.5,8.2H201c0,0,0-15.1,0-22.9c-23.4-7.7-38.7-20.4-38.7-34.8C162.3,110.6,200.1,92.5,248,91.3z M80,87c-52,0-52-4-52-4h52C80,83,80,85.4,80,87z M88,79v-4h152v4H88z"/>
+        </svg> Моды
+    </span>
 }
 
 const corePrint = (n) => {

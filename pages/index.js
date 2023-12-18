@@ -109,7 +109,7 @@ export default function Home(props) {
                                 <div>
                                     <h2 className="m-0">Counter Strike</h2>
                                     <p className="m-0">128 тикрейт, быстрая установка модов и FastDL</p>
-                                    <p className="text-sm m-0 mt-2 text-[#cacad0]">Скоро. В 2023</p>
+                                    <p className="text-sm m-0 mt-2 text-[#cacad0]">Скоро. Q1 2024</p>
                                 </div>
                                 <RightIcon className="flex-shrink-0 w-8 ml-auto" />
                             </div>

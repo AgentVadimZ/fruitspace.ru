@@ -27,9 +27,9 @@ import useFiberAPI from "../../../fiber/fiber";
 
 export default function Order(props) {
 
-    const router = useRouter()
+
     const [srv, setSrv] = useState({
-        srvid: router.query.id||"",
+        srvid: props.router?.query.id||"",
         name: "",
         payDuration: "yr",
         promocode: ""
