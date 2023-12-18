@@ -9,11 +9,16 @@ import MemoryIcon from '@mui/icons-material/Memory';
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 import StorageIcon from '@mui/icons-material/Storage';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import ProductCardMC from "../../../components/Cards/ProductCardMC";
 
 export default function OrderMC(props){
     const router = useRouter()
     const locale = useLocale(props.router)
     const localeGlobal = useGlobalLocale(props.router)
+
+    const t = router.query.t;
+    const tariffType =(t) => ((t.charAt(t.length - 2)) == "d" ? "dynamic" : "static")
+    const planIndex =(t) => (t.slice(-1)) - 1;
 
     // PLACEHOLDERS
     const planName = "planPlaceholder";
@@ -21,48 +26,19 @@ export default function OrderMC(props){
     const cpu = "cpuPlaceholder";
     const ram = "ramPlaceholder";
     const ssd = "ssdPlaceholder";
-    const something =()=>{
-        console.log("Why are we here? Just to suffer?")
-    }
+
     return(
         <>
-            <GlobalHead title={localeGlobal.get('navName')}/>
-            <GlobalNav mainpage router={props.router} />    
-            <div className={styles.main}>
-                <p className ="text-center color-white pt-2 text-xl">Создание нового Minecraft сервера</p>
-                <div className="glassb rounded-xl flex flex-col mx-auto w-1/2 bg-[var(--subtle-color)]">
-                    <p className="text-center color-white text-xl">Вы выбрали тариф <b>{planName}</b>, осталось совсем немного</p>
-                    <div className = "mx-auto w-fit grid grid-cols-1 lg:grid-cols-3">
-                    <FruitTextField className="col-span-2" label="Введите название сервера" type="text" variant="outlined" style={{margin:"1rem",flex:1}}/>
-                    <FruitTextField label="Промокод (если есть)" type="text" variant="outlined" style={{margin:"1rem"}}/>
-                    </div>
-                    <div className="grid grid-cols-2">
-                        <h1 className="color-white, text-left, mt-3 text-2xl ml-8">- Что вы получаете?</h1>
-                        <h1 className="color-white, text-end mt-3 text-2xl mr-8">Дополнительные услуги</h1>
-                    </div>
-                    <div className="ml-2">
-                    <ListItem>
-                    <ListItemIcon><LocalFireDepartmentIcon className="text-white"/></ListItemIcon>
-                    <ListItemText primary={resources}/>
-                    </ListItem>
-                    <ListItem>
-                        <ListItemIcon><MemoryIcon className="text-white"/></ListItemIcon>
-                        <ListItemText primary={cpu}/>
-                    </ListItem>
-                    <ListItem>
-                        <ListItemIcon><ElectricBoltIcon className="text-white"/></ListItemIcon>
-                        <ListItemText primary={ram}/>
-                    </ListItem>
-                    <ListItem>
-    <ListItemIcon><StorageIcon className="text-white"/></ListItemIcon>
-                        <ListItemText primary={ssd}/>
-                    </ListItem>
-                    <Button variant="contained" className={styles.SlimButton}
-                        style={{marginTop:"2rem"}}
-                        onClick={something}>Оплатить</Button>
+            <div className=" bg-[url(https://abrakadabra.fun/uploads/posts/2021-12/1640970997_4-abrakadabra-fun-p-strashnii-fon-mainkraft-4.png)] bg-opacity-50 h-screen w-screen">
+                <GlobalHead title={localeGlobal.get('navName')}/>
+                <GlobalNav mainpage router={props.router}/>
+                <p className="text-center color-white pt-2 text-xl">Создание нового Minecraft сервера</p>
+                <div className="grid grid-cols-3 gap-4">
+                    <div>
+                        <p>Тут должны быть карточки, зато вот я знаю какой у тебя тариф, а именно {tariffType(t)} {planIndex(t)}</p>
                     </div>
                 </div>
-        </div>
+            </div>
         </>
     )
 }
@@ -88,3 +64,95 @@ const FruitTextField = styled(TextField)({
         color: "white",
     },
 });
+
+const tariffs = {}
+tariffs.dynamic = [
+    {
+        title: "Next ⋙",
+        id: "D-1 S",
+        price: 350,
+        cpus: 1,
+        minRam: 2,
+        maxRam: 4,
+        ssd: 20
+    },
+    {
+        title: "Reforged",
+        id: "D-2 S+",
+        price: 700,
+        cpus: 2,
+        minRam: 4,
+        maxRam: 8,
+        ssd: 30
+    },
+    {
+        title: "EverPeak",
+        id: "D-3 M",
+        price: 1300,
+        cpus: 3,
+        minRam: 8,
+        maxRam: 12,
+        ssd: 45
+    },
+    {
+        title: "Orbital",
+        id: "D-4 M+",
+        price: 1700,
+        cpus: 4,
+        minRam: 8,
+        maxRam: 16,
+        ssd: 60
+    },
+    {
+        title: "Horizon",
+        id: "D-5 L",
+        price: 2600,
+        cpus: 5,
+        minRam: 16,
+        maxRam: 24,
+        ssd: 100
+    },
+]
+
+tariffs.static = [
+    {
+        title: "Air",
+        id: "S-1 S~",
+        price: 550,
+        cpus: 1,
+        maxRam: 4,
+        ssd: 30
+    },
+    {
+        title: "Viper",
+        id: "S-2 S++",
+        price: 1000,
+        cpus: 2,
+        maxRam: 8,
+        ssd: 40
+    },
+    {
+        title: "Carbon",
+        id: "S-3 M~",
+        price: 1500,
+        cpus: 3,
+        maxRam: 12,
+        ssd: 60
+    },
+    {
+        title: "Proton",
+        id: "S-4 M++",
+        price: 2300,
+        cpus: 4,
+        maxRam: 16,
+        ssd: 80
+    },
+    {
+        title: "Warp",
+        id: "S-5 L+",
+        price: 3200,
+        cpus: 5,
+        maxRam: 24,
+        ssd: 120
+    },
+]
