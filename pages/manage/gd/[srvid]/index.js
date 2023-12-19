@@ -99,7 +99,6 @@ export default function ManageGD(props) {
                     <h3>{locale.get("nav")}</h3>
                     <div className={styles.CardInbox}>
                         <p className="text-sm" dangerouslySetInnerHTML={{__html: locale.get("note")}}></p>
-                        <p className="rounded-md bg-[var(--btn-color)] text-gray-300 text-sm p-1">🔝 Для продления сервера или улучшения тарифа нажмите на яркую кнопку с названием текущего тарифа справа от ID сервера.</p>
                         <a href=" https://fruitspace.gitbook.io/gdps_docs/"
                            style={{
                                padding: ".75rem 2rem",
