@@ -20,6 +20,10 @@
 
 }
 
+.nohighlight {
+    -webkit-tap-highlight-color: transparent;
+}
+
 @font-face {
     font-family: "Coolvetica";
     src: url("/coolvetica.otf");
