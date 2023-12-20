@@ -1,7 +1,6 @@
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";
 import GlobalHead from "../../components/GlobalHead";
 import GlobalNav from "../../components/GlobalNav";
-import styles from '../../components/Cards/ServerItem.module.css'
 import {Tab, TabPanel, TabsList} from "../../components/Global/Tab";
 import useFiberAPI from "../../fiber/fiber";
 import {useEffect, useState} from "react";

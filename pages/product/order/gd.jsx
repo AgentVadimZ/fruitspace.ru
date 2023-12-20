@@ -1,7 +1,6 @@
 import GlobalHead from "../../../components/GlobalHead";
 import GlobalNav from "../../../components/GlobalNav";
 import styles from "../../../components/Index.module.css";
-import {useRouter} from "next/router";
 import {styled} from "@mui/system";
 import {ListItem, ListItemIcon, ListItemText, TextField} from "@mui/material";
 import {useEffect, useState} from "react";

@@ -1,19 +1,13 @@
 import GlobalHead from "../../../components/GlobalHead";
 import GlobalNav from "../../../components/GlobalNav";
-import styles from "../../../components/Index.module.css";
 import useLocale, {useGlobalLocale} from "../../../locales/useLocale";
 import {useRouter} from "next/router";
 import {styled} from "@mui/system";
-import {ListItem, ListItemIcon, ListItemText, TextField, Button} from "@mui/material";
-import MemoryIcon from '@mui/icons-material/Memory';
-import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
-import StorageIcon from '@mui/icons-material/Storage';
-import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
-import ProductCardMC from "../../../components/Cards/ProductCardMC";
+import {TextField} from "@mui/material";
 
 export default function OrderMC(props){
     const router = useRouter()
-    const locale = useLocale(props.router)
+    useLocale(props.router);
     const localeGlobal = useGlobalLocale(props.router)
 
     const t = router.query.t;
@@ -42,6 +36,8 @@ export default function OrderMC(props){
         </>
     )
 }
+
+OrderMC.RequireAuth = true
 
 const FruitTextField = styled(TextField)({
     '& label.Mui-focused': {

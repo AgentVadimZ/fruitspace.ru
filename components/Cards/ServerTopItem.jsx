@@ -1,5 +1,3 @@
-import styles from './ServerItem.module.css'
-
 import GDLogo from '../assets/logos/geometrydash.png'
 import MCLogo from '../assets/logos/minecraft.png'
 import GTALogo from '../assets/logos/rockstargames.png'

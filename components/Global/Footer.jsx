@@ -1,6 +1,5 @@
 import styles from './Footer.module.css'
 
-import HalogenLogoB from './../assets/logos/halogenlogo_b.png'
 import discordLogo from './../assets/social/discord.png'
 import vkLogo from './../assets/social/vkontakte.png'
 import Link from "next/link";

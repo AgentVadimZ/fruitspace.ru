@@ -17,10 +17,6 @@ import useLocale, {useGlobalLocale} from "../../locales/useLocale";
 import useFiberAPI from "../../fiber/fiber";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDiscord} from "@fortawesome/free-brands-svg-icons";
-import {mutate} from "swr";
-
-
-
 
 
 export default function Login(props) {

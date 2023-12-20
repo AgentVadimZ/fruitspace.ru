@@ -27,8 +27,7 @@ import {useGlobalLocale} from "../locales/useLocale";
 import useFiberAPI from "../fiber/fiber";
 import {useRecoilState} from "recoil";
 import {userAtom} from "../fiber/fiber.model";
-import {mutate} from "swr";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {HideOn} from "react-hide-on-scroll";
 
 

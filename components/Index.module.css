@@ -101,7 +101,7 @@
 }
 
 .formButton:disabled {
-    color: gray !important;
+    color: rgb(128, 128, 128) !important;
 }
 
 /*.form .inputwrap {*/
