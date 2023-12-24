@@ -617,7 +617,7 @@ export default function SettingsGD(props) {
                         })} className={styles.floatSelector}>
                             <TabsList>
                                 <Tab value="2.1">2.1</Tab>
-                                <Tab value="2.2">2.2 Custom</Tab>
+                                <Tab value="2.2">2.2</Tab>
                             </TabsList>
                         </TabsUnstyled>
 
