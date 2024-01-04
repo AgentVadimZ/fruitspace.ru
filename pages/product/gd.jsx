@@ -1,11 +1,13 @@
 import GlobalHead from "../../components/GlobalHead";
 import GlobalNav from "../../components/GlobalNav";
 import styles from "../../components/Index.module.css";
+import styles2 from "../../components/Manage/GDManage.module.css"
 import Footer from "../../components/Global/Footer";
 import BannerGD from "../../components/assets/BannerGD.png"
 import ProductHeader from "../../components/Global/ProductHeader";
 import ProductCardGD from "../../components/Cards/ProductCardGD";
 import {
+    Button,
     ListItem,
     ListItemIcon,
     ListItemText,
@@ -33,7 +35,6 @@ import FeatureShieldImg from "../../components/assets/features/shield_3d-sm.png"
 import FeatureSetupImg from "../../components/assets/features/autosetup_3d-sm.png"
 import FeatureMusicImg from "../../components/assets/features/music_3d-sm.png"
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";
-
 
 
 export default function GD(props) {
@@ -193,9 +194,10 @@ export default function GD(props) {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <p style={{margin:"1rem auto", maxWidth:"320px"}}>
-                    {locale.get('selfHostNotDone')}
-                </p>
+                <div className="flex mx-auto text-center gap-3 justify-center mt-4 mb-4">
+                <Button variant="contained" className={styles2.SlimButton} onClick={() => window.location.href = "https://github.com/FruitSpace/HalogenGDPSCore"}>HalogenCore GitHub Repo</Button>
+                <Button variant="contained" className={styles2.SlimButton} onClick={() => window.location.href = " https://discord.gg/HgBQmMRKTB"}>HalogenCore Discord</Button>
+                </div>
 
             </div>
             <Footer router={props.router}/>
