@@ -26,7 +26,8 @@ export default function Footer(props) {
                     <Link href="/product/mc"><p className="hover:text-white hover:underline">{locale.get('footer.hostingmc')}</p></Link>
                     <Link href="/product/gd"><p className="hover:text-white hover:underline">{locale.get('footer.hostinggd')}</p></Link>
                     <Link href="/product/cs"><p className="hover:text-white hover:underline">{locale.get('footer.hostingcs')}</p></Link>
-                    <Link href="https://api.fruitspace.one/v2/antiswagger/"><p className="hover:text-white hover:underline">FruitSpace API</p></Link>
+                    {/* TAKE YOUR API BACK TO ROBLOX */}
+                    {/* <Link href="https://api.fruitspace.one/v2/antiswagger/"><p className="hover:text-white hover:underline">FruitSpace API</p></Link> */}
                 </div>
                 <span className="flex-1"></span>
                 <Link href="https://m41den.com">
