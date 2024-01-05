@@ -241,6 +241,10 @@ const productGDLocale = {
                 "GitHub community support"
             ]
         },
+        selfHostNotDone: {
+            ru: "На данный момент вы не можете использовать HalogenCore, т.к. мы его дорабатываем для возможности работы отдельных приватных серверов за пределами хостинга.",
+            en: "You can't use HalogenCore yet as we are improving it for the possibility to run private servers outside the hosting."
+        }
     },
 }
 
