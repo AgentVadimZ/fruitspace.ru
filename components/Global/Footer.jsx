@@ -1,5 +1,4 @@
 import styles from './Footer.module.css'
-
 import discordLogo from './../assets/social/discord.png'
 import vkLogo from './../assets/social/vkontakte.png'
 import Link from "next/link";
