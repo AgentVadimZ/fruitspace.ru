@@ -200,11 +200,11 @@ export default function GD(props) {
                     {locale.get('selfHostLinks')}
                 </p>
                 <div className="flex mx-auto gap-2 justify-center mb-2">
-                <Button variant="contained" className="m-2 mt-auto font-bold rounded-lg bg-[#6e5494] h-12 hover:bg-[#5f4980]" onClick={() => window.location.href = "https://github.com/FruitSpace/HalogenGDPSCore"}>
+                <Button variant="contained" className="m-2 mt-auto font-bold rounded-lg bg-[#6e5494] h-12 hover:bg-[#5f4980]" onClick={() => window.open("https://github.com/FruitSpace/HalogenGDPSCore", "_blank")}>
                     <img className="invert h-10 mr-3 h-3/4 rounded" src={GitHubIcon.src} alt="github"/>
                     HalogenCore Github
                 </Button>
-                <Button variant="contained" className="m-2 mt-auto font-bold rounded-lg bg-[#7289da] h-12 hover:bg-[#5f73b8]"  onClick={() => window.location.href = "https://discord.gg/HgBQmMRKTB"}>
+                <Button variant="contained" className="m-2 mt-auto font-bold rounded-lg bg-[#7289da] h-12 hover:bg-[#5f73b8]"  onClick={() => window.open("https://discord.gg/HgBQmMRKTB", "_blank")}>
                     <img className="invert h-10 mr-3 h-3/4" src={discordLogo.src} alt="discord"/>
                     HalogenCore Discord
                 </Button>
