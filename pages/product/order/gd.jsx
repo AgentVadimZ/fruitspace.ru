@@ -22,6 +22,7 @@ import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import useFiberAPI from "../../../fiber/fiber";
+import Link from 'next/link';
 
 
 export default function Order(props) {
@@ -205,27 +206,35 @@ export default function Order(props) {
     return (
         <>
             <GlobalHead title={localeGlobal.get('navName')}/>
-            <GlobalNav router={props.router} />
+            <GlobalNav router={props.router}/>
             <Toaster/>
             <div className={styles.main}>
 
-                <h2 className="text-center">{srv.name?"Продлить GDPS":locale.get('createTitle')}</h2>
+                <h2 className="text-center">{srv.name ? "Продлить GDPS" : locale.get('createTitle')}</h2>
                 <div className="mx-auto w-fit grid grid-cols-1 lg:grid-cols-3">
-                    <FruitTextField label={locale.get('createGDPSTitle')} type="text" variant="outlined" style={{margin:".5rem",flex:1}}
-                                    value={srv.name||''} onChange={(evt)=>{setSrv({
-                        ...srv, name: evt.target.value.replaceAll(/[^a-zA-Z\d .\-_]/g,'')
-                    })}} className="col-span-2" disabled={srv.srvid.length===4}/>
-                    <FruitTextField label={locale.get('createPromo')} type="text" variant="outlined" style={{margin:".5rem"}}
-                                    value={srv.promocode||''} onChange={(evt)=>{setSrv({
-                        ...srv, promocode: evt.target.value.toUpperCase().replaceAll(/[^a-zA-Z\d\-_]/g,'')
-                    })}} />
+                    <FruitTextField label={locale.get('createGDPSTitle')} type="text" variant="outlined"
+                                    style={{margin: ".5rem", flex: 1}}
+                                    value={srv.name || ''} onChange={(evt) => {
+                        setSrv({
+                            ...srv, name: evt.target.value.replaceAll(/[^a-zA-Z\d .\-_]/g, '')
+                        })
+                    }} className="col-span-2" disabled={srv.srvid.length === 4}/>
+                    <FruitTextField label={locale.get('createPromo')} type="text" variant="outlined"
+                                    style={{margin: ".5rem"}}
+                                    value={srv.promocode || ''} onChange={(evt) => {
+                        setSrv({
+                            ...srv, promocode: evt.target.value.toUpperCase().replaceAll(/[^a-zA-Z\d\-_]/g, '')
+                        })
+                    }}/>
                 </div>
 
-                <TabsUnstyled value={srv.payDuration} onChange={(e,val)=>setSrv({...srv, payDuration: val})} className="my-8 w-fit mx-auto">
+                <TabsUnstyled value={srv.payDuration} onChange={(e, val) => setSrv({...srv, payDuration: val})}
+                              className="mt-2rem w-fit mx-auto">
                     <TabsList className="mx-auto">
-                        {!(srv.payDuration!=="mo"&&payDurLock) && <Tab value="mo">{locale.get('tTabs')[0]}</Tab>}
-                        {!(srv.payDuration!=="yr"&&payDurLock) &&<Tab value="yr" className="flex items-center">
-                            {locale.get('tTabs')[1]} <span className="text-xs font-normal ml-1 rounded-md px-1 py-0.5" style={{backgroundColor:(srv.payDuration==="yr"?"var(--btn-color)":"var(--primary-color)")}}>-15%</span>
+                        {!(srv.payDuration !== "mo" && payDurLock) && <Tab value="mo">{locale.get('tTabs')[0]}</Tab>}
+                        {!(srv.payDuration !== "yr" && payDurLock) && <Tab value="yr" className="flex items-center">
+                            {locale.get('tTabs')[1]} <span className="text-xs font-normal ml-1 rounded-md px-1 py-0.5"
+                                                           style={{backgroundColor: (srv.payDuration === "yr" ? "var(--btn-color)" : "var(--primary-color)")}}>-15%</span>
                         </Tab>}
                         <Tab value="all">{locale.get('tTabs')[2]}</Tab>
                     </TabsList>
@@ -240,10 +249,8 @@ export default function Order(props) {
                         {createCards('all')}
                     </TabPanel>
                 </TabsUnstyled>
-
-
-
             </div>
+            <p className="mx-auto w-fit ">{locale.get('tosReminder').main}<Link href="/about/tos" passHref className="text-2xl">{locale.get('tosReminder').link}</Link></p>
         </>
     )
 }
