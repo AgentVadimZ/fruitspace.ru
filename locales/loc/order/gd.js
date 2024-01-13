@@ -136,7 +136,7 @@ const orderGDPSLocale = {
                 link: "Условиями пользования",
             },
             en: {
-                main: "Before making a purchase make sure you've read out",
+                main: "Before making a purchase make sure you've read our ",
                 link: "Terms of use"
             }
         },
