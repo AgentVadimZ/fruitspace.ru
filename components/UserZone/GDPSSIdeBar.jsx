@@ -9,6 +9,7 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 import {Tooltip} from "@mui/material";
 import {useGlobalLocale} from "../../locales/useLocale";
+import SideItem from "../NavBar/SideItem";
 
 
 export default function GDPSNavBar(props) {
@@ -23,14 +24,10 @@ export default function GDPSNavBar(props) {
     return (
         <SideBar>
             <Link href={"/gdps/"+srvid+"/panel"}>
-                <NavItem icon={<PersonIcon/>} acetone square active={action==="panel"}>
-                    <Tooltip title={globalLocale.get('panelGDPSNav').profile} placement="right" arrow open><span /></Tooltip>
-                </NavItem>
+                <SideItem icon={<PersonIcon className="h-5" />} active={action==="panel"} text={globalLocale.get('panelGDPSNav').profile} />
             </Link>
             {props.music && <Link href={"/gdps/"+srvid+"/music"} passHref>
-                <NavItem icon={<MusicIcon/>} acetone square active={action==="music"}>
-                    <Tooltip title={globalLocale.get('panelGDPSNav').music} placement="right" arrow open><span /></Tooltip>
-                </NavItem>
+                <SideItem icon={<MusicIcon className="h-5" />} active={action==="music"} text={globalLocale.get('panelGDPSNav').music} />
             </Link>}
             {/*{srv.tariffConfig.Roles && <Link href={"/manage/gd/"+srvid+"/roles"}>*/}
             {/*    <NavItem icon={<RolesIcon/>} acetone square active={action==="roles"}>*/}

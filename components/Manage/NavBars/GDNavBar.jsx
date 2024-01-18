@@ -14,6 +14,7 @@ import {Tooltip} from "@mui/material";
 import useEffectOnce from "../../Hooks";
 import {useGlobalLocale} from "../../../locales/useLocale";
 import useFiberAPI from "../../../fiber/fiber";
+import SideItem from "../../NavBar/SideItem";
 
 
 export default function GDNavBar(props) {
@@ -39,24 +40,16 @@ export default function GDNavBar(props) {
     return srv.Tariff?(
         <SideBar>
             <Link href={"/manage/gd/"+srvid+"/"} passHref>
-                <NavItem icon={<AnalyticsIcon/>} acetone square active={action==="[srvid]"}>
-                    <Tooltip title={globalLocale.get('panelGDPSNav').analytics} placement="right" arrow open><span /></Tooltip>
-                </NavItem>
+                <SideItem icon={<AnalyticsIcon className="h-5" />} active={action==="[srvid]"} text={globalLocale.get('panelGDPSNav').analytics} />
             </Link>
             {srv.Tariff.CustomMusic && <Link href={"/manage/gd/"+srvid+"/music"} passHref>
-                <NavItem icon={<MusicIcon/>} acetone square active={action==="music"}>
-                    <Tooltip title={globalLocale.get('panelGDPSNav').music} placement="right" arrow open><span /></Tooltip>
-                </NavItem>
+                <SideItem icon={<MusicIcon className="h-5" />} active={action==="music"} text={globalLocale.get('panelGDPSNav').music} />
             </Link>}
             {srv.Tariff.Roles && <Link href={"/manage/gd/"+srvid+"/roles"}>
-                <NavItem icon={<RolesIcon/>} acetone square active={action==="roles"}>
-                    <Tooltip title={globalLocale.get('panelGDPSNav').roles} placement="right" arrow open><span /></Tooltip>
-                </NavItem>
+                <SideItem icon={<RolesIcon className="h-5" />} active={action==="roles"} text={globalLocale.get('panelGDPSNav').roles} />
             </Link>}
             <Link href={"/manage/gd/"+srvid+"/chests"}>
-                <NavItem icon={<ChestsIcon/>} acetone square active={action==="chests"}>
-                    <Tooltip title={globalLocale.get('panelGDPSNav').chests} placement="right" arrow open><span /></Tooltip>
-                </NavItem>
+                <SideItem icon={<ChestsIcon className="h-5" />} active={action==="chests"} text={globalLocale.get('panelGDPSNav').chests} />
             </Link>
             {/*{srv.Tariff.Quests && <Link href={"/manage/gd/"+srvid+"/quests"}>*/}
             {/*    <NavItem icon={<QuestsIcon/>} acetone square active={action==="quests"}>*/}
@@ -69,9 +62,7 @@ export default function GDNavBar(props) {
             {/*    </NavItem>*/}
             {/*</Link>}*/}
             <Link href={"/manage/gd/"+srvid+"/settings"}>
-                <NavItem icon={<SettingsIcon/>} acetone square active={action==="settings"}>
-                    <Tooltip title={globalLocale.get('panelGDPSNav').settings} placement="right" arrow open><span /></Tooltip>
-                </NavItem>
+                <SideItem icon={<SettingsIcon className="h-5" />} active={action==="settings"} text={globalLocale.get('panelGDPSNav').settings} />
             </Link>
 
             {/*{srv.Tariff.GDLab.Enabled &&<Link href={"/manage/gd/" + srvid + "/gdlab"}>*/}
@@ -81,9 +72,7 @@ export default function GDNavBar(props) {
             {/*    </NavItem>*/}
             {/*</Link>}*/}
             {srv.Tariff.Logs && <Link href={"/manage/gd/"+srvid+"/actions"}>
-                <NavItem icon={<ActionsIcon/>} acetone square active={action==="actions"}>
-                    <Tooltip title={globalLocale.get('panelGDPSNav').actions} placement="right" arrow open><span /></Tooltip>
-                </NavItem>
+                <SideItem icon={<ActionsIcon className="h-5" />} active={action==="actions"} text={globalLocale.get('panelGDPSNav').actions} />
             </Link>}
             {/*{srv.Tariff.Shops && <Link href={"/manage/gd/"+srvid+"/store"}>*/}
             {/*    <NavItem icon={<StoreIcon/>} acetone square active={action==="store"}>*/}
