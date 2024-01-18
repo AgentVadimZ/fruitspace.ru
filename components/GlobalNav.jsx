@@ -62,8 +62,7 @@ export default function GlobalNav(props) {
 
     const prettyPrint = (num)=>new Intl.NumberFormat(user.usd?'en-US':'ru-RU',
         {style: 'currency',currency: user.usd?"USD":"RUB"}).format(num).replace(/[.|,]00/g, '')
-
-
+    
     const [open, setOpen] = useState(false)
 
     return (
