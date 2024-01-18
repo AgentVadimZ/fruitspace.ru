@@ -3,7 +3,7 @@ import GlobalNav from "../../../components/GlobalNav";
 import useLocale, {useGlobalLocale} from "../../../locales/useLocale";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
 import {styled} from "@mui/system";
-import {Backdrop, MenuItem, Switch, TextField} from "@mui/material";
+import {Button, Backdrop, MenuItem, Switch, TextField} from "@mui/material";
 import {useState} from "react";
 import {TabsList, TabPanel, Tab} from "../../../components/Global/Tab";
 
@@ -27,9 +27,12 @@ export default function OrderMC(props){
         return ttype[tariff[1]-1]||ttype[1]
     })()
 
+    const TotalPrice = tariffData.price + ssd*50 + (addPort?1:0)*100
+
+
     return(
         <>
-            <div className=" bg-[url(https://abrakadabra.fun/uploads/posts/2021-12/1640970997_4-abrakadabra-fun-p-strashnii-fon-mainkraft-4.png)] bg-opacity-50 h-screen w-screen">
+            <div className="flex flex-col bg-[url(https://abrakadabra.fun/uploads/posts/2021-12/1640970997_4-abrakadabra-fun-p-strashnii-fon-mainkraft-4.png)] bg-opacity-50 h-screen w-screen">
                 <GlobalHead title={localeGlobal.get('navName')}/>
                 <GlobalNav mainpage router={props.router}/>
                 <p className="text-center color-white pt-2 text-xl">Создание нового Minecraft сервера</p>
@@ -38,6 +41,7 @@ export default function OrderMC(props){
                     <ConfigCard core={core} setCore={setCore} name={name} setName={setName} version={version} setVersion={setVersion} />
                     <AdditionalCard ssd={ssd} setSSD={setSSD} addPort={addPort} setAddPort={setAddPort} />
                 </div>
+                <Total TotalPrice={TotalPrice} />
             </div>
             <Backdrop className="bg-black bg-opacity-75" sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                       open={backdrop!="none"} onClick={()=>setBackdrop("none")}>
@@ -129,10 +133,10 @@ const ConfigCard = ({name, setName, version, setVersion, core, setCore}) => {
                 onClick={() => {}}>
 
         <p className="mt-0">Настройки</p>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 h-full">
             <FruitThinField label="Название сервера" value={name}
                             onChange={(evt)=>setName(evt.target.value.replaceAll(/[^a-zA-Z0-9.-_]/g,''))} />
-            <div className="rounded-lg bg-[var(--btn-color)] p-2 flex items-center justify-between h-12">
+            <div className="mt-auto rounded-lg bg-[var(--btn-color)] p-2 flex items-center justify-between h-12">
                 <FruitThinField
                     select label="Ядро" value={core}
                     sx={{minWidth:"8rem"}}
@@ -155,6 +159,13 @@ const ConfigCard = ({name, setName, version, setVersion, core, setCore}) => {
                 </FruitThinField>
             </div>
         </div>
+    </div>
+}
+
+const Total = ({TotalPrice}) => {
+    return <div className="mt-auto mb-6 glassb flex justify-between items-center relative bg-[var(--subtle-color)] rounded-xl w-11/12 lg:w-3/4 mx-auto">
+        <p className="select-none text-lg text-right mx-4 my-0">Итоговая цена: {TotalPrice} ₽/мес</p>
+        <Button variant="contained" className="m-4 text-lg rounded-lg bg-[#0d6efd]">ЗАКАЗАТЬ</Button>
     </div>
 }
 

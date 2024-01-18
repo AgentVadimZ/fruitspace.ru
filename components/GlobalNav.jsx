@@ -69,7 +69,7 @@ export default function GlobalNav(props) {
     return (
         <NavBar mainpage={props.mainpage}>
             <Link href={"/"}><img src={props.mainpage?logo_sm.src:logo.src} alt="logo" className={styles.logo}></img></Link>
-            {(!['/',''].includes(router.asPath))&&
+            {(props.mainpage&&!['/',''].includes(router.asPath))&&
                 <HideOn atHeight height={200}>
                     <h1 className="fixed top-2 left-[50%] -translate-x-[50%] hidden md:block md:text-2xl xl:text-3xl font-[Coolvetica] tracking-wider font-normal fruitText m-0 select-none">FruitSpace</h1>
                 </HideOn>
