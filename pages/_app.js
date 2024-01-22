@@ -5,26 +5,53 @@ import AuthProvider from "../components/AuthProvider";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import LoadingAnim from "../components/ProgressBar";
+import {ConfigProvider, theme} from "antd";
 
-export default function WebApp({ Component, pageProps }) {
+export default function WebApp({Component, pageProps}) {
     const [isL, setL] = useState(false)
     const router = useRouter()
-    useEffect(()=>{
+    useEffect(() => {
         router.events.on('routeChangeStart', () => setL(true));
         router.events.on('routeChangeComplete', () => setL(false));
         router.events.on('routeChangeError', () => setL(false));
     }, [router])
 
-  return (
-      <RecoilRoot>
-          <StyledEngineProvider injectFirst>
-              {isL &&<LoadingAnim />}
-              <AuthProvider RequireAuth={Component.RequireAuth} router={router}>
-                  <Component {...pageProps} router={router} globalLoader={[isL, setL]} />
-              </AuthProvider>
-          </StyledEngineProvider>
-      </RecoilRoot>
-      )
+    return (
+        <RecoilRoot>
+            <StyledEngineProvider injectFirst>
+                {isL && <LoadingAnim/>}
+                <ConfigProvider theme={{
+                    token: {
+                        colorPrimary: "#0d6efd",
+                        colorInfo: "#0d6efd",
+                        colorSuccess: "#43b581",
+                        colorError: "#f04747",
+                        colorLink: "#0d6efd",
+                        borderRadius: 8,
+                        colorBgContainer: "rgba(255, 255, 255, 0.08)",
+                        colorBgSpotlight: "transparent",
+                    },
+                    components: {
+                        Input: {
+                            activeShadow: "0 0 0 1px #0d6efd",
+                        },
+                        Select: {
+                            activeShadow: "0 0 0 1px #0d6efd",
+                            colorBgElevated: "var(--btn-color)"
+                        },
+                        Button: {
+                            primaryShadow: "none",
+                        },
+                    },
+                    algorithm: theme.darkAlgorithm
+                }}>
+                    <AuthProvider RequireAuth={Component.RequireAuth} router={router}>
+                        <Component {...pageProps} router={router} globalLoader={[isL, setL]}/>
+                    </AuthProvider>
+                </ConfigProvider>
+            </StyledEngineProvider>
+        </RecoilRoot>
+    )
 }
 
 

@@ -129,37 +129,39 @@ const AdditionalCard = ({ssd, setSSD, addPort, setAddPort}) => {
 }
 
 const ConfigCard = ({name, setName, version, setVersion, core, setCore}) => {
-    return <div className="glassb flex flex-col relative bg-[var(--subtle-color)] p-4 rounded-xl group"
-                onClick={() => {}}>
+    return (
+        <div className="glassb flex flex-col relative bg-[var(--subtle-color)] p-4 rounded-xl group"
+                    onClick={() => {}}>
 
-        <p className="mt-0">Настройки</p>
-        <div className="flex flex-col gap-2 h-full">
-            <FruitThinField label="Название сервера" value={name}
-                            onChange={(evt)=>setName(evt.target.value.replaceAll(/[^a-zA-Z0-9.-_]/g,''))} />
-            <div className="mt-auto rounded-lg bg-[var(--btn-color)] p-2 flex items-center justify-between h-12">
-                <FruitThinField
-                    select label="Ядро" value={core}
-                    sx={{minWidth:"8rem"}}
-                    onChange={(evt)=>setCore(evt.target.value)}>
-                    {cores.map((option) => (
-                        <MenuItem key={option} value={option}>
-                            {option.split("_").map((v)=>{return v[0].toUpperCase()+v.slice(1)}).join(" ")}
-                        </MenuItem>
-                    ))}
-                </FruitThinField>
-                <FruitThinField
-                    select label="Версия" value={version}
-                    sx={{minWidth:"8rem"}}
-                    onChange={(evt)=>setVersion(evt.target.value)}>
-                    {versions.map((option) => (
-                        <MenuItem key={option} value={option}>
-                            {option}
-                        </MenuItem>
-                    ))}
-                </FruitThinField>
+            <p className="mt-0">Настройки</p>
+            <div className="flex flex-col gap-2 h-full">
+                <FruitThinField label="Название сервера" value={name}
+                                onChange={(evt)=>setName(evt.target.value.replaceAll(/[^a-zA-Z0-9.-_]/g,''))} />
+                <div className="mt-auto rounded-lg bg-[var(--btn-color)] p-2 flex items-center justify-between h-12">
+                    <FruitThinField
+                        select label="Ядро" value={core}
+                        sx={{minWidth:"8rem"}}
+                        onChange={(evt)=>setCore(evt.target.value)}>
+                        {cores.map((option) => (
+                            <MenuItem key={option} value={option}>
+                                {option.split("_").map((v)=>{return v[0].toUpperCase()+v.slice(1)}).join(" ")}
+                            </MenuItem>
+                        ))}
+                    </FruitThinField>
+                    <FruitThinField
+                        select label="Версия" value={version}
+                        sx={{minWidth:"8rem"}}
+                        onChange={(evt)=>setVersion(evt.target.value)}>
+                        {versions.map((option) => (
+                            <MenuItem key={option} value={option}>
+                                {option}
+                            </MenuItem>
+                        ))}
+                    </FruitThinField>
+                </div>
             </div>
         </div>
-    </div>
+    );
 }
 
 const Total = ({TotalPrice}) => {

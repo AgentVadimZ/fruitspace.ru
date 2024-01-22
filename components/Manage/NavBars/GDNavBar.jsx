@@ -1,4 +1,3 @@
-import NavItem from "../../NavBar/NavItem";
 import SideBar from "../../NavBar/SideBar";
 
 import AnalyticsIcon from "../../assets/icons/panel_analytics.svg"
@@ -10,7 +9,6 @@ import ActionsIcon from "../../assets/icons/panel_actions.svg"
 
 import Link from "next/link";
 import {useRouter} from "next/router";
-import {Tooltip} from "@mui/material";
 import useEffectOnce from "../../Hooks";
 import {useGlobalLocale} from "../../../locales/useLocale";
 import useFiberAPI from "../../../fiber/fiber";
@@ -39,16 +37,16 @@ export default function GDNavBar(props) {
 
     return srv.Tariff?(
         <SideBar>
-            <Link href={"/manage/gd/"+srvid+"/"} passHref>
+            <Link href={"/manage/gd/"+srvid+"/"} passHref legacyBehavior>
                 <SideItem icon={<AnalyticsIcon className="h-5" />} active={action==="[srvid]"} text={globalLocale.get('panelGDPSNav').analytics} />
             </Link>
-            {srv.Tariff.CustomMusic && <Link href={"/manage/gd/"+srvid+"/music"} passHref>
+            {srv.Tariff.CustomMusic && <Link href={"/manage/gd/"+srvid+"/music"} passHref legacyBehavior>
                 <SideItem icon={<MusicIcon className="h-5" />} active={action==="music"} text={globalLocale.get('panelGDPSNav').music} />
             </Link>}
-            {srv.Tariff.Roles && <Link href={"/manage/gd/"+srvid+"/roles"}>
+            {srv.Tariff.Roles && <Link href={"/manage/gd/"+srvid+"/roles"} legacyBehavior>
                 <SideItem icon={<RolesIcon className="h-5" />} active={action==="roles"} text={globalLocale.get('panelGDPSNav').roles} />
             </Link>}
-            <Link href={"/manage/gd/"+srvid+"/chests"}>
+            <Link href={"/manage/gd/"+srvid+"/chests"} legacyBehavior>
                 <SideItem icon={<ChestsIcon className="h-5" />} active={action==="chests"} text={globalLocale.get('panelGDPSNav').chests} />
             </Link>
             {/*{srv.Tariff.Quests && <Link href={"/manage/gd/"+srvid+"/quests"}>*/}
@@ -61,7 +59,7 @@ export default function GDNavBar(props) {
             {/*        <Tooltip title={globalLocale.get('panelGDPSNav').levelpacks} placement="right" arrow open><span /></Tooltip>*/}
             {/*    </NavItem>*/}
             {/*</Link>}*/}
-            <Link href={"/manage/gd/"+srvid+"/settings"}>
+            <Link href={"/manage/gd/"+srvid+"/settings"} legacyBehavior>
                 <SideItem icon={<SettingsIcon className="h-5" />} active={action==="settings"} text={globalLocale.get('panelGDPSNav').settings} />
             </Link>
 
@@ -71,7 +69,7 @@ export default function GDNavBar(props) {
             {/*                 open><span/></Tooltip>*/}
             {/*    </NavItem>*/}
             {/*</Link>}*/}
-            {srv.Tariff.Logs && <Link href={"/manage/gd/"+srvid+"/actions"}>
+            {srv.Tariff.Logs && <Link href={"/manage/gd/"+srvid+"/actions"} legacyBehavior>
                 <SideItem icon={<ActionsIcon className="h-5" />} active={action==="actions"} text={globalLocale.get('panelGDPSNav').actions} />
             </Link>}
             {/*{srv.Tariff.Shops && <Link href={"/manage/gd/"+srvid+"/store"}>*/}
@@ -80,5 +78,5 @@ export default function GDNavBar(props) {
             {/*    </NavItem>*/}
             {/*</Link>}*/}
         </SideBar>
-    ):(<></>)
+    ):(<></>);
 }

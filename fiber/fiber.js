@@ -1,4 +1,4 @@
-/* FruitSpace API v1.0 */
+/* FruitSpace API v1.3 */
 
 import {useCookies} from "react-cookie";
 import {useRecoilState} from "recoil";
@@ -7,6 +7,7 @@ import {parseCookies} from "./cockie_parser";
 import {useEffect, useState} from "react";
 
 const DISCORD_AUTH = "https://discord.com/oauth2/authorize?client_id=1119240313605734410&response_type=code&scope=identify%20guilds%20guilds.join&state="
+
 
 class api {
     base_url = "https://api.fruitspace.one/v2/"
@@ -70,6 +71,7 @@ const useFiberAPI = (cookie = "token") => {
     sapi.registerProvider(servers, "servers")
     sapi.registerProvider(gdps_manage, "gdps_manage")
     sapi.registerProvider(gdps_users, "gdps_users")
+    sapi.registerProvider(particles, "particles")
     return sapi
 }
 
@@ -331,5 +333,21 @@ class gdps_users {
 }
 //endregion
 
+// region Particle API
+class particles {
+    constructor(apix) {
+        this._api = apix
+    }
+
+    search = async (data) => {
+        return await this._api.do("particle/search", "POST", data)
+    }
+
+    get_user = async (reg=false) => {
+        return await this._api.do(`particle/user?reg=${reg?"true":"false"}`, "GET")
+    }
+}
+// endregion
+
 export default useFiberAPI
-export {serverFiberAPI, useLoader,}
+export {serverFiberAPI, useLoader}

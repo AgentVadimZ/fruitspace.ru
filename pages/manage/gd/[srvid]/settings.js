@@ -309,474 +309,472 @@ export default function SettingsGD(props) {
             }})
     },[settings, discordbot])
 
-    return (
-        <>
-            <GlobalHead title={locale.get('nav')}/>
-            <GlobalNav />
-            <GDNavBar />
-            <Toaster/>
-            <PanelContent>
-                <div className={styles.CardGrid}>
-                    <div className={styles.CardBox}>
-                        <h3>{locale.get('db')}</h3>
-                        <div className={styles.CardInbox}>
-                            <FruitTextField fullWidth label={locale.get('dbFields')[0]} value={"halgd_"+srv.Srv.srvid||''}
-                                            InputProps={{
-                                                endAdornment: (
-                                                    <InputAdornment position="end">
-                                                        <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText("halgd_"+srv.Srv.srvid);copyValueR()}}>
-                                                            <ContentPasteIcon/>
-                                                        </IconButton>
-                                                    </InputAdornment>
-                                                )
-                                            }}
-                                            disabled/>
-                            <FruitTextField fullWidth label={locale.get('dbFields')[1]} type={showPass?"text":"password"}
-                                            InputProps={{
-                                                endAdornment: (
-                                                    <InputAdornment position="end">
-                                                        <IconButton edge="end" onClick={()=>setShowPass(!showPass)}>
-                                                            {showPass ? <VisibilityOff /> : <Visibility />}
-                                                        </IconButton>
-                                                        <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText(srv.Srv.db_password);copyValueR()}}>
-                                                            <ContentPasteIcon/>
-                                                        </IconButton>
-                                                    </InputAdornment>
-                                                )
-                                            }}
-                                            value={srv.Srv.db_password||''}
-                            disabled/>
-                        </div>
-                        <div className={styles.CardBottom}>
-                            <Button variant="contained" className={`${styles.SlimButton} ${styles.btnError}`}
-                                    onClick={()=>setBackdrop("dbreset")}>{locale.get('dbSettings')[0]}</Button>
-                            <form method="post" action="https://db.fruitspace.one" target="_blank" ref={dbRef}>
-                                <input type="hidden" name="auth[server]" value="FruitSpace GDPS Database" />
-                                <input type="hidden" name="auth[username]" value={"halgd_"+srv.Srv.srvid||''} />
-                                <input type="hidden" name="auth[password]" value={srv.Srv.db_password||''} />
-                                <input type="hidden" name="auth[db]" value={"gdps_"+srv.Srv.srvid||''} />
-                                <Button variant="contained" className={styles.SlimButton} onClick={()=>redirectToDB()}>{locale.get('dbSettings')[1]}</Button>
-                            </form>
-                        </div>
+    return <>
+        <GlobalHead title={locale.get('nav')}/>
+        <GlobalNav />
+        <GDNavBar />
+        <Toaster/>
+        <PanelContent>
+            <div className={styles.CardGrid}>
+                <div className={styles.CardBox}>
+                    <h3>{locale.get('db')}</h3>
+                    <div className={styles.CardInbox}>
+                        <FruitTextField fullWidth label={locale.get('dbFields')[0]} value={"halgd_"+srv.Srv.srvid||''}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText("halgd_"+srv.Srv.srvid);copyValueR()}}>
+                                                        <ContentPasteIcon/>
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            )
+                                        }}
+                                        disabled/>
+                        <FruitTextField fullWidth label={locale.get('dbFields')[1]} type={showPass?"text":"password"}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton edge="end" onClick={()=>setShowPass(!showPass)}>
+                                                        {showPass ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                    <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText(srv.Srv.db_password);copyValueR()}}>
+                                                        <ContentPasteIcon/>
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            )
+                                        }}
+                                        value={srv.Srv.db_password||''}
+                        disabled/>
                     </div>
-
-                    <div className={styles.CardBox}>
-                        <h3>{locale.get('coreSettings')[0]}</h3>
-                        <div className={styles.CardInbox}>
-                            <div className={styles.SettingsPlato}>
-                                <p>{locale.get('coreSettings')[1]}</p>
-                                <FruitTextField
-                                    select label={locale.get('coreSettings')[2]} value={settings.topSize}
-                                    sx={{minWidth:"8rem"}}
-                                    onChange={(evt)=>setSettings({
-                                        ...settings, topSize: evt.target.value,
-                                    })}>
-                                    {topSizes.map((option) => (
-                                        <MenuItem key={option} value={option}>
-                                            {option} {locale.get('coreSettings')[3]}
-                                        </MenuItem>
-                                    ))}
-                                </FruitTextField>
-                            </div>
-                            {srv.Tariff && srv.Tariff.CustomMusic
-                            && <div className={styles.SettingsPlato}>
-                                    <p>
-                                        <Tooltip title={locale.get('tips')[0]}>
-                                            <IconButton><HelpIcon/></IconButton>
-                                        </Tooltip>
-
-                                        {locale.get('coreSettings')[5]}</p>
-                                    <FruitSwitch checked={settings.spaceMusic} onChange={(e, val)=>setSettings({
-                                        ...settings, spaceMusic: val,
-                                    })} disabled={!!srv.Srv.is_space_music} />
-                                </div>
-                            }
-                            <fieldset className={styles.SettingsFieldset}>
-                                <legend> <Tooltip title={locale.get('tips')[1]}>
-                                    <IconButton><HelpIcon/></IconButton></Tooltip>
-                                    {locale.get('coreSettings')[4]} <FruitSwitch checked={settings.security.enabled} onChange={(e, val)=>setSettings({
-                                    ...settings, security: {...settings.security, enabled: val},
-                                })} />
-                                </legend>
-                                <div className={styles.SettingsPlato}>
-                                    <p>{locale.get('coreSettings')[6]}</p>
-                                    <FruitSwitch checked={settings.security.autoActivate} onChange={(e, val)=>setSettings({
-                                        ...settings, security: {...settings.security, autoActivate: val},
-                                    })} disabled={!settings.security.enabled}/>
-                                </div>
-                                <div className={styles.SettingsPlato}>
-                                    <p>{locale.get('coreSettings')[7]}</p>
-                                    <FruitSwitch checked={settings.security.levelLimit} onChange={(e, val)=>setSettings({
-                                        ...settings, security: {...settings.security, levelLimit: val},
-                                    })} disabled={!settings.security.enabled}/>
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
-
-                    <div className={styles.CardBox}>
-                        <h3>{locale.get('customSettings')[0]}</h3>
-                        <div className={styles.CardInbox}>
-                        <FruitTextField
-                            label={locale.get('customSettings')[1]} multiline fullWidth
-                            value={settings.description.text||''}
-                            onChange={(evt)=>{setSettings({...settings,
-                                description: {...settings.description, text: evt.target.value}
-                            })}}
-                            inputProps={{style:{textAlign: aligns[settings.description.align]}}}
-                        />
-                            <p>{locale.get('aboutSectDesc')[0]} <span className={styles.CodeBlock}>#players#</span> {locale.get('aboutSectDesc')[1]} <span className={styles.CodeBlock}>#levels#</span>
-                                {' '+locale.get('aboutSectDesc')[2]}</p>
-
-                        </div>
-
-
-                        <div className={styles.CardBottom}>
-
-                            {srv.Tariff && srv.Tariff.GDLab.Enabled && <Button variant="contained"
-                                className={`${styles.cardButton} ${styles.btnSuccess}`} style={{height:40}}
-                                onClick={()=>setBackdrop("buildlab")}>🔨 BuildLab™</Button>}
-
-                            <ButtonGroup variant="contained"
-                            sx={{backgroundColor: "var(--btn-color)"}}
-                            className={styles.ToggleGroupImitator}>
-                                <FruitIconButton className={settings.description.vk&&styles.btnLinked}
-                                                 onClick={()=>setBackdrop("linksocial")}>
-                                    <img src={vkLogo.src} />
-                                </FruitIconButton>
-                                <FruitIconButton className={settings.description.discord&&styles.btnLinked}
-                                                 onClick={()=>setBackdrop("linksocial")}>
-                                    <img src={discordLogo.src} />
-                                </FruitIconButton>
-                            </ButtonGroup>
-
-                        <FruitToggleButtonGroup
-                            size={"small"}
-                            sx={{backgroundColor:"var(--bkg-color)", width:"fit-content", borderRadius: "8px"}}
-                            value={settings.description.align} exclusive
-                            onChange={(e,val)=>{setSettings({...settings,
-                                description: {...settings.description, align: val}
-                            })}}>
-                            <ToggleButton value={0} aria-label="left aligned">
-                                <FormatAlignLeftIcon />
-                            </ToggleButton>
-                            <ToggleButton value={1} aria-label="centered">
-                                <FormatAlignCenterIcon />
-                            </ToggleButton>
-                            <ToggleButton value={2} aria-label="right aligned">
-                                <FormatAlignRightIcon />
-                            </ToggleButton>
-                        </FruitToggleButtonGroup>
-                    </div>
-                    </div>
-
-                    <div className={styles.CardBox}>
-                        <h3>{locale.get('systemSettings')[0]}</h3>
-                        <div className={styles.CardInbox}>
-                            <p>{locale.get('systemSettings')[1]} <span className={styles.CodeBlock}>GhostCore | v2.X (Hybrid)</span></p>
-                            <div className={styles.SettingsPlato}>
-                                <b>{locale.get('systemSettings')[2]}</b>
-                                <span>
-                                    <Button variant="contained" className={`${styles.SlimButton} ${styles.btnError}`}
-                                            onClick={()=>setBackdrop("delete")}>{locale.get('systemSettings')[3]}</Button>
-                                    {srv.Tariff && srv.Tariff.Backups
-                                        && <Button variant="contained" className={styles.SlimButton}
-                                            onClick={()=>setBackdrop("backups")}>{locale.get('systemSettings')[4]}</Button>}
-                                </span>
-                            </div>
-                            <fieldset className={styles.SettingsFieldset} disabled={srv.Srv.plan<3}>
-                                <legend>{locale.get('systemSettings')[5]}
-                                    <FruitSwitch  checked={!!(settings.modules&&settings.modules.discord)}
-                                    onChange={(e, val)=>setSettings({...settings, modules: {...settings.modules, discord: val}})}/>
-                                </legend>
-                                <div className={styles.SettingsPlato}>
-                                    <span><IconButton><img src={discordLogo.src} className={styles.adornments}/></IconButton>{locale.get('systemSettings')[6]}</span>
-                                    <IconButton onClick={()=>setBackdrop("gdpsbot")}><SettingsIcon/></IconButton>
-                                </div>
-                            </fieldset>
-                        </div>
+                    <div className={styles.CardBottom}>
+                        <Button variant="contained" className={`${styles.SlimButton} ${styles.btnError}`}
+                                onClick={()=>setBackdrop("dbreset")}>{locale.get('dbSettings')[0]}</Button>
+                        <form method="post" action="https://db.fruitspace.one" target="_blank" ref={dbRef}>
+                            <input type="hidden" name="auth[server]" value="FruitSpace GDPS Database" />
+                            <input type="hidden" name="auth[username]" value={"halgd_"+srv.Srv.srvid||''} />
+                            <input type="hidden" name="auth[password]" value={srv.Srv.db_password||''} />
+                            <input type="hidden" name="auth[db]" value={"gdps_"+srv.Srv.srvid||''} />
+                            <Button variant="contained" className={styles.SlimButton} onClick={()=>redirectToDB()}>{locale.get('dbSettings')[1]}</Button>
+                        </form>
                     </div>
                 </div>
 
-            </PanelContent>
-
-            <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                open={backdrop!="none"} onClick={()=>setBackdrop("none")}>
-
-                {backdrop==="dbreset" && <div className={styles.BackdropBox} onClick={(e)=>e.stopPropagation()}>
-                    {locale.get('dbResetConfirm')[0]}
-                    <div className={styles.CardBottom}>
-                        <Button variant="contained" className={`${styles.SlimButton} ${styles.btnError}`}
-                                onClick={ResetDBPassword}>{locale.get('dbResetConfirm')[1]}</Button>
-                        <Button variant="contained" className={styles.SlimButton}
-                                onClick={()=>setBackdrop("none")}>{locale.get('dbResetConfirm')[2]}</Button>
-                    </div>
-                </div>}
-
-                {backdrop==="linksocial" && <div className={styles.BackdropBox} onClick={(e)=>e.stopPropagation()}>
-                    {locale.get('socials')[0]}
-                    <FruitTextField fullWidth label={locale.get('socials')[1]} value={settings.description.vk||''}
-                                    onChange={(evt)=>setSettings({...settings, description: {
-                                            ...settings.description, vk: evt.target.value
-                                        }})}
-                                    placeholder="fruit_space"
-                                    InputProps={{
-                                        startAdornment: (
-                                            <InputAdornment position="start"><IconButton>
-                                                    <img src={vkLogo.src} className={styles.adornments}/>
-                                            </IconButton><p>vk.com/</p></InputAdornment>
-                                        ),
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton edge="end" onClick={()=>{setSettings({...settings, description: {
-                                                    ...settings.description, vk: ""
-                                                    }})}}>
-                                                    <DeleteIcon className={styles.redsvg}/>
-                                                </IconButton>
-                                            </InputAdornment>
-                                        )
-                                    }}/>
-                    <FruitTextField fullWidth label={locale.get('socials')[0]} value={settings.description.discord||''}
-                                    onChange={(evt)=>setSettings({...settings, description: {
-                                            ...settings.description, discord: evt.target.value
-                                        }})}
-                                    placeholder="fruitspace"
-                                    InputProps={{
-                                        startAdornment: (
-                                            <InputAdornment position="start"><IconButton>
-                                                <img src={discordLogo.src} className={styles.adornments}/>
-                                            </IconButton><p>discord.gg/</p></InputAdornment>
-                                        ),
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton edge="end" onClick={()=>{setSettings({...settings, description: {
-                                                        ...settings.description, discord: ""
-                                                    }})}}>
-                                                    <DeleteIcon className={styles.redsvg}/>
-                                                </IconButton>
-                                            </InputAdornment>
-                                        )
-                                    }}/>
-                    <div className={styles.CardBottom}>
-                        <Button variant="contained" className={styles.cardButton}
-                                onClick={()=>setBackdrop("none")}>{locale.get('socials')[3]}</Button>
-                    </div>
-                </div>}
-
-                {backdrop==="delete" && <div className={styles.BackdropBox} style={{padding:0}} onClick={(e)=>e.stopPropagation()}>
-                    <div className={styles.deleteBox}>
-                        {locale.get('deleteConfirm')[0]}
-                        <div className={styles.CardBottom}>
-                            <FruitThinField label={locale.get('deleteConfirm')[1]+deleteCode} value={userDelCode}
-                            onChange={(evt)=>setUserDelCode(evt.target.value.replaceAll(/[^0-9]/g,'').substring(0,4))}/>
-                            <Button variant="contained" className={`${styles.SlimButton} ${styles.btnError}`}
-                                    onClick={()=>{userDelCode===deleteCode?deleteServer()
-                                        :toast.error(locale.get('deleteConfirm')[2],{style: {
-                                                color: "white",
-                                                backgroundColor: "var(--btn-color)"
-                                            }})
-                                    }}>{locale.get('deleteConfirm')[3]}</Button>
-                            <Button variant="contained" className={`${styles.SlimButton} ${styles.btnSuccess}`}
-                                    onClick={()=>setBackdrop("none")}>{locale.get('deleteConfirm')[4]}</Button>
-                        </div>
-                    </div>
-
-                </div>}
-
-                {backdrop==="backups" && <div className={styles.BackdropBox} onClick={(e)=>e.stopPropagation()}>
-                    <h3>{locale.get('backups')[0]}</h3>
-                    <List>
-                        {srv.backups.map((val,i)=>(
-                                <ListItem key={i} className={styles.hoverable} secondaryAction={
-                                    <IconButton edge="end">
-                                        <CloudUploadIcon onClick={()=>toast.success(locale.get('backups')[1]+val.date+locale.get('backups')[2],{style: {
-                                                color: "white",
-                                                backgroundColor: "var(--btn-color)"
-                                            }})} />
-                                    </IconButton>}>
-                                    <ListItemAvatar>
-                                        <BackupBox className={styles.bluesvg} style={{marginRight:"1rem"}}/>
-                                    </ListItemAvatar>
-                                    <ListItemText primary={srv.srvname+" "+val.date}
-                                                  secondary={<p style={{margin:0}}>{ParseDesc(val.players,val.levels)}</p>}/>
-                                </ListItem>
-                            ))}
-                    </List>
-                    {locale.get('backups')[3]}
-                    <div className={styles.CardBottom}>
-                        <Button variant="contained" className={styles.SlimButton}
-                                onClick={()=>setBackdrop("none")}>{locale.get('backups')[4]}</Button>
-                    </div>
-                </div>}
-
-                {backdrop==="buildlab" && <div className={styles.BackdropBox}
-                                               style={{position:"relative",padding:"0 .5rem .5rem .5rem "}} onClick={(e)=>e.stopPropagation()}>
-                        <TabsUnstyled value={buildlab.version} onChange={(e,val)=>setBuildlab({
-                            ...buildlab, version: val, ios: (val==="2.2"?false:buildlab.ios)
-                        })} className={styles.floatSelector}>
-                            <TabsList>
-                                <Tab value="2.1">2.1</Tab>
-                                <Tab value="2.2">2.2 Custom</Tab>
-                                {/* То есть по твоему то что 2.2 вышел делает GDPS Editor официальным??? */}
-                            </TabsList>
-                        </TabsUnstyled>
-
-                    <h3 className={styles.buildlabBrand}>
-                        <img src={GDLablogo.src}/>
-                        <div><h5>FruitSpace</h5><h3>GeometryLab™</h3></div>
-                    </h3>
-                    <div className={styles.buildlabTop}>
-                        <img src={srvIcon} />
-                        <input type="file" accept=".png, .jpg, .jpeg" hidden ref={uploadRef} onChange={changeIcon}/>
-                        <div>
-                            {srv.Tariff && srv.Tariff.GDLab.V22
-                                && <FruitThinField fullWidth label={locale.get('buildLab')[0]} value={buildlab.srvname||srv.Srv.srv_name} onChange={(evt)=>setBuildlab({
-                                ...buildlab, srvname: evt.target.value
-                            })} style={{marginBottom: ".5rem"}} InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton edge="end" onClick={()=>{setBuildlab({...buildlab, srvname: ""})}}>
-                                            <Restore/>
-                                        </IconButton>
-                                    </InputAdornment>
-                                )
-                            }}/>}
-
-                            {srv.Tariff && srv.Tariff.GDLab.Icons && <div style={{width:"100%"}}>
-                                <IconButton className={`${styles.SquareIcon} ${styles.SquareIconGreen}`}
-                                onClick={()=>uploadRef.current.click()}>
-                                    <AddPhotoAlternate/></IconButton>
-                                <IconButton className={`${styles.SquareIcon} ${styles.SquareIconRed}`}
-                                onClick={()=>setBuildlab({...buildlab, icon: "gd_default.png"})}>
-                                    <DeleteIcon/></IconButton>
-
-                            </div>}
-                        </div>
-
-                    </div>
-
-                    <fieldset className={styles.SettingsFieldset}>
-                        <legend>{locale.get('buildLab')[7]}</legend>
-                        {buildlab.version==="2.1" && <div className={styles.SettingsPlato}>
-                            <p><FontAwesomeIcon icon={faWindows}/> Windows</p>
-                            <FruitSwitch checked={buildlab.windows} onChange={(e, val) => setBuildlab({
-                                ...buildlab, windows: val,
-                            })}/>
-                        </div>}
+                <div className={styles.CardBox}>
+                    <h3>{locale.get('coreSettings')[0]}</h3>
+                    <div className={styles.CardInbox}>
                         <div className={styles.SettingsPlato}>
-                            <p>{buildlab.version==="2.2" && <><Chip color="warning" icon={<Warning />} label="Unstable"/>&nbsp;</>}
-                                <FontAwesomeIcon icon={faAndroid}/> Android</p>
-                            <FruitSwitch checked={buildlab.android} onChange={(e, val)=>setBuildlab({
-                                ...buildlab, android: val,
-                            })}/>
+                            <p>{locale.get('coreSettings')[1]}</p>
+                            <FruitTextField
+                                select label={locale.get('coreSettings')[2]} value={settings.topSize}
+                                sx={{minWidth:"8rem"}}
+                                onChange={(evt)=>setSettings({
+                                    ...settings, topSize: evt.target.value,
+                                })}>
+                                {topSizes.map((option) => (
+                                    <MenuItem key={option} value={option}>
+                                        {option} {locale.get('coreSettings')[3]}
+                                    </MenuItem>
+                                ))}
+                            </FruitTextField>
                         </div>
-                        {srv.Tariff && srv.Tariff.GDLab.IOS && buildlab.version==="2.1" && <div className={styles.SettingsPlato}>
-                            <p><FontAwesomeIcon icon={faApple}/> iOS</p>
-                            <FruitSwitch checked={buildlab.ios} onChange={(e, val)=>setBuildlab({
-                                ...buildlab, ios: val,
-                            })}/>
-                        </div>}
-                    </fieldset>
+                        {srv.Tariff && srv.Tariff.CustomMusic
+                        && <div className={styles.SettingsPlato}>
+                                <p>
+                                    <Tooltip title={locale.get('tips')[0]}>
+                                        <IconButton><HelpIcon/></IconButton>
+                                    </Tooltip>
 
-                    {buildlab.version==="2.2"&& <Alert severity="warning" style={{backgroundColor:"#ed6c02",color:"#fff",marginTop:"1rem"}}>{locale.get('buildLab')[1]}</Alert>}
-
-                    {buildlab.textures!=="default"&& <Alert severity="warning" style={{backgroundColor:"#ed6c02",color:"#fff",marginTop:"1rem"}}>
-                        {locale.get('buildLab')[2]}</Alert>}
-
-                    {srv.Tariff && srv.Tariff.GDLab.Textures
-                        &&<div className={styles.SettingsPlato} style={{margin:"0 .5rem .5rem .5rem"}}>
-                        <input type="file" accept=".fpack" hidden ref={uploadTexturesRef} onChange={changeTextures}/>
-
-                        <p>{locale.get('buildLab')[3]} (<span style={{color:"var(--primary-color)"}}>{buildlab.textures==="default"?locale.get('buildLab')[4]:buildlab.textures}</span>)</p>
-                        <div style={{display:"flex"}}>
-                            <IconButton className={`${styles.SquareIcon} ${styles.SquareIconGreen}`}
-                                        onClick={()=>uploadTexturesRef.current.click()}>
-                                <CloudUploadIcon/></IconButton>
-                            <IconButton className={`${styles.SquareIcon} ${styles.SquareIconRed}`}
-                                        onClick={()=>setBuildlab({...buildlab, textures: "default"})}>
-                                <Restore/></IconButton>
-                        </div>
-                    </div>}
-
-                    <div className={styles.CardBottom} style={{margin:".5rem 0 0 0"}}>
-                        <Button variant="contained" className={`${styles.SlimButton} ${styles.btnSuccess}`}
-                                onClick={goBuildLab}>{locale.get('buildLab')[5]}</Button>
-                        <Button variant="contained" className={styles.SlimButton}
-                                onClick={()=>setBackdrop("none")}>{locale.get('buildLab')[6]}</Button>
+                                    {locale.get('coreSettings')[5]}</p>
+                                <FruitSwitch checked={settings.spaceMusic} onChange={(e, val)=>setSettings({
+                                    ...settings, spaceMusic: val,
+                                })} disabled={!!srv.Srv.is_space_music} />
+                            </div>
+                        }
+                        <fieldset className={styles.SettingsFieldset}>
+                            <legend> <Tooltip title={locale.get('tips')[1]}>
+                                <IconButton><HelpIcon/></IconButton></Tooltip>
+                                {locale.get('coreSettings')[4]} <FruitSwitch checked={settings.security.enabled} onChange={(e, val)=>setSettings({
+                                ...settings, security: {...settings.security, enabled: val},
+                            })} />
+                            </legend>
+                            <div className={styles.SettingsPlato}>
+                                <p>{locale.get('coreSettings')[6]}</p>
+                                <FruitSwitch checked={settings.security.autoActivate} onChange={(e, val)=>setSettings({
+                                    ...settings, security: {...settings.security, autoActivate: val},
+                                })} disabled={!settings.security.enabled}/>
+                            </div>
+                            <div className={styles.SettingsPlato}>
+                                <p>{locale.get('coreSettings')[7]}</p>
+                                <FruitSwitch checked={settings.security.levelLimit} onChange={(e, val)=>setSettings({
+                                    ...settings, security: {...settings.security, levelLimit: val},
+                                })} disabled={!settings.security.enabled}/>
+                            </div>
+                        </fieldset>
                     </div>
-                </div>}
+                </div>
 
-                {backdrop==="gdpsbot" && <div className={styles.BackdropBox} onClick={(e)=>e.stopPropagation()}>
-                    {locale.get('gdpsbot')[0]}
-                    <FruitTextField fullWidth label={locale.get('gdpsbot')[2]} value={discordbot.rate||''}
-                                    onChange={(evt)=>setDiscordbot({...discordbot, rate:evt.target.value})}
-                                    placeholder={locale.get('gdpsbot')[1]}
-                                    InputProps={{
-                                        startAdornment: (
-                                            <InputAdornment position="start"><FontAwesomeIcon icon={faStar} className="text-white mr-2" /></InputAdornment>
-                                        ),
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton edge="end" onClick={()=>setDiscordbot({...discordbot, rate:""})}>
-                                                    <DeleteIcon className={styles.redsvg}/>
-                                                </IconButton>
-                                            </InputAdornment>
-                                        )
-                                    }}/>
-                    <FruitTextField fullWidth label={locale.get('gdpsbot')[3]} value={discordbot.newlevel||''}
-                                    onChange={(evt)=>setDiscordbot({...discordbot, newlevel:evt.target.value})}
-                                    placeholder={locale.get('gdpsbot')[1]}
-                                    InputProps={{
-                                        startAdornment: (
-                                            <InputAdornment position="start"><FontAwesomeIcon icon={faUpload} className="text-white mr-2" /></InputAdornment>
-                                        ),
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton edge="end" onClick={()=>setDiscordbot({...discordbot, newlevel:""})}>
-                                                    <DeleteIcon className={styles.redsvg}/>
-                                                </IconButton>
-                                            </InputAdornment>
-                                        )
-                                    }}/>
-                    <FruitTextField fullWidth label={locale.get('gdpsbot')[4]} value={discordbot.newuser||''}
-                                    onChange={(evt)=>setDiscordbot({...discordbot, newuser:evt.target.value})}
-                                    placeholder={locale.get('gdpsbot')[1]}
-                                    InputProps={{
-                                        startAdornment: (
-                                            <InputAdornment position="start"><FontAwesomeIcon icon={faUser} className="text-white mr-2" /></InputAdornment>
-                                        ),
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton edge="end" onClick={()=>setDiscordbot({...discordbot, newuser:""})}>
-                                                    <DeleteIcon className={styles.redsvg}/>
-                                                </IconButton>
-                                            </InputAdornment>
-                                        )
-                                    }}/>
-                    <FruitTextField fullWidth label={locale.get('gdpsbot')[5]} value={discordbot.newmusic||''}
-                                    onChange={(evt)=>setDiscordbot({...discordbot, newmusic:evt.target.value})}
-                                    placeholder={locale.get('gdpsbot')[1]}
-                                    InputProps={{
-                                        startAdornment: (
-                                            <InputAdornment position="start"><FontAwesomeIcon icon={faMusic} className="text-white mr-2" /></InputAdornment>
-                                        ),
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton edge="end" onClick={()=>setDiscordbot({...discordbot, newmusic:""})}>
-                                                    <DeleteIcon className={styles.redsvg}/>
-                                                </IconButton>
-                                            </InputAdornment>
-                                        )
-                                    }}/>
+                <div className={styles.CardBox}>
+                    <h3>{locale.get('customSettings')[0]}</h3>
+                    <div className={styles.CardInbox}>
+                    <FruitTextField
+                        label={locale.get('customSettings')[1]} multiline fullWidth
+                        value={settings.description.text||''}
+                        onChange={(evt)=>{setSettings({...settings,
+                            description: {...settings.description, text: evt.target.value}
+                        })}}
+                        inputProps={{style:{textAlign: aligns[settings.description.align]}}}
+                    />
+                        <p>{locale.get('aboutSectDesc')[0]} <span className={styles.CodeBlock}>#players#</span> {locale.get('aboutSectDesc')[1]} <span className={styles.CodeBlock}>#levels#</span>
+                            {' '+locale.get('aboutSectDesc')[2]}</p>
+
+                    </div>
+
+
                     <div className={styles.CardBottom}>
-                        <Button variant="contained" className={styles.cardButton}
-                                onClick={()=>setBackdrop("none")}>{locale.get('socials')[3]}</Button>
+
+                        {srv.Tariff && srv.Tariff.GDLab.Enabled && <Button variant="contained"
+                            className={`${styles.cardButton} ${styles.btnSuccess}`} style={{height:40}}
+                            onClick={()=>setBackdrop("buildlab")}>🔨 BuildLab™</Button>}
+
+                        <ButtonGroup variant="contained"
+                        sx={{backgroundColor: "var(--btn-color)"}}
+                        className={styles.ToggleGroupImitator}>
+                            <FruitIconButton className={settings.description.vk&&styles.btnLinked}
+                                             onClick={()=>setBackdrop("linksocial")}>
+                                <img src={vkLogo.src} />
+                            </FruitIconButton>
+                            <FruitIconButton className={settings.description.discord&&styles.btnLinked}
+                                             onClick={()=>setBackdrop("linksocial")}>
+                                <img src={discordLogo.src} />
+                            </FruitIconButton>
+                        </ButtonGroup>
+
+                    <FruitToggleButtonGroup
+                        size={"small"}
+                        sx={{backgroundColor:"var(--bkg-color)", width:"fit-content", borderRadius: "8px"}}
+                        value={settings.description.align} exclusive
+                        onChange={(e,val)=>{setSettings({...settings,
+                            description: {...settings.description, align: val}
+                        })}}>
+                        <ToggleButton value={0} aria-label="left aligned">
+                            <FormatAlignLeftIcon />
+                        </ToggleButton>
+                        <ToggleButton value={1} aria-label="centered">
+                            <FormatAlignCenterIcon />
+                        </ToggleButton>
+                        <ToggleButton value={2} aria-label="right aligned">
+                            <FormatAlignRightIcon />
+                        </ToggleButton>
+                    </FruitToggleButtonGroup>
+                </div>
+                </div>
+
+                <div className={styles.CardBox}>
+                    <h3>{locale.get('systemSettings')[0]}</h3>
+                    <div className={styles.CardInbox}>
+                        <p>{locale.get('systemSettings')[1]} <span className={styles.CodeBlock}>GhostCore | v2.X (Hybrid)</span></p>
+                        <div className={styles.SettingsPlato}>
+                            <b>{locale.get('systemSettings')[2]}</b>
+                            <span>
+                                <Button variant="contained" className={`${styles.SlimButton} ${styles.btnError}`}
+                                        onClick={()=>setBackdrop("delete")}>{locale.get('systemSettings')[3]}</Button>
+                                {srv.Tariff && srv.Tariff.Backups
+                                    && <Button variant="contained" className={styles.SlimButton}
+                                        onClick={()=>setBackdrop("backups")}>{locale.get('systemSettings')[4]}</Button>}
+                            </span>
+                        </div>
+                        <fieldset className={styles.SettingsFieldset} disabled={srv.Srv.plan<3}>
+                            <legend>{locale.get('systemSettings')[5]}
+                                <FruitSwitch  checked={!!(settings.modules&&settings.modules.discord)}
+                                onChange={(e, val)=>setSettings({...settings, modules: {...settings.modules, discord: val}})}/>
+                            </legend>
+                            <div className={styles.SettingsPlato}>
+                                <span><IconButton><img src={discordLogo.src} className={styles.adornments}/></IconButton>{locale.get('systemSettings')[6]}</span>
+                                <IconButton onClick={()=>setBackdrop("gdpsbot")}><SettingsIcon/></IconButton>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+
+        </PanelContent>
+
+        <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={backdrop!="none"} onClick={()=>setBackdrop("none")}>
+
+            {backdrop==="dbreset" && <div className={styles.BackdropBox} onClick={(e)=>e.stopPropagation()}>
+                {locale.get('dbResetConfirm')[0]}
+                <div className={styles.CardBottom}>
+                    <Button variant="contained" className={`${styles.SlimButton} ${styles.btnError}`}
+                            onClick={ResetDBPassword}>{locale.get('dbResetConfirm')[1]}</Button>
+                    <Button variant="contained" className={styles.SlimButton}
+                            onClick={()=>setBackdrop("none")}>{locale.get('dbResetConfirm')[2]}</Button>
+                </div>
+            </div>}
+
+            {backdrop==="linksocial" && <div className={styles.BackdropBox} onClick={(e)=>e.stopPropagation()}>
+                {locale.get('socials')[0]}
+                <FruitTextField fullWidth label={locale.get('socials')[1]} value={settings.description.vk||''}
+                                onChange={(evt)=>setSettings({...settings, description: {
+                                        ...settings.description, vk: evt.target.value
+                                    }})}
+                                placeholder="fruit_space"
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start"><IconButton>
+                                                <img src={vkLogo.src} className={styles.adornments}/>
+                                        </IconButton><p>vk.com/</p></InputAdornment>
+                                    ),
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton edge="end" onClick={()=>{setSettings({...settings, description: {
+                                                ...settings.description, vk: ""
+                                                }})}}>
+                                                <DeleteIcon className={styles.redsvg}/>
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
+                                }}/>
+                <FruitTextField fullWidth label={locale.get('socials')[0]} value={settings.description.discord||''}
+                                onChange={(evt)=>setSettings({...settings, description: {
+                                        ...settings.description, discord: evt.target.value
+                                    }})}
+                                placeholder="fruitspace"
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start"><IconButton>
+                                            <img src={discordLogo.src} className={styles.adornments}/>
+                                        </IconButton><p>discord.gg/</p></InputAdornment>
+                                    ),
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton edge="end" onClick={()=>{setSettings({...settings, description: {
+                                                    ...settings.description, discord: ""
+                                                }})}}>
+                                                <DeleteIcon className={styles.redsvg}/>
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
+                                }}/>
+                <div className={styles.CardBottom}>
+                    <Button variant="contained" className={styles.cardButton}
+                            onClick={()=>setBackdrop("none")}>{locale.get('socials')[3]}</Button>
+                </div>
+            </div>}
+
+            {backdrop==="delete" && <div className={styles.BackdropBox} style={{padding:0}} onClick={(e)=>e.stopPropagation()}>
+                <div className={styles.deleteBox}>
+                    {locale.get('deleteConfirm')[0]}
+                    <div className={styles.CardBottom}>
+                        <FruitThinField label={locale.get('deleteConfirm')[1]+deleteCode} value={userDelCode}
+                        onChange={(evt)=>setUserDelCode(evt.target.value.replaceAll(/[^0-9]/g,'').substring(0,4))}/>
+                        <Button variant="contained" className={`${styles.SlimButton} ${styles.btnError}`}
+                                onClick={()=>{userDelCode===deleteCode?deleteServer()
+                                    :toast.error(locale.get('deleteConfirm')[2],{style: {
+                                            color: "white",
+                                            backgroundColor: "var(--btn-color)"
+                                        }})
+                                }}>{locale.get('deleteConfirm')[3]}</Button>
+                        <Button variant="contained" className={`${styles.SlimButton} ${styles.btnSuccess}`}
+                                onClick={()=>setBackdrop("none")}>{locale.get('deleteConfirm')[4]}</Button>
+                    </div>
+                </div>
+
+            </div>}
+
+            {backdrop==="backups" && <div className={styles.BackdropBox} onClick={(e)=>e.stopPropagation()}>
+                <h3>{locale.get('backups')[0]}</h3>
+                <List>
+                    {srv.backups.map((val,i)=>(
+                            <ListItem key={i} className={styles.hoverable} secondaryAction={
+                                <IconButton edge="end">
+                                    <CloudUploadIcon onClick={()=>toast.success(locale.get('backups')[1]+val.date+locale.get('backups')[2],{style: {
+                                            color: "white",
+                                            backgroundColor: "var(--btn-color)"
+                                        }})} />
+                                </IconButton>}>
+                                <ListItemAvatar>
+                                    <BackupBox className={styles.bluesvg} style={{marginRight:"1rem"}}/>
+                                </ListItemAvatar>
+                                <ListItemText primary={srv.srvname+" "+val.date}
+                                              secondary={<p style={{margin:0}}>{ParseDesc(val.players,val.levels)}</p>}/>
+                            </ListItem>
+                        ))}
+                </List>
+                {locale.get('backups')[3]}
+                <div className={styles.CardBottom}>
+                    <Button variant="contained" className={styles.SlimButton}
+                            onClick={()=>setBackdrop("none")}>{locale.get('backups')[4]}</Button>
+                </div>
+            </div>}
+
+            {backdrop==="buildlab" && <div className={styles.BackdropBox}
+                                           style={{position:"relative",padding:"0 .5rem .5rem .5rem "}} onClick={(e)=>e.stopPropagation()}>
+                    <TabsUnstyled value={buildlab.version} onChange={(e,val)=>setBuildlab({
+                        ...buildlab, version: val, ios: (val==="2.2"?false:buildlab.ios)
+                    })} className={styles.floatSelector}>
+                        <TabsList>
+                            <Tab value="2.1">2.1</Tab>
+                            <Tab value="2.2">2.2 Custom</Tab>
+                            {/* То есть по твоему то что 2.2 вышел делает GDPS Editor официальным??? */}
+                        </TabsList>
+                    </TabsUnstyled>
+
+                <h3 className={styles.buildlabBrand}>
+                    <img src={GDLablogo.src}/>
+                    <div><h5>FruitSpace</h5><h3>GeometryLab™</h3></div>
+                </h3>
+                <div className={styles.buildlabTop}>
+                    <img src={srvIcon} />
+                    <input type="file" accept=".png, .jpg, .jpeg" hidden ref={uploadRef} onChange={changeIcon}/>
+                    <div>
+                        {srv.Tariff && srv.Tariff.GDLab.V22
+                            && <FruitThinField fullWidth label={locale.get('buildLab')[0]} value={buildlab.srvname||srv.Srv.srv_name} onChange={(evt)=>setBuildlab({
+                            ...buildlab, srvname: evt.target.value
+                        })} style={{marginBottom: ".5rem"}} InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton edge="end" onClick={()=>{setBuildlab({...buildlab, srvname: ""})}}>
+                                        <Restore/>
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }}/>}
+
+                        {srv.Tariff && srv.Tariff.GDLab.Icons && <div style={{width:"100%"}}>
+                            <IconButton className={`${styles.SquareIcon} ${styles.SquareIconGreen}`}
+                            onClick={()=>uploadRef.current.click()}>
+                                <AddPhotoAlternate/></IconButton>
+                            <IconButton className={`${styles.SquareIcon} ${styles.SquareIconRed}`}
+                            onClick={()=>setBuildlab({...buildlab, icon: "gd_default.png"})}>
+                                <DeleteIcon/></IconButton>
+
+                        </div>}
+                    </div>
+
+                </div>
+
+                <fieldset className={styles.SettingsFieldset}>
+                    <legend>{locale.get('buildLab')[7]}</legend>
+                    {buildlab.version==="2.1" && <div className={styles.SettingsPlato}>
+                        <p><FontAwesomeIcon icon={faWindows}/> Windows</p>
+                        <FruitSwitch checked={buildlab.windows} onChange={(e, val) => setBuildlab({
+                            ...buildlab, windows: val,
+                        })}/>
+                    </div>}
+                    <div className={styles.SettingsPlato}>
+                        <p>{buildlab.version==="2.2" && <><Chip color="warning" icon={<Warning />} label="Unstable"/>&nbsp;</>}
+                            <FontAwesomeIcon icon={faAndroid}/> Android</p>
+                        <FruitSwitch checked={buildlab.android} onChange={(e, val)=>setBuildlab({
+                            ...buildlab, android: val,
+                        })}/>
+                    </div>
+                    {srv.Tariff && srv.Tariff.GDLab.IOS && buildlab.version==="2.1" && <div className={styles.SettingsPlato}>
+                        <p><FontAwesomeIcon icon={faApple}/> iOS</p>
+                        <FruitSwitch checked={buildlab.ios} onChange={(e, val)=>setBuildlab({
+                            ...buildlab, ios: val,
+                        })}/>
+                    </div>}
+                </fieldset>
+
+                {buildlab.version==="2.2"&& <Alert severity="warning" style={{backgroundColor:"#ed6c02",color:"#fff",marginTop:"1rem"}}>{locale.get('buildLab')[1]}</Alert>}
+
+                {buildlab.textures!=="default"&& <Alert severity="warning" style={{backgroundColor:"#ed6c02",color:"#fff",marginTop:"1rem"}}>
+                    {locale.get('buildLab')[2]}</Alert>}
+
+                {srv.Tariff && srv.Tariff.GDLab.Textures
+                    &&<div className={styles.SettingsPlato} style={{margin:"0 .5rem .5rem .5rem"}}>
+                    <input type="file" accept=".fpack" hidden ref={uploadTexturesRef} onChange={changeTextures}/>
+
+                    <p>{locale.get('buildLab')[3]} (<span style={{color:"var(--primary-color)"}}>{buildlab.textures==="default"?locale.get('buildLab')[4]:buildlab.textures}</span>)</p>
+                    <div style={{display:"flex"}}>
+                        <IconButton className={`${styles.SquareIcon} ${styles.SquareIconGreen}`}
+                                    onClick={()=>uploadTexturesRef.current.click()}>
+                            <CloudUploadIcon/></IconButton>
+                        <IconButton className={`${styles.SquareIcon} ${styles.SquareIconRed}`}
+                                    onClick={()=>setBuildlab({...buildlab, textures: "default"})}>
+                            <Restore/></IconButton>
                     </div>
                 </div>}
-            </Backdrop>
-        </>
-    )
+
+                <div className={styles.CardBottom} style={{margin:".5rem 0 0 0"}}>
+                    <Button variant="contained" className={`${styles.SlimButton} ${styles.btnSuccess}`}
+                            onClick={goBuildLab}>{locale.get('buildLab')[5]}</Button>
+                    <Button variant="contained" className={styles.SlimButton}
+                            onClick={()=>setBackdrop("none")}>{locale.get('buildLab')[6]}</Button>
+                </div>
+            </div>}
+
+            {backdrop==="gdpsbot" && <div className={styles.BackdropBox} onClick={(e)=>e.stopPropagation()}>
+                {locale.get('gdpsbot')[0]}
+                <FruitTextField fullWidth label={locale.get('gdpsbot')[2]} value={discordbot.rate||''}
+                                onChange={(evt)=>setDiscordbot({...discordbot, rate:evt.target.value})}
+                                placeholder={locale.get('gdpsbot')[1]}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start"><FontAwesomeIcon icon={faStar} className="text-white mr-2" /></InputAdornment>
+                                    ),
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton edge="end" onClick={()=>setDiscordbot({...discordbot, rate:""})}>
+                                                <DeleteIcon className={styles.redsvg}/>
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
+                                }}/>
+                <FruitTextField fullWidth label={locale.get('gdpsbot')[3]} value={discordbot.newlevel||''}
+                                onChange={(evt)=>setDiscordbot({...discordbot, newlevel:evt.target.value})}
+                                placeholder={locale.get('gdpsbot')[1]}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start"><FontAwesomeIcon icon={faUpload} className="text-white mr-2" /></InputAdornment>
+                                    ),
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton edge="end" onClick={()=>setDiscordbot({...discordbot, newlevel:""})}>
+                                                <DeleteIcon className={styles.redsvg}/>
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
+                                }}/>
+                <FruitTextField fullWidth label={locale.get('gdpsbot')[4]} value={discordbot.newuser||''}
+                                onChange={(evt)=>setDiscordbot({...discordbot, newuser:evt.target.value})}
+                                placeholder={locale.get('gdpsbot')[1]}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start"><FontAwesomeIcon icon={faUser} className="text-white mr-2" /></InputAdornment>
+                                    ),
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton edge="end" onClick={()=>setDiscordbot({...discordbot, newuser:""})}>
+                                                <DeleteIcon className={styles.redsvg}/>
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
+                                }}/>
+                <FruitTextField fullWidth label={locale.get('gdpsbot')[5]} value={discordbot.newmusic||''}
+                                onChange={(evt)=>setDiscordbot({...discordbot, newmusic:evt.target.value})}
+                                placeholder={locale.get('gdpsbot')[1]}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start"><FontAwesomeIcon icon={faMusic} className="text-white mr-2" /></InputAdornment>
+                                    ),
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton edge="end" onClick={()=>setDiscordbot({...discordbot, newmusic:""})}>
+                                                <DeleteIcon className={styles.redsvg}/>
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
+                                }}/>
+                <div className={styles.CardBottom}>
+                    <Button variant="contained" className={styles.cardButton}
+                            onClick={()=>setBackdrop("none")}>{locale.get('socials')[3]}</Button>
+                </div>
+            </div>}
+        </Backdrop>
+    </>;
 }
 
 SettingsGD.RequireAuth=true

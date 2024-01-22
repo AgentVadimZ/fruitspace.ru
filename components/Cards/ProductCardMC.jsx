@@ -16,16 +16,16 @@ export default function ProductCardMC(props) {
                     {props.children}
                 </List>
             </div>
-            <Link href={props.link?("/product/"+props.link):"#"}>
+            <Link href={props.link?("/product/"+props.link):"#"} legacyBehavior>
                 <Button variant="contained" className="m-2 mt-auto rounded-lg bg-[#0d6efd] h-12 disabled:!text-gray-500" disabled={props.disabled}>
                     {props.btnText}
                 </Button>
             </Link>
-            {props.btnTopText && <Link href={props.link?("/top/"+props.link):"#"}>
+            {props.btnTopText && <Link href={props.link?("/top/"+props.link):"#"} legacyBehavior>
                 <Button variant="contained" className="m-2 mt-auto rounded-lg bg-[#0d6efd] h-12 disabled:!text-gray-500" disabled={props.disabled} style={{marginTop:"0"}}>
                     {props.btnTopText}
                 </Button>
             </Link>}
         </div>
-    )
+    );
 }

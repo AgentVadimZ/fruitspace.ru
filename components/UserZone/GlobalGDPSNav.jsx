@@ -33,23 +33,26 @@ export default function GlobalGDPSNav(props) {
 
     return (
         <NavBar>
-            <Link href={"/"}><>
+            <Link href={"/"} legacyBehavior><>
                 <img src={props.icon} alt="logo" className={styles.logo}></img>
                 <h2 className="font-normal text-lg">{props.name}</h2>
             </></Link>
             <span className={`${styles.delim} !mr-0`} />
-            <Link href={"/"}><img src={logo.src} alt="logo" className={`${styles.logo} !h-[100%]`}></img></Link>
+            <Link href={"/"} legacyBehavior><img src={logo.src} alt="logo" className={`${styles.logo} !h-[100%]`}></img></Link>
             <span style={{flex:1}}></span>
             <NavItem profile icon={<img src={props.icon}/>} open={open} setOpen={setOpen} name="profile">
                 <DropdownMenu>
                     {userList}
-                    <Link href={`/gdps/${router.query.srvid}?fresh=y`} prefetch={false}>
+                    <Link
+                        href={`/gdps/${router.query.srvid}?fresh=y`}
+                        prefetch={false}
+                        legacyBehavior>
                         <DropdownItem key="fresh" leftIcon={<LogoutOutlinedIcon/>}>{globalLocale.get('addaccount')}</DropdownItem>
                     </Link>
                 </DropdownMenu>
             </NavItem>
         </NavBar>
-    )
+    );
 }
 
 
@@ -62,7 +65,7 @@ const getUserlist = (users, setUserList, api) => {
             api.authorization = acc
             api.gdps_users.get(srvid).then(accinfo=>{
                 if (!accinfo.uname) return
-                userlist.push(<Link href={`/gdps/${srvid}/panel?acc=${acc}`} prefetch={false}>
+                userlist.push(<Link href={`/gdps/${srvid}/panel?acc=${acc}`} prefetch={false} legacyBehavior>
                     <DropdownItem key={`${i}${srvid}`} leftIcon={
                         <img onError={(img)=>{img.target.src=`https://cdn.fruitspace.one/server_icons/gd_default.png`}}
                              src={`https://cdn.fruitspace.one/server_icons/gd_${srvid}.png`}/>

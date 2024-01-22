@@ -1,4 +1,3 @@
-import NavItem from "../NavBar/NavItem";
 import SideBar from "../NavBar/SideBar";
 
 import PersonIcon from '@mui/icons-material/Person';
@@ -7,7 +6,6 @@ import MusicIcon from "../assets/icons/panel_music.svg"
 
 import Link from "next/link";
 import {useRouter} from "next/router";
-import {Tooltip} from "@mui/material";
 import {useGlobalLocale} from "../../locales/useLocale";
 import SideItem from "../NavBar/SideItem";
 
@@ -23,10 +21,10 @@ export default function GDPSNavBar(props) {
 
     return (
         <SideBar>
-            <Link href={"/gdps/"+srvid+"/panel"}>
+            <Link href={"/gdps/"+srvid+"/panel"} legacyBehavior>
                 <SideItem icon={<PersonIcon className="h-5" />} active={action==="panel"} text={globalLocale.get('panelGDPSNav').profile} />
             </Link>
-            {props.music && <Link href={"/gdps/"+srvid+"/music"} passHref>
+            {props.music && <Link href={"/gdps/"+srvid+"/music"} passHref legacyBehavior>
                 <SideItem icon={<MusicIcon className="h-5" />} active={action==="music"} text={globalLocale.get('panelGDPSNav').music} />
             </Link>}
             {/*{srv.tariffConfig.Roles && <Link href={"/manage/gd/"+srvid+"/roles"}>*/}
@@ -65,5 +63,5 @@ export default function GDPSNavBar(props) {
             {/*    </NavItem>*/}
             {/*</Link>}*/}
         </SideBar>
-    )
+    );
 }

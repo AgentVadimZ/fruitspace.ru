@@ -39,8 +39,7 @@ export default function Home(props) {
 
     const scrollRef = useRef(null)
 
-    return (
-    <>
+    return <>
         <GlobalHead og={og} />
         <div className="fixed top-0 left-0 w-screen h-screen -z-20 bg-[#191921]"></div>
         <div className="fixed top-0 left-0 w-screen h-screen -z-10 techBg"></div>
@@ -75,7 +74,7 @@ export default function Home(props) {
                     <p className="text-lg text-center xl:text-2xl m-0 font-[Helvetica]">Удобный и надежный хостинг для ваших любимых игр. И ещё немножко магии ✨</p>
 
                     <div className="mt-24 grid grid-cols-1 xl:grid-cols-3 gap-4 xl:gap-16 select-none">
-                        <Link href="/product/gd">
+                        <Link href="/product/gd" legacyBehavior>
                             <div className="p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] flex flex-col">
                                 <div className="flex-1 bg-[var(--subtle-color)] rounded-2xl p-4 pr-2 font-[Helvetica] cursor-pointer flex items-center hover:opacity-90 transition-all max-w-md">
                                     <img alt="prod.logo" className="h-24 mr-2" src={GDLogo.src} />
@@ -89,7 +88,7 @@ export default function Home(props) {
                             </div>
                         </Link>
                         
-                        <Link href="/product/mc">
+                        <Link href="/product/mc" legacyBehavior>
                         <div className="p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] flex flex-col">
                             <div className="flex-1 bg-[var(--subtle-color)] rounded-2xl p-4 pr-2 font-[Helvetica] cursor-pointer flex items-center hover:opacity-90 transition-all max-w-md">
                                 <img alt="prod.logo" className="h-24 mr-2" src={MinecraftLogo.src} />
@@ -116,7 +115,7 @@ export default function Home(props) {
                         </div>
                     </div>
 
-                    <Link href="/top/gd">
+                    <Link href="/top/gd" legacyBehavior>
                         <div className="w-full md:w-fit mt-4 xl:mt-8 p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] flex flex-col">
                             <div className="flex-1 bg-[var(--subtle-color)] rounded-2xl p-2 font-[Helvetica] cursor-pointer flex items-center justify-between hover:opacity-90 transition-all md:max-w-md">
                                 <img alt="prod.logo" className="h-16 lg:mr-2" src="https://img.icons8.com/nolan/96/1A6DFF/C822FF/prize.png" />
@@ -175,8 +174,7 @@ export default function Home(props) {
         </div>
 
         <Footer router={props.router}/>
-    </>
-  )
+    </>;
 }
 
 const reviews = [

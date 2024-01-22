@@ -15,21 +15,21 @@ export default function Footer(props) {
             <div className={styles.footerTop}>
                 <div className={styles.footerLinklist}>
                     <h3>{locale.get('footer.about')}</h3>
-                    <Link href="/about"><p className="hover:text-white hover:underline">{locale.get('footer.about')}</p></Link>
-                    <Link href="/about/team"><p className="hover:text-white hover:underline">{locale.get('footer.team')}</p></Link>
-                    <Link href="/about/partnership"><p className="hover:text-white hover:underline">{locale.get('footer.partnership')}</p></Link>
-                    <Link href="/about/tos"><p className="hover:text-white hover:underline">{locale.get('footer.tos')}</p></Link>
+                    <Link href="/about" legacyBehavior><p className="hover:text-white hover:underline">{locale.get('footer.about')}</p></Link>
+                    <Link href="/about/team" legacyBehavior><p className="hover:text-white hover:underline">{locale.get('footer.team')}</p></Link>
+                    <Link href="/about/partnership" legacyBehavior><p className="hover:text-white hover:underline">{locale.get('footer.partnership')}</p></Link>
+                    <Link href="/about/tos" legacyBehavior><p className="hover:text-white hover:underline">{locale.get('footer.tos')}</p></Link>
                 </div>
                 <div className={styles.footerLinklist}>
                     <h3>FruitSpace</h3>
-                    <Link href="/product/mc"><p className="hover:text-white hover:underline">{locale.get('footer.hostingmc')}</p></Link>
-                    <Link href="/product/gd"><p className="hover:text-white hover:underline">{locale.get('footer.hostinggd')}</p></Link>
-                    <Link href="/product/cs"><p className="hover:text-white hover:underline">{locale.get('footer.hostingcs')}</p></Link>
+                    <Link href="/product/mc" legacyBehavior><p className="hover:text-white hover:underline">{locale.get('footer.hostingmc')}</p></Link>
+                    <Link href="/product/gd" legacyBehavior><p className="hover:text-white hover:underline">{locale.get('footer.hostinggd')}</p></Link>
+                    <Link href="/product/cs" legacyBehavior><p className="hover:text-white hover:underline">{locale.get('footer.hostingcs')}</p></Link>
                     {/* TAKE YOUR API BACK TO ROBLOX */}
                     {/* <Link href="https://api.fruitspace.one/v2/antiswagger/"><p className="hover:text-white hover:underline">FruitSpace API</p></Link> */}
                 </div>
                 <span className="flex-1"></span>
-                <Link href="https://m41den.com">
+                <Link href="https://m41den.com" legacyBehavior>
                     <div className="my-auto p-1 h-fit group w-36 flex !items-center bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] transition-all duration-300 hover:w-60">
                         <div className="h-24 w-[9rem] !m-0 cursor-pointer flex flex-col justify-center transition-all duration-300 bg-black">
                             <div className="mx-4 my-2">
@@ -54,5 +54,5 @@ export default function Footer(props) {
                 </a>
             </div>
         </div>
-    )
+    );
 }

@@ -109,7 +109,7 @@ export default function PayBox(props) {
                 </div>
             </Backdrop>
         </div>
-    )
+    );
 }
 
 

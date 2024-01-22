@@ -27,7 +27,7 @@ export default function Carousel(props) {
 
 export function CarouselItem(props) {
     return (
-        <Link href={props.link}>
+        <Link href={props.link} legacyBehavior>
             <div className={styles.carouselItem}>
                 <img src={props.image} alt="carousel"/>
                 <div className={styles.textbox}>
@@ -36,5 +36,5 @@ export function CarouselItem(props) {
                 </div>
             </div>
         </Link>
-    )
+    );
 }
