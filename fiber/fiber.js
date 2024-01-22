@@ -343,6 +343,10 @@ class particles {
         return await this._api.do("particle/search", "POST", data)
     }
 
+    get_particle = async (author, name) => {
+        return await this._api.do(`particle/v/${author}/${name}`, "GET")
+    }
+
     get_user = async (reg=false) => {
         return await this._api.do(`particle/user?reg=${reg?"true":"false"}`, "GET")
     }

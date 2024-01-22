@@ -31,6 +31,11 @@
     cursor: pointer !important;
 }
 
+.ant-menu-sub:last-child {
+    border-radius: 0 0 .75rem .75rem !important;
+}
+
+
 .ant-select-selector {
     box-shadow: none !important;
 }

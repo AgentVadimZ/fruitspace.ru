@@ -3,7 +3,7 @@ import GlobalNav from "../../components/GlobalNav";
 import PanelSideNav from "../../components/PanelSideNav";
 import PanelContent from "../../components/Global/PanelContent";
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";
-import {Input, Form, Menu, Button, Select, Checkbox, List, Modal} from "antd";
+import {Input, Form, Menu, Button, Select, Checkbox, List, Modal, Pagination} from "antd";
 import {faCircleCheck, faClock, faCopy, faDownload} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import toast, {Toaster} from "react-hot-toast";
@@ -14,32 +14,6 @@ import Link from "next/link";
 import useFiberAPI from "../../fiber/fiber";
 import {useEffect, useState} from "react";
 import useSWR, {mutate} from "swr";
-
-// type Particle struct {
-//     gorm.Model
-//     Name        string
-//     Author      string
-//     UID         uint
-//     Arch        string
-//     LayerID     string
-//     Version     string
-//     Description string
-//     Recipe      string
-//     Size        uint `gorm:"default:0"` // bytes
-//     IsPrivate   bool `gorm:"default:0"`
-//     IsUnlisted  bool `gorm:"default:0"`
-// Downloads   uint   `gorm:"default:0" json:"downloads"`
-// Likes       uint   `gorm:"default:0" json:"likes"`
-// IsOfficial  bool   `gorm:"default:0" json:"is_official"`
-// }
-
-// type ParticleUser struct {
-//     gorm.Model
-//     Username       string `json:"username"`
-//     Token          string `json:"token"`
-//     MaxAllowedSize uint   `json:"max_allowed_size" gorm:"default:0"` //bytes
-//     IsAdmin        bool   `json:"-"`
-// }
 
 const formatMB = (bytes)=>{
     return (bytes/1024/1024).toFixed(1)
@@ -83,6 +57,8 @@ const arches = ["w64", "w32", "l64", "l32", "l64a", "d64", "d64a"]
 export default function Particles(props) {
 
     const [isLoading, setLoading] = useState(props.globalLoader)
+    const [page, setPage] = useState(1)
+    const [form] = Form.useForm()
 
     const locale = useLocale(props.router)
     const localeGlobal = useGlobalLocale(props.router)
@@ -92,11 +68,17 @@ export default function Particles(props) {
 
     const {data:user, error} = useSWR("puser", ()=>api.particles.get_user())
 
-    console.log(user)
+    const {data:cli_version} = useSWR("https://s3.m41den.com/particle_releases/ver", (url)=>fetch(url).then(r=>r.text()))
 
-    const searchParticles = async (d) => {
+    const downloadCLI = ({arch}) => {
+        if (arch[0]==="w")
+            arch+=".exe"
+        window?.open(`https://s3.m41den.com/particle_releases/particle-${arch}`,"_blank")
+    }
+
+    const searchParticles = async (d, page=1) => {
         setLoading(true)
-        api.particles.search(d).then(res=>{
+        api.particles.search({...d, page: page}).then(res=>{
             setLoading(false)
             if (res.status!=="ok") {
                 toast.error(res.message, {
@@ -109,6 +91,7 @@ export default function Particles(props) {
                 return
             }
             setParticles(res)
+            setPage(page)
         })
     }
 
@@ -145,7 +128,7 @@ export default function Particles(props) {
                             <Form.Item label="Токен" className="mb-0">
                                 <Input.Password value={user?.token} className="!cursor-default"
                                 addonAfter={<FontAwesomeIcon className="cursor-pointer hover:text-white" icon={faCopy}
-                                        onClick={()=>copyValue("lobotomy","Токен скопирован")} />} />
+                                        onClick={()=>copyValue(user?.token,"Токен скопирован")} />} />
                             </Form.Item>
                             <Form.Item label="Исп. место" className="mb-0">
                                 <Input disabled value={`${formatMB(user?.used_size)}/${formatMB(user?.max_allowed_size)} MB`} className="border-0" />
@@ -157,7 +140,7 @@ export default function Particles(props) {
                         <span className="text-xs absolute top-2 left-2 bg-[var(--bkg-color)] rounded-lg px-2 py-0.5">Поиск</span>
                         <span className="mt-3 block"></span>
                         <Form layout="vertical" className="flex flex-col gap-2"
-                        onFinish={searchParticles}>
+                        onFinish={(d)=>searchParticles(d, 1)} form={form}>
                             <Form.Item label="Поиск" className="mb-0" name="query">
                                 <Input placeholder="" className="border-0" />
                             </Form.Item>
@@ -178,11 +161,25 @@ export default function Particles(props) {
                             </div>
                         </Form>
                     </div>
+                    <div className="bg-[var(--subtle-color)] rounded-xl p-4 relative">
+                        <span className="text-xs absolute top-2 left-2 bg-[var(--bkg-color)] rounded-lg px-2 py-0.5">Загрузка CLI</span>
+                        <span className="mt-3 block"></span>
+                        <Form labelCol={{span: 8}} wrapperCol={{span: ''}} className="flex flex-col gap-2" onFinish={downloadCLI}>
+                            <Form.Item label="Архитектура" className="mb-0" name="arch" required>
+                                <Select placeholder="Выберите архитектуру" className="border-0" options={arches.map(val=>({value: val, label: formatArch(val)}))} />
+                            </Form.Item>
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs text-gray-400">v{cli_version}</span>
+                                <Button type="primary" htmlType="submit">Скачать</Button>
+                            </div>
+                        </Form>
+                    </div>
                 </div>
                 <div className="bg-[var(--subtle-color)] rounded-xl p-4 col-span-1 md:col-span-2 xl:col-span-3">
                     {particles.particles.length?
+                        <>
                         <List itemLayout="vertical" dataSource={particles.particles} renderItem={(item,i) => (
-                        <Link href={`/particles/view/${i}`} legacyBehavior>
+                        <Link href={`/particles/v/${item.author}/${item.name}`} legacyBehavior>
                             <List.Item key={i} className="mb-4 !p-4 cursor-pointer bg-[rgba(255,255,255,0.08)] hover:bg-[var(--btn-hover)] rounded-lg">
                                 <List.Item.Meta avatar={<AutoAwesomeIcon className="h-8 w-8 fill-amber-300" />}
                                                 title={<span className="font-normal font-mono flex gap-2 items-center">
@@ -210,6 +207,8 @@ export default function Particles(props) {
                             </List.Item>
                         </Link>
                     )}/>
+                            <Pagination current={page} onChange={(p)=>searchParticles(form.getFieldsValue(true), p)} total={particles.count} defaultPageSize={10} />
+                        </>
                         :<span className="flex flex-col items-center justify-center gap-4 h-full">
                             <AutoAwesomeIcon className="h-8 w-8 fill-amber-300" />
                             Кажется мы ничего не нашли
