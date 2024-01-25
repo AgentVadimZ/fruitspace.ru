@@ -17,10 +17,6 @@ class api {
         this.qid = Math.random()
     }
 
-    registerProvider = (obj, override, bloop=null) => {
-        this[override] = bloop||new obj(this)
-    }
-
     doForm = async (endpoint, method = "GET", body = null) => {
         return fetch(this.base_url + endpoint,
             {method: method, body: body, headers: {"Authorization": this.authorization}}
@@ -64,14 +60,14 @@ const useFiberAPI = (cookie = "token") => {
     xauth.setCookieToken = (token) => setCookie(cookie, token,
         {path: "/", expires: new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * 30)), secure: true})
 
-    sapi.registerProvider(auth, "auth", xauth)
-    sapi.registerProvider(user, "user")
-    sapi.registerProvider(payments, "payments")
-    sapi.registerProvider(ufetch, "fetch")
-    sapi.registerProvider(servers, "servers")
-    sapi.registerProvider(gdps_manage, "gdps_manage")
-    sapi.registerProvider(gdps_users, "gdps_users")
-    sapi.registerProvider(particles, "particles")
+    sapi.auth = xauth
+    sapi.user = new user(sapi)
+    sapi.payments = new payments(sapi)
+    sapi.fetch = new ufetch(sapi)
+    sapi.servers = new servers(sapi)
+    sapi.gdps_manage = new gdps_manage(sapi)
+    sapi.gdps_users = new gdps_users(sapi)
+    sapi.particles = new particles(sapi)
     return sapi
 }
 
@@ -79,13 +75,15 @@ const serverFiberAPI = (ctx, cookie = "token") => {
     const cookies = ctx ? parseCookies(ctx.req) : {}
     let sapi = new api()
     sapi.authorization = cookies[cookie] || ""
-    sapi.registerProvider(auth, "auth")
-    sapi.registerProvider(user, "user")
-    sapi.registerProvider(payments, "payments")
-    sapi.registerProvider(ufetch, "fetch")
-    sapi.registerProvider(servers, "servers")
-    sapi.registerProvider(gdps_manage, "gdps_manage")
-    sapi.registerProvider(gdps_users, "gdps_users")
+
+    sapi.auth = new auth(sapi)
+    sapi.user = new user(sapi)
+    sapi.payments = new payments(sapi)
+    sapi.fetch = new ufetch(sapi)
+    sapi.servers = new servers(sapi)
+    sapi.gdps_manage = new gdps_manage(sapi)
+    sapi.gdps_users = new gdps_users(sapi)
+    sapi.particles = new particles(sapi)
     return sapi
 }
 // endregion
@@ -211,6 +209,19 @@ class ufetch {
     gdpsGet = async (srvid) => {
         return await this._api.do(`fetch/gd/info/${srvid}`, "GET")
     }
+
+    minecraftGetCores = async () => {
+        return await this._api.do("fetch/mc/cores", "GET")
+    }
+
+    minecraftFetchVersions = async () => {
+        let v = await fetch('https://launchermeta.mojang.com/mc/game/version_manifest.json').then(r=>r.json())
+        let vers=[]
+        v.versions.forEach(e=>{
+            e.id.match(/^\d\.[\d]+[\.]*\d$/g)&&vers.push(e.id)
+        })
+        return vers
+    }
 }
 
 
@@ -287,6 +298,10 @@ class gdps_manage {
     }
     searchUsers = async (srvid, keyword) => {
         return await this._api.do(`servers/gd/${srvid}/get/users?user=${encodeURI(keyword)}`, "GET")
+    }
+
+    upgrade22 = async (srvid) => {
+        return await this._api.do(`servers/gd/${srvid}/upgrade22`, "GET")
     }
 }
 

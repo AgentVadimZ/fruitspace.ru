@@ -86,7 +86,7 @@ export default function SettingsGD(props) {
     const [buildlab, setBuildlab] = useState({
         id: "",
         srvname: "",
-        version: "2.1",
+        version: "2.2",
 
         windows: false,
         android: false,
@@ -217,10 +217,11 @@ export default function SettingsGD(props) {
         let res=buildlab.textures
         if (buildlab.textureObj!==null) {
             let cdata = new FormData()
-            cdata.append("reqtype","fileupload")
-            cdata.append("time","12h")
-            cdata.append("fileToUpload",buildlab.textureObj)
-            res = await fetch("https://litterbox.catbox.moe/resources/internals/api.php", {method:"POST", body: cdata}).then(res=>res.text())
+            cdata.append("file",buildlab.textureObj)
+            cdata.append("expires","12h")
+            cdata.append("maxDownloads", "1")
+            cdata.append("autoDelete", "true")
+            res = await fetch("https://file.io", {method:"POST", body: cdata}).then(res=>res.json()).then(r=>(r.link))
         }
             api.gdps_manage.buildlabPush(srv.Srv.srvid, {
                 ...buildlab,
@@ -616,8 +617,7 @@ export default function SettingsGD(props) {
                     })} className={styles.floatSelector}>
                         <TabsList>
                             <Tab value="2.1">2.1</Tab>
-                            <Tab value="2.2">2.2 Custom</Tab>
-                            {/* То есть по твоему то что 2.2 вышел делает GDPS Editor официальным??? */}
+                            <Tab value="2.2">2.2</Tab>
                         </TabsList>
                     </TabsUnstyled>
 
@@ -629,7 +629,7 @@ export default function SettingsGD(props) {
                     <img src={srvIcon} />
                     <input type="file" accept=".png, .jpg, .jpeg" hidden ref={uploadRef} onChange={changeIcon}/>
                     <div>
-                        {srv.Tariff && srv.Tariff.GDLab.V22
+                        {srv.Tariff && srv.Tariff.GDLab.Enabled
                             && <FruitThinField fullWidth label={locale.get('buildLab')[0]} value={buildlab.srvname||srv.Srv.srv_name} onChange={(evt)=>setBuildlab({
                             ...buildlab, srvname: evt.target.value
                         })} style={{marginBottom: ".5rem"}} InputProps={{
@@ -657,28 +657,26 @@ export default function SettingsGD(props) {
 
                 <fieldset className={styles.SettingsFieldset}>
                     <legend>{locale.get('buildLab')[7]}</legend>
-                    {buildlab.version==="2.1" && <div className={styles.SettingsPlato}>
+                    <div className={styles.SettingsPlato}>
                         <p><FontAwesomeIcon icon={faWindows}/> Windows</p>
                         <FruitSwitch checked={buildlab.windows} onChange={(e, val) => setBuildlab({
                             ...buildlab, windows: val,
                         })}/>
-                    </div>}
+                    </div>
                     <div className={styles.SettingsPlato}>
-                        <p>{buildlab.version==="2.2" && <><Chip color="warning" icon={<Warning />} label="Unstable"/>&nbsp;</>}
+                        <p>
                             <FontAwesomeIcon icon={faAndroid}/> Android</p>
                         <FruitSwitch checked={buildlab.android} onChange={(e, val)=>setBuildlab({
                             ...buildlab, android: val,
                         })}/>
                     </div>
-                    {srv.Tariff && srv.Tariff.GDLab.IOS && buildlab.version==="2.1" && <div className={styles.SettingsPlato}>
+                    {srv.Tariff && srv.Tariff.GDLab.IOS && <div className={styles.SettingsPlato}>
                         <p><FontAwesomeIcon icon={faApple}/> iOS</p>
                         <FruitSwitch checked={buildlab.ios} onChange={(e, val)=>setBuildlab({
                             ...buildlab, ios: val,
                         })}/>
                     </div>}
                 </fieldset>
-
-                {buildlab.version==="2.2"&& <Alert severity="warning" style={{backgroundColor:"#ed6c02",color:"#fff",marginTop:"1rem"}}>{locale.get('buildLab')[1]}</Alert>}
 
                 {buildlab.textures!=="default"&& <Alert severity="warning" style={{backgroundColor:"#ed6c02",color:"#fff",marginTop:"1rem"}}>
                     {locale.get('buildLab')[2]}</Alert>}

@@ -4,19 +4,38 @@ import useLocale, {useGlobalLocale} from "../../../locales/useLocale";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
 import {styled} from "@mui/system";
 import {Button, Backdrop, MenuItem, Switch, TextField} from "@mui/material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {TabsList, TabPanel, Tab} from "../../../components/Global/Tab";
+import {Form, Input, Select} from "antd";
+import useFiberAPI from "../../../fiber/fiber";
+import semver from "semver";
+import BackgroundMC from "../../../components/assets/MCOrderBG.png"
 
 export default function OrderMC(props){
     const locale = useLocale(props.router);
     const localeGlobal = useGlobalLocale(props.router)
+    const api = useFiberAPI()
 
     const [tariff, setTariff] = useState(props.router.query.t||"d2")
+    const [cores, setCores] = useState(null)
+    const [versions, setVersions] = useState([])
+
+    const [config, setConfig] = useState({
+        disk: 0,
+        dedicated_port: false,
+        name: "",
+        version: "1.20.4",
+        core: "vanilla"
+    })
+
+    useEffect(() => {
+        api.fetch.minecraftFetchVersions().then(r=>setVersions(r))
+        api.fetch.minecraftGetCores().then(r=>setCores(r.cores))
+    }, []);
+
+
     const [ssd, setSSD] = useState(0)
     const [addPort, setAddPort] = useState(false)
-    const [name, setName] = useState("")
-    const [version, setVersion] = useState("1.20.2")
-    const [core, setCore] = useState("paper")
 
     const [backdrop, setBackdrop] = useState("none")
 
@@ -27,19 +46,23 @@ export default function OrderMC(props){
         return ttype[tariff[1]-1]||ttype[1]
     })()
 
-    const TotalPrice = tariffData.price + ssd*50 + (addPort?1:0)*100
+    const TotalPrice = tariffData.price + config.disk*50 + (config.dedicated_port?1:0)*100
+
+    console.log(BackgroundMC)
 
 
     return(
         <>
-            <div className="flex flex-col bg-[url(https://abrakadabra.fun/uploads/posts/2021-12/1640970997_4-abrakadabra-fun-p-strashnii-fon-mainkraft-4.png)] bg-opacity-50 h-screen w-screen">
+            <div className={`flex flex-col bg-opacity-50 lg:h-screen w-screen bg-cover`} style={{
+                backgroundImage: `url(${BackgroundMC.src})`,
+            }}>
                 <GlobalHead title={localeGlobal.get('navName')}/>
                 <GlobalNav mainpage router={props.router}/>
                 <p className="text-center color-white pt-2 text-xl">Создание нового Minecraft сервера</p>
                 <div className="grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mx-auto w-11/12 lg:w-3/4">
                     <TariffCard tariffData={tariffData} main setBackdrop={setBackdrop} setTariff={setTariff} />
-                    <ConfigCard core={core} setCore={setCore} name={name} setName={setName} version={version} setVersion={setVersion} />
-                    <AdditionalCard ssd={ssd} setSSD={setSSD} addPort={addPort} setAddPort={setAddPort} />
+                    <ConfigCard config={config} setConfig={setConfig} cores={cores} versions={versions} />
+                    <AdditionalCard config={config} setConfig={setConfig} ssd={ssd} setSSD={setSSD} addPort={addPort} setAddPort={setAddPort} />
                 </div>
                 <Total TotalPrice={TotalPrice} />
             </div>
@@ -105,68 +128,67 @@ const TariffCard = ({tariffData, main, setBackdrop, setTariff}) => {
     </div>
 }
 
-const AdditionalCard = ({ssd, setSSD, addPort, setAddPort}) => {
+const AdditionalCard = ({config, setConfig}) => {
     return <div className="glassb flex flex-col relative bg-[var(--subtle-color)] p-4 rounded-xl group">
 
         <p className="mt-0">Доп. услуги</p>
         <div className="flex flex-col gap-2">
-            <div className="rounded-lg bg-[var(--btn-color)] p-2 flex items-center justify-between h-12">
-                <span>Выделенный IP + Порт 25565</span>
-                <FruitSwitch checked={addPort} onChange={(e, val)=>setAddPort(val)} />
-            </div>
+            {/*<div className="rounded-lg bg-[var(--btn-color)] p-2 flex items-center justify-between h-12">*/}
+            {/*    <span>Выделенный IP + Порт 25565</span>*/}
+            {/*    <FruitSwitch checked={addPort} onChange={(e, val)=>setAddPort(val)} />*/}
+            {/*</div>*/}
             <div className="rounded-lg bg-[var(--btn-color)] p-2 flex items-center justify-between h-12">
                 <span>Доп. место</span>
-                <span className="flex items-center gap-2 bg-black bg-opacity-[38%] p-1 rounded-full">
+                <span className="flex items-center gap-2 bg-black bg-opacity-[38%] p-1 rounded-full select-none">
                     <span className="nohighlight hover:cursor-pointer flex items-center justify-center rounded-full h-7 bg-[var(--btn-color)] hover:bg-[var(--btn-hover)] aspect-square"
-                          onClick={()=>setSSD(Math.max(ssd-1,0))}>–</span>
-                    <span className="select-none">{ssd*10} GB</span>
+                          onClick={()=>setConfig(c=>({...c, disk:Math.max(c.disk-1,0)}))}>–</span>
+                    <span className="select-none">{config.disk*10} GB</span>
                     <span className="nohighlight hover:cursor-pointer flex items-center justify-center rounded-full h-7 bg-[var(--btn-color)] hover:bg-[var(--btn-hover)] aspect-square"
-                    onClick={()=>setSSD(ssd+1)}>+</span>
+                    onClick={()=>setConfig(c=>({...c, disk:Math.min(c.disk+1, 20)}))}>+</span>
                 </span>
             </div>
         </div>
     </div>
 }
 
-const ConfigCard = ({name, setName, version, setVersion, core, setCore}) => {
+const ConfigCard = ({config, setConfig, cores, versions}) => {
+
+    const findSuitableVersions = (core) => versions.filter((ver)=>semver.satisfies(ver, cores[core].version_constraint.replace(',','')))
+
+    const suitableVersions = (versions&&cores)?findSuitableVersions(config.core):[]
+
+    const [form] = Form.useForm()
+
     return (
         <div className="glassb flex flex-col relative bg-[var(--subtle-color)] p-4 rounded-xl group"
                     onClick={() => {}}>
 
             <p className="mt-0">Настройки</p>
             <div className="flex flex-col gap-2 h-full">
-                <FruitThinField label="Название сервера" value={name}
-                                onChange={(evt)=>setName(evt.target.value.replaceAll(/[^a-zA-Z0-9.-_]/g,''))} />
-                <div className="mt-auto rounded-lg bg-[var(--btn-color)] p-2 flex items-center justify-between h-12">
-                    <FruitThinField
-                        select label="Ядро" value={core}
-                        sx={{minWidth:"8rem"}}
-                        onChange={(evt)=>setCore(evt.target.value)}>
-                        {cores.map((option) => (
-                            <MenuItem key={option} value={option}>
-                                {option.split("_").map((v)=>{return v[0].toUpperCase()+v.slice(1)}).join(" ")}
-                            </MenuItem>
-                        ))}
-                    </FruitThinField>
-                    <FruitThinField
-                        select label="Версия" value={version}
-                        sx={{minWidth:"8rem"}}
-                        onChange={(evt)=>setVersion(evt.target.value)}>
-                        {versions.map((option) => (
-                            <MenuItem key={option} value={option}>
-                                {option}
-                            </MenuItem>
-                        ))}
-                    </FruitThinField>
-                </div>
+                <Form labelCol={{span: 8}} wrapperCol={{span: 16}} form={form}>
+                    <Form.Item label="Название сервера" name="srvName">
+                        <Input value={config.name} onChange={({target})=>setConfig(c=>({...c, name: target.value.replaceAll(/[^a-zA-Z0-9.\-_ ]/g,'')}))} />
+                    </Form.Item>
+                    <Form.Item label="Ядро" name="core">
+                        <Select showSearch defaultValue={config.core} options={cores&&Object.keys(cores).map(c=>({value: c, label: cores[c].title}))}
+                        onChange={(core)=>{
+                            const ver = findSuitableVersions(core)[0]
+                            setConfig(c=>({...c, core: core, version: ver}))
+                            form.setFieldValue("version", ver)
+                        }}/>
+                    </Form.Item>
+                    <Form.Item label="Версия" name="version">
+                        <Select showSearch defaultValue={config.version} options={suitableVersions.map(ver=>({value:ver}))} />
+                    </Form.Item>
+                </Form>
             </div>
         </div>
     );
 }
 
 const Total = ({TotalPrice}) => {
-    return <div className="mt-auto mb-6 glassb flex justify-between items-center relative bg-[var(--subtle-color)] rounded-xl w-11/12 lg:w-3/4 mx-auto">
-        <p className="select-none text-lg text-right mx-4 my-0">Итоговая цена: {TotalPrice} ₽/мес</p>
+    return <div className="mt-4 lg:mt-auto mb-6 glassb flex justify-between items-center relative bg-[var(--subtle-color)] rounded-xl w-11/12 lg:w-3/4 mx-auto">
+        <p className="select-none text-lg text-right mx-4 my-0">Итого: {TotalPrice} ₽/мес</p>
         <Button variant="contained" className="m-4 text-lg rounded-lg bg-[#0d6efd]">ЗАКАЗАТЬ</Button>
     </div>
 }

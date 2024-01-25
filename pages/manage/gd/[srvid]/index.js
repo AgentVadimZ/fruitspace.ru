@@ -26,6 +26,7 @@ import useLocale from "../../../../locales/useLocale";
 import ProgressCard from "../../../../components/Cards/ProgressCard";
 import GDPSCard, {DownloadCard} from "../../../../components/Cards/GDPSCard";
 import useFiberAPI from "../../../../fiber/fiber";
+import {mutate} from "swr";
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -99,19 +100,36 @@ export default function ManageGD(props) {
                     <h3>{locale.get("nav")}</h3>
                     <div className={styles.CardInbox}>
                         <p className="text-sm" dangerouslySetInnerHTML={{__html: locale.get("note")}}></p>
-                        <a href=" https://fruitspace.gitbook.io/gdps_docs/"
-                           style={{
-                               padding: ".75rem 2rem",
-                               background: "linear-gradient(135deg, #8e388e,#5a00ff 70%, #0d6efd)",
-                               borderRadius: "8px",
-                               margin: "0 auto",
-                           }}>{locale.get("docs")}</a>
+                        <div className="flex items-center justify-between">
+                            <a href="https://fruitspace.gitbook.io/gdps_docs/"
+                               style={{
+                                   padding: ".75rem 2rem",
+                                   background: "linear-gradient(135deg, #8e388e,#5a00ff 70%, #0d6efd)",
+                                   borderRadius: "8px",
+                                   margin: "0 auto",
+                               }}>{locale.get("docs")}</a>
+                            {srv.Srv.plan < 2 && srv.Srv.version != "2.2" && <a onClick={()=>{
+                                api.gdps_manage.upgrade22(srv.Srv.srvid).then(()=>{
+                                    mutate(srv.Srv.srvid)
+                                    toast.success("Ваш сервер обновлен до 2.2! Ожидайте сборки", {
+                                        duration: 1000,
+                                        style: {
+                                            color: "white",
+                                            backgroundColor: "var(--btn-color)"
+                                        }
+                                    })
+                                })
+                            }}
+                                style={{
+                                padding: ".75rem 2rem",
+                                background: "linear-gradient(135deg, #8e388e,#5a00ff 70%, #0d6efd)",
+                                borderRadius: "8px",
+                                margin: "0 auto",
+                                cursor: "pointer"
+                            }}>Обновить до 2.2</a>}
+                        </div>
                     </div>
                 </div>
-
-
-
-
 
 
                 {/*<div className={styles.chartBox}>*/}

@@ -60,7 +60,7 @@ export default function Order(props) {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})
-                router.push("/profile/servers")
+                props.router.push("/profile/servers")
             }else{
                 toast.error(locale.get('createFailed')+ParseError(resp.code, resp.message),{style: {
                         color: "white",
@@ -209,7 +209,7 @@ export default function Order(props) {
         <Toaster/>
         <div className={styles.main}>
 
-            <h2 className="text-center">{srv.name ? "Продлить GDPS" : locale.get('createTitle')}</h2>
+            <h2 className="text-center">{props.router?.query.id ? "Продлить GDPS" : locale.get('createTitle')}</h2>
             <div className="mx-auto w-fit grid grid-cols-1 lg:grid-cols-3">
                 <FruitTextField label={locale.get('createGDPSTitle')} type="text" variant="outlined"
                                 style={{margin: ".5rem", flex: 1}}

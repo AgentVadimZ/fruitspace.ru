@@ -94,7 +94,9 @@ const serverGDModel = {
     vk: "code",
     is_space_music: false,
     is_22: false,
-    is_custom_textures: false
+    is_custom_textures: false,
+    version: "2.2",
+    recipe: ""
 }
 
 const serverGDAtom = atom({
