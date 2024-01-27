@@ -182,15 +182,19 @@ export default function Particles(props) {
                         <Link href={`/particles/v/${item.author}/${item.name}`} legacyBehavior>
                             <List.Item key={i} className="mb-4 !p-4 cursor-pointer bg-[rgba(255,255,255,0.08)] hover:bg-[var(--btn-hover)] rounded-lg">
                                 <List.Item.Meta avatar={<AutoAwesomeIcon className="h-8 w-8 fill-amber-300" />}
-                                                title={<span className="font-normal font-mono flex gap-2 items-center">
-                                    {item.name}
-                                                    <span className="text-sm font-normal px-2 py-1 rounded-md bg-[var(--subtle-color)]">{item.author}</span>
-                                                    {item.is_official&&<span className="flex items-center gap-1 bg-[var(--success-color)] px-1 py-0.5 rounded-md">
-                                        <FontAwesomeIcon className="text-lg" icon={faCircleCheck} />
-                                        <span className="text-xs">Official</span>
-                                    </span>}
+                                                title={<span className="font-normal font-mono flex flex-col lg:flex-row gap-2 lg:items-center">
+                                                    {item.name}
+                                                    <span className="flex items-center gap-2">
+                                                        <span
+                                                            className="text-sm font-normal px-2 py-1 rounded-md bg-[var(--subtle-color)]">{item.author}</span>
+                                                        {item.is_official && <span
+                                                            className="flex items-center gap-1 bg-[var(--success-color)] px-1 py-0.5 rounded-md">
+                                                            <FontAwesomeIcon className="text-lg" icon={faCircleCheck} />
+                                                            <span className="text-xs">Official</span>
+                                                        </span>}
+                                                    </span>
                                 </span>} description={<div className="flex flex-col gap-2">
-                                    <span className="flex gap-2 items-center">
+                                    <span className="flex gap-2 items-center flex-wrap">
                                         <SettingsIcon className="h-4"/> {item.arch.split(",").map(val => <span
                                         key={val}
                                         className="text-xs font-normal px-2 py-1 rounded-md bg-[var(--subtle-color)]">{formatArch(val)}</span>)}

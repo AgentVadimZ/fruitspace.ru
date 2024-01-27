@@ -241,6 +241,13 @@ class servers {
             name: name, tariff: tariff, duration: duration, promocode: promocode, srvid: srvid
         })
     }
+
+    createMC = async (name, tariff, core, version, add_storage, promocode, dedic_port=false, srvid="", duration="mo") => {
+        return await this._api.do("servers/mc", "POST", {
+            name: name, tariff: tariff, core: core, version: version, add_storage: add_storage, promocode: promocode,
+            dedicated_port: dedic_port, srvid: srvid, duration: duration
+        })
+    }
     useGDPS = () => {
         return useRecoilState(serverGDAtom)
     }

@@ -30,7 +30,7 @@ export default function ServerItem(props) {
                 <img className="mr-4 w-16 h-16 rounded-lg bg-[var(--btn-color)]" src={props.icon?props.icon:(Types[props.type]||QuestionMark.src)} />
                 <div className="flex flex-1 flex-col justify-center">
                     <h3 className="m-1">{props.name}</h3>
-                    <p className="mx-4 my-1"><b>{props.plan}</b> → {props.desc}</p>
+                    <p className="mx-4 my-1 flex items-center gap-1"><b>{props.plan}</b> → {props.desc}</p>
                 </div>
                 <RightSvg className="w-8"/>
             </div>

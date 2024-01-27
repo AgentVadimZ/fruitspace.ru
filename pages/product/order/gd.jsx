@@ -66,7 +66,6 @@ export default function Order(props) {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})
-                setLoading(false)
             }})
     }
 

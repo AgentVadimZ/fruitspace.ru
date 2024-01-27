@@ -222,17 +222,17 @@ export default function DownloadPage(props) {
                             <p className="my-0 mx-4 text-lg">{locale.get('download')}</p>
                             {srv.client_windows_url &&
                                 <span className="flex">
-                            {srv.client_windows_url && <span className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
-                                                            onClick={()=>window.location.href=srv.client_windows_url}><FontAwesomeIcon icon={faWindows} className="mr-2" /> Windows
-                            </span>}
-                                    {srv.client_android_url && <span className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
-                                                                    onClick={()=>window.location.href=srv.client_android_url}>
+                                    {srv.client_windows_url && <a className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
+                                                                    href={srv.client_windows_url} filename={srv.client_windows_url.split("/").slice(-1)}><FontAwesomeIcon icon={faWindows} className="mr-2" /> Windows
+                            </a>}
+                                    {srv.client_android_url && <a className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
+                                                                    href={srv.client_android_url}>
                                 <FontAwesomeIcon icon={faAndroid} className="mr-2" /> Android
-                            </span>}
-                                    {srv.client_ios_url && <span className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
-                                                                onClick={()=>window.location.href=srv.client_ios_url}>
+                            </a>}
+                                    {srv.client_ios_url && <a className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
+                                                                    href={srv.client_ios_url} filename={srv.client_ios_url.split("/").slice(-1)}>
                                 <FontAwesomeIcon icon={faApple} className="mr-2" /> iOS
-                            </span>}
+                            </a>}
 
                         </span>}
                         </div>

@@ -49,7 +49,7 @@ export default function MC(props) {
                 primaryText={locale.get('prodmc.titlecloud')} primaryLink="#cloud"/>
                 <h2 className="text-center mt-12 mb-8 text-white text-3xl">{locale.get('prodmc.tariffs')}</h2>
                 <p className="text-center text-lg">Ресурсы</p>
-                <TabsUnstyled value={tab} onChange={(e,val)=>setTab(val)} class=" w-fit mx-auto">
+                <TabsUnstyled value={tab} onChange={(e,val)=>setTab(val)} className="w-fit mx-auto">
                     <TabsList className="mx-auto text-center">
                         <Tab value="dynamic" className="!w-fit">Динамические</Tab>
                         <Tab value="static" className="!w-fit">Статические</Tab>
@@ -131,7 +131,12 @@ export default function MC(props) {
             <p className="text-center mt-8 text-lg">Дополнительные услуги:</p>
 
             <div className="flex flex-col lg:flex-row w-fit gap-4 mx-auto justify-around">
-                <div className="bg-[var(--active-color)] glassb rounded-xl mx-auto xl:m-0 w-80">
+                <div className="bg-[var(--active-color)] glassb rounded-xl mx-auto xl:m-0 w-80 relative">
+                    <div className="absolute top-0 left-0 w-full h-full rounded-xl flex justify-center items-center" style={{
+                        background: `repeating-linear-gradient(45deg, #00000088, #00000088 10px, var(--error-color) 10px, var(--error-color) 20px)`
+                    }}>
+                        <span className="text-lg">Временно недоступно</span>
+                    </div>
                     <div className="flex flex-col m-2">
                         <div className="flex items-center">
                             <FontAwesomeIcon icon={faServer} className="!w-12 !h-12" />

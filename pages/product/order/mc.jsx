@@ -10,11 +10,14 @@ import {Form, Input, Select} from "antd";
 import useFiberAPI from "../../../fiber/fiber";
 import semver from "semver";
 import BackgroundMC from "../../../components/assets/MCOrderBG.png"
+import toast, {Toaster} from "react-hot-toast";
 
 export default function OrderMC(props){
     const locale = useLocale(props.router);
     const localeGlobal = useGlobalLocale(props.router)
     const api = useFiberAPI()
+    const [loading, setLoading] = props.globalLoader
+    const ParseError = localeGlobal.get('funcParseErr')
 
     const [tariff, setTariff] = useState(props.router.query.t||"d2")
     const [cores, setCores] = useState(null)
@@ -33,8 +36,6 @@ export default function OrderMC(props){
         api.fetch.minecraftGetCores().then(r=>setCores(r.cores))
     }, []);
 
-
-    const [ssd, setSSD] = useState(0)
     const [addPort, setAddPort] = useState(false)
 
     const [backdrop, setBackdrop] = useState("none")
@@ -48,8 +49,30 @@ export default function OrderMC(props){
 
     const TotalPrice = tariffData.price + config.disk*50 + (config.dedicated_port?1:0)*100
 
-    console.log(BackgroundMC)
-
+    const createServer = () => {
+        if (config.name.length===0) {
+            toast.error("Укажите название сервера", {style: {
+                    color: "white",
+                    backgroundColor: "var(--btn-color)"
+                }})
+            return
+        }
+        setLoading(true)
+        api.servers.createMC(config.name, tariff, config.core, config.version, config.disk, "", config.dedicated_port).then(resp=>{
+            setLoading(false)
+            if(resp.status==="ok") {
+                toast.success("Сервер успешно создан!",{style: {
+                        color: "white",
+                        backgroundColor: "var(--btn-color)"
+                    }})
+                props.router.push("/profile/servers?s=mc")
+            } else{
+                toast.error("Не удалось создать сервер: "+ParseError(resp.code, resp.message),{style: {
+                        color: "white",
+                        backgroundColor: "var(--btn-color)"
+                    }})
+            }})
+    }
 
     return(
         <>
@@ -58,19 +81,26 @@ export default function OrderMC(props){
             }}>
                 <GlobalHead title={localeGlobal.get('navName')}/>
                 <GlobalNav mainpage router={props.router}/>
+                <Toaster />
                 <p className="text-center color-white pt-2 text-xl">Создание нового Minecraft сервера</p>
                 <div className="grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mx-auto w-11/12 lg:w-3/4">
                     <TariffCard tariffData={tariffData} main setBackdrop={setBackdrop} setTariff={setTariff} />
                     <ConfigCard config={config} setConfig={setConfig} cores={cores} versions={versions} />
-                    <AdditionalCard config={config} setConfig={setConfig} ssd={ssd} setSSD={setSSD} addPort={addPort} setAddPort={setAddPort} />
+                    <AdditionalCard config={config} setConfig={setConfig} />
                 </div>
-                <Total TotalPrice={TotalPrice} />
+                <div
+                    className="mt-4 lg:mt-auto mb-6 glassb flex justify-between items-center relative bg-[var(--subtle-color)] rounded-xl w-11/12 lg:w-3/4 mx-auto">
+                    <p className="select-none text-lg text-right mx-4 my-0">Итого: {TotalPrice} ₽/мес</p>
+                    <Button variant="contained" className="m-4 text-lg rounded-lg bg-[#0d6efd]" onClick={createServer}>Заказать</Button>
+                </div>
             </div>
-            <Backdrop className="bg-black bg-opacity-75" sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                      open={backdrop!="none"} onClick={()=>setBackdrop("none")}>
-                {backdrop=="tariff"&&<div className="w-full h-full overflow-y-scroll pb-4" onClick={(e)=>e.stopPropagation()}>
+            <Backdrop className="bg-black bg-opacity-75"
+                      sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
+                      open={backdrop != "none"} onClick={() => setBackdrop("none")}>
+                {backdrop == "tariff" &&
+                    <div className="w-full h-full overflow-y-scroll pb-4" onClick={(e) => e.stopPropagation()}>
                     <p className="text-3xl text-center">Ресурсы</p>
-                    <TabsUnstyled value={ttab} onChange={(e,val)=>setTtab(val)} class="w-fit mx-auto">
+                    <TabsUnstyled value={ttab} onChange={(e,val)=>setTtab(val)} className="w-fit mx-auto">
                         <TabsList className="mx-auto text-center">
                             <Tab value="dynamic" className="!w-fit">Динамические</Tab>
                             <Tab value="static" className="!w-fit">Статические</Tab>
@@ -96,7 +126,7 @@ export default function OrderMC(props){
     )
 }
 
-// OrderMC.RequireAuth = true
+OrderMC.RequireAuth = true
 
 
 const TariffCard = ({tariffData, main, setBackdrop, setTariff}) => {
@@ -167,7 +197,7 @@ const ConfigCard = ({config, setConfig, cores, versions}) => {
             <div className="flex flex-col gap-2 h-full">
                 <Form labelCol={{span: 8}} wrapperCol={{span: 16}} form={form}>
                     <Form.Item label="Название сервера" name="srvName">
-                        <Input value={config.name} onChange={({target})=>setConfig(c=>({...c, name: target.value.replaceAll(/[^a-zA-Z0-9.\-_ ]/g,'')}))} />
+                        <Input value={config.name} onChange={({target})=>setConfig(c=>({...c, name: target.value}))} />
                     </Form.Item>
                     <Form.Item label="Ядро" name="core">
                         <Select showSearch defaultValue={config.core} options={cores&&Object.keys(cores).map(c=>({value: c, label: cores[c].title}))}
@@ -178,19 +208,15 @@ const ConfigCard = ({config, setConfig, cores, versions}) => {
                         }}/>
                     </Form.Item>
                     <Form.Item label="Версия" name="version">
-                        <Select showSearch defaultValue={config.version} options={suitableVersions.map(ver=>({value:ver}))} />
+                        <Select showSearch defaultValue={config.version} options={suitableVersions.map(ver=>({value:ver}))}
+                        onChange={(version)=>{
+                            setConfig(c=>({...c, version: version}))
+                        }}/>
                     </Form.Item>
                 </Form>
             </div>
         </div>
     );
-}
-
-const Total = ({TotalPrice}) => {
-    return <div className="mt-4 lg:mt-auto mb-6 glassb flex justify-between items-center relative bg-[var(--subtle-color)] rounded-xl w-11/12 lg:w-3/4 mx-auto">
-        <p className="select-none text-lg text-right mx-4 my-0">Итого: {TotalPrice} ₽/мес</p>
-        <Button variant="contained" className="m-4 text-lg rounded-lg bg-[#0d6efd]">ЗАКАЗАТЬ</Button>
-    </div>
 }
 
 const FruitThinField = styled(TextField)({
@@ -256,32 +282,6 @@ const FruitSwitch = styled(Switch)({
         margin: 2,
     },
 });
-
-
-const cores = [
-    "vanilla",
-    "spigot",
-    "paper",
-    "purpur",
-    "folia",
-    "fabric",
-    "forge",
-    "quilt",
-    "sponge",
-    "sponge_forge"
-]
-
-const versions = [
-    "1.9.4",
-    "1.12.2",
-    "1.14.4",
-    "1.16.5",
-    "1.17.1",
-    "1.18.2",
-    "1.19.3",
-    "1.19.4",
-    "1.20.2"
-]
 
 const tariffs = {}
 tariffs.dynamic = [

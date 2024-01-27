@@ -116,13 +116,16 @@ export default function ParticleView(props) {
                                         <span className="text-xs">Official</span>
                                     </span>}
                             </span>
-                            <span className="flex gap-2 items-center">
-                                <span className="w-fit text-sm font-normal px-2 py-1 rounded-md bg-[var(--active-color)]">by @{data.author}</span>
-                                •
-                                <span><FontAwesomeIcon icon={faDownload}/> {formatStat(data.downloads)}</span>
+                            <span className="flex flex-col lg:flex-row gap-2 lg:gap-4 lg:items-center">
+                                <span
+                                    className="w-fit text-sm font-normal px-2 py-1 rounded-md bg-[var(--active-color)]">by @{data.author}</span>
+                                <span className="flex items-center gap-2">
+                                    <span><FontAwesomeIcon icon={faDownload}/> {formatStat(data.downloads)}</span>
                                 •
                                 <span>
-                                    <FontAwesomeIcon icon={faClock}/> {new Date(data.UpdatedAt).toLocaleDateString("ru-RU")}</span>
+                                    <FontAwesomeIcon
+                                        icon={faClock}/> {new Date(data.UpdatedAt).toLocaleDateString("ru-RU")}</span>
+                                </span>
                                 </span>
                         </div>
                     </div>

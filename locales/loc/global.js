@@ -276,6 +276,12 @@ const globalLocale = {
                 case "promo_limit": return "Количество использований промокода достигло своего предела"
                 case "bal": return "Недостаточно средств для покупки"
                 case "invhash": return "Не удалось верифицировать баланс, свяжитесь с поддержкой"
+                case "no_nodes": return "Нет доступных нод для создания сервера"
+                case "wisp_account": return "Не удалось создать аккаунт в панели, свяжитесь с поддежкой!"
+                case "wisp_server": return "Не удалось создать сервер, свяжитесь с поддежкой!"
+                case "inv_core": return "Выбрано неподдерживаемое ядро"
+                case "inv_version": return "Выбрана неподдерживаемая версия"
+                case "inv_storage": return "Выбран слишком большой дополнительный объем диска"
                 default: return msg
 
             }
