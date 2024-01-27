@@ -1,6 +1,4 @@
 import styles from './Footer.module.css'
-
-import HalogenLogoB from './../assets/logos/halogenlogo_b.png'
 import discordLogo from './../assets/social/discord.png'
 import vkLogo from './../assets/social/vkontakte.png'
 import Link from "next/link";
@@ -17,20 +15,21 @@ export default function Footer(props) {
             <div className={styles.footerTop}>
                 <div className={styles.footerLinklist}>
                     <h3>{locale.get('footer.about')}</h3>
-                    <Link href="/about"><p className="hover:text-white hover:underline">{locale.get('footer.about')}</p></Link>
-                    <Link href="/about/team"><p className="hover:text-white hover:underline">{locale.get('footer.team')}</p></Link>
-                    <Link href="/about/partnership"><p className="hover:text-white hover:underline">{locale.get('footer.partnership')}</p></Link>
-                    <Link href="/about/tos"><p className="hover:text-white hover:underline">{locale.get('footer.tos')}</p></Link>
+                    <Link href="/about" legacyBehavior><p className="hover:text-white hover:underline">{locale.get('footer.about')}</p></Link>
+                    <Link href="/about/team" legacyBehavior><p className="hover:text-white hover:underline">{locale.get('footer.team')}</p></Link>
+                    <Link href="/about/partnership" legacyBehavior><p className="hover:text-white hover:underline">{locale.get('footer.partnership')}</p></Link>
+                    <Link href="/about/tos" legacyBehavior><p className="hover:text-white hover:underline">{locale.get('footer.tos')}</p></Link>
                 </div>
                 <div className={styles.footerLinklist}>
                     <h3>FruitSpace</h3>
-                    <Link href="/product/mc"><p className="hover:text-white hover:underline">{locale.get('footer.hostingmc')}</p></Link>
-                    <Link href="/product/gd"><p className="hover:text-white hover:underline">{locale.get('footer.hostinggd')}</p></Link>
-                    <Link href="/product/gta"><p className="hover:text-white hover:underline">{locale.get('footer.hostinggta')}</p></Link>
-                    {/*<Link href="https://telegra.ph/Dokumentaciya-dlya-ochen-umnyh-09-29"><p>{locale.get('footer.docs')}</p></Link>*/}
+                    <Link href="/product/mc" legacyBehavior><p className="hover:text-white hover:underline">{locale.get('footer.hostingmc')}</p></Link>
+                    <Link href="/product/gd" legacyBehavior><p className="hover:text-white hover:underline">{locale.get('footer.hostinggd')}</p></Link>
+                    <Link href="/product/cs" legacyBehavior><p className="hover:text-white hover:underline">{locale.get('footer.hostingcs')}</p></Link>
+                    {/* TAKE YOUR API BACK TO ROBLOX */}
+                    {/* <Link href="https://api.fruitspace.one/v2/antiswagger/"><p className="hover:text-white hover:underline">FruitSpace API</p></Link> */}
                 </div>
                 <span className="flex-1"></span>
-                <Link href="https://m41den.com">
+                <Link href="https://m41den.com" legacyBehavior>
                     <div className="my-auto p-1 h-fit group w-36 flex !items-center bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] transition-all duration-300 hover:w-60">
                         <div className="h-24 w-[9rem] !m-0 cursor-pointer flex flex-col justify-center transition-all duration-300 bg-black">
                             <div className="mx-4 my-2">
@@ -45,15 +44,15 @@ export default function Footer(props) {
             </div>
             <div className={styles.footerLine}></div>
             <div className="m-2 flex flex-col items-center justify-center lg:flex-row">
-                <a className="flex gap-2 justify-center items-center box-border border-2 border-black hover:border-white transition-all duration-300 border-solid rounded-xl pr-2 m-2"
+                <a className="flex gap-2 justify-center items-center box-border border-2 border-black hover:border-white transition-all duration-300 border-solid rounded-lg pr-2 m-2"
                    href="https://discord.gg/fruitspace">
-                    <img className="invert h-16" src={discordLogo.src} alt="discord"/> FruitSpace
+                    <img className="invert h-10" src={discordLogo.src} alt="discord"/> FruitSpace
                 </a>
-                <a className="flex gap-2 justify-center items-center box-border border-2 border-black hover:border-white transition-all duration-300 border-solid rounded-xl pr-2 m-2"
+                <a className="flex gap-2 justify-center items-center box-border border-2 border-black hover:border-white transition-all duration-300 border-solid rounded-lg pr-2 m-2"
                    href="https://vk.com/fruit_space">
-                    <img className="invert h-16" src={vkLogo.src} alt="discord"/> FruitSpace
+                    <img className="invert h-10" src={vkLogo.src} alt="discord"/> FruitSpace
                 </a>
             </div>
         </div>
-    )
+    );
 }

@@ -1,7 +1,5 @@
 /** @type {import('next').NextConfig} */
 
-const { withSentryConfig } = require('@sentry/nextjs');
-
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
@@ -23,9 +21,6 @@ const nextConfig = {
       ],
     },
   ],
-  sentry: {
-    hideSourceMaps: true
-  },
   i18n: {
     locales: ['en', 'ru'],
     defaultLocale: 'ru',
@@ -42,7 +37,11 @@ const nextConfig = {
       }
     ]
   },
-  output: "standalone"
+  output: "standalone",
+  // transpilePackages: [
+  //     '@ant-design',
+  //     'antd'
+  // ]
 }
 
 const sentryWebpackPluginOptions = {

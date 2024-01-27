@@ -1,16 +1,24 @@
 import Head from 'next/head'
 
+import banner from "./assets/banner.png"
 
 export default function GlobalHead(props) {
+    const domain = "https://openbeta.fruitspace.ru"
+    let og = {
+        title: "FruitSpace",
+        description: "Игровой хостинг FruitSpace: сервера Minecraft, Geometry Dash, CS 1.6/GO/2",
+        type: "website",
+        url: "/",
+        image: `${domain}${banner.src}`,
+    }
+    og = {...og, ...props.og}
+
     return (
         <Head>
             <link rel="shortcut icon" href="/favicon.ico" />
-            <title>{props.title} | FruitSpace</title>
-            <meta property="og:title" content={`${props.title} | FruitSpace`} />
-            <meta property="og:description" content={props.description?props.description:
-                "Игровой хостинг FruitSpace: сервера Minecraft, Geometry Dash, GTA SA/IV/V"} />
-            {props.image && <meta property="og:image" content={props.image} />}
-            <meta name="pandora-tag" content="cdn:edge.halogen.cc;ttl=300;instances=3"/>
+            <title>{og.title}</title>
+            <meta name="description" content={props.description||og.description} />
+            {Object.keys(og).map((k, i) => <meta key={i} property={`og:${k}`} content={og[k]} />)}
         </Head>
     )
 }

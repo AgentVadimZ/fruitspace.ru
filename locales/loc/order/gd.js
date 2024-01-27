@@ -130,7 +130,16 @@ const orderGDPSLocale = {
                 ]
             }
         },
-
+        tosReminder: {
+            ru: {
+                main: "Перед покупкой убедитесь, что вы ознакомились с ",
+                link: "Условиями пользования",
+            },
+            en: {
+                main: "Before making a purchase make sure you've read our ",
+                link: "Terms of use"
+            }
+        },
 
 
 

@@ -59,11 +59,13 @@ const gdAnalyticsLocale = {
         ru: "👋 Привет! Мы немного обновили панель, теперь статистику GDPS можно увидеть вверху.<br/>" +
             "🔗 Ссылки для скачивания перенесены в отдельную карточку, где вы можете скачать сервер или " +
             "скопировать ссылку для своих игроков.<br/>🧐 Под названием вашего сервера в светло-сером поле ID вашего GDPS." +
-            " Сообщите его поддержке когда откроете тикет.<br/><br/>",
+            " Сообщите его поддержке когда откроете тикет.<br/>🔝 Для продления сервера или улучшения тарифа" +
+            " нажмите на яркую кнопку с названием текущего тарифа справа от ID сервера.<br/>",
         en: "👋 Hello! We have updated the panel, now you can see GDPS stats right on top.<br/>" +
             "🔗 Download links are now in their own card, where you can download your server or copy link to share it " +
             "with your players.<br/>🧐 Under your server name is a GDPS ID in a light-gray field." +
-            " Tell it to support when opening a ticket."
+            " Tell it to support when opening a ticket.<br/>🔝 To extend or upgrade your plan press the colorful button with" +
+            " the name of your current plan next to your GDPS ID."
     }
 
 }

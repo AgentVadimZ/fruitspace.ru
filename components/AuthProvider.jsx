@@ -1,10 +1,7 @@
 import {useRecoilState} from "recoil";
-import useEffectOnce from "./Hooks";
 import useFiberAPI from "../fiber/fiber";
 import {userAtom} from "../fiber/fiber.model";
 import useSWR from "swr";
-import {useEffect} from "react";
-
 
 
 export default function AuthProvider({RequireAuth, children, router}) {

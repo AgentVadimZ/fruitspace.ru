@@ -45,49 +45,47 @@ export default function Billing(props) {
     const prettyPrint = (num)=>new Intl.NumberFormat(false?'en-US':'ru-RU',
         {style: 'currency',currency: false?"USD":"RUB"}).format(num).replace(/[.|,]00/g, '')
 
-    return (
-        <>
-            <GlobalHead title={locale.get('nav')}/>
-            <GlobalNav />
-            <PanelSideNav />
-            <Toaster/>
-            <PanelContent>
-                <TabsUnstyled value={tab} onChange={(e,val)=>setTab(val)}
-                              className={"vServersWindow"}>
-                    <TabsList>
-                        <Tab value="wallet">{locale.get('tabs')[0]}</Tab>
-                        <Tab value="shops">{locale.get('tabs')[1]}</Tab>
-                    </TabsList>
-                    <TabPanel value="wallet">
-                        <PayBox router={props.router} api={api}/>
+    return <>
+        <GlobalHead title={locale.get('nav')}/>
+        <GlobalNav />
+        <PanelSideNav />
+        <Toaster/>
+        <PanelContent>
+            <TabsUnstyled value={tab} onChange={(e,val)=>setTab(val)}
+                          className={"vServersWindow"}>
+                <TabsList>
+                    <Tab value="wallet">{locale.get('tabs')[0]}</Tab>
+                    <Tab value="shops">{locale.get('tabs')[1]}</Tab>
+                </TabsList>
+                <TabPanel value="wallet">
+                    <PayBox router={props.router} api={api}/>
 
-                        {transactions.length===0
-                            ?(<p style={{textAlign:"center",fontSize:"14pt"}}>{locale.get('noPayments')}</p>)
-                        :(<List className={styles.MrWhite}>
-                                {transactions.map((tr, i)=>(
-                                        <ListItem className={styles.buttonHover} key={i} secondaryAction={
-                                            tr.is_active&&<Link href={tr.go_pay_url}><IconButton edge="end"><SendIcon /></IconButton></Link>}>
-                                            <ListItemAvatar>
-                                                <Avatar style={{backgroundColor:"var(--btn-color)"}}>
-                                                    {tr.is_active?<TimerIcon/>:<CreditScoreIcon/>}
-                                                </Avatar>
-                                            </ListItemAvatar>
-                                            <ListItemText
-                                                primary={locale.get('amount')[0]+`${prettyPrint(tr.amount)} (№${tr.id})`}
-                                                secondary={locale.get('amount')[1]+`${tr.method}`}
-                                            />
-                                        </ListItem>
-                                    ))}
-                            </List>
-                            )}
-                    </TabPanel>
-                    <TabPanel value="shops">
-                        <p style={{textAlign:"center"}}>{locale.get('withdraw')}</p>
-                    </TabPanel>
-                </TabsUnstyled>
-            </PanelContent>
-        </>
-    )
+                    {transactions.length===0
+                        ?(<p style={{textAlign:"center",fontSize:"14pt"}}>{locale.get('noPayments')}</p>)
+                    :(<List className={styles.MrWhite}>
+                            {transactions.map((tr, i)=>(
+                                    <ListItem className={styles.buttonHover} key={i} secondaryAction={
+                                        tr.is_active&&<Link href={tr.go_pay_url} legacyBehavior><IconButton edge="end"><SendIcon /></IconButton></Link>}>
+                                        <ListItemAvatar>
+                                            <Avatar style={{backgroundColor:"var(--btn-color)"}}>
+                                                {tr.is_active?<TimerIcon/>:<CreditScoreIcon/>}
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary={locale.get('amount')[0]+`${prettyPrint(tr.amount)} (№${tr.id})`}
+                                            secondary={locale.get('amount')[1]+`${tr.method}`}
+                                        />
+                                    </ListItem>
+                                ))}
+                        </List>
+                        )}
+                </TabPanel>
+                <TabPanel value="shops">
+                    <p style={{textAlign:"center"}}>{locale.get('withdraw')}</p>
+                </TabPanel>
+            </TabsUnstyled>
+        </PanelContent>
+    </>;
 }
 
 Billing.RequireAuth = true

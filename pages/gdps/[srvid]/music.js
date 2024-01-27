@@ -67,21 +67,23 @@ export default function MusicGD(props) {
 
     const [user, setUser] = useState({})
 
-    const api = useFiberAPI(`acc${srvid}`)
+    const api = useFiberAPI(`gdps_token`)
+    let tokens = api.authorization||{}
+    const defaultId = tokens.default?.[srvid] || 0
+    const token = tokens[srvid]?.[defaultId] || ""
+    api.authorization = token
 
     useEffect(()=> {
+
         srvid&&api.gdps_users.get(srvid).then(resp=>{
             setUser({...resp, vessels: JSON.parse(resp.vessels)})
         })
-    }, [srvid])
-
-    useEffect(()=>{
-        if (srvid==null) return
         api.fetch.gdpsGet(srvid).then((resp)=>{
             if(resp.srvid) setSrv(resp);
             else router.push("/");
         })
-    },[srvid])
+        searchMusic(sortMode)
+    }, [srvid])
 
     const [music, setMusic] = useState([])
     const [pageCount, setPageCount] = useState(10)
@@ -161,7 +163,7 @@ export default function MusicGD(props) {
     return (
         <>
             <GlobalHead title={srv.srv_name}/>
-            <GlobalGDPSNav name={srv.srv_name} icon={srv.icon}/>
+            <GlobalGDPSNav name={srv.srv_name} icon={srv.icon} users={tokens} />
             <GDPSNavBar music={srv.plan>1}/>
             <PanelContent>
                 <div className={`${styles.CardBox} ${styles.MusicSlider}`}>
@@ -176,7 +178,7 @@ export default function MusicGD(props) {
                         {srv.plan>1 && <img src={LogoYT.src} onClick={()=>setBackdrop("add-yt")} /> }
                         {srv.plan>2 &&<img src={LogoDZ.src} onClick={()=>setBackdrop("add-dz")} /> }
                         {srv.plan>2 &&<img src={LogoVK.src} onClick={()=>setBackdrop("add-vk")} /> }
-                        {srv.plan>2 &&<img src={LogoDBox.src} onClick={()=>setBackdrop("add-db")} /> }
+                        {srv.plan>1 &&<img src={LogoDBox.src} onClick={()=>setBackdrop("add-db")} /> }
                     </div>
                     <span className={styles.SliderDelimiter} />
                     <div className={styles.MusicSliderPlayer}>

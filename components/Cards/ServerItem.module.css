@@ -1,53 +1,7 @@
 
-.ServerCard {
-    border-radius: 8px;
-    background-color: var(--active-color);
-    padding: .5rem;
-    display: flex;
-    align-items: center;
-    margin-bottom: .5rem;
-}
-.ServerCard:last-child {
-    margin-bottom: 0;
-}
-
-.ServerCard > svg {
-    height: 3rem;
-}
-
-.ServerCard:hover {
-    background-color: var(--btn-color);
-    cursor: pointer;
-}
-
-.ServerIcon {
-    margin-right: 1rem;
-    background-color: var(--btn-color);
-    border-radius: 8px;
-    height: 4rem;
-    width: 4rem;
-}
-
-.ServerBox {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.ServerBox > h3 {
-    margin: .25rem;
-}
-.ServerBox > p {
-    margin: .25rem 1rem;
-}
 
 .AddIcon {
     height: 2.5rem;
     width: 2.5rem;
     margin-left: .5rem;
-}
-
-.AddText{
-    margin: 0 auto;
 }

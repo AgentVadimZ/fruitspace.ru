@@ -113,9 +113,14 @@ const globalLocale = {
         ru: "Хостинг Geometry Dash",
         en: "Geometry Dash hosting"
     },
-    "footer.hostinggta":{
-        ru: "Хостинг Grand Theft Auto",
-        en: "Grand Theft Auto hosting"
+    "footer.hostingcs":{
+        ru: "Хостинг Counter Strike",
+        en: "Counter Strike hosting"
+    },
+
+    "addaccount": {
+        ru: "Добавить аккаунт",
+        en: "Add account"
     },
 
 
@@ -234,8 +239,9 @@ const globalLocale = {
     },
 
     funcParseErr: {
-        ru: (err)=>{
+        ru: (err, msg = null)=>{
             let errc = err.split("|")[1] || err
+            msg = msg || err
             switch (errc){
                 case "eml": return "Неверный формат email"
                 case "uname_shrt": return "Слишком короткий логин (необходимо 5+ символов)"
@@ -268,11 +274,21 @@ const globalLocale = {
                 case "promo_invalid": return "Неверный промокод"
                 case "promo_expire": return "Срок действия промокода истек"
                 case "promo_limit": return "Количество использований промокода достигло своего предела"
-                default: return err
+                case "bal": return "Недостаточно средств для покупки"
+                case "invhash": return "Не удалось верифицировать баланс, свяжитесь с поддержкой"
+                case "no_nodes": return "Нет доступных нод для создания сервера"
+                case "wisp_account": return "Не удалось создать аккаунт в панели, свяжитесь с поддежкой!"
+                case "wisp_server": return "Не удалось создать сервер, свяжитесь с поддежкой!"
+                case "inv_core": return "Выбрано неподдерживаемое ядро"
+                case "inv_version": return "Выбрана неподдерживаемая версия"
+                case "inv_storage": return "Выбран слишком большой дополнительный объем диска"
+                default: return msg
+
             }
         },
-        en: (err)=>{
+        en: (err, msg = null)=>{
             let errc = err.split("|")[1] || err
+            msg = msg || err
             switch (errc){
                 case "eml": return "Invalid email format"
                 case "uname_shrt": return "Username is too short (5+ symbols needed)"
@@ -305,7 +321,9 @@ const globalLocale = {
                 case "promo_invalid": return "Invalid promo code"
                 case "promo_expire": return "Promo code is expired"
                 case "promo_limit": return "Promo code usage limit is depleted"
-                default: return err
+                case "bal": return "Not enough money to make a purschase"
+                case "invhash": return "Failed to verify balance hash, please contact FruitSpace support"
+                default: return msg
             }
         }
     }

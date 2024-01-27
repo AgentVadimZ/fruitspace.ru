@@ -284,7 +284,7 @@ export default function ChestsGD(props) {
                         onClick={saveChests}>{locale.get("save")}</Button>
             </PanelContent>
         </LocalizationProvider>
-    )
+    );
 }
 
 ChestsGD.RequireAuth=true

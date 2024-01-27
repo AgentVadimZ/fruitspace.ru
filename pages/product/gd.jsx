@@ -4,8 +4,9 @@ import styles from "../../components/Index.module.css";
 import Footer from "../../components/Global/Footer";
 import BannerGD from "../../components/assets/BannerGD.png"
 import ProductHeader from "../../components/Global/ProductHeader";
-import ProductCard from "../../components/Cards/ProductCard";
+import ProductCardGD from "../../components/Cards/ProductCardGD";
 import {
+    Button,
     ListItem,
     ListItemIcon,
     ListItemText,
@@ -15,6 +16,7 @@ import {
     TableHead,
     TableRow
 } from "@mui/material";
+
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
@@ -32,6 +34,8 @@ import FeatureShieldImg from "../../components/assets/features/shield_3d-sm.png"
 import FeatureSetupImg from "../../components/assets/features/autosetup_3d-sm.png"
 import FeatureMusicImg from "../../components/assets/features/music_3d-sm.png"
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";
+import discordLogo from "../../components/assets/social/discord.png";
+import GitHubIcon from "../../components/assets/logos/GithubIcon.png";
 
 
 
@@ -42,16 +46,16 @@ export default function GD(props) {
     return (
         <>
             <GlobalHead title={localeGlobal.get('navName')}/>
-            <GlobalNav router={props.router} />
+            <GlobalNav mainpage router={props.router} />
             <div className={styles.main}>
                 <ProductHeader img={BannerGD} title={locale.get('prodgd.title')} text={locale.get('prodgd.titletext')}
                 primaryText={locale.get('prodgd.titlecloud')} primaryLink="#cloud"
                 secondaryText={locale.get('prodgd.titleselfhosted')} secondaryLink="#selfhosted"/>
                 {/*Insert Halogen Counter*/}
 
-                <h2 style={{textAlign:'center',margin:"3rem 0",color:"white"}}>{locale.get('prodgd.tariffs')}</h2>
+                <h2 className="text-center my-12 text-white text-3xl">{locale.get('prodgd.tariffs')}</h2>
                 <div className={styles.productCardGrid} id="cloud">
-                    <ProductCard title="Press Start" btnText={locale.get('freeA')} link="order/gd?t=1">
+                    <ProductCardGD title="Press Start" btnText={locale.get('freeA')} link="order/gd?t=1">
                         <ListItem>
                             <ListItemIcon><PersonIcon/></ListItemIcon>
                             <ListItemText primary={locale.get('tPressStart')[0]}/>
@@ -64,8 +68,8 @@ export default function GD(props) {
                             <ListItemIcon><CloseIcon/></ListItemIcon>
                             <ListItemText primary={locale.get('tPressStart')[2]}/>
                         </ListItem>
-                    </ProductCard>
-                    <ProductCard title="Singularity" btnText={locale.get('tSingularityPrice')} link="order/gd?t=2">
+                    </ProductCardGD>
+                    <ProductCardGD title="Singularity" btnText={locale.get('tSingularityPrice')} link="order/gd?t=2">
                         <ListItem>
                             <ListItemIcon><AllInclusiveIcon/></ListItemIcon>
                             <ListItemText primary={locale.get('tSingualrity')[0]}/>
@@ -82,8 +86,8 @@ export default function GD(props) {
                             <ListItemIcon><DesktopMacIcon/></ListItemIcon>
                             <ListItemText primary={locale.get('tSingualrity')[3]}/>
                         </ListItem>
-                    </ProductCard>
-                    <ProductCard  title="Takeoff" btnText={locale.get('tTakeoffPrice')} link="order/gd?t=3">
+                    </ProductCardGD>
+                    <ProductCardGD title="Takeoff" btnText={locale.get('tTakeoffPrice')} link="order/gd?t=3">
                         <ListItem>
                             <ListItemIcon><AllInclusiveIcon/></ListItemIcon>
                             <ListItemText primary={locale.get('tTakeoff')[0]}/>
@@ -108,7 +112,7 @@ export default function GD(props) {
                             <ListItemIcon><AppleIcon/></ListItemIcon>
                             <ListItemText primary={locale.get('tTakeoff')[5]}/>
                         </ListItem>
-                    </ProductCard>
+                    </ProductCardGD>
                 </div>
                 <p style={{textAlign:'center', margin:"0  1rem 1rem"}}>{locale.get('onlyOneGDPS')}</p>
 
@@ -192,9 +196,20 @@ export default function GD(props) {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <p style={{margin:"1rem auto", maxWidth:"320px"}}>
-                    {locale.get('selfHostNotDone')}
+                <p className="mx-auto text-center max-w-2xl">
+                    {locale.get('selfHostLinks')}
                 </p>
+                <div className="flex mx-auto gap-2 justify-center mb-2">
+                <Button variant="contained" className="m-2 mt-auto font-bold rounded-lg bg-[#6e5494] h-12 hover:bg-[#5f4980]" onClick={() => window.open("https://github.com/FruitSpace/HalogenGDPSCore", "_blank")}>
+                    <img className="invert h-10 mr-3 h-3/4 rounded" src={GitHubIcon.src} alt="github"/>
+                    HalogenCore Github
+                </Button>
+                <Button variant="contained" className="m-2 mt-auto font-bold rounded-lg bg-[#7289da] h-12 hover:bg-[#5f73b8]"  onClick={() => window.open("https://discord.gg/HgBQmMRKTB", "_blank")}>
+                    <img className="invert h-10 mr-3 h-3/4" src={discordLogo.src} alt="discord"/>
+                    HalogenCore Discord
+                </Button>
+
+                </div>
 
             </div>
             <Footer router={props.router}/>

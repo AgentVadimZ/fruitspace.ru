@@ -37,6 +37,10 @@
     row-gap: 1rem;
 }
 
+.productCardGridMC {
+    justify-items: center;
+}
+
 .productCardGrid svg {
     fill: white;
 }
@@ -97,7 +101,7 @@
 }
 
 .formButton:disabled {
-    color: gray !important;
+    color: rgb(128, 128, 128) !important;
 }
 
 /*.form .inputwrap {*/

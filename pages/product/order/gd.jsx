@@ -1,7 +1,6 @@
 import GlobalHead from "../../../components/GlobalHead";
 import GlobalNav from "../../../components/GlobalNav";
 import styles from "../../../components/Index.module.css";
-import {useRouter} from "next/router";
 import {styled} from "@mui/system";
 import {ListItem, ListItemIcon, ListItemText, TextField} from "@mui/material";
 import {useEffect, useState} from "react";
@@ -23,13 +22,14 @@ import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import useFiberAPI from "../../../fiber/fiber";
+import Link from 'next/link';
 
 
 export default function Order(props) {
 
-    const router = useRouter()
+
     const [srv, setSrv] = useState({
-        srvid: router.query.id||"",
+        srvid: props.router?.query.id||"",
         name: "",
         payDuration: "yr",
         promocode: ""
@@ -43,7 +43,7 @@ export default function Order(props) {
 
 
     const [tariffs,setTariffs] = useState({});
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = props.globalLoader
     const [cookies, setCookie, delCookie] = useCookies(["token"])
 
     const locale = useLocale(props.router)
@@ -54,13 +54,13 @@ export default function Order(props) {
     const createServer = (tariff)=> {
         setLoading(true)
         api.servers.createGDPS(srv.name, parseInt(tariff),srv.payDuration,srv.promocode,srv.srvid).then((resp)=>{
-                    setLoading(false)
-                    if(resp.status==="ok") {
+            setLoading(false)
+            if(resp.status==="ok") {
                 toast.success(locale.get('createSuccess'),{style: {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})
-                router.push("/profile/servers")
+                props.router.push("/profile/servers")
             }else{
                 toast.error(locale.get('createFailed')+ParseError(resp.code, resp.message),{style: {
                         color: "white",
@@ -202,50 +202,54 @@ export default function Order(props) {
     //---------------------------------------------------------------------------
     //---------------------------------------------------------------------------
 
-    return (
-        <>
-            <GlobalHead title={localeGlobal.get('navName')}/>
-            <GlobalNav router={props.router} />
-            <Toaster/>
-            <div className={styles.main}>
+    return <>
+        <GlobalHead title={localeGlobal.get('navName')}/>
+        <GlobalNav router={props.router}/>
+        <Toaster/>
+        <div className={styles.main}>
 
-                <h2 className="text-center">{locale.get('createTitle')}</h2>
-                <div className="mx-auto w-fit grid grid-cols-1 lg:grid-cols-3">
-                    <FruitTextField label={locale.get('createGDPSTitle')} type="text" variant="outlined" style={{margin:".5rem",flex:1}}
-                                    value={srv.name||''} onChange={(evt)=>{setSrv({
-                        ...srv, name: evt.target.value.replaceAll(/[^a-zA-Z\d .\-_]/g,'')
-                    })}} className="col-span-2" disabled={srv.srvid.length===4}/>
-                    <FruitTextField label={locale.get('createPromo')} type="text" variant="outlined" style={{margin:".5rem"}}
-                                    value={srv.promocode||''} onChange={(evt)=>{setSrv({
-                        ...srv, promocode: evt.target.value.toUpperCase().replaceAll(/[^a-zA-Z\d\-_]/g,'')
-                    })}} />
-                </div>
-
-                <TabsUnstyled value={srv.payDuration} onChange={(e,val)=>setSrv({...srv, payDuration: val})} className="my-8 w-fit mx-auto">
-                    <TabsList className="mx-auto">
-                        {!(srv.payDuration!=="mo"&&payDurLock) && <Tab value="mo">{locale.get('tTabs')[0]}</Tab>}
-                        {!(srv.payDuration!=="yr"&&payDurLock) &&<Tab value="yr" className="flex items-center">
-                            {locale.get('tTabs')[1]} <span className="text-xs font-normal ml-1 rounded-md px-1 py-0.5" style={{backgroundColor:(srv.payDuration==="yr"?"var(--btn-color)":"var(--primary-color)")}}>-15%</span>
-                        </Tab>}
-                        <Tab value="all">{locale.get('tTabs')[2]}</Tab>
-                    </TabsList>
-
-                    <TabPanel value="mo" className="border-none !p-0">
-                        {createCards('mo')}
-                    </TabPanel>
-                    <TabPanel value="yr" className="border-none !p-0">
-                        {createCards('yr')}
-                    </TabPanel>
-                    <TabPanel value="all" className="border-none !p-0">
-                        {createCards('all')}
-                    </TabPanel>
-                </TabsUnstyled>
-
-
-
+            <h2 className="text-center">{props.router?.query.id ? "Продлить GDPS" : locale.get('createTitle')}</h2>
+            <div className="mx-auto w-fit grid grid-cols-1 lg:grid-cols-3">
+                <FruitTextField label={locale.get('createGDPSTitle')} type="text" variant="outlined"
+                                style={{margin: ".5rem", flex: 1}}
+                                value={srv.name || ''} onChange={(evt) => {
+                    setSrv({
+                        ...srv, name: evt.target.value.replaceAll(/[^a-zA-Z\d .\-_]/g, '')
+                    })
+                }} className="col-span-2" disabled={srv.srvid.length === 4}/>
+                <FruitTextField label={locale.get('createPromo')} type="text" variant="outlined"
+                                style={{margin: ".5rem"}}
+                                value={srv.promocode || ''} onChange={(evt) => {
+                    setSrv({
+                        ...srv, promocode: evt.target.value.toUpperCase().replaceAll(/[^a-zA-Z\d\-_]/g, '')
+                    })
+                }}/>
             </div>
-        </>
-    )
+
+            <TabsUnstyled value={srv.payDuration} onChange={(e, val) => setSrv({...srv, payDuration: val})}
+                          className="mt-2rem w-fit mx-auto">
+                <TabsList className="mx-auto">
+                    {!(srv.payDuration !== "mo" && payDurLock) && <Tab value="mo">{locale.get('tTabs')[0]}</Tab>}
+                    {!(srv.payDuration !== "yr" && payDurLock) && <Tab value="yr" className="flex items-center">
+                        {locale.get('tTabs')[1]} <span className="text-xs font-normal ml-1 rounded-md px-1 py-0.5"
+                                                       style={{backgroundColor: (srv.payDuration === "yr" ? "var(--btn-color)" : "var(--primary-color)")}}>-15%</span>
+                    </Tab>}
+                    <Tab value="all">{locale.get('tTabs')[2]}</Tab>
+                </TabsList>
+
+                <TabPanel value="mo" className="border-none !p-0">
+                    {createCards('mo')}
+                </TabPanel>
+                <TabPanel value="yr" className="border-none !p-0">
+                    {createCards('yr')}
+                </TabPanel>
+                <TabPanel value="all" className="border-none !p-0">
+                    {createCards('all')}
+                </TabPanel>
+            </TabsUnstyled>
+        </div>
+        <p className="mx-auto w-fit ">{locale.get('tosReminder').main}<Link href="/about/tos" passHref className="text-2xl" legacyBehavior>{locale.get('tosReminder').link}</Link></p>
+    </>;
 }
 
 Order.RequireAuth = true

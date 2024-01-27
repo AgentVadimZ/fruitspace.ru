@@ -1,5 +1,3 @@
-import styles from './ServerItem.module.css'
-
 import GDLogo from '../assets/logos/geometrydash.png'
 import MCLogo from '../assets/logos/minecraft.png'
 import CSLogo from '../assets/logos/counterstrike.png'
@@ -20,22 +18,22 @@ export default function ServerItem(props) {
         "cs": CSLogo.src
     }
     return props.add?(
-        <Link href={"/product/order/"+props.type}>
-            <div className={styles.ServerCard}>
-                <AddCircleIcon className={styles.AddIcon}/>
-                <h3 className={styles.AddText}>{localeGlobal.get('create')}</h3>
+        <Link href={"/product/order/"+props.type} legacyBehavior>
+            <div className="bg-[var(--active-color)] rounded-xl p-3 flex items-center cursor-pointer hover:bg-[var(--btn-color)]">
+                <AddCircleIcon className="h-12 w-12 ml-2"/>
+                <h3 className="mx-auto my-0">{localeGlobal.get('create')}</h3>
             </div>
         </Link>
     ):(
-        <Link href={"/manage/"+props.type+"/"+props.uuid}>
-            <div className={styles.ServerCard}>
-                <img className={styles.ServerIcon} src={props.icon?props.icon:(Types[props.type]||QuestionMark.src)} />
-                <div className={styles.ServerBox}>
-                    <h3>{props.name}</h3>
-                    <p><b>{props.plan}</b> → {props.desc}</p>
+        <Link href={"/manage/"+props.type+"/"+props.uuid} legacyBehavior>
+            <div className="bg-[var(--active-color)] rounded-xl p-2 flex items-center cursor-pointer hover:bg-[var(--btn-color)] mb-2">
+                <img className="mr-4 w-16 h-16 rounded-lg bg-[var(--btn-color)]" src={props.icon?props.icon:(Types[props.type]||QuestionMark.src)} />
+                <div className="flex flex-1 flex-col justify-center">
+                    <h3 className="m-1">{props.name}</h3>
+                    <p className="mx-4 my-1 flex items-center gap-1"><b>{props.plan}</b> → {props.desc}</p>
                 </div>
                 <RightSvg className="w-8"/>
             </div>
         </Link>
-    )
+    );
 }

@@ -10,6 +10,7 @@ export default function About(props) {
     const locale = useLocale(props.router)
     const localeGlobal = useGlobalLocale(props.router)
 
+    const newLocal = <br />;
     return (
         <>
             <GlobalHead title={localeGlobal.get('navName')}/>
@@ -18,9 +19,10 @@ export default function About(props) {
             <div className={styles.main}>
                 <div className={styles.innerMain}>
                     <h2>{locale.get('header')}</h2>
-                    <p style={{margin:"2rem"}}><strong>FruitSpace</strong>{locale.get('description')}</p>
+                    <p className="m-4"><span className="font-bold">FruitSpace</span>{locale.get('description')}</p>
+                    <div style={{height:"100vh"}} />
+                    {/* Когда научишься писать код без <li></li><br/> и ебучего курсива, тогда и приходи. В лайн-врап завернуть ему было лень */}
                 </div>
-                <div style={{height:"100vh"}} />
             </div>
             <Footer router={props.router}/>
         </>

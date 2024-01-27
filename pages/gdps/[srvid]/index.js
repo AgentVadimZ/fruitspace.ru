@@ -2,7 +2,7 @@ import useLocale, {useGlobalLocale} from "../../../locales/useLocale";
 import {faCircleInfo, faRightToBracket} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAndroid, faApple, faDiscord, faVk, faWindows} from "@fortawesome/free-brands-svg-icons";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {styled} from "@mui/system";
 import {Backdrop, TextField} from "@mui/material";
@@ -19,11 +19,9 @@ export async function getServerSideProps(ctx) {
     const api = serverFiberAPI(ctx, `acc${srvid}`)
     let srv = await api.fetch.gdpsGet(srvid)
     if (srv.srvid){
-        let user= await api.gdps_users.get(srvid)
         return {
             props: {
-                srv: srv,
-                user: user
+                srv: srv
             }
         }
     }
@@ -58,17 +56,22 @@ export default function DownloadPage(props) {
     const srvid = router.query.srvid
     const srv = props.srv
 
-    const user = props.user
+    const [user, setUser] = useState({})
 
-    const api = useFiberAPI(`acc${srvid}`)
+    const api = useFiberAPI(`gdps_token`)
+    let tokens = api.authorization||{}
+    const defaultId = tokens.default?.[srvid] || 0
+    const token = tokens[srvid]?.[defaultId] || ""
+    api.authorization = token
+
+    useEffect(() => {
+        api.gdps_users.get(srvid).then(r=>setUser(r))
+    }, []);
 
     const [creds, setCreds] = useState({uname:"", password:"", captcha:"", email: ""})
     const [backdrop, setBackdrop] = useState("none")
     const [showLogin, setShowLogin] = useState(false)
 
-    // useEffect(()=> {
-    //     srvid&&api.gdps_users.get(srvid).then(resp=>setUser(resp))
-    // }, [srvid])
 
     const aLogin=()=>{
         const solution = funnyCaptcha.captchaStatus.solution
@@ -85,15 +88,26 @@ export default function DownloadPage(props) {
         api.gdps_users.login(srvid, creds.uname, creds.password, solution).then((resp)=>{
             if (resp.status==="ok") {
 
-                        toast.success(locale.get('success'), {
-                            duration: 1000,
-                            style: {
-                                color: "white",
-                                backgroundColor: "var(--btn-color)"
-                            }
-                        })
-                        api.auth.setCookieToken(resp.token)
-                        router.push(srvid+"/panel")
+                toast.success(locale.get('success'), {
+                    duration: 1000,
+                    style: {
+                        color: "white",
+                        backgroundColor: "var(--btn-color)"
+                    }
+                })
+
+                if (tokens[srvid]) {
+                    tokens[srvid][defaultId] = resp.token
+                } else {
+                    tokens[srvid] = [resp.token]
+                }
+                if (tokens.default) {
+                    tokens.default[srvid] = defaultId
+                } else {
+                    tokens.default = {[srvid]: defaultId}
+                }
+                api.auth.setCookieToken(JSON.stringify(tokens))
+                router.push(srvid+"/panel")
             }else{
                 switch (resp.code) {
                     case "-1":
@@ -115,7 +129,7 @@ export default function DownloadPage(props) {
                         })
                         break
                     default:
-                        toast.error(`Error: ${resp.message} (c_${resp.code})`, {
+                        toast.error(errParse(resp.code, resp.message), {
                             duration: 10000,
                             style: {
                                 color: "white",
@@ -172,7 +186,7 @@ export default function DownloadPage(props) {
                         break
                 }
             }else{
-                toast.error(resp.message, {
+                toast.error(errParse(resp.code, resp.message), {
                     duration: 10000,
                     style: {
                         color: "white",
@@ -208,17 +222,17 @@ export default function DownloadPage(props) {
                             <p className="my-0 mx-4 text-lg">{locale.get('download')}</p>
                             {srv.client_windows_url &&
                                 <span className="flex">
-                            {srv.client_windows_url && <span className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
-                                                            onClick={()=>window.location.href=srv.client_windows_url}><FontAwesomeIcon icon={faWindows} className="mr-2" /> Windows
-                            </span>}
-                                    {srv.client_android_url && <span className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
-                                                                    onClick={()=>window.location.href=srv.client_android_url}>
+                                    {srv.client_windows_url && <a className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
+                                                                    href={srv.client_windows_url} filename={srv.client_windows_url.split("/").slice(-1)}><FontAwesomeIcon icon={faWindows} className="mr-2" /> Windows
+                            </a>}
+                                    {srv.client_android_url && <a className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
+                                                                    href={srv.client_android_url}>
                                 <FontAwesomeIcon icon={faAndroid} className="mr-2" /> Android
-                            </span>}
-                                    {srv.client_ios_url && <span className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
-                                                                onClick={()=>window.location.href=srv.client_ios_url}>
+                            </a>}
+                                    {srv.client_ios_url && <a className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
+                                                                    href={srv.client_ios_url} filename={srv.client_ios_url.split("/").slice(-1)}>
                                 <FontAwesomeIcon icon={faApple} className="mr-2" /> iOS
-                            </span>}
+                            </a>}
 
                         </span>}
                         </div>
@@ -226,9 +240,9 @@ export default function DownloadPage(props) {
                     <div className="bg-[var(--subtle-color)] p-2 w-[available] flex rounded-2xl mt-4">
                         <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-lg flex items-center justify-center h-12 rounded-xl flex-1 mr-2 last:mr-0"
                            onClick={()=>{
-                               if(user.uid>0) router.push(srvid+"/panel")
+                               if(user.uname && !router.query.fresh) router.push(srvid+"/panel")
                                else setShowLogin(!showLogin)
-                           }}>{(user.uname?locale.get('loginas')+user.uname:locale.get('login'))}</a>
+                           }}>{((user.uname && !router.query.fresh)?locale.get('loginas')+user.uname:locale.get('login'))}</a>
 
                         {srv.discord && <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block flex items-center justify-center rounded-xl w-12 mr-2 last:mr-0 aspect-square"
                                            onClick={()=>window.location.href="https://discord.gg/"+srv.discord}><FontAwesomeIcon icon={faDiscord} className="!h-6" /></a>

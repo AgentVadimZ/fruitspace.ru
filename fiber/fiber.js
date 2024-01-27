@@ -1,4 +1,4 @@
-/* FruitSpace API v1.0 */
+/* FruitSpace API v1.3 */
 
 import {useCookies} from "react-cookie";
 import {useRecoilState} from "recoil";
@@ -8,34 +8,40 @@ import {useEffect, useState} from "react";
 
 const DISCORD_AUTH = "https://discord.com/oauth2/authorize?client_id=1119240313605734410&response_type=code&scope=identify%20guilds%20guilds.join&state="
 
-const api = {
-    base_url: "https://api.fruitspace.one/v2/",
-    authorization: "",
+
+class api {
+    base_url = "https://api.fruitspace.one/v2/"
+    authorization = ""
+
+    constructor() {
+        this.qid = Math.random()
+    }
+
+    doForm = async (endpoint, method = "GET", body = null) => {
+        return fetch(this.base_url + endpoint,
+            {method: method, body: body, headers: {"Authorization": this.authorization}}
+        ).then(r => r.json()).catch(e => ({status: "error", message: e.message, code: "conn"}))
+    }
+
+    do = async (endpoint, method = "GET", body = null) => {
+        return fetch(this.base_url + endpoint,
+            {
+                method: method,
+                body: body ? JSON.stringify(body) : null,
+                headers: {"Authorization": this.authorization, "Content-Type": "application/json"}
+            }
+        ).then(r => r.json()).catch(e => ({status: "error", message: e.message, code: "conn"}))
+    }
 }
 
 // region API
 
-api.do = async (endpoint, method="GET", body=null) => {
-    return fetch(api.base_url+endpoint,
-        {method: method, body: body?JSON.stringify(body):null, headers:{"Authorization":api.authorization, "Content-Type":"application/json"}}
-    ).then(r=>r.json()).catch(e=>({status:"error", message:e.message, code:"conn"}))
-}
-api.doForm = async (endpoint, method="GET", body=null) => {
-    return fetch(api.base_url+endpoint,
-        {method: method, body: body, headers:{"Authorization":api.authorization}}
-    ).then(r=>r.json()).catch(e=>({status:"error", message:e.message, code:"conn"}))
-}
-
-api.registerProvider = (obj, override) => {
-    obj._api = api
-    api[override] = obj
-}
 
 const useLoader = (loader) => {
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState({})
-    useEffect(()=>{
-        loader().then((resp)=>{
+    useEffect(() => {
+        loader().then((resp) => {
             setLoading(false)
             setData(resp)
         })
@@ -44,241 +50,330 @@ const useLoader = (loader) => {
     return {loading, data}
 }
 
-const useFiberAPI = (cookie="token")=> {
+const useFiberAPI = (cookie = "token") => {
     const [cookies, setCookie, delCookie] = useCookies([cookie])
-    api.authorization = cookies[cookie]
-    api.auth = auth
-    auth.logout=()=>delCookie(cookie, { path: '/' })
-    auth.setCookieToken=(token)=>setCookie(cookie,token,
-        {path:"/",expires:new Date(new Date().getTime()+(1000*60*60*24*30)), secure:true})
+    let sapi = new api();
+    sapi.authorization = cookies[cookie]
 
-    api.registerProvider(auth, "auth")
-    api.registerProvider(user, "user")
-    api.registerProvider(payments, "payments")
-    api.registerProvider(ufetch, "fetch")
-    api.registerProvider(servers, "servers")
-    api.registerProvider(gdps_manage, "gdps_manage")
-    api.registerProvider(gdps_users, "gdps_users")
-    return api
+    let xauth = new auth(sapi);
+    xauth.logout = () => delCookie(cookie, {path: '/'})
+    xauth.setCookieToken = (token) => setCookie(cookie, token,
+        {path: "/", expires: new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * 30)), secure: true})
+
+    sapi.auth = xauth
+    sapi.user = new user(sapi)
+    sapi.payments = new payments(sapi)
+    sapi.fetch = new ufetch(sapi)
+    sapi.servers = new servers(sapi)
+    sapi.gdps_manage = new gdps_manage(sapi)
+    sapi.gdps_users = new gdps_users(sapi)
+    sapi.particles = new particles(sapi)
+    return sapi
 }
 
-const serverFiberAPI = (ctx, cookie="token")=> {
-    const cookies = ctx?parseCookies(ctx.req):{}
-    api.authorization = cookies[cookie]||""
-    api.registerProvider(auth, "auth")
-    api.registerProvider(user, "user")
-    api.registerProvider(payments, "payments")
-    api.registerProvider(ufetch, "fetch")
-    api.registerProvider(servers, "servers")
-    api.registerProvider(gdps_manage, "gdps_manage")
-    api.registerProvider(gdps_users, "gdps_users")
-    return api
+const serverFiberAPI = (ctx, cookie = "token") => {
+    const cookies = ctx ? parseCookies(ctx.req) : {}
+    let sapi = new api()
+    sapi.authorization = cookies[cookie] || ""
+
+    sapi.auth = new auth(sapi)
+    sapi.user = new user(sapi)
+    sapi.payments = new payments(sapi)
+    sapi.fetch = new ufetch(sapi)
+    sapi.servers = new servers(sapi)
+    sapi.gdps_manage = new gdps_manage(sapi)
+    sapi.gdps_users = new gdps_users(sapi)
+    sapi.particles = new particles(sapi)
+    return sapi
 }
 // endregion
 
 // region  Auth API
-const auth = {_api: api}
-auth.logout = ()=>{}
-auth.login = async (uname, password, hcaptcha, totp="") => {
-    return await auth._api.do("auth/login","POST", {
-        uname: uname,
-        password: password,
-        hCaptchaToken: hcaptcha,
-        totp: totp
-    })
+class auth {
+    constructor(apix) {
+        this._api = apix
+    }
+
+    logout = () => {
+    }
+    login = async (uname, password, hcaptcha, totp = "") => {
+        return await this._api.do("auth/login", "POST", {
+            uname: uname,
+            password: password,
+            hCaptchaToken: hcaptcha,
+            totp: totp
+        })
+    }
+    register = async (uname, name, surname, email, password, hcaptcha, lang) => {
+        return await this._api.do("auth/register", "POST", {
+            uname: uname,
+            name: name,
+            surname: surname,
+            email: email,
+            password: password,
+            hCaptchaToken: hcaptcha,
+            lang: lang
+        })
+    }
+    recover = async (email, hcaptcha, lang) => {
+        return await this._api.do("auth/recover", "POST", {
+            email: email,
+            hCaptchaToken: hcaptcha,
+            lang: lang
+        })
+    }
+    discord = (shallow = false) => {
+        window.location.href = DISCORD_AUTH + (
+            this._api.authorization && !shallow
+                ? this._api.authorization : "")
+    }
 }
-auth.register = async (uname, name, surname, email, password, hcaptcha, lang) => {
-    return await auth._api.do("auth/register","POST", {
-        uname: uname,
-        name: name,
-        surname: surname,
-        email: email,
-        password: password,
-        hCaptchaToken: hcaptcha,
-        lang: lang
-    })
-}
-auth.recover = async (email, hcaptcha, lang) => {
-    return await auth._api.do("auth/recover", "POST", {
-        email: email,
-        hCaptchaToken: hcaptcha,
-        lang: lang
-    })
-}
-auth.discord = (shallow=false) => {
-    window.location.href=DISCORD_AUTH+(
-        auth._api.authorization&&!shallow
-            ?auth._api.authorization:"")
-}
+
 // endregion
 
 // region User API
-const user = {_api: api}
-user.sso = async () => {
-    return await user._api.do("user","GET")
+class user {
+    constructor(apix) {
+        this._api = apix
+    }
+
+    sso = async () => {
+        return await this._api.do("user", "GET")
+    }
+    useUser = () => {
+        return useRecoilState(userAtom)
+    }
+    updateName = async (name, surname) => {
+        return await this._api.do("user", "PATCH", {
+            name: name,
+            surname: surname
+        })
+    }
+    updatePassword = async (password, new_password) => {
+        return await this._api.do("user", "PATCH", {
+            password: password,
+            new_password: new_password
+        })
+    }
+    updateTOTP = async (totp) => {
+        return await this._api.do("user", "PATCH", {
+            totp: totp
+        })
+    }
+    resetAvatar = async () => {
+        let datax = new FormData()
+        datax.append("reset", "reset")
+        return await this._api.doForm("user/avatar", "POST", datax)
+    }
+    updateAvatar = async (avatar_file) => {
+        let datax = new FormData()
+        datax.append("profile_pic", avatar_file)
+        return await this._api.doForm("user/avatar", "POST", datax)
+    }
 }
-user.useUser = ()=> {
-    return useRecoilState(userAtom)
-}
-user.updateName = async (name, surname) => {
-    return await user._api.do("user","PATCH", {
-        name: name,
-        surname: surname
-    })
-}
-user.updatePassword = async (password, new_password) => {
-    return await user._api.do("user","PATCH", {
-        password: password,
-        new_password: new_password
-    })
-}
-user.updateTOTP = async (totp) => {
-    return await user._api.do("user","PATCH", {
-        totp: totp
-    })
-}
-user.resetAvatar = async () => {
-    var datax = new FormData()
-    datax.append("reset", "reset")
-    return await user._api.doForm("user/avatar","POST", datax)
-}
-user.updateAvatar = async (avatar_file) => {
-    var datax = new FormData()
-    datax.append("profile_pic", avatar_file)
-    return await user._api.doForm("user/avatar","POST", datax)
-}
+
 // endregion
 
 // region Payments API
-const payments = {_api: api}
-payments.new = async (amount, merchant)=>{
-    return await payments._api.do("payments", "POST", {amount: amount, merchant: merchant})
+class payments {
+    constructor(apix) {
+        this._api = apix
+    }
+
+    new = async (amount, merchant) => {
+        return await this._api.do("payments", "POST", {amount: amount, merchant: merchant})
+    }
+    get = async () => {
+        return await this._api.do("payments", "GET")
+    }
 }
-payments.get = async ()=>{
-    return await payments._api.do("payments", "GET")
-}
+
 //endregion
 
 // region Fetch API
-const ufetch = {_api: api}
+class ufetch {
+    constructor(apix) {
+        this._api = apix
+    }
 
-ufetch.stats = async () => {
-    return await ufetch._api.do("fetch/stats","GET")
+    stats = async () => {
+        return await this._api.do("fetch/stats", "GET")
+    }
+
+    gdpsTariffs = async () => {
+        return await this._api.do("fetch/gd/tariffs", "GET")
+    }
+    gdpsTop = async (page = 0) => {
+        return await this._api.do(`fetch/gd/top?offset=${page}`, "GET")
+    }
+    gdpsGet = async (srvid) => {
+        return await this._api.do(`fetch/gd/info/${srvid}`, "GET")
+    }
+
+    minecraftGetCores = async () => {
+        return await this._api.do("fetch/mc/cores", "GET")
+    }
+
+    minecraftFetchVersions = async () => {
+        let v = await fetch('https://launchermeta.mojang.com/mc/game/version_manifest.json').then(r=>r.json())
+        let vers=[]
+        v.versions.forEach(e=>{
+            e.id.match(/^\d\.[\d]+[\.]*\d$/g)&&vers.push(e.id)
+        })
+        return vers
+    }
 }
 
-ufetch.gdpsTariffs = async () => {
-    return await ufetch._api.do("fetch/gd/tariffs","GET")
-}
-ufetch.gdpsTop = async (page=0) => {
-    return await ufetch._api.do(`fetch/gd/top?offset=${page}`,"GET")
-}
-ufetch.gdpsGet = async (srvid) => {
-    return await ufetch._api.do(`fetch/gd/info/${srvid}`, "GET")
-}
+
 // endregion
 
 // region Servers API
-const servers = {_api: api}
-servers.list = async () => {
-    return await servers._api.do("servers", "GET")
-}
-servers.createGDPS = async (name, tariff, duration, promocode, srvid="") => {
-    return await servers._api.do("servers/gd", "POST", {
-        name: name, tariff: tariff, duration: duration, promocode: promocode, srvid: srvid
-    })
-}
-servers.useGDPS = ()=> {
-    return useRecoilState(serverGDAtom)
-}
+class servers {
+    constructor(apix) {
+        this._api = apix
+    }
 
+    list = async () => {
+        return await this._api.do("servers", "GET")
+    }
+    createGDPS = async (name, tariff, duration, promocode, srvid = "") => {
+        return await this._api.do("servers/gd", "POST", {
+            name: name, tariff: tariff, duration: duration, promocode: promocode, srvid: srvid
+        })
+    }
+
+    createMC = async (name, tariff, core, version, add_storage, promocode, dedic_port=false, srvid="", duration="mo") => {
+        return await this._api.do("servers/mc", "POST", {
+            name: name, tariff: tariff, core: core, version: version, add_storage: add_storage, promocode: promocode,
+            dedicated_port: dedic_port, srvid: srvid, duration: duration
+        })
+    }
+    useGDPS = () => {
+        return useRecoilState(serverGDAtom)
+    }
+}
 //endregion
 
 // region GDPS Manage API
-const gdps_manage = {_api: api}
-gdps_manage.delete = async (srvid)=> {
-    return await gdps_manage._api.do(`servers/gd/${srvid}`, "DELETE")
-}
-gdps_manage.get = async (srvid)=> {
-    return await gdps_manage._api.do(`servers/gd/${srvid}`, "GET")
-}
-gdps_manage.dbreset = async (srvid)=> {
-    return await gdps_manage._api.do(`servers/gd/${srvid}/dbreset`, "GET")
-}
-gdps_manage.updateChests = async (srvid, chests)=> {
-    return await gdps_manage._api.do(`servers/gd/${srvid}/chests`, "POST", chests)
-}
-gdps_manage.getLogs = async (srvid, type, page=0)=> {
-    return await gdps_manage._api.do(`servers/gd/${srvid}/logs`, "POST", {type: type, page: page})
-}
-gdps_manage.getMusic = async (srvid, mode, query="", page=0)=> {
-    return await gdps_manage._api.do(`servers/gd/${srvid}/music`, "POST", {mode: mode, page: page, query: query})
-}
-gdps_manage.addMusic = async (srvid, type, url)=> {
-    return await gdps_manage._api.do(`servers/gd/${srvid}/music`, "PUT", {type: type, url: url})
-}
-gdps_manage.updateLogo = async (srvid, avatar_file) => {
-    var datax = new FormData()
-    datax.append("profile_pic", avatar_file)
-    return await user._api.doForm(`servers/gd/${srvid}/icon`,"POST", datax)
-}
-gdps_manage.updateSettings = async (srvid, settings)=> {
-    return await gdps_manage._api.do(`servers/gd/${srvid}/settings`, "POST", settings)
-}
-gdps_manage.buildlabPush = async (srvid, blab)=> {
-    return await gdps_manage._api.do(`servers/gd/${srvid}/buildlab`, "POST", blab)
-}
-gdps_manage.fetchBuildStatus = async (srvid)=> {
-    return await gdps_manage._api.do(`servers/gd/${srvid}/buildlab/status`, "GET")
-}
-gdps_manage.moduleDiscord = async (srvid, enable, module)=> {
-    return await gdps_manage._api.do(`servers/gd/${srvid}/modules/discord`, "PUT", {...module, enable: enable})
-}
-gdps_manage.getRoles = async (srvid)=> {
-    return await gdps_manage._api.do(`servers/gd/${srvid}/roles`, "GET")
-}
-gdps_manage.setRole = async (srvid, role)=> {
-    return await gdps_manage._api.do(`servers/gd/${srvid}/roles`, "POST", role)
+class gdps_manage {
+    constructor(apix) {
+        this._api = apix
+    }
+    delete = async (srvid) => {
+        return await this._api.do(`servers/gd/${srvid}`, "DELETE")
+    }
+    get = async (srvid) => {
+        return await this._api.do(`servers/gd/${srvid}`, "GET")
+    }
+    dbreset = async (srvid) => {
+        return await this._api.do(`servers/gd/${srvid}/dbreset`, "GET")
+    }
+    updateChests = async (srvid, chests) => {
+        return await this._api.do(`servers/gd/${srvid}/chests`, "POST", chests)
+    }
+    getLogs = async (srvid, type, page = 0) => {
+        return await this._api.do(`servers/gd/${srvid}/logs`, "POST", {type: type, page: page})
+    }
+    getMusic = async (srvid, mode, query = "", page = 0) => {
+        return await this._api.do(`servers/gd/${srvid}/music`, "POST", {mode: mode, page: page, query: query})
+    }
+    addMusic = async (srvid, type, url) => {
+        return await this._api.do(`servers/gd/${srvid}/music`, "PUT", {type: type, url: url})
+    }
+    updateLogo = async (srvid, avatar_file) => {
+        let datax = new FormData()
+        datax.append("profile_pic", avatar_file)
+        return await this._api.doForm(`servers/gd/${srvid}/icon`, "POST", datax)
+    }
+    updateSettings = async (srvid, settings) => {
+        return await this._api.do(`servers/gd/${srvid}/settings`, "POST", settings)
+    }
+    buildlabPush = async (srvid, blab) => {
+        return await this._api.do(`servers/gd/${srvid}/buildlab`, "POST", blab)
+    }
+    fetchBuildStatus = async (srvid) => {
+        return await this._api.do(`servers/gd/${srvid}/buildlab/status`, "GET")
+    }
+    moduleDiscord = async (srvid, enable, module) => {
+        return await this._api.do(`servers/gd/${srvid}/modules/discord`, "PUT", {...module, enable: enable})
+    }
+    getRoles = async (srvid) => {
+        return await this._api.do(`servers/gd/${srvid}/roles`, "GET")
+    }
+    setRole = async (srvid, role) => {
+        return await this._api.do(`servers/gd/${srvid}/roles`, "POST", role)
+    }
+    searchUsers = async (srvid, keyword) => {
+        return await this._api.do(`servers/gd/${srvid}/get/users?user=${encodeURI(keyword)}`, "GET")
+    }
+
+    upgrade22 = async (srvid) => {
+        return await this._api.do(`servers/gd/${srvid}/upgrade22`, "GET")
+    }
 }
 
-gdps_manage.searchUsers = async (srvid, keyword)=> {
-    return await gdps_manage._api.do(`servers/gd/${srvid}/get/users?user=${encodeURI(keyword)}`, "GET")
-}
 // endregion
 
 // region GDPS Users API
-const gdps_users = {_api: api}
-gdps_users.login = async (srvid, uname, password, fcaptcha) => {
-    return await gdps_users._api.do(`servers/gd/${srvid}/u/login`,"POST", {
-        uname: uname,
-        password: password,
-        fCaptchaToken: fcaptcha,
-        hCaptchaToken: ""
-    })
-}
-gdps_users.get = async (srvid) => {
-    return await gdps_users._api.do(`servers/gd/${srvid}/u`,"GET")
-}
-gdps_users.forgotPassword = async (srvid, email, fcaptcha) => {
-    return await gdps_users._api.do(`servers/gd/${srvid}/u/recover`,"POST", {
-        fCaptchaToken: fcaptcha, email: email, hCaptchaToken: ""
-    })
-}
-gdps_users.updateUsername = async (srvid, uname) => {
-    return await gdps_users._api.do(`servers/gd/${srvid}/u`,"PUT", {uname: uname, password: "", email: ""})
-}
-gdps_users.updateEmail = async (srvid, email) => {
-    return await gdps_users._api.do(`servers/gd/${srvid}/u`,"PUT", {uname: "", password: "", email: email})
-}
-gdps_users.updatePassword = async (srvid, password) => {
-    return await gdps_users._api.do(`servers/gd/${srvid}/u`,"PUT", {uname: "", password: password, email: ""})
-}
-gdps_users.getMusic = async (srvid, mode, query="", page=0)=> {
-    return await gdps_users._api.do(`servers/gd/${srvid}/u/music`, "POST", {mode: mode, page: page, query: query})
-}
-gdps_users.addMusic = async (srvid, type, url)=> {
-    return await gdps_users._api.do(`servers/gd/${srvid}/u/music`, "PUT", {type: type, url: url})
+class gdps_users {
+    constructor(apix) {
+        this._api = apix
+    }
+    login = async (srvid, uname, password, fcaptcha) => {
+        return await this._api.do(`servers/gd/${srvid}/u/login`, "POST", {
+            uname: uname,
+            password: password,
+            fCaptchaToken: fcaptcha,
+            hCaptchaToken: ""
+        })
+    }
+    get = async (srvid) => {
+        console.log(this._api.qid)
+        return await this._api.do(`servers/gd/${srvid}/u`, "GET")
+    }
+    forgotPassword = async (srvid, email, fcaptcha) => {
+        return await this._api.do(`servers/gd/${srvid}/u/recover`, "POST", {
+            fCaptchaToken: fcaptcha, email: email, hCaptchaToken: ""
+        })
+    }
+    updateUsername = async (srvid, uname) => {
+        return await this._api.do(`servers/gd/${srvid}/u`, "PUT", {uname: uname, password: "", email: ""})
+    }
+    updateEmail = async (srvid, email) => {
+        return await this._api.do(`servers/gd/${srvid}/u`, "PUT", {uname: "", password: "", email: email})
+    }
+    updatePassword = async (srvid, password) => {
+        return await this._api.do(`servers/gd/${srvid}/u`, "PUT", {uname: "", password: password, email: ""})
+    }
+    getMusic = async (srvid, mode, query = "", page = 0) => {
+        return await this._api.do(`servers/gd/${srvid}/u/music`, "POST", {mode: mode, page: page, query: query})
+    }
+    addMusic = async (srvid, type, url) => {
+        console.log(this._api.authorization)
+        return await this._api.do(`servers/gd/${srvid}/u/music`, "PUT", {type: type, url: url})
+    }
 }
 //endregion
 
+// region Particle API
+class particles {
+    constructor(apix) {
+        this._api = apix
+    }
+
+    search = async (data) => {
+        return await this._api.do("particle/search", "POST", data)
+    }
+
+    get_particle = async (author, name) => {
+        return await this._api.do(`particle/v/${author}/${name}`, "GET")
+    }
+
+    get_user = async (reg=false) => {
+        return await this._api.do(`particle/user?reg=${reg?"true":"false"}`, "GET")
+    }
+}
+// endregion
+
 export default useFiberAPI
-export {serverFiberAPI, useLoader, useFiberAPI}
+export {serverFiberAPI, useLoader}

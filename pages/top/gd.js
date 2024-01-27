@@ -1,7 +1,6 @@
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";
 import GlobalHead from "../../components/GlobalHead";
 import GlobalNav from "../../components/GlobalNav";
-import styles from '../../components/Cards/ServerItem.module.css'
 import {Tab, TabPanel, TabsList} from "../../components/Global/Tab";
 import useFiberAPI from "../../fiber/fiber";
 import {useEffect, useState} from "react";
@@ -51,9 +50,9 @@ export default function GD(props) {
                             <ServerTopItem key={i} place={i} type="gdps" name={val.srv_name} router={props.router}
                                            desc={ParseDesc(val.user_count, val.level_count)} uuid={val.srvid} icon={val.icon} />
                         ))}
-                        <div className={styles.ServerCard} onClick={()=>fetchMore()}>
-                            <AddCircleIcon className={styles.AddIcon}/>
-                            <h3 className={styles.AddText}>{localeGlobal.get('loadmore')}</h3>
+                        <div className="bg-[var(--active-color)] rounded-xl p-3 flex items-center cursor-pointer hover:bg-[var(--btn-color)]" onClick={()=>fetchMore()}>
+                            <AddCircleIcon className="h-12 w-12 ml-2"/>
+                            <h3 className="mx-auto my-0">{localeGlobal.get('loadmore')}</h3>
                         </div>
                     </TabPanel>
                 </TabsUnstyled>

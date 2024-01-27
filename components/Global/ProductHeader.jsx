@@ -16,18 +16,19 @@ export default function ProductHeader({title, text, img, primaryText, secondaryT
                 <h1>{title}</h1>
                 <p>{text}</p>
                 <div className={styles.cardBox}>
-                    <Link href={primaryLink||"#"}>
+                    <Link href={primaryLink||"#"} legacyBehavior>
                         <Button variant="contained" className={styles.cardButton} startIcon={<BoltIcon/>}>
                             {primaryText}
                         </Button>
                     </Link>
-                    <Link href={secondaryLink||"#"}>
-                        <Button variant="contained" className={styles.cardSecondaryButton} startIcon={<StorageIcon/>}>
-                            {secondaryText}
-                        </Button>
-                    </Link>
+                    {secondaryText &&
+                        <Link href={secondaryLink||'#'} legacyBehavior>
+                            <Button variant="contained" className={styles.cardSecondaryButton} startIcon={<StorageIcon/>}>
+                                {secondaryText}
+                            </Button>
+                        </Link>}
                 </div>
             </div>
         </div>
-    )
+    );
 }

@@ -1,4 +1,4 @@
-FROM node:18-alpine AS base
+FROM node:20-alpine AS base
 
 ARG MSG
 
@@ -25,13 +25,12 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED 1
-ENV NODE_ENV development
+ENV NODE_ENV production
 ENV MSG_ENV=$MSG
 RUN export DATE=$(date +"%d.%m.%Y %H:%M") && \
     sed -i "s/false/true/g" components/betadata.js && \
-    sed -i "s/DATE/$DATE/g" components/betadata.js && \
-    sed -i "s/MSG/$MSG_ENV/g" components/betadata.js
-RUN yarn build
+    sed -i "s/DATE/$DATE/g" components/betadata.js
+RUN yarn global add pnpm && pnpm build
 
 # If using npm comment out above and use below instead
 # RUN npm run build
@@ -40,7 +39,7 @@ RUN yarn build
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV development
+ENV NODE_ENV production
 # Uncomment the following line in case you want to disable telemetry during runtime.
 ENV NEXT_TELEMETRY_DISABLED 1
 

@@ -2,6 +2,7 @@ import {aboutLocale} from "./loc/about";
 import {globalLocale} from "./loc/global";
 import {profileLocale} from "./loc/profile";
 import {productGDLocale} from "./loc/product/gd";
+import {productMCLocale} from "./loc/product/mc";
 import {indexLocale} from "./loc";
 import {orderGDPSLocale} from "./loc/order/gd";
 import {storeLocale} from "./loc/manage/store";
@@ -13,6 +14,7 @@ const translationList = {
     ...aboutLocale,
     ...profileLocale,
     ...productGDLocale,
+    ...productMCLocale,
     ...indexLocale,
     ...orderGDPSLocale,
     ...storeLocale,

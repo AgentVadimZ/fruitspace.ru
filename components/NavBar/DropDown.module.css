@@ -35,7 +35,7 @@
 
 .iconButton {
     margin-right: 0.5rem;
-    background-color: var(--btn-color);
+    background-color: var(--subtle-color);
     border-radius: 16rem;
     height: 3rem;
     width: 3rem;
