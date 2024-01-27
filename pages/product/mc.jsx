@@ -49,7 +49,7 @@ export default function MC(props) {
                 primaryText={locale.get('prodmc.titlecloud')} primaryLink="#cloud"/>
                 <h2 className="text-center mt-12 mb-8 text-white text-3xl">{locale.get('prodmc.tariffs')}</h2>
                 <p className="text-center text-lg">Ресурсы</p>
-                <TabsUnstyled value={tab} onChange={(e,val)=>setTab(val)} className="w-fit mx-auto">
+                <TabsUnstyled value={tab} onChange={(e,val)=>setTab(val)} >
                     <TabsList className="mx-auto text-center">
                         <Tab value="dynamic" className="!w-fit">Динамические</Tab>
                         <Tab value="static" className="!w-fit">Статические</Tab>
