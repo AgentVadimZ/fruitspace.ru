@@ -223,14 +223,14 @@ export default function DownloadPage(props) {
                             {srv.client_windows_url &&
                                 <span className="flex">
                                     {srv.client_windows_url && <a className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
-                                                                    href={srv.client_windows_url} filename={srv.client_windows_url.split("/").slice(-1)}><FontAwesomeIcon icon={faWindows} className="mr-2" /> Windows
+                                                                    href={srv.client_windows_url}><FontAwesomeIcon icon={faWindows} className="mr-2" /> Windows
                             </a>}
                                     {srv.client_android_url && <a className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
                                                                     href={srv.client_android_url}>
-                                <FontAwesomeIcon icon={faAndroid} className="mr-2" /> Android
+                                <FontAwesomeIcon icon={faAndroid} className="mr-2"/> Android
                             </a>}
                                     {srv.client_ios_url && <a className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
-                                                                    href={srv.client_ios_url} filename={srv.client_ios_url.split("/").slice(-1)}>
+                                                                    href={srv.client_ios_url}>
                                 <FontAwesomeIcon icon={faApple} className="mr-2" /> iOS
                             </a>}
 

@@ -100,7 +100,7 @@ export default function OrderMC(props){
                 {backdrop == "tariff" &&
                     <div className="w-full h-full overflow-y-scroll pb-4" onClick={(e) => e.stopPropagation()}>
                     <p className="text-3xl text-center">Ресурсы</p>
-                    <TabsUnstyled value={ttab} onChange={(e,val)=>setTtab(val)} className="w-fit mx-auto">
+                    <TabsUnstyled value={ttab} onChange={(e,val)=>setTtab(val)} >
                         <TabsList className="mx-auto text-center">
                             <Tab value="dynamic" className="!w-fit">Динамические</Tab>
                             <Tab value="static" className="!w-fit">Статические</Tab>
