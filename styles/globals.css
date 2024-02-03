@@ -35,6 +35,11 @@
     border-radius: 0 0 .75rem .75rem !important;
 }
 
+.slick-dots li button {
+    background-color: white !important;
+    height: 6px !important;
+}
+
 
 .ant-select-selector {
     box-shadow: none !important;

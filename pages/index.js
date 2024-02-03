@@ -1,5 +1,4 @@
 import GlobalNav from "../components/GlobalNav";
-import Carousel from "../components/Global/Carousel";
 import styles from "../components/Index.module.css"
 
 import MinecraftLogo from "../components/assets/logos/minecraft.png"
@@ -14,8 +13,8 @@ import useLocale, {useGlobalLocale} from "../locales/useLocale";
 import Link from "next/link";
 import {serverFiberAPI} from "../fiber/fiber";
 import {useRef} from "react";
-import {Rating} from "@mui/material";
 import {BetaData} from '../components/betadata';
+import {Rate, Carousel} from "antd";
 
 export async function getStaticProps(ctx) {
     const api = serverFiberAPI(null)
@@ -69,55 +68,19 @@ export default function Home(props) {
 
             <div className={styles.main}>
 
-                <div className="flex flex-col items-center justify-center h-[100vh] relative">
+                <div className="flex flex-col items-center justify-center lg:h-[100vh] relative">
                     <h1 className="text-5xl mt-48 lg:mt-2 xl:text-8xl font-[Coolvetica] tracking-wider font-normal fruitText m-2 select-none">FruitSpace</h1>
                     <p className="text-lg text-center xl:text-2xl m-0 font-[Helvetica]">Удобный и надежный хостинг для ваших любимых игр. И ещё немножко магии ✨</p>
 
                     <div className="mt-24 grid grid-cols-1 xl:grid-cols-3 gap-4 xl:gap-16 select-none">
-                        <Link href="/product/gd" legacyBehavior>
-                            <div className="p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] flex flex-col">
-                                <div className="flex-1 bg-[var(--subtle-color)] rounded-2xl p-4 pr-2 font-[Helvetica] cursor-pointer flex items-center hover:opacity-90 transition-all max-w-md">
-                                    <img alt="prod.logo" className="h-24 mr-2" src={GDLogo.src} />
-                                    <div>
-                                        <h2 className="m-0">Geometry Dash</h2>
-                                        <p className="m-0">Кастомная музыка, 2.2, моды и конфигуратор установщиков</p>
-                                        <p className="text-sm m-0 mt-2 text-[#cacad0]">{props.stats.gdps_count} {getRegionalPostfix(props.stats.gdps_count)} • {getLvlsCnt(props.stats.gdps_levels)}</p>
-                                    </div>
-                                    <RightIcon className="flex-shrink-0 w-8 ml-auto" />
-                                </div>
-                            </div>
-                        </Link>
-                        
-                        <Link href="/product/mc" legacyBehavior>
-                        <div className="p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] flex flex-col">
-                            <div className="flex-1 bg-[var(--subtle-color)] rounded-2xl p-4 pr-2 font-[Helvetica] cursor-pointer flex items-center hover:opacity-90 transition-all max-w-md">
-                                <img alt="prod.logo" className="h-24 mr-2" src={MinecraftLogo.src} />
-                                <div>
-                                    <h2 className="m-0">Minecraft</h2>
-                                    <p className="m-0">Мощные сервера, динамические ресурсы и удобная панель</p>
-                                    <p className="text-sm m-0 mt-2 text-[#cacad0]">Уже на FruitSpace!</p>
-                                </div>
-                                <RightIcon className="flex-shrink-0 w-8 ml-auto" />
-                            </div>
-                        </div>
-                        </Link>
-
-                        <div className="p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] flex flex-col">
-                            <div className="flex-1 bg-[var(--subtle-color)] rounded-2xl p-4 pr-2 font-[Helvetica] cursor-pointer flex items-center hover:opacity-90 transition-all max-w-md">
-                                <img alt="prod.logo" className="h-24 mr-2" src={CSLogo.src} />
-                                <div>
-                                    <h2 className="m-0">Counter Strike</h2>
-                                    <p className="m-0">128 тикрейт, быстрая установка модов и FastDL</p>
-                                    <p className="text-sm m-0 mt-2 text-[#cacad0]">Скоро. Q1 2024</p>
-                                </div>
-                                <RightIcon className="flex-shrink-0 w-8 ml-auto" />
-                            </div>
-                        </div>
+                        <ProdCard link="/product/gd" name="Geometry Dash" description="Кастомная музыка, 2.2, моды и конфигуратор установщиков" logo={GDLogo.src} stats={`${props.stats.gdps_count} ${getRegionalPostfix(props.stats.gdps_count)} • ${getLvlsCnt(props.stats.gdps_levels)}`} />
+                        <ProdCard link="/product/mc" name="Minecraft" description="Мощные сервера, динамические ресурсы и удобная панель" logo={MinecraftLogo.src} stats="Уже на FruitSpace!" />
+                        <ProdCard link="#" name="Counter Strike" description="128 тикрейт, быстрая установка модов и FastDL" logo={CSLogo.src} stats="Скоро. Q2 2024" />
                     </div>
 
                     <Link href="/top/gd" legacyBehavior>
-                        <div className="w-full md:w-fit mt-4 xl:mt-8 p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e] via-[#5a00ff] to-[#0d6efd] flex flex-col">
-                            <div className="flex-1 bg-[var(--subtle-color)] rounded-2xl p-2 font-[Helvetica] cursor-pointer flex items-center justify-between hover:opacity-90 transition-all md:max-w-md">
+                        <div className="w-full md:w-fit mt-4 xl:mt-8 p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e88] via-[#5a00ff88] to-[#0d6efd88] flex flex-col">
+                            <div className="flex-1 bg-[#333338cc] glass rounded-2xl p-2 font-[Helvetica] cursor-pointer flex items-center justify-between hover:bg-[#33333888] transition-all duration-300 md:max-w-md">
                                 <img alt="prod.logo" className="h-16 lg:mr-2" src="https://img.icons8.com/nolan/96/1A6DFF/C822FF/prize.png" />
                                 <h2 className="m-0 w-fit">Топ серверов</h2>
                                 <RightIcon className="flex-shrink-0 w-8 lg:ml-auto" />
@@ -127,55 +90,86 @@ export default function Home(props) {
 
                 </div>
 
-                <p className="text-4xl text-center m-0 mt-16 font-[Helvetica]" ref={scrollRef}>На грани возможного</p>
-                <p className="text-center text-lg px-4 xl:px-24">Неважно, любите ли вы добавлять массу модов и плагинов или предпочитаете
-                ванильные версии игр — FruitSpace позволит вам насладиться всеми возможностями игры по максимуму. Музыка из любых источников и быстрые обновления текстур/модов для Geometry Dash.
-                SourceMod и MetaMod для Counter Strike (fastDL в комплекте). Поддержка многопоточных ядер и объединения нескольких серверов для Minecraft.
-                 Если для чего-то не нужно переписывать игру с нуля, у нас скорее всего это есть.</p>
-                <p className="text-4xl text-center m-0 mt-16 font-[Helvetica]">Для новичков и профи</p>
-                <p className="text-center text-lg px-4 xl:px-24">Мы стремимся делать управление серверами простым и удобным, не забирая возможности тонко кастомизировать
-                каждый аспект ваших любимых игр. Для каждой игры мы предоставляем отдельную удобную панель, в которой могут разобраться даже те, кто до этого не имеел
-                    свой собственный сервер. </p>
-                <p className="text-4xl text-center m-0 mt-16 font-[Helvetica]">Нам доверяют <span className="text-blue-600">{props.stats.clients}</span> клиентов</p>
-                <p className="text-center text-lg px-4 xl:px-24">Не решаетесь, стоит ли вам входить в нишу игровых серверов? Наш хостинг помогает достичь своих целей
-                    абсолютно каждому - мододелам, новичкам, профессионалам, и просто игрокам которые хотят создать свой укромный уголок. Не верите?
-                    Прочтите реальные отзывы или оставьте свой!</p>
+                <div className="bg-black bg-opacity-25 rounded-t-2xl glassb !border-b-0 mt-16 py-8">
+                    <p className="text-4xl text-center m-0 font-[Helvetica]" ref={scrollRef}>На грани
+                        возможного</p>
+                    <p className="text-center text-lg px-4 xl:px-24">Неважно, любите ли вы добавлять массу модов и
+                        плагинов или предпочитаете
+                        ванильные версии игр — FruitSpace позволит вам насладиться всеми возможностями игры по
+                        максимуму. Музыка из любых источников и быстрые обновления текстур/модов для Geometry Dash.
+                        SourceMod и MetaMod для Counter Strike (fastDL в комплекте). Поддержка многопоточных ядер и
+                        объединения нескольких серверов для Minecraft.
+                        Если для чего-то не нужно переписывать игру с нуля, у нас скорее всего это есть.</p>
+                    <p className="text-4xl text-center m-0 mt-16 font-[Helvetica]">Для новичков и профи</p>
+                    <p className="text-center text-lg px-4 xl:px-24">Мы стремимся делать управление серверами простым и
+                        удобным, не забирая возможности тонко кастомизировать
+                        каждый аспект ваших любимых игр. Для каждой игры мы предоставляем отдельную удобную панель, в
+                        которой могут разобраться даже те, кто до этого не имеел
+                        свой собственный сервер. </p>
+                    <p className="text-4xl text-center m-0 mt-16 font-[Helvetica]">Нам доверяют <span
+                        className="text-blue-600">{props.stats.clients}</span> клиентов</p>
+                    <p className="text-center text-lg px-4 xl:px-24">Не решаетесь, стоит ли вам входить в нишу игровых
+                        серверов? Наш хостинг помогает достичь своих целей
+                        абсолютно каждому - мододелам, новичкам, профессионалам, и просто игрокам которые хотят создать
+                        свой укромный уголок. Не верите?
+                        Прочтите реальные отзывы или оставьте свой!</p>
 
-                <Carousel>
-                    {reviews.map((u,i)=>{
-                        return <div key={i} className="px-12 py-4 rounded-xl bg-[var(--subtle-color)] my-4">
-                                <div className="flex items-center justify-between">
+                    <Carousel dots={{className:"!bottom-2"}}>
+                        {reviews.map((u, i) => {
+                            return <div key={i} className="px-2 py-2 rounded-xl bg-[#333338aa] my-4 overflow-y-scroll
+                             !w-5/6 lg:!w-2/3 h-96 mx-auto !flex flex-col glass">
+                                <div className="flex flex-col lg:flex-row items-center justify-between">
                                     <p>{u.date}</p>
                                     <p className="text-lg m-0">{u.user}</p>
-                                    <Rating className="p-4 bg-[var(--active-color)] rounded-lg h-fit" defaultValue={u.rating} precision={0.5} readOnly />
+                                    <Rate className="p-4 bg-[var(--active-color)] rounded-lg h-fit" allowHalf disabled
+                                          defaultValue={u.rating}/>
                                 </div>
                                 <div>
-                                    {u.pros&&<>
-                                        <p className="text-xl">Что понравилось?</p>
-                                        <pre className="text-md rounded-lg bg-[var(--active-color)] p-2 whitespace-normal">{u.pros}</pre>
+                                    {u.pros && <>
+                                        <p className="text-lg lg:text-xl mb-1">Что понравилось?</p>
+                                        <pre className="text-md rounded-lg bg-[var(--active-color)] p-2 whitespace-normal leading-tight mt-0">{u.pros}</pre>
                                     </>}
-                                    {u.cons&&<>
-                                        <p className="text-xl">Что не понравилось, чего не хватает?</p>
-                                        <pre className="text-md rounded-lg bg-[var(--active-color)] p-2 whitespace-normal">{u.cons}</pre>
+                                    {u.cons && <>
+                                        <p className="text-lg lg:text-xl mb-1">Что не понравилось, чего не хватает?</p>
+                                        <pre className="text-md rounded-lg bg-[var(--active-color)] p-2 whitespace-normal leading-tight mt-0">{u.cons}</pre>
                                     </>}
-                                    {u.verdict&&<>
-                                        <p className="text-xl">Останетесь ли на FruitSpace?</p>
-                                        <pre className="text-md rounded-lg bg-[var(--active-color)] p-2 whitespace-normal">{u.verdict}</pre>
+                                    {u.verdict && <>
+                                        <p className="text-lg lg:text-xl mb-1">Останетесь ли на FruitSpace?</p>
+                                        <pre className="text-md rounded-lg bg-[var(--active-color)] p-2 whitespace-normal leading-tight mt-0">{u.verdict}</pre>
                                     </>}
                                 </div>
-                                <div className="flex justify-between items-center">
-                                    <p className="text-gray-300">Хостинг: {u.product}</p>
+                                <div className="flex flex-col lg:flex-row justify-between items-center mt-auto">
+                                    <span className="text-gray-300">Хостинг: {u.product}</span>
                                     <a href={u.url} className="text-[var(--primary-color)]">Отзыв в Discord →</a>
                                 </div>
-                               </div>
-                    })}
-                </Carousel>
+                            </div>
+                        })}
+                    </Carousel>
+                </div>
             </div>
         </div>
 
         <Footer router={props.router}/>
     </>;
 }
+
+
+const ProdCard = (props) => (
+    <Link href={props.link} legacyBehavior>
+        <div className="p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e88] via-[#5a00ff88] to-[#0d6efd88] flex flex-col">
+            <div
+                className="flex-1 bg-[#333338cc] glass rounded-2xl p-4 pr-2 font-[Helvetica] cursor-pointer flex items-center hover:bg-[#33333888] transition-all duration-300 max-w-md">
+                <img alt="prod.logo" className="h-24 mr-2" src={props.logo}/>
+                <div>
+                    <h2 className="m-0">{props.name}</h2>
+                    <p className="leading-tight text-sm lg:text-md lg:leading-normal m-0">{props.description}</p>
+                    <p className="text-xs text-nowrap lg:text-sm m-0 mt-2 text-[#cacad0]">{props.stats}</p>
+                </div>
+                <RightIcon className="flex-shrink-0 w-8 ml-auto"/>
+            </div>
+        </div>
+    </Link>
+)
 
 const reviews = [
     {
@@ -226,16 +220,6 @@ const reviews = [
         cons: "Ожидаю больше всего встроенный модменю на пк и телефоны!",
         verdict: "У меня есть свой GDPS на вашем хостинге и уходить от вас я не собираюсь т.к думаю что ваш сервис самый лучший из всех возможных!",
         url: "https://discord.com/channels/1025382676875726898/1130816253284585512/1130840075043876965",
-        product: "Geometry Dash"
-    },
-    {
-        user: "YDZ",
-        rating: 5,
-        date: "18/07/2023",
-        pros: "Как игрок, пользователь и член команды, я хотел бы выразить свое категорическое утверждение о том, что этот сервис является самым выдающимся и лучшим в своей области среди всех, с которыми мне доводилось работать. Не могу оценить его иначе, как наивысшим баллом - 10 из 10. Ранее я пользовался услугами других хостингов, и мне действительно сложно не отметить значительное отличие (и это отличие только в лучшую сторону) в организационном уровне этой компании по сравнению с другими хостинг-провайдерами. Здесь я встретил превосходную команду профессионалов, которые оперативно решают любые вопросы, и, кстати, получают достойное вознаграждение за свою работу. Неожиданно для меня, но при выполнении своих обязанностей я получил оплату. Я владею суперприватным сервером для 11 человек, и за полгода эксплуатации не столкнулся ни с одной неполадкой или сбоем со стороны хостинга. Даже когда я столкнулся с попыткой атаки на мой сервер через ботов, отправил запрос в техническую поддержку, и мне подробно объяснили суть проблемы. Особо хочу отметить, что цены на услуги этого хостинг-провайдера действительно, и я не преувеличиваю, ОЧЕНЬ демократичны. Не встретишь ни одного веб-хостинга, который предложит вам держать ваш приватный сервер бесплатно или за символическую плату в 50 рублей в месяц.",
-        cons: "",
-        verdict: "Как я уже упоминал ранее, я страстный поклонник так называемых масонских сообществ, которые часто рекламируются через подкупные методы и предлагают жесткий отбор своих участников. В прошлом я владел GDPS под названием Deadlands, который вмещал до 54 человек. К сожалению, его активность постепенно снизилась, и в итоге сервер закрылся. Но с новыми знаниями и новыми силами я решил создать GDPS под названием Angelic Recoursion, который, хоть и начинал свою жизнь не слишком активно, теперь входит в эпоху нового расцвета игры Geometry Dash. Действительно, активность и количество поисковых запросов на игру в этом году увеличились почти в два раза по сравнению с 2020 годом, даже несмотря на то, что в то время был карантин. Поэтому я не собираюсь менять хостинг-провайдера, не планирую закрывать свой GDPS и, в то же время, намерен продолжать работать вместе с этой удивительной командой.",
-        url: "https://discord.com/channels/1025382676875726898/1130816253284585512/1130823474731036702",
         product: "Geometry Dash"
     },
     {

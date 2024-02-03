@@ -112,11 +112,7 @@ export default function GlobalNav(props) {
                             <DropdownItem leftIcon={<LogoutOutlinedIcon/>} onClick={()=>logout()}>{localeGlobal.get('navLogout')}</DropdownItem>
                         </DropdownMenu>
                     </NavItem>
-                ): (<NavItem icon={<PersonIcon/>}>
-                    <DropdownMenu>
-                        <Link href="/profile/login" legacyBehavior><DropdownItem leftIcon={<VpnKeyIcon/>}>{localeGlobal.get('navLogin')}</DropdownItem></Link>
-                    </DropdownMenu>
-                </NavItem>)}
+                ): (<NavItem icon={<VpnKeyIcon/>} setOpen={()=>router.push("/profile/login")}></NavItem>)}
             </div>
         </NavBar>
     );
