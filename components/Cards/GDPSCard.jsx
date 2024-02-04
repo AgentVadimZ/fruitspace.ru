@@ -42,7 +42,7 @@ export default function GDPSCard(props) {
 
 export function DownloadCard(props) {
     const api = props.api
-    const {data, isLoading, error} = useSWR(props.srvid, api.gdps_manage.fetchBuildStatus)
+    const {data, isLoading, error} = useSWR(props.srvid, api.gdps_manage.fetchBuildStatus, {refreshInterval:3000})
 
     return (
         <div className="mx-1 my-1.5 md:m-3 p-3 rounded-xl w-auto md:w-fit" style={{backgroundColor: "var(--active-color)"}}>
