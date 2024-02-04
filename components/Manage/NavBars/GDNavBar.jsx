@@ -36,7 +36,7 @@ export default function GDNavBar(props) {
     })
 
     return srv.Tariff?(
-        <SideBar>
+        <SideBar sref={props.sref}>
             <Link href={"/manage/gd/"+srvid+"/"} passHref legacyBehavior>
                 <SideItem icon={<AnalyticsIcon className="h-5" />} active={action==="[srvid]"} text={globalLocale.get('panelGDPSNav').analytics} />
             </Link>

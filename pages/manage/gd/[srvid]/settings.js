@@ -46,7 +46,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAndroid, faApple, faWindows} from "@fortawesome/free-brands-svg-icons";
 import useLocale, {useGlobalLocale} from "../../../../locales/useLocale";
 import useFiberAPI from "../../../../fiber/fiber";
-import {faMusic, faStar, faUpload, faUser} from "@fortawesome/free-solid-svg-icons";
+import {faMusic, faQuestion, faStar, faUpload, faUser} from "@fortawesome/free-solid-svg-icons";
+import {SettingsTour} from "../../../../locales/tours/manage/gd";
+import {FloatButton, Tour} from "antd";
 
 
 const aligns = ["left","center","right"]
@@ -55,6 +57,10 @@ var saveToast=null;
 const deleteCode=""+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)
 
 export default function SettingsGD(props) {
+    const refs = useRef({})
+    const tourSteps = SettingsTour.map((v,i)=>({...v, target: ()=>refs.current[v.target]}))
+    const [tourOpen, setTourOpen] = useState(!!props.router.query.tour)
+
     const router = useRouter()
     const [showPass, setShowPass] = useState(false)
     const [backdrop, setBackdrop] = useState("none")
@@ -303,7 +309,7 @@ export default function SettingsGD(props) {
             </div>),{
             duration: Infinity,
             id: "save",
-            position: "bottom-right",
+            position: "top-center",
             style: {
                 color: "white",
                 backgroundColor: "var(--btn-color)",
@@ -315,9 +321,17 @@ export default function SettingsGD(props) {
         <GlobalNav />
         <GDNavBar />
         <Toaster/>
+        <Tour open={tourOpen} onClose={()=>setTourOpen(false)} steps={tourSteps}/>
+        <FloatButton
+            shape="square"
+            type="primary"
+            style={{right: 20, bottom: 20}}
+            onClick={() => setTourOpen(true)}
+            icon={<FontAwesomeIcon icon={faQuestion} />}
+        />
         <PanelContent>
             <div className={styles.CardGrid}>
-                <div className={styles.CardBox}>
+                <div ref={r=>refs.current["db"]=r} className={styles.CardBox}>
                     <h3>{locale.get('db')}</h3>
                     <div className={styles.CardInbox}>
                         <FruitTextField fullWidth label={locale.get('dbFields')[0]} value={"halgd_"+srv.Srv.srvid||''}
@@ -363,7 +377,7 @@ export default function SettingsGD(props) {
                 <div className={styles.CardBox}>
                     <h3>{locale.get('coreSettings')[0]}</h3>
                     <div className={styles.CardInbox}>
-                        <div className={styles.SettingsPlato}>
+                        <div className={styles.SettingsPlato} ref={r=>refs.current["topsize"]=r}>
                             <p>{locale.get('coreSettings')[1]}</p>
                             <FruitTextField
                                 select label={locale.get('coreSettings')[2]} value={settings.topSize}
@@ -391,7 +405,7 @@ export default function SettingsGD(props) {
                                 })} disabled={!!srv.Srv.is_space_music} />
                             </div>
                         }
-                        <fieldset className={styles.SettingsFieldset}>
+                        <fieldset className={styles.SettingsFieldset} ref={r=>refs.current["antibot"]=r}>
                             <legend> <Tooltip title={locale.get('tips')[1]}>
                                 <IconButton><HelpIcon/></IconButton></Tooltip>
                                 {locale.get('coreSettings')[4]} <FruitSwitch checked={settings.security.enabled} onChange={(e, val)=>setSettings({
@@ -414,7 +428,7 @@ export default function SettingsGD(props) {
                     </div>
                 </div>
 
-                <div className={styles.CardBox}>
+                <div ref={r=>refs.current["customization"]=r} className={styles.CardBox}>
                     <h3>{locale.get('customSettings')[0]}</h3>
                     <div className={styles.CardInbox}>
                     <FruitTextField

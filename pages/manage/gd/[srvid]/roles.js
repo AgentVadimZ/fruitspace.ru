@@ -4,7 +4,7 @@ import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
 import PanelContent from "../../../../components/Global/PanelContent";
 import {useRouter} from "next/router";
 import styles from "../../../../components/Manage/GDManage.module.css";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {
     Autocomplete,
     Avatar,
@@ -25,18 +25,21 @@ import {
     faCheck, faCircleDot,
     faCirclePlus,
     faHammer,
-    faPen,
+    faPen, faQuestion,
     faXmark
 } from "@fortawesome/free-solid-svg-icons";
 
 import modBadge from "../../../../components/assets/gd/mod.png"
 import modElderBadge from "../../../../components/assets/gd/mod-elder.png"
+import modListBadge from "../../../../components/assets/gd/mod-leaderboard.png"
 import toast, {Toaster} from "react-hot-toast";
 import {styled} from "@mui/system";
 import {Restore} from "@mui/icons-material";
 import dynamic from "next/dynamic";
 import HelpIcon from "@mui/icons-material/Help";
 import useFiberAPI from "../../../../fiber/fiber";
+import {FloatButton, Tour} from "antd";
+import {RolesTour} from "../../../../locales/tours/manage/gd";
 
 const SketchPicker = dynamic(() => import("react-color").then((mod)=>mod.SketchPicker), { ssr: false });
 
@@ -58,6 +61,11 @@ const fn=(val)=>{
 }
 
 export default function RolesGD(props) {
+    const refs = useRef({})
+    const tourSteps = RolesTour.map((v,i)=>({...v, target: ()=>refs.current[v.target]}))
+    const [tourOpen, setTourOpen] = useState(!!props.router.query.tour)
+
+
     const router = useRouter()
 
     const [roles, setRoles] = useState([])
@@ -122,6 +130,8 @@ export default function RolesGD(props) {
                 return <img src={modBadge.src} className="w-12 !h-12 p-2 rounded-lg cursor-pointer" />
             case 2:
                 return <img src={modElderBadge.src} className="w-12 !h-12 p-2 rounded-lg cursor-pointer" />
+            case 3:
+                return <img src={modListBadge.src} className="w-12 !h-12 p-2 rounded-lg cursor-pointer" />
             default:
                 return <FontAwesomeIcon icon={faCircleDot} className="w-12 !h-12 p-2 rounded-lg" />
         }
@@ -133,6 +143,15 @@ export default function RolesGD(props) {
             <GlobalNav />
             <GDNavBar />
             <Toaster/>
+            <Tour open={tourOpen} onClose={()=>setTourOpen(false)} steps={tourSteps}/>
+            <FloatButton
+                ref={r=>refs.current["help"]=r}
+                shape="square"
+                type="primary"
+                style={{right: 20, bottom: 20}}
+                onClick={() => setTourOpen(true)}
+                icon={<FontAwesomeIcon icon={faQuestion} />}
+            />
             <PanelContent>
                 <div className="flex flex-col xl:flex-row gap-8 w-full">
                     <div className={`${styles.CardBox} flex-1`}>
@@ -198,13 +217,15 @@ export default function RolesGD(props) {
                                                                     <div className="w-fit">
                                                                         <Tooltip title={
                                                                             <div>
-                                                                                <div className="flex items-center gap-2">
+                                                                                <div className="grid grid-cols-3 gap-2">
                                                                                     <FontAwesomeIcon icon={faBan} className="w-12 !h-12 p-2 rounded-lg cursor-pointer" onClick={()=>setCRole({...crole, mod_level:0})}
                                                                                                      style={crole.mod_level==0?{backgroundColor:"var(--primary-color)"}:{}} />
                                                                                     <img src={modBadge.src} className="w-12 !h-12 p-2 rounded-lg cursor-pointer" onClick={()=>setCRole({...crole, mod_level:1})}
                                                                                          style={crole.mod_level==1?{backgroundColor:"var(--primary-color)"}:{}} />
                                                                                     <img src={modElderBadge.src} className="w-12 !h-12 p-2 rounded-lg cursor-pointer" onClick={()=>setCRole({...crole, mod_level:2})}
                                                                                          style={crole.mod_level==2?{backgroundColor:"var(--primary-color)"}:{}} />
+                                                                                    <img src={modListBadge.src} className="w-12 !h-12 p-2 rounded-lg cursor-pointer" onClick={()=>setCRole({...crole, mod_level:3})}
+                                                                                         style={crole.mod_level==3?{backgroundColor:"var(--primary-color)"}:{}} />
                                                                                     <FontAwesomeIcon icon={faCircleDot} className="w-12 !h-12 p-2 rounded-lg text-gray-400"
                                                                                                      style={crole.mod_level>2?{backgroundColor:"var(--primary-color)"}:{}} />
                                                                                 </div>

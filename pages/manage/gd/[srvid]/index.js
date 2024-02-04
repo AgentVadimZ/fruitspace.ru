@@ -28,7 +28,9 @@ import GDPSCard, {DownloadCard} from "../../../../components/Cards/GDPSCard";
 import useFiberAPI from "../../../../fiber/fiber";
 import {mutate} from "swr";
 import {IndexTour} from "../../../../locales/tours/manage/gd";
-import {Tour} from "antd";
+import {FloatButton, Tour} from "antd";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faQuestion} from "@fortawesome/free-solid-svg-icons";
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -42,12 +44,10 @@ ChartJS.register(
 
 
 export default function ManageGD(props) {
-
-    const [tourOpen, setTourOpen] = useState(false)
-
     const refs = useRef({})
-
     const tourSteps = IndexTour.map((v,i)=>({...v, target: ()=>refs.current[v.target]}))
+    const [tourOpen, setTourOpen] = useState(!!props.router.query.tour)
+
 
     const api = useFiberAPI()
     const [srv, setSrv] = api.servers.useGDPS()
@@ -82,21 +82,29 @@ export default function ManageGD(props) {
         <>
             <GlobalHead title={locale.get('nav')}/>
             <GlobalNav />
-            <GDNavBar />
+            <GDNavBar sref={r=>refs.current["nav"] = r} />
             <Toaster/>
             <Tour open={tourOpen} onClose={()=>setTourOpen(false)} steps={tourSteps}/>
+            <FloatButton
+                ref={r=>refs.current["help"]=r}
+                shape="square"
+                type="primary"
+                style={{right: 20, bottom: 20}}
+                onClick={() => setTourOpen(true)}
+                icon={<FontAwesomeIcon icon={faQuestion} />}
+            />
             <PanelContent>
                 {/*<div className={styles.Smallbanner}>*/}
                 {/*    <div></div>*/}
                 {/*    <p>{locale.get("development")}</p>*/}
                 {/*</div>*/}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 w-full md:w-auto">
-                    <GDPSCard  name={srv.Srv.srv_name} planid={srv.Srv.plan} plan={GetGDPlan(srv.Srv.plan)} id={<span style={{color:"white"}} className={styles.CodeBlock}>{srv.Srv.srvid}</span>}
+                    <GDPSCard sref={r=>refs.current["servcard"] = r} tref={r=>refs.current["servtariff"] = r} name={srv.Srv.srv_name} planid={srv.Srv.plan} plan={GetGDPlan(srv.Srv.plan)} id={<span style={{color:"white"}} className={styles.CodeBlock}>{srv.Srv.srvid}</span>}
                               icon={"https://cdn.fruitspace.one/server_icons/"+srv.Srv.icon} onClick={()=>props.router.push("/product/order/gd?id="+srv.Srv.srvid)}/>
                     <ProgressCard color max={srv.CoreConfig&&srv.CoreConfig.ServerConfig.MaxUsers} now={srv.Srv.user_count} text={locale.get('chips')[0]} />
                     <ProgressCard color max={srv.CoreConfig&&srv.CoreConfig.ServerConfig.MaxLevels} now={srv.Srv.level_count} text={locale.get('chips')[1]} />
                     <ProgressCard color date max={preMax>30?365:30} now={expireDate} text={locale.get('chips')[2]+expireText} />
-                    <DownloadCard api={api} srvid={srv.Srv.srvid} locale={locale} srv={srv.Srv} copyR={copyValueR} />
+                    <DownloadCard sref={r=>refs.current["build"] = r} api={api} srvid={srv.Srv.srvid} locale={locale} srv={srv.Srv} copyR={copyValueR} />
                 </div>
 
                 <div className={styles.CardBox} ref={r=>refs.current["cardbox"]=r}>
@@ -111,13 +119,6 @@ export default function ManageGD(props) {
                                    borderRadius: "8px",
                                    margin: "0 auto",
                                }}>{locale.get("docs")}</a>
-                            <span onClick={()=>setTourOpen(true)}
-                               style={{
-                                   padding: ".75rem 2rem",
-                                   background: "linear-gradient(135deg, #8e388e,#5a00ff 70%, #0d6efd)",
-                                   borderRadius: "8px",
-                                   margin: "0 auto",
-                               }}>{locale.get("docs")}</span>
                             {srv.Srv.plan < 2 && srv.Srv.version != "2.2" && <a onClick={() => {
                                 api.gdps_manage.upgrade22(srv.Srv.srvid).then(() => {
                                     mutate(srv.Srv.srvid)
@@ -129,14 +130,13 @@ export default function ManageGD(props) {
                                         }
                                     })
                                 })
-                            }}
-                                                                                style={{
-                                                                                    padding: ".75rem 2rem",
-                                                                                    background: "linear-gradient(135deg, #8e388e,#5a00ff 70%, #0d6efd)",
-                                                                                    borderRadius: "8px",
-                                                                                    margin: "0 auto",
-                                                                                    cursor: "pointer"
-                                                                                }}>Обновить до 2.2</a>}
+                            }} style={{
+                                padding: ".75rem 2rem",
+                                background: "linear-gradient(135deg, #8e388e,#5a00ff 70%, #0d6efd)",
+                                borderRadius: "8px",
+                                margin: "0 auto",
+                                cursor: "pointer"
+                            }}>Обновить до 2.2</a>}
                         </div>
                     </div>
                 </div>

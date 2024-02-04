@@ -17,7 +17,7 @@ import {
     faArrowDownWideShort,
     faCompactDisc,
     faPause,
-    faPlay
+    faPlay, faQuestion
 } from "@fortawesome/free-solid-svg-icons";
 import {
     Slider,
@@ -42,9 +42,16 @@ import {Tooltip} from "@mui/material"
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import useLocale from "../../../../locales/useLocale";
 import useFiberAPI from "../../../../fiber/fiber";
+import {MusicTour} from "../../../../locales/tours/manage/gd";
+import {FloatButton, Tour} from "antd";
 
 
 export default function MusicGD(props) {
+    const refs = useRef({})
+    const tourSteps = MusicTour.map((v,i)=>({...v, target: ()=>refs.current[v.target]}))
+    const [tourOpen, setTourOpen] = useState(!!props.router.query.tour)
+
+
     const playerRef = useRef(null)
     const [playerData, setPlayerData] = useState({
         title: "Hmmmmmm",
@@ -141,13 +148,21 @@ export default function MusicGD(props) {
             <GlobalHead title="Игровой хостинг"/>
             <GlobalNav />
             <GDNavBar />
+            <Tour open={tourOpen} onClose={()=>setTourOpen(false)} steps={tourSteps}/>
+            <FloatButton
+                shape="square"
+                type="primary"
+                style={{right: 20, bottom: 20}}
+                onClick={() => setTourOpen(true)}
+                icon={<FontAwesomeIcon icon={faQuestion} />}
+            />
             <PanelContent>
                 <div className={`${styles.CardBox} ${styles.MusicSlider}`}>
                     <ReactPlayer style={{display:"none"}} url={playerData.src||''} playing={playerData.playing}
                                  volume={playerData.volume/100} progressInterval={250} onProgress={updateMusic}
                     onEnded={()=>setPlayerData({...playerData,playing: false})} ref={playerRef}
                     onSeek={(val)=>setPlayerData({...playerData, position: val})}/>
-                    <div className={styles.MusicSliderSelector}>
+                    <div ref={r=>refs.current["newsong"]=r} className={styles.MusicSliderSelector}>
                         <AddCircleIcon />
                         <KeyboardArrowRightIcon />
                         <img src={LogoNG.src} onClick={()=>setBackdrop("add-ng")} />
@@ -157,7 +172,7 @@ export default function MusicGD(props) {
                         {srv.Tariff && srv.Tariff.Music.Files &&<img src={LogoDBox.src} onClick={()=>setBackdrop("add-db")} /> }
                     </div>
                     <span className={styles.SliderDelimiter} />
-                    <div className={styles.MusicSliderPlayer}>
+                    <div ref={r=>refs.current["player"]=r} className={styles.MusicSliderPlayer}>
                         <div aria-label='top'>
                             {playerData.playing
                             ? <FontAwesomeIcon icon={faPause} onClick={()=>setPlayerData({...playerData, playing: !playerData.playing})} />
@@ -244,7 +259,7 @@ export default function MusicGD(props) {
 
 
 
-                <div className={styles.CardBox} style={{marginTop:"2rem"}}>
+                <div ref={r=>refs.current["songlist"]=r} className={styles.CardBox} style={{marginTop:"2rem"}}>
                     <div className={styles.MusicSearchBox}>
                         <div className={styles.MusicSearchSlick}>
                             <ClickAwayListener onClickAway={()=>setSortShow(false)}>
