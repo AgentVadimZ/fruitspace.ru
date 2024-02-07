@@ -2,7 +2,11 @@ import GlobalHead from "../../components/GlobalHead";
 import GlobalNav from "../../components/GlobalNav";
 import styles from "../../components/Index.module.css";
 import Footer from "../../components/Global/Footer";
+import pSrvList from "../../components/assets/panel1.png";
+import pAnalytics from "../../components/assets/panel2.png";
+import pSettings from "../../components/assets/panel3.png";
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";
+import { Image } from 'antd';
 
 
 export default function About(props) {
@@ -19,13 +23,13 @@ export default function About(props) {
             <div className={styles.main}>
                 <div className={styles.innerMain}>
                     <h2>{locale.get('header')}</h2>
-                    <div className="m-8 text-center bg-[color:var(--subtle-color)] p-3 br-50 rounded-3xl">
+                    <div className="glassb m-8 text-center bg-[color:var(--subtle-color)] p-3 br-50 rounded-3xl">
                         <p>
                             👋Добро пожаловать на FruitSpace - игровой хостинг для игр GeometryDash, Minecraft и CS.
                         </p>
                         <p>
                             Мы основали данный проект, вдохновившись идеей создать идеальное место для формирования
-                            сообществ или совместных игр с друзьями, и уже более года продолжаем его активно
+                            сообществ и совместных игр с друзьями, и уже более года продолжаем активно его
                             поддерживать.
                         </p>
                     </div>
@@ -34,7 +38,7 @@ export default function About(props) {
                         Что мы предлагаем?
                     </h2>
 
-                    <div className="m-8 text-center bg-[color:var(--subtle-color)] p-3 br-50 rounded-3xl">
+                    <div className="glassb m-8 text-center bg-[color:var(--subtle-color)] p-3 br-50 rounded-3xl">
                         <div className="flex flex-wrap items-center justify-center">
                             {[
                                 {
@@ -47,19 +51,19 @@ export default function About(props) {
                                     icon: "🍊",
                                     title: "Безопасность и конфиденциальность",
                                     description:
-                                        "Мы заботимся о ваших данных и используем все современные методы их защиты. Обычным .php файлом вы ничего не сделаете.",
+                                        "Мы заботимся о ваших данных и используем все современные методы для их защиты. Обычным .php файлом вы ничего не сделаете.",
                                 },
                                 {
                                     icon: "🍇",
                                     title: "Открытость и честность нашей команды",
                                     description:
-                                        "Мы всегда готовы помочь вам с любыми вопросами и проблемами, а также советами по созданию собственных проектов.",
+                                        "Мы всегда готовы помочь вам с любыми вопросами и проблемами, и даже советами по созданию собственных проектов.",
                                 },
                                 {
                                     icon: "🍍",
-                                    title: "Ивенты и розыгрышы",
+                                    title: "Ивенты и розыгрыши",
                                     description:
-                                        "Вся наша команда коллективно решила, что быть бездушным скучным сервисом, просто предоставляющим свои услуги не сделает нас особенными. Поэтому мы часто проводим различные события!",
+                                        "Наша команда коллективно решила, что мы не хотим быть бездушным скучным сервисом, просто предоставляющим свои услуги. Поэтому мы часто проводим различные события!",
                                 },
                             ].map((item, index) => (
                                 <div key={index} className="w-full max-w-xs mt-0 m-5 sm:w-1/3">
@@ -76,7 +80,7 @@ export default function About(props) {
                         А также...
                     </h2>
 
-                    <div className="m-8 text-center bg-[color:var(--subtle-color)] p-3 br-50 rounded-3xl">
+                    <div className="glassb m-8 text-center bg-[color:var(--subtle-color)] p-3 br-50 rounded-3xl">
                         <div className="flex flex-wrap items-center justify-center">
                             {[
                                 {
@@ -95,15 +99,20 @@ export default function About(props) {
                             ))}
                         </div>
 
-                        <img width={400} className="lg:inline hidden rounded m-4"
-                             src="https://images-ext-2.discordapp.net/external/xec8A_XJu_7yfBk2EDQFBprWZ9meEcWGrx202J7DHw4/https/i.ibb.co/qmZNXZp/Screenshot-2024-02-07-173700.png"
-                             alt="Скриншот из панели (1)"/>
-                        <img width={400} className="lg:inline hidden rounded m-4"
-                             src="https://images-ext-1.discordapp.net/external/wHaB_ptKV7IxMMOo3RMvUKwnYOWgnZ-3VBfuXzryxxo/https/i.ibb.co/P4Ff2qz/Screenshot-2024-02-07-173724.png"
-                             alt="Скриншот из панели (2)"/>
-                        <img width={400} className="lg:inline hidden rounded m-4"
-                             src="https://images-ext-1.discordapp.net/external/lCjzyAufEW9Emzk8m3MyJrZUtzMNR6vscid701JWel4/https/i.ibb.co/0XGP3sw/Screenshot-2024-02-07-173754.png"
-                             alt="Скриншот из панели (3)"/>
+                        <div className="flex justify-center gap-8 mb-2">
+                        {/*<img width={400} className="lg:inline hidden rounded m-4"*/}
+                        {/*     src="https://images-ext-2.discordapp.net/external/xec8A_XJu_7yfBk2EDQFBprWZ9meEcWGrx202J7DHw4/https/i.ibb.co/qmZNXZp/Screenshot-2024-02-07-173700.png"*/}
+                        {/*     alt="Скриншот из панели (1)"/>*/}
+                        {/*<img width={400} className="lg:inline hidden rounded m-4"*/}
+                        {/*     src="https://images-ext-1.discordapp.net/external/wHaB_ptKV7IxMMOo3RMvUKwnYOWgnZ-3VBfuXzryxxo/https/i.ibb.co/P4Ff2qz/Screenshot-2024-02-07-173724.png"*/}
+                        {/*     alt="Скриншот из панели (2)"/>*/}
+                        {/*<img width={400} className="lg:inline hidden rounded m-4"*/}
+                        {/*     src="https://images-ext-1.discordapp.net/external/lCjzyAufEW9Emzk8m3MyJrZUtzMNR6vscid701JWel4/https/i.ibb.co/0XGP3sw/Screenshot-2024-02-07-173754.png"*/}
+                        {/*     alt="Скриншот из панели (3)"/>*/}
+                        <Image className="rounded-md" alt="Список серверов" width={400} src={pSrvList.src}/>
+                        <Image className="rounded-md" alt="Раздел аналитики" width={400} src={pAnalytics.src}/>
+                        <Image className="rounded-md" alt="Панель настроек" width={400} src={pSettings.src}/>
+                        </div>
                     </div>
                 </div>
             </div>
