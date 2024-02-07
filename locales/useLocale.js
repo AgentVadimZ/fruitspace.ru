@@ -1,4 +1,6 @@
 import {aboutLocale} from "./loc/about";
+import {partnerLocale} from "./loc/about";
+import {teamLocale} from "./loc/about"
 import {globalLocale} from "./loc/global";
 import {profileLocale} from "./loc/profile";
 import {productGDLocale} from "./loc/product/gd";
@@ -12,6 +14,8 @@ import {topLocale} from "./loc/top";
 
 const translationList = {
     ...aboutLocale,
+    ...partnerLocale,
+    ...teamLocale,
     ...profileLocale,
     ...productGDLocale,
     ...productMCLocale,

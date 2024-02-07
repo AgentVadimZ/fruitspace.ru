@@ -10,21 +10,25 @@ const aboutLocale = {
             ru: " - игровой хостинг, предоставляющий приватные сервера для игр Minecraft, Geometry Dash и Grand Theft Auto: San Andreas / IV / V",
             en: " is a game hosting that provides high-quality private servers for Minecraft, Geometry Dash and Grand Theft Auto: San Andreas / IV / V"
         }
-    },
+    }
+}
+
+const partnerLocale = {
     "/about/partnership": {
         header: {
             ru: "Партнерская программа",
             en: "Partnership"
         }
-    },
+    }
+}
+
+const teamLocale = {
     "/about/team": {
         header: {
             ru: "Наша команда",
-            en: "Our team"
+            en: "Out team"
         }
     }
 }
 
-// Нахуя нам целых 3 локали к полностью русским страницам? Так еще и разделять их на куски говна?
-
-export {aboutLocale}
+export {aboutLocale, partnerLocale, teamLocale}
