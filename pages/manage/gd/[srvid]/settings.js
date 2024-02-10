@@ -51,6 +51,33 @@ import {SettingsTour} from "../../../../locales/tours/manage/gd";
 import {FloatButton, Tour} from "antd";
 
 
+function deepEqual(object1, object2) {
+    const keys1 = Object.keys(object1);
+    const keys2 = Object.keys(object2);
+
+    if (keys1.length !== keys2.length) {
+        return false;
+    }
+
+    for (const key of keys1) {
+        const val1 = object1[key];
+        const val2 = object2[key];
+        const areObjects = isObject(val1) && isObject(val2);
+        if (
+            areObjects && !deepEqual(val1, val2) ||
+            !areObjects && val1 !== val2
+        ) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function isObject(object) {
+    return object != null && typeof object === 'object';
+}
+
 const aligns = ["left","center","right"]
 const topSizes = [10,25,50,100,200,250,500]
 var saveToast=null;
@@ -58,7 +85,12 @@ const deleteCode=""+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)+Ma
 
 export default function SettingsGD(props) {
     const refs = useRef({})
-    const tourSteps = SettingsTour.map((v,i)=>({...v, target: ()=>refs.current[v.target]}))
+    const tourSteps = SettingsTour.map((v,i)=>({
+        ...v, target: ()=>refs.current[v.target],
+        nextButtonProps: {children: <span>Далее</span>},
+        prevButtonProps: {children: <span>Назад</span>},
+        className: "w-fit lg:w-[520px]"
+    }))
     const [tourOpen, setTourOpen] = useState(!!props.router.query.tour)
 
     const router = useRouter()
@@ -88,6 +120,8 @@ export default function SettingsGD(props) {
         },
         modules: {}
     })
+
+    const [oldSettings, setOldSettings] = useState(null)
 
     const [buildlab, setBuildlab] = useState({
         id: "",
@@ -120,22 +154,26 @@ export default function SettingsGD(props) {
 
 
     useEffect(()=>{
-        srv.CoreConfig&&setSettings({
-            description: {
-                text: srv.Srv.description,
-                align: srv.Srv.text_align,
-                discord: srv.Srv.discord,
-                vk: srv.Srv.vk,
-            },
-            spaceMusic: srv.Srv.is_space_music,
-            topSize: srv.CoreConfig.ServerConfig.TopSize,
-            security: {
-                enabled: !srv.CoreConfig.SecurityConfig.DisableProtection,
-                autoActivate: srv.CoreConfig.SecurityConfig.AutoActivate,
-                levelLimit: !srv.CoreConfig.SecurityConfig.NoLevelLimits
-            },
-            modules: srv.CoreConfig.ServerConfig.EnableModules
-        })
+        if (srv.CoreConfig) {
+            let d={
+                description: {
+                    text: srv.Srv.description,
+                    align: srv.Srv.text_align,
+                    discord: srv.Srv.discord,
+                    vk: srv.Srv.vk,
+                },
+                spaceMusic: srv.Srv.is_space_music,
+                topSize: srv.CoreConfig.ServerConfig.TopSize,
+                security: {
+                    enabled: !srv.CoreConfig.SecurityConfig.DisableProtection,
+                    autoActivate: srv.CoreConfig.SecurityConfig.AutoActivate,
+                    levelLimit: !srv.CoreConfig.SecurityConfig.NoLevelLimits
+                },
+                modules: srv.CoreConfig.ServerConfig.EnableModules
+            }
+            setSettings(d)
+            setOldSettings(d)
+        }
         srv.Srv&&setDiscordbot(srv.Srv.m_stat_history)
     },[srv])
 
@@ -172,6 +210,7 @@ export default function SettingsGD(props) {
         toast.dismiss("save")
         api.gdps_manage.updateSettings(srv.Srv.srvid, settings).then((resp)=>{
             if(resp.status==="ok") {
+                setOldSettings(settings)
                 toast.success(locale.get('saveSuccess'),{style: {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
@@ -301,7 +340,7 @@ export default function SettingsGD(props) {
     })()
 
     useEffect(()=>{
-        toast((
+        !deepEqual(settings, oldSettings)?toast((
             <div>
                 <span><IconButton><SaveIcon style={{fill:"white"}}/></IconButton>{locale.get('dontForget')}</span>
                 <Button variant="contained" className={`${styles.SlimButton} ${styles.btnSuccess}`}
@@ -313,8 +352,8 @@ export default function SettingsGD(props) {
             style: {
                 color: "white",
                 backgroundColor: "var(--btn-color)",
-            }})
-    },[settings, discordbot])
+            }}):toast.remove("save")
+    },[settings, oldSettings, discordbot])
 
     return <>
         <GlobalHead title={locale.get('nav')}/>

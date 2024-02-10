@@ -4,18 +4,7 @@ import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
 import PanelContent from "../../../../components/Global/PanelContent";
 import styles from "../../../../components/Manage/GDManage.module.css"
 import {useRef, useState} from "react";
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Filler,
-    Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
+
 import {styled} from "@mui/system";
 import {
     TextField
@@ -31,21 +20,15 @@ import {IndexTour} from "../../../../locales/tours/manage/gd";
 import {FloatButton, Tour} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faQuestion} from "@fortawesome/free-solid-svg-icons";
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Filler,
-    Legend
-);
-
 
 export default function ManageGD(props) {
     const refs = useRef({})
-    const tourSteps = IndexTour.map((v,i)=>({...v, target: ()=>refs.current[v.target]}))
+    const tourSteps = IndexTour.map((v,i)=>({
+        ...v, target: ()=>refs.current[v.target],
+        nextButtonProps: {children: <span>Далее</span>},
+        prevButtonProps: {children: <span>Назад</span>},
+        className: "w-fit lg:w-[520px]"
+    }))
     const [tourOpen, setTourOpen] = useState(!!props.router.query.tour)
 
 

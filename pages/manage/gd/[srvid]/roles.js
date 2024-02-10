@@ -62,7 +62,12 @@ const fn=(val)=>{
 
 export default function RolesGD(props) {
     const refs = useRef({})
-    const tourSteps = RolesTour.map((v,i)=>({...v, target: ()=>refs.current[v.target]}))
+    const tourSteps = RolesTour.map((v,i)=>({
+        ...v, target: ()=>refs.current[v.target],
+        nextButtonProps: {children: <span>Далее</span>},
+        prevButtonProps: {children: <span>Назад</span>},
+        className: "w-fit lg:w-[520px]"
+    }))
     const [tourOpen, setTourOpen] = useState(!!props.router.query.tour)
 
 
