@@ -121,7 +121,7 @@ export default function SettingsGD(props) {
         modules: {}
     })
 
-    const [oldSettings, setOldSettings] = useState(null)
+    const [oldSettings, setOldSettings] = useState({})
 
     const [buildlab, setBuildlab] = useState({
         id: "",
