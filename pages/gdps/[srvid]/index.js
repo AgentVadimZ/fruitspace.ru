@@ -13,7 +13,6 @@ import useFiberAPI, {serverFiberAPI} from "../../../fiber/fiber";
 import GlobalHead from "../../../components/GlobalHead";
 import {useCaptchaHook} from "@aacn.eu/use-friendly-captcha";
 
-
 export async function getServerSideProps(ctx) {
     let srvid = ctx.params.srvid
     const api = serverFiberAPI(ctx, `acc${srvid}`)
@@ -71,6 +70,7 @@ export default function DownloadPage(props) {
     const [creds, setCreds] = useState({uname:"", password:"", captcha:"", email: ""})
     const [backdrop, setBackdrop] = useState("none")
     const [showLogin, setShowLogin] = useState(false)
+    
 
 
     const aLogin=()=>{
