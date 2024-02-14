@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: contains(github.event.head_commit.message, '[run]')
+#    if: contains(github.event.head_commit.message, '[run]')
     steps:
       - uses: actions/checkout@v2
 
@@ -22,13 +22,13 @@ jobs:
         run: docker push cr.yandex/crpr24jcqm2dno6qlm3b/fruce-www_beta
   deploy:
     runs-on: ubuntu-latest
-#    needs: build
+    needs: build
     steps:
       - name: Setup Nomad
         uses: lucasmelin/setup-nomad@v2.0.0
       - uses: actions/checkout@v2
       - name: Deploy
-        run: nomad job run ${{ env.NOMAD_JOB }}
+        run: nomad job run -detach ${{ env.NOMAD_JOB }}
         env:
           NOMAD_TOKEN: ${{ secrets.NOMAD_TOKEN }}
           NOMAD_JOB: ".github/beta-deploy.nomad"
