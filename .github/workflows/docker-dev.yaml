@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: contains(github.event.head_commit.message, '[run]')
+#    if: contains(github.event.head_commit.message, '[run]')
     steps:
       - uses: actions/checkout@v2
 
@@ -20,3 +20,16 @@ jobs:
 
       - name: Push image
         run: docker push cr.yandex/crpr24jcqm2dno6qlm3b/fruce-www_beta
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/nomad-deploy-with-envs@v1
+      - name: Deploy
+        run: ls
+        env:
+          token: ${{ secrets.NOMAD_TOKEN }}
+          NOMAD_JOB: ".github/beta-deploy.nomad"
+          NOMAD_ADDR: ${{ secrets.NOMAD_ADDR }}
+          NOMAD_VAR_VERSION: ${{ github.event.head_commit.id }}
+          NOMAD_VAR_DOCKERPASS: ${{ secrets.DOCKER_PASSWORD }}
