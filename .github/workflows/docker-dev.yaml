@@ -28,10 +28,10 @@ jobs:
         uses: lucasmelin/setup-nomad@v2.0.0
       - uses: actions/checkout@v2
       - name: Deploy
-        uses: ebarriosjr/nomad-deploy-action@v1
-        with:
-          token: ${{ secrets.NOMAD_TOKEN }}
+        run: nomad run job $NOMAD_JOB
+        env:
+          NOMAD_TOKEN: ${{ secrets.NOMAD_TOKEN }}
           NOMAD_JOB: ".github/beta-deploy.nomad"
-          NOMAD_ADDR: ${{ secrets.NOMAD_ADDR }}
+          NOMAD_ADDR: ${{ secrets.NOMAD_ADDR }}:4646
           NOMAD_VAR_VERSION: ${{ github.event.head_commit.id }}
           NOMAD_VAR_DOCKERPASS: ${{ secrets.DOCKER_PASSWORD }}
