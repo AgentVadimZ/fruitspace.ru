@@ -28,7 +28,7 @@ jobs:
         uses: lucasmelin/setup-nomad@v2.0.0
       - uses: actions/checkout@v2
       - name: Deploy
-        run: nomad run job ${{ env.NOMAD_JOB }}
+        run: nomad job run ${{ env.NOMAD_JOB }}
         env:
           NOMAD_TOKEN: ${{ secrets.NOMAD_TOKEN }}
           NOMAD_JOB: ".github/beta-deploy.nomad"
