@@ -11,45 +11,9 @@
     display: flex;
 }
 
-.ProfilePic {
-    composes: Box;
-}
 
-.ProfilePic > img {
-    border-radius: 8px;
-    height: 16rem;
-    width: auto;
-}
 
-.ProfilePic > svg {
-    position: absolute;
-    border-radius: 16rem;
-    background-color: var(--btn-color);
-    padding: .5rem;
-    bottom: 1rem;
-    right: 1rem;
-    height: 2rem;
-    width: auto;
-    fill: white;
-    transition: 300ms;
-    border-width: 2px;
-    border-style: solid;
-    border-color: var(--btn-color);
-}
 
-.ProfilePic > svg:hover{
-    cursor: pointer;
-    background-color: var(--btn-hover);
-    fill: var(--primary-color);
-    border-color: var(--primary-color)
-}
-
-.UnameBox {
-    composes: Box;
-    flex-direction: column;
-    margin-left: 1rem;
-    width: 30rem;
-}
 
 .UnameBox > h3 {
     background-color: var(--btn-color);
@@ -72,11 +36,10 @@
 }
 
 .cardButton {
-    margin: auto .5rem .5rem;
     border-radius: 8px;
     height: 3rem;
     background-color: #0d6efd;
-    font-weight: bolder;
+    /*font-weight: bolder;*/
 }
 
 .cardButton:disabled {
