@@ -304,7 +304,7 @@ export default function SettingsGD(props) {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})
-                setTimeout(()=>router.push("/profile/servers/"), 5000)
+                setTimeout(()=>router.push("/profile/servers/"), 3000)
             }else{
                 toast.error(locale.get('universalErr')+resp.message,{style: {
                         color: "white",

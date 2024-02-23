@@ -42,7 +42,7 @@ export default function ManageGD(props) {
     const locale = useLocale(props.router)
 
 
-    let expire = new Date(srv.Srv.expire_date)
+    let expire = new Date(srv?.Srv?.expire_date)
     let expireDate = (expire.getTime() - new Date().getTime()) /1000/60/60/24
     let expireText = `${expire.getDate()}.${expire.getMonth()+1}.${expire.getFullYear()}`+(expireDate<=0?" ❄️":"")
     let preMax = Math.min(expireDate,365)
@@ -57,8 +57,6 @@ export default function ManageGD(props) {
             }
         })
     }
-
-    console.log(refs)
 
 
     return (
@@ -76,7 +74,7 @@ export default function ManageGD(props) {
                 onClick={() => setTourOpen(true)}
                 icon={<FontAwesomeIcon icon={faQuestion} />}
             />
-            <PanelContent>
+            {srv.Srv&&<PanelContent>
                 {/*<div className={styles.Smallbanner}>*/}
                 {/*    <div></div>*/}
                 {/*    <p>{locale.get("development")}</p>*/}
@@ -151,7 +149,7 @@ export default function ManageGD(props) {
                 {/*    <FruitChartLevels dataAll={[100,120,190,190,250]} dataNew={[2,20,70,2,60]}*/}
                 {/*                 labels={['S1', 'S2', 'S3', 'S4', 'S5']}/>*/}
                 {/*</div>*/}
-            </PanelContent>
+            </PanelContent>}
 
         </>
     )

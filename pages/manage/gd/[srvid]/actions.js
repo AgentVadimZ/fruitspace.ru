@@ -260,9 +260,6 @@ export default function ActionsGD(props) {
                         <div className="flex items-center rounded-lg bg-[var(--btn-color)] px-4 py-2">
                             <FontAwesomeIcon icon={faStar} className="mr-2" /> — действие модератора
                         </div>
-                        <div className="flex items-center rounded-lg bg-[var(--btn-color)] px-4 py-2">
-                            <FontAwesomeIcon icon={faWarning} className="mr-2" /> English translation isn&apos;t available now
-                        </div>
                     </div>
                 </div>
                 <div className={styles.CardBox} style={{width:"100%"}}>
