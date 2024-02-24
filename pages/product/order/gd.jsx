@@ -60,7 +60,7 @@ export default function Order(props) {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})
-                props.router.push("/profile/servers")
+                props.router.push(`/manage/gd/${resp.message}?tour=true`)
             }else{
                 toast.error(locale.get('createFailed')+ParseError(resp.code, resp.message),{style: {
                         color: "white",

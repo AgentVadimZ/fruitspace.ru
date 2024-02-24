@@ -23,13 +23,13 @@ export default function GDPSCard(props) {
     }
 
     return (
-        <div className="col-span-2 md:col-span-2 mx-1 my-1.5 md:m-3 p-3 rounded-xl w-auto flex items-center" style={{backgroundColor: "var(--active-color)"}}>
+        <div ref={props.sref} className="col-span-2 md:col-span-2 mx-1 my-1.5 md:m-3 p-3 rounded-xl w-auto flex items-center" style={{backgroundColor: "var(--active-color)"}}>
             <img src={props.icon} className="rounded-lg h-20 mr-2" />
             <div className="">
                 <h2 className="my-2">{props.name}</h2>
                 <p className="m-0 text-gray-400 flex items-center gap-2">
                     {props.id} •
-                    <span className={`text-white rounded-lg cursor-pointer flex gap-2 items-center group border-solid box-border border-2 hover:!border-${hover}`}
+                    <span ref={props.tref} className={`text-white rounded-lg cursor-pointer flex gap-2 items-center group border-solid box-border border-2 hover:!border-${hover}`}
                           style={{borderColor: bg}} onClick={props.onClick}>
                         <FontAwesomeIcon icon={icon} className={`rounded-l-md p-1.5 aspect-square group-hover:!bg-${hover}`} style={{backgroundColor: bg}} />
                         <span className="inline pr-2 text-sm md:text-base">{props.plan}</span>
@@ -42,10 +42,10 @@ export default function GDPSCard(props) {
 
 export function DownloadCard(props) {
     const api = props.api
-    const {data, isLoading, error} = useSWR(props.srvid, api.gdps_manage.fetchBuildStatus)
+    const {data, isLoading, error} = useSWR(props.srvid, api.gdps_manage.fetchBuildStatus, {refreshInterval:3000})
 
     return (
-        <div className="mx-1 my-1.5 md:m-3 p-3 rounded-xl w-auto md:w-fit" style={{backgroundColor: "var(--active-color)"}}>
+        <div ref={props.sref} className="mx-1 my-1.5 md:m-3 p-3 rounded-xl w-auto md:w-fit" style={{backgroundColor: "var(--active-color)"}}>
             <span className="flex rounded-lg" style={{backgroundColor: "var(--primary-color)"}}>
                 <a href={`https://gofruit.space/gdps/${props.srvid}`} target="_blank" rel="noreferrer" className="rounded-l-lg flex justify-center p-2 hover:bg-blue-800 cursor-pointer flex-1">
                     <FontAwesomeIcon icon={faDownload}/> <span className="ml-2 hidden md:inline">{props.locale.get('download')}</span>

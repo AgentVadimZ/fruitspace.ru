@@ -170,6 +170,12 @@ class user {
         datax.append("profile_pic", avatar_file)
         return await this._api.doForm("user/avatar", "POST", datax)
     }
+    listSessions = async () => {
+        return await this._api.do("user/sessions", "GET")
+    }
+    resetSessions = async () => {
+        return await this._api.do("user/sessions", "DELETE")
+    }
 }
 
 // endregion
