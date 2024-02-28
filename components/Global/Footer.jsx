@@ -16,7 +16,7 @@ export default function Footer(props) {
                 <div className={styles.footerLinklist}>
                     <h3>{locale.get('footer.about')}</h3>
                     <Link href="/about" legacyBehavior><p className="hover:text-white hover:underline">{locale.get('footer.about')}</p></Link>
-                    <Link href="/about/team" legacyBehavior><p className="hover:text-white hover:underline">{locale.get('footer.team')}</p></Link>
+                    {/*<Link href="/about/team" legacyBehavior><p className="hover:text-white hover:underline">{locale.get('footer.team')}</p></Link>*/}
                     <Link href="/about/partnership" legacyBehavior><p className="hover:text-white hover:underline">{locale.get('footer.partnership')}</p></Link>
                     <Link href="/about/tos" legacyBehavior><p className="hover:text-white hover:underline">{locale.get('footer.tos')}</p></Link>
                 </div>
