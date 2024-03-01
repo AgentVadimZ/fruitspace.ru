@@ -5,8 +5,8 @@ import {userAtom} from "@/fiber/fiber.model";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import {useState} from "react";
 import {Backdrop, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField} from "@mui/material";
-import YooMoneyLogo from "@/components/assets/logos/yoomoney_logo.svg"
-import EnotLogo from "@/components/assets/logos/enot_logo.svg"
+import YooMoneyLogo from "@/assets/logos/yoomoney_logo.svg"
+import EnotLogo from "@/assets/logos/enot_logo.svg"
 import {styled} from "@mui/system";
 import toast from "react-hot-toast";
 import useLocale, {useGlobalLocale} from "@/locales/useLocale";

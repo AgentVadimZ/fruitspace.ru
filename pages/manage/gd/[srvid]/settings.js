@@ -28,8 +28,8 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import discordLogo from '@/assets/social/discord.png'
 import vkLogo from '@/assets/social/vkontakte.png'
-import GDLablogo from '../../../../components/assets/logos/geometrydash.png'
-import GDLogo from '../../../../components/assets/logos/gd_icon.png'
+import GDLablogo from '../../../../assets/logos/geometrydash.png'
+import GDLogo from '../../../../assets/logos/gd_icon.png'
 import toast, {Toaster} from "react-hot-toast";
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';

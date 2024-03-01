@@ -5,8 +5,8 @@ import NavItem from "@/components/NavBar/NavItem";
 import {DropdownItem, DropdownMenu} from "@/components/NavBar/DropDown";
 
 import RightSvg from "@/assets/icons/right.svg";
-import logo_sm from "@/components/assets/ava.png";
-import logo from "@/components/assets/Fruitspace2.png";
+import logo_sm from "@/assets/ava.png";
+import logo from "@/assets/Fruitspace2.png";
 import ServerSvg from "@/assets/icons/server.svg";
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
@@ -15,9 +15,9 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
-import MinecraftLogo from "@/components/assets/logos/minecraft.png"
-import GDLogo from "@/components/assets/logos/geometrydash.png"
-import CSLogo from "@/components/assets/logos/counterstrike.png"
+import MinecraftLogo from "@/assets/logos/minecraft.png"
+import GDLogo from "@/assets/logos/geometrydash.png"
+import CSLogo from "@/assets/logos/counterstrike.png"
 import {useRouter} from "next/router";
 import {useGlobalLocale} from "@/locales/useLocale";
 import useFiberAPI from "@/fiber/fiber";

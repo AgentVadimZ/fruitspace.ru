@@ -1,9 +1,9 @@
 import GlobalNav from "../components/GlobalNav";
 import styles from "../components/Index.module.css"
 
-import MinecraftLogo from "../components/assets/logos/minecraft.png"
-import GDLogo from "../components/assets/logos/geometrydash.png"
-import CSLogo from "../components/assets/logos/counterstrike.png"
+import MinecraftLogo from "../assets/logos/minecraft.png"
+import GDLogo from "../assets/logos/geometrydash.png"
+import CSLogo from "../assets/logos/counterstrike.png"
 import RightIcon from '@/assets/icons/right.svg'
 
 

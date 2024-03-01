@@ -2,7 +2,7 @@ import Link from "next/link";
 import styles from "@/components/NavBar/NavBar.module.css";
 import NavBar from "@/components/NavBar/NavBar";
 
-import logo from "@/components/assets/ava.png";
+import logo from "@/assets/ava.png";
 
 import {useRouter} from "next/router";
 import {useGlobalLocale} from "@/locales/useLocale";

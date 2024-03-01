@@ -8,7 +8,7 @@ import useEffectOnce from "../../components/Hooks";
 import toast, {Toaster} from "react-hot-toast";
 import PanelContent from "../../components/Global/PanelContent";
 
-import cardImg from '../../components/assets/bg_2.jpeg'
+import cardImg from '../../assets/bg_2.jpeg'
 import Link from "next/link";
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";
 import useFiberAPI from "../../fiber/fiber";
