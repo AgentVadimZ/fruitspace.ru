@@ -1,18 +1,18 @@
-import SideBar from "../../NavBar/SideBar";
+import SideBar from "@/components/NavBar/SideBar";
 
-import AnalyticsIcon from "../../assets/icons/panel_analytics.svg"
-import MusicIcon from "../../assets/icons/panel_music.svg"
-import RolesIcon from "../../assets/icons/panel_roles.svg"
-import ChestsIcon from "../../assets/icons/panel_chests.svg"
-import SettingsIcon from "../../assets/icons/panel_settings.svg"
-import ActionsIcon from "../../assets/icons/panel_actions.svg"
+import AnalyticsIcon from "@/assets/icons/panel_analytics.svg"
+import MusicIcon from "@/assets/icons/panel_music.svg"
+import RolesIcon from "@/assets/icons/panel_roles.svg"
+import ChestsIcon from "@/assets/icons/panel_chests.svg"
+import SettingsIcon from "@/assets/icons/panel_settings.svg"
+import ActionsIcon from "@/assets/icons/panel_actions.svg"
 
 import Link from "next/link";
 import {useRouter} from "next/router";
-import useEffectOnce from "../../Hooks";
-import {useGlobalLocale} from "../../../locales/useLocale";
-import useFiberAPI from "../../../fiber/fiber";
-import SideItem from "../../NavBar/SideItem";
+import useEffectOnce from "@/components/Hooks";
+import {useGlobalLocale} from "@/locales/useLocale";
+import useFiberAPI from "@/fiber/fiber";
+import SideItem from "@/components/NavBar/SideItem";
 
 
 export default function GDNavBar(props) {

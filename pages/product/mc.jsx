@@ -20,8 +20,8 @@ import MemoryIcon from '@mui/icons-material/Memory';
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 import StorageIcon from '@mui/icons-material/Storage';
 import ProductCardMC from "../../components/Cards/ProductCardMC";
-import discordLogo from "../../components/assets/social/discord.png";
-import vkLogo from "../../components/assets/social/vkontakte.png";
+import discordLogo from "@/assets/social/discord.png";
+import vkLogo from "@/assets/social/vkontakte.png";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import CoreVanilla from "../../components/assets/logos/minecraft.png"

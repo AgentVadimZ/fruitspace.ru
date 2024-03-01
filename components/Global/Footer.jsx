@@ -1,8 +1,8 @@
 import styles from './Footer.module.css'
-import discordLogo from './../assets/social/discord.png'
-import vkLogo from './../assets/social/vkontakte.png'
+import discordLogo from '@/assets/social/discord.png'
+import vkLogo from '@/assets/social/vkontakte.png'
 import Link from "next/link";
-import {useGlobalLocale} from "../../locales/useLocale";
+import {useGlobalLocale} from "@/locales/useLocale";
 
 
 export default function Footer(props) {

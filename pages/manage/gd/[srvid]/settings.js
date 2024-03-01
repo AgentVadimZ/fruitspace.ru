@@ -26,8 +26,8 @@ import {AddPhotoAlternate, Restore, Visibility, VisibilityOff, Warning} from "@m
 import {useEffect, useRef, useState} from "react";
 import SaveIcon from '@mui/icons-material/Save';
 
-import discordLogo from '../../../../components/assets/social/discord.png'
-import vkLogo from '../../../../components/assets/social/vkontakte.png'
+import discordLogo from '@/assets/social/discord.png'
+import vkLogo from '@/assets/social/vkontakte.png'
 import GDLablogo from '../../../../components/assets/logos/geometrydash.png'
 import GDLogo from '../../../../components/assets/logos/gd_icon.png'
 import toast, {Toaster} from "react-hot-toast";
@@ -39,7 +39,7 @@ import {Alert, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import HelpIcon from '@mui/icons-material/Help';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SettingsIcon from '@mui/icons-material/Settings';
-import BackupBox from '../../../../components/assets/icons/backup_box.svg'
+import BackupBox from '@/assets/icons/backup_box.svg'
 import TabsUnstyled from "@mui/base/TabsUnstyled";
 import {Tab, TabsList} from "../../../../components/Global/TinyTab";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

@@ -1,17 +1,17 @@
 import Link from "next/link";
-import styles from "../NavBar/NavBar.module.css";
-import NavBar from "../NavBar/NavBar";
+import styles from "@/components/NavBar/NavBar.module.css";
+import NavBar from "@/components/NavBar/NavBar";
 
-import logo from "../assets/ava.png";
+import logo from "@/components/assets/ava.png";
 
 import {useRouter} from "next/router";
-import {useGlobalLocale} from "../../locales/useLocale";
-import {DropdownItem, DropdownMenu} from "../NavBar/DropDown";
-import RightSvg from "../assets/icons/right.svg";
+import {useGlobalLocale} from "@/locales/useLocale";
+import {DropdownItem, DropdownMenu} from "@/components/NavBar/DropDown";
+import RightSvg from "@/assets/icons/right.svg";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import NavItem from "../NavBar/NavItem";
+import NavItem from "@/components/NavBar/NavItem";
 import {useEffect, useState} from "react";
-import useFiberAPI from "../../fiber/fiber";
+import useFiberAPI from "@/fiber/fiber";
 
 
 export default function GlobalGDPSNav(props) {

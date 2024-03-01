@@ -1,13 +1,13 @@
-import SideBar from "../NavBar/SideBar";
+import SideBar from "@/components/NavBar/SideBar";
 
 import PersonIcon from '@mui/icons-material/Person';
 
-import MusicIcon from "../assets/icons/panel_music.svg"
+import MusicIcon from "@/assets/icons/panel_music.svg"
 
 import Link from "next/link";
 import {useRouter} from "next/router";
-import {useGlobalLocale} from "../../locales/useLocale";
-import SideItem from "../NavBar/SideItem";
+import {useGlobalLocale} from "@/locales/useLocale";
+import SideItem from "@/components/NavBar/SideItem";
 
 
 export default function GDPSNavBar(props) {

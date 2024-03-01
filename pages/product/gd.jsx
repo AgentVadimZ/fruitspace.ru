@@ -31,10 +31,10 @@ import FeatureCard from "../../components/Cards/FeatureCard";
 
 import FeatureCoreImg from "../../components/assets/features/core_3d-sm.png"
 import FeatureShieldImg from "../../components/assets/features/shield_3d-sm.png"
-import FeatureSetupImg from "../../components/assets/features/autosetup_3d-sm.png"
-import FeatureMusicImg from "../../components/assets/features/music_3d-sm.png"
+import FeatureSetupImg from "../../assets/features/autosetup_3d-sm.png"
+import FeatureMusicImg from "../../assets/features/music_3d-sm.png"
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";
-import discordLogo from "../../components/assets/social/discord.png";
+import discordLogo from "@/assets/social/discord.png";
 import GitHubIcon from "../../components/assets/logos/GithubIcon.png";
 
 

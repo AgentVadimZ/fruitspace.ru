@@ -1,6 +1,6 @@
 import {Backdrop, CircularProgress, circularProgressClasses} from "@mui/material";
 import Image from "next/image";
-import logo_sm from "./assets/ava.png";
+import logo_sm from "@/components/assets/ava.png";
 
 
 export default function LoadingAnim() {

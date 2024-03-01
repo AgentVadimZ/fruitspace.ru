@@ -10,7 +10,7 @@ import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleCheck, faClock, faCopy, faDownload} from "@fortawesome/free-solid-svg-icons";
 import {Input, Menu} from "antd";
-import SettingsIcon from "../../../components/assets/icons/panel_settings.svg";
+import SettingsIcon from "@/assets/icons/panel_settings.svg";
 import Markdown from "react-markdown";
 
 const formatArch = (arch) => {

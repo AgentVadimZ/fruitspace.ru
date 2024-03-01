@@ -4,7 +4,7 @@ import styles from "../components/Index.module.css"
 import MinecraftLogo from "../components/assets/logos/minecraft.png"
 import GDLogo from "../components/assets/logos/geometrydash.png"
 import CSLogo from "../components/assets/logos/counterstrike.png"
-import RightIcon from '../components/assets/icons/right.svg'
+import RightIcon from '@/assets/icons/right.svg'
 
 
 import Footer from "../components/Global/Footer";

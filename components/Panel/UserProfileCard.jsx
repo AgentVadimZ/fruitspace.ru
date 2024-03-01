@@ -1,4 +1,4 @@
-import styles3 from "../Manage/GDManage.module.css"
+import styles3 from "@/components/Manage/GDManage.module.css"
 import {styled} from "@mui/system";
 import {Backdrop, IconButton, InputAdornment, TextField, Tooltip} from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
@@ -7,15 +7,15 @@ import LockPersonIcon from '@mui/icons-material/LockPerson';
 import PasswordIcon from '@mui/icons-material/Password';
 import toast from "react-hot-toast";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
-import useLocale, {useGlobalLocale} from "../../locales/useLocale";
+import useLocale, {useGlobalLocale} from "@/locales/useLocale";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDiscord} from "@fortawesome/free-brands-svg-icons";
-import useFiberAPI from "../../fiber/fiber";
+import useFiberAPI from "@/fiber/fiber";
 import {Button, List} from "antd";
 import useSWR, {mutate} from "swr";
 import {faKey} from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
-import Logo from "../assets/ava.png"
+import Logo from "../../assets/ava.png"
 
 export default function UserProfileCard(props) {
 

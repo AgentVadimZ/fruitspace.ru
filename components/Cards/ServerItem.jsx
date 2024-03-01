@@ -1,11 +1,11 @@
-import GDLogo from '../assets/logos/geometrydash.png'
-import MCLogo from '../assets/logos/minecraft.png'
-import CSLogo from '../assets/logos/counterstrike.png'
-import QuestionMark from '../assets/icons/cross.png'
-import RightSvg from "../assets/icons/right.svg";
+import GDLogo from '@/components/assets/logos/geometrydash.png'
+import MCLogo from '@/components/assets/logos/minecraft.png'
+import CSLogo from '@/components/assets/logos/counterstrike.png'
+import QuestionMark from '@/assets/icons/cross.png'
+import RightSvg from "@/assets/icons/right.svg";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Link from "next/link";
-import {useGlobalLocale} from "../../locales/useLocale";
+import {useGlobalLocale} from "@/locales/useLocale";
 
 
 export default function ServerItem(props) {
