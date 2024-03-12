@@ -6,6 +6,7 @@ import RolesIcon from "@/assets/icons/panel_roles.svg"
 import ChestsIcon from "@/assets/icons/panel_chests.svg"
 import SettingsIcon from "@/assets/icons/panel_settings.svg"
 import ActionsIcon from "@/assets/icons/panel_actions.svg"
+import LevelpacksIcon from "@/assets/icons/panel_levelpacks.svg"
 
 import Link from "next/link";
 import {useRouter} from "next/router";
@@ -54,11 +55,9 @@ export default function GDNavBar(props) {
             {/*        <Tooltip title={globalLocale.get('panelGDPSNav').quests} placement="right" arrow open><span /></Tooltip>*/}
             {/*    </NavItem>*/}
             {/*</Link>}*/}
-            {/*{srv.Tariff.Levelpacks && <Link href={"/manage/gd/"+srvid+"/levelpacks"}>*/}
-            {/*    <NavItem icon={<LevelpacksIcon/>} acetone square active={action==="levelpacks"}>*/}
-            {/*        <Tooltip title={globalLocale.get('panelGDPSNav').levelpacks} placement="right" arrow open><span /></Tooltip>*/}
-            {/*    </NavItem>*/}
-            {/*</Link>}*/}
+            {srv.Tariff.Levelpacks && <Link href={"/manage/gd/"+srvid+"/levelpacks"} legacyBehavior>
+                <SideItem icon={<LevelpacksIcon className="h-5" />} active={action==="levelpacks"} text={globalLocale.get('panelGDPSNav').levelpacks} />
+            </Link>}
             <Link href={"/manage/gd/"+srvid+"/settings"} legacyBehavior>
                 <SideItem icon={<SettingsIcon className="h-5" />} active={action==="settings"} text={globalLocale.get('panelGDPSNav').settings} />
             </Link>

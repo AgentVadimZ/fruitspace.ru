@@ -45,6 +45,14 @@
     box-shadow: none !important;
 }
 
+.ant-menu-item-selected {
+    background-color: var(--btn-hover) !important;
+}
+
+.ant-tabs-nav {
+    margin: 0 !important;
+}
+
 @font-face {
     font-family: "Coolvetica";
     src: url("/coolvetica.otf");

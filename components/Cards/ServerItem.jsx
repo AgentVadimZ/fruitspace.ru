@@ -15,7 +15,8 @@ export default function ServerItem(props) {
     const Types = {
         "gd": GDLogo.src,
         "mc": MCLogo.src,
-        "cs": CSLogo.src
+        "cs": CSLogo.src,
+
     }
     return props.add?(
         <Link href={"/product/order/"+props.type} legacyBehavior>

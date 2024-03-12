@@ -55,11 +55,6 @@ const toRGB = (vals) => {
     }
 }
 
-const fn=(val)=>{
-    console.log(val)
-    return val
-}
-
 export default function RolesGD(props) {
     const refs = useRef({})
     const tourSteps = RolesTour.map((v,i)=>({
@@ -70,8 +65,6 @@ export default function RolesGD(props) {
     }))
     const [tourOpen, setTourOpen] = useState(!!props.router.query.tour)
 
-
-    const router = useRouter()
 
     const [roles, setRoles] = useState([])
     const [roleid, setRoleid] = useState(-1)

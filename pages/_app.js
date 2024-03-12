@@ -42,6 +42,9 @@ export default function WebApp({Component, pageProps}) {
                         Button: {
                             primaryShadow: "none",
                         },
+                        Menu: {
+                            itemHeight: "4rem"
+                        }
                     },
                     algorithm: theme.darkAlgorithm
                 }}>
