@@ -8,11 +8,13 @@ import * as Gauntlets from "@/assets/gauntlets"
 import {Button, Form, Modal, Select} from "antd";
 import useFiberAPI from "@/fiber/fiber";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamation, faPlusCircle, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faExclamation, faPlusCircle, faSave, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {useState} from "react";
 import useSWR from "swr";
 import Tab from "@/components/Tab"
 import {Tooltip} from "@mui/material";
+import toast, {Toaster} from "react-hot-toast";
+import {debounce} from "lodash";
 
 
 const gauntletParams = {
@@ -85,6 +87,7 @@ export default function LevelpackGD(props) {
             <GlobalHead title="Игровой хостинг"/>
             <GlobalNav />
             <GDNavBar />
+            <Toaster/>
             <PanelContent>
                 <div className="flex-col w-full p-2 box-border">
                     <Tab addbtn={<Button type="primary" className="flex gap-2 items-center" onClick={()=>setShowModal(true)}>
@@ -96,7 +99,7 @@ export default function LevelpackGD(props) {
                             key: "gau",
                             children: <div className="grid sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 p-2 gap-2">
                                 {gaunts?.packs?.map((gaunt, i)=>{
-                                    return <GauntletItem pack={gaunt} api={api} key={i} />
+                                    return <GauntletItem pack={gaunt} api={api} srvid={srv.Srv.srvid} key={i} />
                                 })}
                             </div>
                         },
@@ -130,7 +133,9 @@ export default function LevelpackGD(props) {
         </>
 }
 
-const GauntletItem = ({pack, api}) => {
+const GauntletItem = ({pack, api, srvid}) => {
+    const [isLoading, setIsLoading] = useState(false)
+
     const pdata = Object.keys(gauntletParams).filter(k=>gauntletParams[k].id==pack.pack_name)[0]
     const gau = gauntletParams[pdata]
     const levels = pack.levels.map((lvl)=>{
@@ -139,20 +144,60 @@ const GauntletItem = ({pack, api}) => {
             value: lvl.id
         }
     })
-    const [availLevels, setAvailLevels] = useState(levels)
+    const [selectedLevels, setSelectedLevels] = useState(levels||[])
+    const [availLevels, setAvailLevels] = useState([])
+    
+    const search = async (query) => {
+        setIsLoading(true)
+        let data = await api.gdps_manage.searchLevels(srvid, query)
+        let newlevels = data?.levels?.map((lvl)=>{
+            return {
+                label: `[${lvl.id}] ${lvl.name}`,
+                value: lvl.id
+            }
+        })||[]
+        setAvailLevels(newlevels)
+        setIsLoading(false)
+        return data
+    }
+    const searchDebounced = debounce(search, 500)
+
+    const saveGauntlet = async () => {
+        let d = await api.gdps_manage.editLevelpack(srvid, pack.id, {...pack, levels: selectedLevels.map((lvl)=>lvl.value)})
+        if (d.status=="ok") {
+            toast.success(`${pdata || "Unknown"} Gauntlet сохранен`, {
+                duration: 1000,
+                style: {
+                    color: "white",
+                    backgroundColor: "var(--btn-color)"
+                }
+            })
+        }
+    }
 
     return <div className="rounded-xl p-2 bg-dark flex flex-col items-center box-border">
-        <img src={pdata ? gauntletParams[pdata].icon : Gauntlets.Unknown.src} className="h-24 lg:h-48"/>
-        <span className="text-white lg:text-lg flex gap-2 items-center justify-center">
+        <img src={pdata ? gauntletParams[pdata].icon : Gauntlets.Unknown.src} className="h-24 lg:h-48 select-none"/>
+        <span className="text-white lg:text-lg flex gap-2 items-center justify-center select-none">
             {pdata || "Unknown"} {(!pdata || gauntletParams[pdata].is22) && <span className="text-xs lg:text-sm bg-primary rounded-md px-1.5">2.2+</span>}
         </span>
-        <Select options={levels} defaultValue={[...levels]} className="flex-1" mode="multiple" placeholder="Уровни" maxCount={5}
-                onSearch={(val)=>{}}/>
+        <Select options={[...selectedLevels, ...availLevels]} defaultValue={levels} value={selectedLevels}
+                className="flex-1" mode="multiple" placeholder="Уровни" maxCount={5} filterOption={false}
+                onSearch={(val)=>{searchDebounced(val)}} loading={isLoading} onChange={(e,v)=>{
+                    setSelectedLevels(v);
+                    setAvailLevels([])
+                }}/>
         <div className="flex justify-end w-full gap-2 mt-2">
             {pdata&&gau.note&&<Tooltip title={gau.note} arrow placement="bottom" >
-                <Button type="primary" warning className="rounded-md"><FontAwesomeIcon icon={faExclamation} /></Button>
+                <Button type="dashed" className="rounded-md">
+                    <FontAwesomeIcon icon={faExclamation} />
+                </Button>
             </Tooltip>}
-            <Button type="primary" danger className="rounded-md"><FontAwesomeIcon icon={faTrash} /></Button>
+            <Button type="primary" warning className="rounded-md aspect-square flex justify-center items-center" onClick={saveGauntlet}>
+                <FontAwesomeIcon icon={faSave} />
+            </Button>
+            <Button type="primary" danger className="rounded-md aspect-square flex justify-center items-center">
+                <FontAwesomeIcon icon={faTrash} />
+            </Button>
         </div>
     </div>
 
