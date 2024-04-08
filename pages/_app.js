@@ -44,6 +44,10 @@ export default function WebApp({Component, pageProps}) {
                         },
                         Menu: {
                             itemHeight: "4rem"
+                        },
+                        Modal: {
+                            contentBg: "#1f1f1fdd",
+                            headerBg: "transparent",
                         }
                     },
                     algorithm: theme.darkAlgorithm

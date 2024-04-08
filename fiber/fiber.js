@@ -325,6 +325,10 @@ class gdps_manage {
         return await this._api.do(`servers/gd/${srvid}/levelpack/${id}`, "POST", data)
     }
 
+    deleteLevelpack = async (srvid, id) => {
+        return await this._api.do(`servers/gd/${srvid}/levelpack/${id}`, "DELETE")
+    }
+
     createLevelpack = async (srvid, data) => {
         return await this._api.do(`servers/gd/${srvid}/levelpack`, "POST", data)
     }
