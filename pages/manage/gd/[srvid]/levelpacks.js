@@ -127,8 +127,6 @@ export default function LevelpackGD(props) {
                             children: lvlpacks?.packs
                                 ? <div className="flex flex-col h-full">
                                     <MappackView api={api} srvid={srv.Srv.srvid} packs={lvlpacks.packs} />
-                                    {lvlpacks?.packs?.map((pack, i) => <pre
-                                        key={i}>{JSON.stringify(pack, null, 4)}</pre>)}
                                 </div>
                                 : (lvlpackloading
                                     ? <div className="flex justify-center p-8"><Loader size={24}/></div>
@@ -138,10 +136,12 @@ export default function LevelpackGD(props) {
                     ]} onChange={setMode}/>
                 </div>
             </PanelContent>
-            <Modal title={`Добавить ${mode=="gau"?"гаунтлет":"маппак"}`} open={showModal} onOk={()=>{packForm.submit()}} onCancel={()=>setShowModal(false)}
+        {mode=="gau"
+            ? <Modal title={`Добавить ${mode=="gau"?"гаунтлет":"маппак"}`} open={showModal} onOk={()=>{packForm.submit()}} onCancel={()=>setShowModal(false)}
             okText="Добавить" cancelText="Отмена">
-                {mode=="gau"?<GauCreateModal packs={gaunts?.packs||[]} api={api} form={packForm} srvid={srv.Srv.srvid} setShowModal={setShowModal} />:<MappackCreateModal/>}
+                <GauCreateModal packs={gaunts?.packs||[]} api={api} form={packForm} srvid={srv.Srv.srvid} setShowModal={setShowModal} />
             </Modal>
+            : <MapPackModal open={showModal} onCancel={() => setShowModal(false)} api={api} srvid={srv.Srv.srvid}  isnew/>}
         </>
 }
 
@@ -240,20 +240,157 @@ const GauCreateModal = ({packs, api, srvid, form, setShowModal}) => {
     </Form>
 }
 
-const MappackCreateModal = (props) => {
-    return <></>
+
+function MapPackModal({isnew, open, onCancel, api, srvid}) {
+
+    const [selected, setSelected] = useState(open.pack_name?open:{pack_coins:0,pack_stars:0})
+    const [selectedLevels, setSelectedLevels] = useState(open?.levels?.map((lvl)=>({
+        label: `[${lvl.id}] ${lvl.name}`,
+        value: lvl.id
+    }))||[])
+    const [availLevels, setAvailLevels] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+
+    const [form] = Form.useForm()
+
+    useEffect(()=>{
+        setSelected(open)
+        const sel = open?.levels?.map((lvl)=>({
+            label: `[${lvl.id}] ${lvl.name}`,
+            value: lvl.id
+        }))||[]
+        setSelectedLevels(sel)
+        form.setFieldsValue({...open, levels: sel})
+    }, [open])
+
+    const search = async (query) => {
+        setIsLoading(true)
+        let data = await api.gdps_manage.searchLevels(srvid, query)
+        let newlevels = data?.levels?.map((lvl)=>{
+            return {
+                label: `[${lvl.id}] ${lvl.name}`,
+                value: lvl.id
+            }
+        })||[]
+        setAvailLevels(newlevels)
+        setIsLoading(false)
+        return data
+    }
+    const searchDebounced = debounce(search, 500)
+
+    const savePack = async (val) => {
+        let d = await api.gdps_manage.editLevelpack(srvid, selected.id, {...selected, ...val, levels: selectedLevels.map((lvl)=>({id:lvl.value}))})
+        if (d.status=="ok") {
+            toast.success(`${val.pack_name} сохранен`, {
+                duration: 1000,
+                style: {
+                    color: "white",
+                    backgroundColor: "var(--btn-color)"
+                }
+            })
+            mutate("lvlpacks")
+            onCancel()
+        }
+    }
+
+
+    return <Modal title={isnew?"Создать маппак":`Редактировать ${selected.pack_name}`} open={open} onOk={form.submit}
+                  onCancel={()=>{
+                      onCancel()
+                  }}
+                  okText="Сохранить" cancelText="Отмена">
+        <Form form={form} className="flex flex-col gap-4" onFinish={(values)=>{
+            console.log(values)
+            savePack(values)
+        }}>
+            <div className="flex items-center gap-4">
+                {(() => {
+                    const vtype = ["unrated", "auto", "easy", "normal", "hard", "hard", "harder", "harder", "insane", "insane", "demon-hard"][selected.pack_difficulty] || "unrated"
+                    return <img src={`https://cdn.fruitspace.one/assets/bot_icons/lvl/${vtype}.png`}
+                                className="w-24"/>
+                })()}
+                <div className="rounded-xl bg-subtle bg-opacity-50 backdrop-blur p-2 flex-1">
+                    <Form.Item label="Название" name="pack_name" rules={[
+                        {
+                            required: true,
+                            message: "Укажите название маппака"
+                        }
+                    ]} initialValue={selected.pack_name}>
+                        <Input/>
+                    </Form.Item>
+
+                    <div className="flex gap-3 items-center">
+                        <img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/unrated.png"
+                             className="w-4"/>
+                        <Form.Item name="pack_difficulty" className="mb-0 flex-1">
+                            <Slider min={0} max={10} defaultValue={selected.pack_difficulty}
+                                    onChange={(v) => setSelected({...selected, pack_difficulty: v})}
+                                    className="flex-1"/>
+                        </Form.Item>
+                        <img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/demon-hard.png"
+                             className="w-4"/>
+                    </div>
+                </div>
+            </div>
+
+            <div className="rounded-xl bg-subtle bg-opacity-50 backdrop-blur p-2 flex items-center justify-between">
+                <Form.Item label={<span className="flex items-center gap-1">
+                            <img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/star.png"
+                                 className="w-4"/> Звезды
+                        </span>} name="pack_stars"
+                           className="mb-0">
+                    <InputNumber min={0} contols defaultValue={selected.pack_stars}
+                                 onChange={(e, v) => setSelected({...selected, pack_stars: v})}/>
+                </Form.Item>
+                <Form.Item label={<span className="flex items-center gap-1">
+                            <img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/silvercoin.png"
+                                 className="w-4"/> Монеты
+                        </span>} name="pack_coins"
+                           className="mb-0">
+                    <InputNumber min={0} contols defaultValue={selected.pack_coins} onChange={(e,v)=>setSelected({...selected, pack_coins: v})}/>
+                </Form.Item>
+            </div>
+
+            <div className="rounded-xl bg-subtle bg-opacity-50 backdrop-blur p-2 flex items-center justify-between">
+                <Form.Item label="Уровни" name="levels" rules={[
+                    {
+                        required: true,
+                        message: "Укажите хотя бы 1 уровень",
+                        min: 1,
+                        type: "array"
+                    }
+                ]} className="mb-0 w-full" initialValue={selectedLevels}>
+                    <Select options={undupe([...selectedLevels, ...availLevels])} value={selectedLevels}
+                            defaultValue={selectedLevels}
+                            className="flex-1" mode="multiple" placeholder="Уровни" filterOption={false}
+                            onSearch={searchDebounced} loading={isLoading} onChange={(e,v)=>{
+                        setSelectedLevels(v);
+                        setAvailLevels([])
+                    }}/>
+                </Form.Item>
+            </div>
+        </Form>
+    </Modal>;
 }
 
 const MappackView = ({api, srvid, packs}) => {
 
     const [editModpackOpen, setEditModpackOpen] = useState(false)
-    const [selected, setSelected] = useState({})
 
-    const [form] = Form.useForm()
+    const deletePack = async (pack) => {
+        let d = await api.gdps_manage.deleteLevelpack(srvid, pack.id)
+        if (d.status=="ok") {
+            toast.success(`${pack.pack_name} удален`, {
+                duration: 1000,
+                style: {
+                    color: "white",
+                    backgroundColor: "var(--btn-color)"
+                }
+            })
+            mutate("lvlpacks")
+        }
+    }
 
-    const [selectedLevels, setSelectedLevels] = useState([])
-    const [availLevels, setAvailLevels] = useState([])
-    const [isLoading, setIsLoading] = useState(false)
 
     const structure = [
         {
@@ -295,110 +432,37 @@ const MappackView = ({api, srvid, packs}) => {
             </div>
         },
         {
-            render: (_, entry) => <FontAwesomeIcon icon={faPen} onClick={()=>{
-                form.resetFields()
-                setSelected(entry)
-                setSelectedLevels(entry.levels.map(lvl=>({
-                    label: `[${lvl.id}] ${lvl.name}`,
-                    value: lvl.id
-                })))
-                setEditModpackOpen(true)
-            }} className="rounded-full bg-primary cursor-pointer hover:bg-opacity-80 p-2" />
+            render: (_, entry) => <div className="flex w-fit gap-2 items-center">
+                <Button type="primary" className="rounded-md aspect-square flex justify-center items-center" onClick={()=>{
+                    setEditModpackOpen(entry)
+                }}>
+                    <FontAwesomeIcon icon={faPen} />
+                </Button>
+                <Popconfirm
+                    title="Удалить маппак"
+                    description={`Вы точно хотите удалить ${entry.pack_name}?`}
+                    okText="Да" okType="danger"
+                    cancelText="Нет"
+                    onConfirm={()=>deletePack(entry)}>
+                    <Button type="primary" danger className="rounded-md aspect-square flex justify-center items-center !shadow-none">
+                        <FontAwesomeIcon icon={faTrash} />
+                    </Button>
+                </Popconfirm>
+            </div>
         }
     ]
 
 
-    const search = async (query) => {
-        setIsLoading(true)
-        let data = await api.gdps_manage.searchLevels(srvid, query)
-        let newlevels = data?.levels?.map((lvl)=>{
-            return {
-                label: `[${lvl.id}] ${lvl.name}`,
-                value: lvl.id
-            }
-        })||[]
-        setAvailLevels(newlevels)
-        setIsLoading(false)
-        return data
-    }
-    const searchDebounced = debounce(search, 500)
+
 
     return <>
-        <Table columns={structure} dataSource={packs} className="bg-transparent bg-opacity-20 rounded-2xl" pagination={false} />
-        <Modal title={`Редактировать ${selected.pack_name}`} open={editModpackOpen} onOk={()=>{form.submit()}} onCancel={()=>setEditModpackOpen(false)}
-               okText="Сохранить" cancelText="Отмена">
-            <Form form={form} className="flex flex-col gap-4">
-                <div className="flex items-center gap-4">
-                    {(() => {
-                        const vtype = ["unrated", "auto", "easy", "normal", "hard", "hard", "harder", "harder", "insane", "insane", "demon-hard"][selected.pack_difficulty] || "unrated"
-                        return <img src={`https://cdn.fruitspace.one/assets/bot_icons/lvl/${vtype}.png`}
-                                    className="w-24"/>
-                    })()}
-                    <div className="rounded-lg bg-subtle bg-opacity-50 backdrop-blur p-2 flex-1">
-                        <Form.Item label="Название" name="pack_name" rules={[
-                            {
-                                required: true,
-                                message: "Укажите название маппака"
-                            }
-                        ]} initialValue={selected.pack_name}>
-                            <Input/>
-                        </Form.Item>
-                        <Form.Item initialValue={selected.pack_difficulty} name="pack_difficulty" className="mb-0">
-                            <div className="flex gap-3 items-center">
-                                <img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/unrated.png"
-                                     className="w-4"/>
-                                <Slider min={0} max={10} defaultValue={selected.pack_difficulty}
-                                        onChange={(v) => setSelected({...selected, pack_difficulty: v})}
-                                        className="flex-1"/>
-                                <img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/demon-hard.png"
-                                     className="w-4"/>
-                            </div>
-                        </Form.Item>
-                    </div>
-                </div>
-
-                <div className="rounded-lg bg-subtle bg-opacity-50 backdrop-blur p-2 flex items-center justify-between">
-                    <Form.Item label={<span className="flex items-center gap-1">
-                            <img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/star.png"
-                                 className="w-4"/> Звезды
-                        </span>} name="pack_stars" initialValue={selected.pack_stars}
-                               className="mb-0">
-                        <InputNumber min={0} contols/>
-                    </Form.Item>
-                    <Form.Item label={<span className="flex items-center gap-1">
-                            <img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/silvercoin.png"
-                                 className="w-4"/> Монеты
-                        </span>} name="pack_coins" initialValue={selected.pack_coins}
-                               className="mb-0">
-                        <InputNumber min={0} contols/>
-                    </Form.Item>
-                </div>
-
-                <div className="rounded-lg bg-subtle bg-opacity-50 backdrop-blur p-2 flex items-center justify-between">
-                    <Form.Item label="Уровни" name="levels" rules={[
-                        {
-                            required: true,
-                            message: "Укажите хотя бы 1 уровень",
-                            min: 1,
-                            type: "array"
-                        }
-                    ]} initialValue={selectedLevels} className="mb-0">
-                        <Select options={undupe([...selectedLevels, ...availLevels])} value={selectedLevels}
-                                className="flex-1" mode="multiple" placeholder="Уровни" maxCount={5} filterOption={false}
-                                onSearch={(val)=>{searchDebounced(val)}} loading={isLoading} onChange={(e,v)=>{
-                            setSelectedLevels(v);
-                            setAvailLevels([])
-                        }}/>
-                    </Form.Item>
-                </div>
-            </Form>
-        </Modal>
+        <Table columns={structure} dataSource={packs} className="bg-transparent bg-opacity-20 rounded-2xl"
+               pagination={false}/>
+        <MapPackModal api={api} srvid={srvid} open={editModpackOpen} onCancel={() => setEditModpackOpen(false)} />
     </>
 }
 
-const GauntletItem = ({
-    pack, api, srvid
-}) => {
+const GauntletItem = ({pack, api, srvid}) => {
     const [isLoading, setIsLoading] = useState(false)
 
     const pdata = Object.keys(gauntletParams).filter(k => gauntletParams[k].id == pack.pack_name)[0]
