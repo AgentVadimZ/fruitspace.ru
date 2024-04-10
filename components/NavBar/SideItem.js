@@ -15,7 +15,7 @@ const SideItem = React.forwardRef((props,ref)=> {
                 <span className="flex aspect-square h-full justify-center items-center">
                     {props.icon}
                 </span>
-        <span className="whitespace-nowrap">{props.text}</span>
+        <span className="whitespace-nowrap ml-0.5">{props.text}</span>
     </li>
 })
 

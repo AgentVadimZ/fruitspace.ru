@@ -48,6 +48,12 @@ export default function WebApp({Component, pageProps}) {
                         Modal: {
                             contentBg: "#1f1f1fdd",
                             headerBg: "transparent",
+                        },
+                        Table: {
+                            headerBg: "rgba(0,0,0,0)",
+                            footerBg: "rgba(0,0,0,0)",
+                            colorBgContainer: "rgba(0,0,0,0)",
+                            selectionColumnWidth: 48
                         }
                     },
                     algorithm: theme.darkAlgorithm
