@@ -4,11 +4,11 @@ import PanelContent from "../../../components/Global/PanelContent";
 import styles from "../../../components/Manage/GDManage.module.css"
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import LogoNG from '../../../components/assets/logos/ng-logo.jpeg'
-import LogoYT from '../../../components/assets/logos/yt-logo.jpeg'
-import LogoVK from '../../../components/assets/logos/vk-logo.png'
-import LogoDZ from '../../../components/assets/logos/dz-logo.png'
-import LogoDBox from '../../../components/assets/logos/dbox-logo.png'
+import LogoNG from '../../../assets/logos/ng-logo.jpeg'
+import LogoYT from '../../../assets/logos/yt-logo.jpeg'
+import LogoVK from '../../../assets/logos/vk-logo.png'
+import LogoDZ from '../../../assets/logos/dz-logo.png'
+import LogoDBox from '../../../assets/logos/dbox-logo.png'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faArrowDown19,

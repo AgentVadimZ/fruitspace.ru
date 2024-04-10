@@ -16,7 +16,7 @@ import ProgressCard from "../../../../components/Cards/ProgressCard";
 import GDPSCard, {DownloadCard} from "../../../../components/Cards/GDPSCard";
 import useFiberAPI from "../../../../fiber/fiber";
 import {mutate} from "swr";
-import {IndexTour} from "../../../../locales/tours/manage/gd";
+import {IndexTour} from "@/locales/tours/manage/gd";
 import {FloatButton, Tour} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faQuestion} from "@fortawesome/free-solid-svg-icons";

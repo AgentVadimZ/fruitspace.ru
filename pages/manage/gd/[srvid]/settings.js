@@ -26,10 +26,10 @@ import {AddPhotoAlternate, Restore, Visibility, VisibilityOff, Warning} from "@m
 import {useEffect, useRef, useState} from "react";
 import SaveIcon from '@mui/icons-material/Save';
 
-import discordLogo from '../../../../components/assets/social/discord.png'
-import vkLogo from '../../../../components/assets/social/vkontakte.png'
-import GDLablogo from '../../../../components/assets/logos/geometrydash.png'
-import GDLogo from '../../../../components/assets/logos/gd_icon.png'
+import discordLogo from '@/assets/social/discord.png'
+import vkLogo from '@/assets/social/vkontakte.png'
+import GDLablogo from '../../../../assets/logos/geometrydash.png'
+import GDLogo from '../../../../assets/logos/gd_icon.png'
 import toast, {Toaster} from "react-hot-toast";
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
@@ -39,7 +39,7 @@ import {Alert, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import HelpIcon from '@mui/icons-material/Help';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SettingsIcon from '@mui/icons-material/Settings';
-import BackupBox from '../../../../components/assets/icons/backup_box.svg'
+import BackupBox from '@/assets/icons/backup_box.svg'
 import TabsUnstyled from "@mui/base/TabsUnstyled";
 import {Tab, TabsList} from "../../../../components/Global/TinyTab";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -51,28 +51,6 @@ import {SettingsTour} from "../../../../locales/tours/manage/gd";
 import {FloatButton, Tour} from "antd";
 
 
-function deepEqual(object1, object2) {
-    const keys1 = Object.keys(object1);
-    const keys2 = Object.keys(object2);
-
-    if (keys1.length !== keys2.length) {
-        return false;
-    }
-
-    for (const key of keys1) {
-        const val1 = object1[key];
-        const val2 = object2[key];
-        const areObjects = isObject(val1) && isObject(val2);
-        if (
-            areObjects && !deepEqual(val1, val2) ||
-            !areObjects && val1 !== val2
-        ) {
-            return false;
-        }
-    }
-
-    return true;
-}
 
 function isObject(object) {
     return object != null && typeof object === 'object';

@@ -1,7 +1,7 @@
-import GDLogo from '../assets/logos/geometrydash.png'
-import MCLogo from '../assets/logos/minecraft.png'
-import GTALogo from '../assets/logos/rockstargames.png'
-import QuestionMark from '../assets/icons/cross.png'
+import GDLogo from '@/assets/logos/geometrydash.png'
+import MCLogo from '@/assets/logos/minecraft.png'
+import GTALogo from '@/assets/logos/rockstargames.png'
+import QuestionMark from '@/assets/icons/cross.png'
 import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCrown, faDownload} from "@fortawesome/free-solid-svg-icons";

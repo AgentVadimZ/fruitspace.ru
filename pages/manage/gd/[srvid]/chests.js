@@ -8,15 +8,15 @@ import {styled} from "@mui/system";
 import {Button, IconButton, Switch, TextField, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import {useEffect, useState} from "react";
 
-import shardFire from "../../../../components/assets/shards/fire.webp"
-import shardIce from "../../../../components/assets/shards/ice.webp"
-import shardLava from "../../../../components/assets/shards/lava.webp"
-import shardPoison from "../../../../components/assets/shards/poison.webp"
-import shardShadow from "../../../../components/assets/shards/shadow.webp"
-import orbsIcon from "../../../../components/assets/shards/orbs.webp"
-import keysIcon from "../../../../components/assets/shards/keys.webp"
-import diamondsIcon from "../../../../components/assets/shards/diamonds.webp"
-import timeIcon from "../../../../components/assets/shards/time.png"
+import shardFire from "@/assets/shards/fire.webp"
+import shardIce from "@/assets/shards/ice.webp"
+import shardLava from "@/assets/shards/lava.webp"
+import shardPoison from "@/assets/shards/poison.webp"
+import shardShadow from "@/assets/shards/shadow.webp"
+import orbsIcon from "@/assets/shards/orbs.webp"
+import keysIcon from "@/assets/shards/keys.webp"
+import diamondsIcon from "@/assets/shards/diamonds.webp"
+import timeIcon from "@/assets/shards/time.png"
 import {TimePicker} from "@mui/x-date-pickers/TimePicker";
 import {LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";

@@ -4,7 +4,7 @@ import styles from "../../components/Index.module.css";
 import Footer from "../../components/Global/Footer";
 import {useState} from "react";
 
-import logo from "../../components/assets/Fruitspace2.png"
+import logo from "../../assets/Fruitspace2.png"
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import {Button, IconButton, InputAdornment, TextField} from "@mui/material";
 import {LoadingButton} from "@mui/lab"

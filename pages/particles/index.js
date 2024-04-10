@@ -8,7 +8,7 @@ import {faCircleCheck, faClock, faCopy, faDownload} from "@fortawesome/free-soli
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import toast, {Toaster} from "react-hot-toast";
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import SettingsIcon from "../../components/assets/icons/panel_settings.svg"
+import SettingsIcon from "@/assets/icons/panel_settings.svg"
 import {faHeart} from "@fortawesome/free-solid-svg-icons/faHeart";
 import Link from "next/link";
 import useFiberAPI from "../../fiber/fiber";

@@ -313,6 +313,26 @@ class gdps_manage {
         return await this._api.do(`servers/gd/${srvid}/get/users?user=${encodeURI(keyword)}`, "GET")
     }
 
+    searchLevels = async (srvid, keyword) => {
+        return await this._api.do(`servers/gd/${srvid}/get/levels?lvl=${encodeURI(keyword)}`, "GET")
+    }
+
+    getLevelPacks = async (srvid, isgau=false) => {
+        return await this._api.do(`servers/gd/${srvid}/levelpacks?gau=${isgau?"true":"false"}`, "GET")
+    }
+
+    editLevelpack = async (srvid, id, data) => {
+        return await this._api.do(`servers/gd/${srvid}/levelpack`, "POST", data)
+    }
+
+    deleteLevelpack = async (srvid, id) => {
+        return await this._api.do(`servers/gd/${srvid}/levelpack/${id}`, "DELETE")
+    }
+
+    createLevelpack = async (srvid, data) => {
+        return await this._api.do(`servers/gd/${srvid}/levelpack`, "POST", data)
+    }
+
     upgrade22 = async (srvid) => {
         return await this._api.do(`servers/gd/${srvid}/upgrade22`, "GET")
     }

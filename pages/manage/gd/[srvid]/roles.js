@@ -29,9 +29,9 @@ import {
     faXmark
 } from "@fortawesome/free-solid-svg-icons";
 
-import modBadge from "../../../../components/assets/gd/mod.png"
-import modElderBadge from "../../../../components/assets/gd/mod-elder.png"
-import modListBadge from "../../../../components/assets/gd/mod-leaderboard.png"
+import modBadge from "../../../../assets/gd/mod.png"
+import modElderBadge from "../../../../assets/gd/mod-elder.png"
+import modListBadge from "../../../../assets/gd/mod-leaderboard.png"
 import toast, {Toaster} from "react-hot-toast";
 import {styled} from "@mui/system";
 import {Restore} from "@mui/icons-material";
@@ -55,11 +55,6 @@ const toRGB = (vals) => {
     }
 }
 
-const fn=(val)=>{
-    console.log(val)
-    return val
-}
-
 export default function RolesGD(props) {
     const refs = useRef({})
     const tourSteps = RolesTour.map((v,i)=>({
@@ -70,8 +65,6 @@ export default function RolesGD(props) {
     }))
     const [tourOpen, setTourOpen] = useState(!!props.router.query.tour)
 
-
-    const router = useRouter()
 
     const [roles, setRoles] = useState([])
     const [roleid, setRoleid] = useState(-1)

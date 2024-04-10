@@ -2,7 +2,7 @@ import GlobalHead from "../../components/GlobalHead";
 import GlobalNav from "../../components/GlobalNav";
 import styles from "../../components/Index.module.css";
 import Footer from "../../components/Global/Footer";
-import BannerGD from "../../components/assets/BannerGD.png"
+import BannerGD from "../../assets/BannerGD.png"
 import ProductHeader from "../../components/Global/ProductHeader";
 import ProductCardGD from "../../components/Cards/ProductCardGD";
 import {
@@ -29,13 +29,13 @@ import PersonIcon from '@mui/icons-material/Person';
 
 import FeatureCard from "../../components/Cards/FeatureCard";
 
-import FeatureCoreImg from "../../components/assets/features/core_3d-sm.png"
-import FeatureShieldImg from "../../components/assets/features/shield_3d-sm.png"
-import FeatureSetupImg from "../../components/assets/features/autosetup_3d-sm.png"
-import FeatureMusicImg from "../../components/assets/features/music_3d-sm.png"
+import FeatureCoreImg from "../../assets/features/core_3d-sm.png"
+import FeatureShieldImg from "../../assets/features/shield_3d-sm.png"
+import FeatureSetupImg from "../../assets/features/autosetup_3d-sm.png"
+import FeatureMusicImg from "../../assets/features/music_3d-sm.png"
 import useLocale, {useGlobalLocale} from "../../locales/useLocale";
-import discordLogo from "../../components/assets/social/discord.png";
-import GitHubIcon from "../../components/assets/logos/GithubIcon.png";
+import discordLogo from "@/assets/social/discord.png";
+import GitHubIcon from "../../assets/logos/GithubIcon.png";
 
 
 

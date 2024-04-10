@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-import banner from "./assets/banner.png"
+import banner from "@/assets/banner.png"
 
 export default function GlobalHead(props) {
     const domain = "https://openbeta.fruitspace.ru"

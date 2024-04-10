@@ -1,15 +1,13 @@
 import Link from "next/link";
-import styles from "./NavBar/NavBar.module.css";
-import NavBar from "./NavBar/NavBar";
-import NavItem from "./NavBar/NavItem";
-import {DropdownItem, DropdownMenu} from "./NavBar/DropDown";
+import styles from "@/components/NavBar/NavBar.module.css";
+import NavBar from "@/components/NavBar/NavBar";
+import NavItem from "@/components/NavBar/NavItem";
+import {DropdownItem, DropdownMenu} from "@/components/NavBar/DropDown";
 
-import RightSvg from "./assets/icons/right.svg";
-import logo_sm from "./assets/ava.png";
-import logo from "./assets/Fruitspace2.png";
-import ServerSvg from "./assets/icons/server.svg";
-import PersonIcon from '@mui/icons-material/Person';
-import DeleteIcon from '@mui/icons-material/Delete';
+import RightSvg from "@/assets/icons/right.svg";
+import logo_sm from "@/assets/ava.png";
+import logo from "@/assets/Fruitspace2.png";
+import ServerSvg from "@/assets/icons/server.svg";
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import StoreIcon from '@mui/icons-material/Store';
@@ -17,14 +15,14 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
-import MinecraftLogo from "./assets/logos/minecraft.png"
-import GDLogo from "./assets/logos/geometrydash.png"
-import CSLogo from "./assets/logos/counterstrike.png"
+import MinecraftLogo from "@/assets/logos/minecraft.png"
+import GDLogo from "@/assets/logos/geometrydash.png"
+import CSLogo from "@/assets/logos/counterstrike.png"
 import {useRouter} from "next/router";
-import {useGlobalLocale} from "../locales/useLocale";
-import useFiberAPI from "../fiber/fiber";
+import {useGlobalLocale} from "@/locales/useLocale";
+import useFiberAPI from "@/fiber/fiber";
 import {useRecoilState} from "recoil";
-import {userAtom} from "../fiber/fiber.model";
+import {userAtom} from "@/fiber/fiber.model";
 import {useState} from "react";
 import {HideOn} from "react-hide-on-scroll";
 
@@ -52,7 +50,10 @@ export default function GlobalNav(props) {
 
     return (
         <NavBar mainpage={props.mainpage}>
-            <Link href={"/"} legacyBehavior><img src={props.mainpage?logo_sm.src:logo.src} alt="logo" className={styles.logo}></img></Link>
+            <Link href={"/"} legacyBehavior>
+                {props.mainpage ? <img src={logo_sm.src} alt="logo" className={styles.logo}/>
+                    : <img src={logo.src} alt="logo" className="h-8 ml-1 cursor-pointer"/>}
+            </Link>
             {(props.mainpage&&!['/',''].includes(router.pathname))&&
                 <HideOn atHeight height={200}>
                     <h1 className="fixed top-2 left-[50%] -translate-x-[50%] hidden md:block md:text-2xl xl:text-3xl font-[Coolvetica] tracking-wider font-normal fruitText m-0 select-none">FruitSpace</h1>

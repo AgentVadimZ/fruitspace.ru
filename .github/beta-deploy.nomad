@@ -19,7 +19,7 @@ job "FruitSpace-Beta-Deployment" {
     service {
       name = "beta-fruitspace-web"
       port = "node"
-      tags = ["urlprefix-beta.fruitspace.ru/"]
+      tags = ["urlprefix-beta.fruitspace.one/"]
       check {
         name     = "alive"
         type     = "http"

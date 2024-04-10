@@ -1,14 +1,14 @@
-import SideBar from "./NavBar/SideBar";
+import SideBar from "@/components/NavBar/SideBar";
 
-import ServerIcon from "./assets/icons/server.svg"
+import ServerIcon from "@/assets/icons/server.svg"
 import WindowIcon from '@mui/icons-material/Window';
 import PersonIcon from '@mui/icons-material/Person';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import Link from "next/link";
 import {useRouter} from "next/router";
-import {useGlobalLocale} from "../locales/useLocale";
-import SideItem from "./NavBar/SideItem";
+import {useGlobalLocale} from "@/locales/useLocale";
+import SideItem from "@/components/NavBar/SideItem";
 
 
 export default function PanelSideNav(props) {

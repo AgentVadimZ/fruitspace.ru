@@ -1,5 +1,5 @@
-import Img from "../../../components/assets/tours/img.png";
-import Img1 from "../../../components/assets/tours/img_1.png";
+import Img from "@/assets/tours/img.png";
+import Img1 from "@/assets/tours/img_1.png";
 
 const IndexTour = [
     {

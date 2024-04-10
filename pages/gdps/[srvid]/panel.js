@@ -5,14 +5,14 @@ import GlobalGDPSNav from "../../../components/UserZone/GlobalGDPSNav";
 import GDPSNavBar from "../../../components/UserZone/GDPSSIdeBar";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
-import starImg from "../../../components/assets/gd/star.png"
-import cpImg from "../../../components/assets/gd/cp.png"
-import ucoinImg from "../../../components/assets/gd/browncoin.png"
-import coinImg from "../../../components/assets/gd/silvercoin.png"
-import diamondsImg from "../../../components/assets/gd/diamond.png"
-import orbsImg from "../../../components/assets/gd/orbs.png"
-import demonImg from "../../../components/assets/gd/demon.png"
-import playImg from "../../../components/assets/gd/play.png"
+import starImg from "../../../assets/gd/star.png"
+import cpImg from "../../../assets/gd/cp.png"
+import ucoinImg from "../../../assets/gd/browncoin.png"
+import coinImg from "../../../assets/gd/silvercoin.png"
+import diamondsImg from "../../../assets/gd/diamond.png"
+import orbsImg from "../../../assets/gd/orbs.png"
+import demonImg from "../../../assets/gd/demon.png"
+import playImg from "../../../assets/gd/play.png"
 import useFiberAPI from "../../../fiber/fiber";
 import {getBrowserLocale} from "../../../components/Hooks";
 import useLocale from "../../../locales/useLocale";

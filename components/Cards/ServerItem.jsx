@@ -1,11 +1,11 @@
-import GDLogo from '../assets/logos/geometrydash.png'
-import MCLogo from '../assets/logos/minecraft.png'
-import CSLogo from '../assets/logos/counterstrike.png'
-import QuestionMark from '../assets/icons/cross.png'
-import RightSvg from "../assets/icons/right.svg";
+import GDLogo from '@/assets/logos/geometrydash.png'
+import MCLogo from '@/assets/logos/minecraft.png'
+import CSLogo from '@/assets/logos/counterstrike.png'
+import QuestionMark from '@/assets/icons/cross.png'
+import RightSvg from "@/assets/icons/right.svg";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Link from "next/link";
-import {useGlobalLocale} from "../../locales/useLocale";
+import {useGlobalLocale} from "@/locales/useLocale";
 
 
 export default function ServerItem(props) {
@@ -15,7 +15,8 @@ export default function ServerItem(props) {
     const Types = {
         "gd": GDLogo.src,
         "mc": MCLogo.src,
-        "cs": CSLogo.src
+        "cs": CSLogo.src,
+
     }
     return props.add?(
         <Link href={"/product/order/"+props.type} legacyBehavior>

@@ -9,7 +9,7 @@ import {TabsList, TabPanel, Tab} from "../../../components/Global/Tab";
 import {Form, Input, Select} from "antd";
 import useFiberAPI from "../../../fiber/fiber";
 import semver from "semver";
-import BackgroundMC from "../../../components/assets/MCOrderBG.png"
+import BackgroundMC from "../../../assets/MCOrderBG.png"
 import toast, {Toaster} from "react-hot-toast";
 
 export default function OrderMC(props){

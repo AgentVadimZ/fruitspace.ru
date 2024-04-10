@@ -1,6 +1,6 @@
 import {useRecoilState} from "recoil";
-import useFiberAPI from "../fiber/fiber";
-import {userAtom} from "../fiber/fiber.model";
+import useFiberAPI from "@/fiber/fiber";
+import {userAtom} from "@/fiber/fiber.model";
 import useSWR from "swr";
 
 
