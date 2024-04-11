@@ -49,6 +49,7 @@ import useFiberAPI from "../../../../fiber/fiber";
 import {faMusic, faQuestion, faStar, faUpload, faUser} from "@fortawesome/free-solid-svg-icons";
 import {SettingsTour} from "../../../../locales/tours/manage/gd";
 import {FloatButton, Tour} from "antd";
+import {deepEqual} from "@/components/Hooks";
 
 
 

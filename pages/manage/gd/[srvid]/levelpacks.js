@@ -5,10 +5,18 @@ import PanelContent from "../../../../components/Global/PanelContent";
 import {useRouter} from "next/router";
 import * as Gauntlets from "@/assets/gauntlets"
 
-import {Button, Form, Input, Modal, Popconfirm, Select, Table, Slider, InputNumber} from "antd";
+import {Button, Form, Input, Modal, Popconfirm, Select, Table, Slider, InputNumber, ColorPicker} from "antd";
 import useFiberAPI from "@/fiber/fiber";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamation, faPen, faPencil, faPlusCircle, faSave, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {
+    faBrush,
+    faExclamation, faPaintbrush,
+    faPen,
+    faPencil,
+    faPlusCircle,
+    faSave,
+    faTrash
+} from "@fortawesome/free-solid-svg-icons";
 import {useEffect, useState} from "react";
 import useSWR, {mutate} from "swr";
 import Tab from "@/components/Tab"
@@ -74,6 +82,17 @@ const gauntletParams = {
 
 const undupe = (arr)=> [...new Map(arr.map(i=>[i.value, i])).values()]
 
+const diffs= ["auto", "easy", "normal", "hard", "harder", "insane", "demon-easy", "demon-medium", "demon-hard", "demon-insane", "demon-extreme"]
+const demonize = (id, upl=false) => {
+    if (upl) {
+        id = (5<id&&id<9) ? 6+(id+1)%3 : id
+    } else {
+        id = (5<id&&id<9) ? 6+(id-1)%3 : id
+    }
+    return id
+}
+
+const formatRgb = ({r,g,b}) => `${r},${g},${b}`
 
 export default function LevelpackGD(props) {
     const router = useRouter()
@@ -260,7 +279,7 @@ function MapPackModal({isnew, open, onCancel, api, srvid}) {
             value: lvl.id
         }))||[]
         setSelectedLevels(sel)
-        form.setFieldsValue({...open, levels: sel})
+        form.setFieldsValue({...open, levels: sel, pack_color: `rgb(${open.pack_color})`})
     }, [open])
 
     const search = async (query) => {
@@ -279,7 +298,12 @@ function MapPackModal({isnew, open, onCancel, api, srvid}) {
     const searchDebounced = debounce(search, 500)
 
     const savePack = async (val) => {
-        let d = await api.gdps_manage.editLevelpack(srvid, selected.id, {...selected, ...val, levels: selectedLevels.map((lvl)=>({id:lvl.value}))})
+        let d = await api.gdps_manage.editLevelpack(srvid, selected.id, {
+            ...selected, ...val,
+            pack_difficulty: demonize(val.pack_difficulty, true),
+            pack_color: formatRgb(val.pack_color?.toRgb()||{r:255,g:255,b:255}),
+            levels: selectedLevels.map((lvl)=>({id:lvl.value}))
+        })
         if (d.status=="ok") {
             toast.success(`${val.pack_name} сохранен`, {
                 duration: 1000,
@@ -305,7 +329,7 @@ function MapPackModal({isnew, open, onCancel, api, srvid}) {
         }}>
             <div className="flex items-center gap-4">
                 {(() => {
-                    const vtype = ["unrated", "auto", "easy", "normal", "hard", "hard", "harder", "harder", "insane", "insane", "demon-hard"][selected.pack_difficulty] || "unrated"
+                    const vtype = diffs[demonize(selected.pack_difficulty)] || "unrated"
                     return <img src={`https://cdn.fruitspace.one/assets/bot_icons/lvl/${vtype}.png`}
                                 className="w-24"/>
                 })()}
@@ -327,27 +351,27 @@ function MapPackModal({isnew, open, onCancel, api, srvid}) {
                                     onChange={(v) => setSelected({...selected, pack_difficulty: v})}
                                     className="flex-1"/>
                         </Form.Item>
-                        <img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/demon-hard.png"
+                        <img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/demon-extreme.png"
                              className="w-4"/>
                     </div>
                 </div>
             </div>
 
             <div className="rounded-xl bg-subtle bg-opacity-50 backdrop-blur p-2 flex items-center justify-between">
-                <Form.Item label={<span className="flex items-center gap-1">
-                            <img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/star.png"
-                                 className="w-4"/> Звезды
-                        </span>} name="pack_stars"
+                <Form.Item label={<img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/star.png"
+                                       className="w-4"/>} name="pack_stars"
                            className="mb-0">
                     <InputNumber min={0} contols defaultValue={selected.pack_stars}
                                  onChange={(e, v) => setSelected({...selected, pack_stars: v})}/>
                 </Form.Item>
-                <Form.Item label={<span className="flex items-center gap-1">
-                            <img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/silvercoin.png"
-                                 className="w-4"/> Монеты
-                        </span>} name="pack_coins"
+                <Form.Item label={<img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/silvercoin.png"
+                                       className="w-4"/>} name="pack_coins"
                            className="mb-0">
                     <InputNumber min={0} contols defaultValue={selected.pack_coins} onChange={(e,v)=>setSelected({...selected, pack_coins: v})}/>
+                </Form.Item>
+                <Form.Item label={<FontAwesomeIcon icon={faPaintbrush} />} name="pack_color"
+                           className="mb-0">
+                    <ColorPicker format="rgb" disabledAlpha/>
                 </Form.Item>
             </div>
 
@@ -397,14 +421,14 @@ const MappackView = ({api, srvid, packs}) => {
             dataIndex: "pack_difficulty",
             key: "pack_difficulty",
             render: (val)=> {
-                const vtype = ["unrated","auto","easy","normal","hard","hard","harder","harder","insane","insane","demon-hard"][val]||"unrated"
+                const vtype = diffs[demonize(val)]||"unrated"
                 return <img src={`https://cdn.fruitspace.one/assets/bot_icons/lvl/${vtype}.png`} className="w-12" />
             }
         },
         {
             title: "Название",
             dataIndex: "pack_name",
-            render: (val, entry) => <span className="font-bold" style={{color:`rgb(${entry.pack_color})`}}>{val}</span>
+            render: (val, entry) => <span className="font-semibold" style={{color:`rgb(${entry.pack_color})`}}>{val}</span>
         },
         {
             title: "Звезды",
