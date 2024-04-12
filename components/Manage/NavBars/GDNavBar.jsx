@@ -55,9 +55,9 @@ export default function GDNavBar(props) {
             {/*        <Tooltip title={globalLocale.get('panelGDPSNav').quests} placement="right" arrow open><span /></Tooltip>*/}
             {/*    </NavItem>*/}
             {/*</Link>}*/}
-            {srv.Tariff.Levelpacks && <Link href={"/manage/gd/"+srvid+"/levelpacks"} legacyBehavior>
+            <Link href={"/manage/gd/"+srvid+"/levelpacks"} legacyBehavior>
                 <SideItem icon={<LevelpacksIcon className="h-5" />} active={action==="levelpacks"} text={globalLocale.get('panelGDPSNav').levelpacks} />
-            </Link>}
+            </Link>
             <Link href={"/manage/gd/"+srvid+"/settings"} legacyBehavior>
                 <SideItem icon={<SettingsIcon className="h-5" />} active={action==="settings"} text={globalLocale.get('panelGDPSNav').settings} />
             </Link>
