@@ -298,10 +298,23 @@ function MapPackModal({isnew, open, onCancel, api, srvid}) {
     const searchDebounced = debounce(search, 500)
 
     const savePack = async (val) => {
+        let clr = val.pack_color
+        switch (typeof clr) {
+            case "string":
+                clr = clr.length===0
+                    ? formatRgb({r:255,g:255,b:255})
+                    : clr.replace("rgb(", "").replace(")", "")
+                break
+            case "object":
+                clr = formatRgb(clr.toRgb())
+                break
+            default:
+                clr = formatRgb({r:255,g:255,b:255})
+        }
         let d = await api.gdps_manage.editLevelpack(srvid, selected.id, {
             ...selected, ...val,
             pack_difficulty: demonize(val.pack_difficulty, true),
-            pack_color: formatRgb(val.pack_color?.toRgb()||{r:255,g:255,b:255}),
+            pack_color: clr,
             levels: selectedLevels.map((lvl)=>({id:lvl.value}))
         })
         if (d.status=="ok") {
