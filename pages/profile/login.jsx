@@ -66,6 +66,7 @@ export default function Login(props) {
                     backgroundColor: "var(--btn-color)"
                 }
             })
+            setMode("login")
         }else{
             toast.error(locale.get('err')+ParseError(resp.code, resp.message), {
                 duration: 10000,

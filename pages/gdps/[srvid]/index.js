@@ -12,6 +12,7 @@ import Linkify from "linkify-react";
 import useFiberAPI, {serverFiberAPI} from "../../../fiber/fiber";
 import GlobalHead from "../../../components/GlobalHead";
 import {useCaptchaHook} from "@aacn.eu/use-friendly-captcha";
+import {Button, Form, Input} from "antd";
 
 export async function getServerSideProps(ctx) {
     let srvid = ctx.params.srvid
@@ -142,7 +143,7 @@ export default function DownloadPage(props) {
         })
     }
 
-    const aRecover=()=>{
+    const aRecover = ()=>{
         const solution = funnyCaptcha.captchaStatus.solution
         if(!solution) {
             toast.error(errParse("captcha"), {
@@ -201,43 +202,39 @@ export default function DownloadPage(props) {
     return (<>
             <GlobalHead title={srv.srv_name} description={srv.description} image={srv.icon}/>
             <Toaster/>
-            <div className="h-[100vh] flex justify-center items-center flex-col">
-                <div className="w-fit max-w-full lg:max-w-xl">
-                    <div className="bg-[var(--subtle-color)] p-2 rounded-2xl">
-                        <div className="flex items-center flex-col lg:flex-row">
+            <div className="h-screen flex justify-center items-center flex-col">
+                <div className="w-fit max-w-full lg:max-w-xl flex flex-col gap-4">
+                    <div className="bg-active border-subtle rounded-2xl border-solid border-[1px] p-4 flex flex-col gap-4">
+                        <div className="flex gap-4 items-center flex-col lg:flex-row">
                             <img className="h-40 rounded-xl" src={srv.icon}/>
-                            <div className="ml-4 text-center lg:text-left">
-                                <h2 className="text-2xl my-2">{srv.srv_name}</h2>
-                                <span>
-                                {showPlayers(srv.user_count,srv.level_count)}
-                                    <span className="py-0.5 px-2 bg-[var(--primary-color)] ml-2 rounded-md">by {srv.owner_id}</span>
-                            </span>
+                            <div className="text-center lg:text-left">
+                                <p className="text-2xl w-fit mx-auto lg:mx-0">{srv.srv_name}</p>
+                                {/*<p className="px-2 bg-blue-700 border-[1px] border-blue-900 rounded-md text-sm font-mono w-fit mx-auto lg:mx-0 mb-1">by {srv.owner_id}</p>*/}
+                                <span className="text-sm">{showPlayers(srv.user_count, srv.level_count)}</span>
                             </div>
                         </div>
-                        <Linkify as="pre" className="bg-[var(--active-color)] p-2 rounded-xl mt-2 text-sm whitespace-normal"
-                                 options={{className:"text-[var(--primary-color)]"}}>
+                        <Linkify as="pre" className="p-2 rounded-xl mt-2 text-sm whitespace-normal"
+                                 options={{className:"text-primary"}}>
                     {srv.description}
                     </Linkify>
                         <div className="flex items-center justify-between flex-col lg:flex-row">
                             <p className="my-0 mx-4 text-lg">{locale.get('download')}</p>
                             {srv.client_windows_url &&
-                                <span className="flex">
-                                    {srv.client_windows_url && <a className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
-                                                                    href={srv.client_windows_url}><FontAwesomeIcon icon={faWindows} className="mr-2" /> Windows
-                            </a>}
-                                    {srv.client_android_url && <a className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
-                                                                    href={srv.client_android_url}>
-                                <FontAwesomeIcon icon={faAndroid} className="mr-2"/> Android
-                            </a>}
-                                    {srv.client_ios_url && <a className="flex rounded-lg bg-[var(--primary-color)] p-3 cursor-pointer mx-2 hover:bg-blue-800 first:ml-0 last:mr-0"
-                                                                    href={srv.client_ios_url}>
-                                <FontAwesomeIcon icon={faApple} className="mr-2" /> iOS
-                            </a>}
+                                <span className="flex gap-2">
+                                    {srv.client_windows_url &&
+                                        <Button type="primary" size="large" icon={<FontAwesomeIcon icon={faWindows} />} onClick={() => router.push(srv.client_windows_url)}>Windows</Button>
+                                    }
+                                    {srv.client_android_url &&
+                                        <Button type="primary" size="large" icon={<FontAwesomeIcon icon={faAndroid} />} onClick={() => router.push(srv.client_android_url)}>Android</Button>
+                                    }
+                                    {srv.client_ios_url &&
+                                        <Button type="primary" size="large" icon={<FontAwesomeIcon icon={faApple} />} onClick={() => router.push(srv.client_ios_url)}>iOS</Button>
+                                    }
 
                         </span>}
                         </div>
                     </div>
-                    <div className="bg-[var(--subtle-color)] p-2 w-[available] flex rounded-2xl mt-4">
+                    <div className="bg-active border-subtle rounded-2xl border-solid border-[1px] p-2 flex w-[available]">
                         <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-lg flex items-center justify-center h-12 rounded-xl flex-1 mr-2 last:mr-0"
                            onClick={()=>{
                                if(user.uname && !router.query.fresh) router.push(srvid+"/panel")
@@ -253,31 +250,28 @@ export default function DownloadPage(props) {
                     </div>
 
                     {showLogin && <>
-                        <div className="bg-[var(--subtle-color)] p-2 w-[available] flex flex-col lg:flex-row rounded-2xl mt-4">
-                            <FruitTextField
-                                label={locale.get("logfield")[0]}
-                                value={creds.uname}
-                                onChange={(evt)=>setCreds({...creds, uname: evt.target.value})}
-                                className="mr-0 mb-2 lg:mr-2 lg:mb-0 flex-1"
-                            />
-                            <FruitTextField
-                                label={locale.get("logfield")[1]} type="password"
-                                value={creds.password}
-                                onChange={(evt)=>setCreds({...creds, password: evt.target.value})}
-                                className="mr-0 mb-2 lg:mr-2 lg:mb-0 flex-1"
-                            />
-                            <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block flex items-center justify-center rounded-xl h-14 aspect-square"
-                               onClick={()=>setBackdrop("login")}><FontAwesomeIcon icon={faRightToBracket} className="!h-6"/></a>
-
+                        <div className="bg-active border-subtle rounded-2xl border-solid border-[1px] p-4">
+                            <Form labelCol={{span: 4}} >
+                                <Form.Item label="Логин">
+                                    <Input onChange={(evt)=>setCreds({...creds, uname: evt.target.value})} />
+                                </Form.Item>
+                                <Form.Item label="Пароль">
+                                    <Input.Password onChange={(evt)=>setCreds({...creds, password: evt.target.value})} />
+                                </Form.Item>
+                            </Form>
+                            <div className="flex justify-end">
+                                <Button className="ml-auto" icon={<FontAwesomeIcon icon={faRightToBracket} />} type="primary"
+                                onClick={()=>setBackdrop('login')}>Войти</Button>
+                            </div>
                         </div>
 
-                        <div className="bg-[var(--subtle-color)] p-1 w-[available] flex flex-col lg:flex-row rounded-xl mt-4">
+                        <div className="bg-[var(--subtle-color)] p-1 w-[available] flex flex-col lg:flex-row rounded-xl">
                             <a className="hover:bg-red-800 cursor-pointer bg-[var(--error-color)] block text-base flex items-center m-1 justify-center h-8 rounded-lg flex-1"
                                onClick={()=>setBackdrop("forgot")}>{locale.get('forgot')}</a>
                         </div>
                     </>}
 
-                    <div className="p-2 w-[available] flex mt-4 items-center justify-center">
+                    <div className="p-2 w-full text-sm text-gray-400 flex items-center justify-center">
                         <FontAwesomeIcon icon={faCircleInfo} className="mr-2" />
                         {locale.get("lognote")}
                     </div>
@@ -285,7 +279,8 @@ export default function DownloadPage(props) {
             </div>
         <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                   open={backdrop!="none"} onClick={()=>setBackdrop("none")}>
-            {backdrop==="login" && <div className="bg-[var(--subtle-color)] p-2 rounded-2xl"
+
+            {backdrop==="login" && <div className="bg-active border-subtle rounded-2xl border-solid border-[1px] p-2 w-96 flex flex-col gap-4"
                                         onClick={(e)=>e.stopPropagation()}>
                 {funnyCaptcha.CaptchaWidget(
                     {className: "bg-[var(--btn-hover)] rounded-xl p-2"},
@@ -298,29 +293,33 @@ export default function DownloadPage(props) {
                         text: {textAlign:"center", margin:".5rem"}
                     }
                 )}
-                {/*<HCaptcha sitekey="c17bb027-5ed7-4e3d-9f67-6f3ed2d78090"*/}
-                {/*          onVerify={(val,idk)=>setCreds({*/}
-                {/*              ...creds,*/}
-                {/*              captcha: val*/}
-                {/*          })} theme="dark"/>*/}
-                <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] text-lg flex items-center justify-center h-12 rounded-xl flex-1 mt-1 px-4"
-                   onClick={aLogin}>{locale.get('login')}</a>
+                <Button type="primary" onClick={aLogin}>Войти в панель</Button>
             </div>}
-            {backdrop==="forgot" && <div className="bg-[var(--subtle-color)] p-2 rounded-xl"
+            {backdrop==="forgot" && <div className="bg-active border-subtle rounded-2xl border-solid border-[1px] p-2 w-96 flex flex-col gap-4"
                                         onClick={(e)=>e.stopPropagation()}>
-                <FruitTextField
-                    label="Email" type="email" fullWidth
-                    value={creds.email}
-                    onChange={(evt)=>setCreds({...creds, email: evt.target.value})}
-                    className="mb-1"
-                />
-                {/*<HCaptcha sitekey="c17bb027-5ed7-4e3d-9f67-6f3ed2d78090"*/}
-                {/*          onVerify={(val,idk)=>setCreds({*/}
-                {/*              ...creds,*/}
-                {/*              captcha: val*/}
-                {/*          })} theme="dark"/>*/}
-                <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-lg flex items-center justify-center h-12 rounded-xl flex-1 mt-1"
-                   onClick={aRecover}>{locale.get('forgotAction')}</a>
+                {funnyCaptcha.CaptchaWidget(
+                    {className: "bg-[var(--btn-hover)] rounded-xl p-2"},
+                    {
+                        icon: {color: "white", fill: "white", height: "3rem", width: "3rem"},
+                        button: {
+                            color: "white", background: "#0d6efd", borderRadius:'4px', marginBottom:".5rem", fontWeight:"normal",
+                            fontSize: "11pt", padding:".5rem 0"
+                        },
+                        text: {textAlign:"center", margin:".5rem"}
+                    }
+                )}
+                <Form labelCol={{span: 5}} >
+                    <Form.Item label="Email" colon={false} name="email" className="mb-0" rules={[
+                        {
+                            required: true,
+                            type: "email",
+                            message: "Неверный формат почты"
+                        }
+                    ]}>
+                        <Input placeholder="user@email.com" onChange={(evt)=>setCreds({...creds, email: evt.target.value})} />
+                    </Form.Item>
+                </Form>
+                <Button type="primary" onClick={aRecover}>Восстановить аккаунт</Button>
             </div>}
         </Backdrop>
     </>)

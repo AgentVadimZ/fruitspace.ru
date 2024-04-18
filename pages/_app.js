@@ -41,6 +41,7 @@ export default function WebApp({Component, pageProps}) {
                         },
                         Button: {
                             primaryShadow: "none",
+                            colorPrimaryHover: "rgb(30 64 175)"
                         },
                         Menu: {
                             itemHeight: "4rem"
