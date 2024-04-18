@@ -6,7 +6,7 @@ module.exports = {
     "./locales/tours/**/*.{js,ts,jsx,tsx}",
   ],
   corePlugins: {
-    preflight: false
+    preflight: true
   },
   theme: {
     extend: {
@@ -21,7 +21,10 @@ module.exports = {
         "subtle": "#333338",
         "active": "#212125",
         "dark": "#090912",
-      }
+      },
+      fontFamily: {
+        "avant": "ITC Avant Garde Std Md, sans-serif",
+      },
     },
   },
   plugins: [],

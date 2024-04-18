@@ -69,8 +69,8 @@ export default function Home(props) {
             <div className={styles.main}>
 
                 <div className="flex flex-col items-center justify-center lg:h-[100vh] relative">
-                    <h1 className="text-5xl mt-48 lg:mt-2 xl:text-8xl font-[Coolvetica] tracking-wider font-normal fruitText m-2 select-none">FruitSpace</h1>
-                    <p className="text-lg text-center xl:text-2xl m-0 font-[Helvetica]">Удобный и надежный хостинг для ваших любимых игр. И ещё немножко магии ✨</p>
+                    <h1 className="text-6xl mt-48 lg:mt-2 xl:text-8xl font-[Coolvetica] tracking-wider font-normal fruitText m-2 select-none">FruitSpace</h1>
+                    <p className="text-md text-center xl:text-xl m-0 font-[Helvetica]">Удобный и надежный хостинг для ваших любимых игр. И ещё немножко магии ✨</p>
 
                     <div className="mt-24 grid grid-cols-1 xl:grid-cols-3 gap-4 xl:gap-16 select-none">
                         <ProdCard link="/product/gd" name="Geometry Dash" description="Кастомная музыка, 2.2, моды и конфигуратор установщиков" logo={GDLogo.src} stats={`${props.stats.gdps_count} ${getRegionalPostfix(props.stats.gdps_count)} • ${getLvlsCnt(props.stats.gdps_levels)}`} />
@@ -90,33 +90,36 @@ export default function Home(props) {
 
                 </div>
 
-                <div className="bg-black bg-opacity-25 rounded-t-2xl glassb !border-b-0 mt-16 py-8">
-                    <p className="text-4xl text-center m-0 font-[Helvetica]" ref={scrollRef}>На грани
-                        возможного</p>
-                    <p className="text-center text-lg px-4 xl:px-24">Неважно, любите ли вы добавлять массу модов и
-                        плагинов или предпочитаете
-                        ванильные версии игр — FruitSpace позволит вам насладиться всеми возможностями игры по
-                        максимуму. Музыка из любых источников и быстрые обновления текстур/модов для Geometry Dash.
-                        SourceMod и MetaMod для Counter Strike (fastDL в комплекте). Поддержка многопоточных ядер и
-                        объединения нескольких серверов для Minecraft.
-                        Если для чего-то не нужно переписывать игру с нуля, у нас скорее всего это есть.</p>
-                    <p className="text-4xl text-center m-0 mt-16 font-[Helvetica]">Для новичков и профи</p>
-                    <p className="text-center text-lg px-4 xl:px-24">Мы стремимся делать управление серверами простым и
-                        удобным, не забирая возможности тонко кастомизировать
-                        каждый аспект ваших любимых игр. Для каждой игры мы предоставляем отдельную удобную панель, в
-                        которой могут разобраться даже те, кто до этого не имеел
-                        свой собственный сервер. </p>
-                    <p className="text-4xl text-center m-0 mt-16 font-[Helvetica]">Нам доверяют <span
-                        className="text-blue-600">{props.stats.clients}</span> клиентов</p>
-                    <p className="text-center text-lg px-4 xl:px-24">Не решаетесь, стоит ли вам входить в нишу игровых
-                        серверов? Наш хостинг помогает достичь своих целей
-                        абсолютно каждому - мододелам, новичкам, профессионалам, и просто игрокам которые хотят создать
-                        свой укромный уголок. Не верите?
-                        Прочтите реальные отзывы или оставьте свой!</p>
+                <div className="bg-black bg-opacity-25 rounded-t-2xl glassb !border-b-0 mt-16 py-8 flex flex-col gap-8" ref={scrollRef}>
+                    {[
+                        {
+                            h:"На грани возможного",
+                            t:"Неважно, любите ли вы добавлять массу модов и плагинов или предпочитаете ванильные версии игр" +
+                                " — FruitSpace позволит вам насладиться всеми возможностями игры по максимуму. Музыка из любых" +
+                                " источников и быстрые обновления текстур/модов для Geometry Dash. SourceMod и MetaMod для" +
+                                " Counter Strike (fastDL в комплекте). Поддержка многопоточных ядер и объединения нескольких" +
+                                " серверов для Minecraft. Если для чего-то не нужно переписывать игру с нуля, у нас скорее всего это есть."
+                        },
+                        {
+                            h:"Для новичков и профи",
+                            t:"Мы стремимся делать управление серверами простым и удобным, не забирая возможности тонко " +
+                                "кастомизировать каждый аспект ваших любимых игр. Для каждой игры мы предоставляем отдельную" +
+                                " удобную панель, в которой могут разобраться даже те, кто до этого не имеел свой собственный сервер."
+                        },
+                        {
+                            h:<>Нам доверяют <span className="text-blue-600">{props.stats.clients}</span> клиентов</>,
+                            t:"Не решаетесь, стоит ли вам входить в нишу игровых серверов? Наш хостинг помогает достичь своих целей " +
+                                "абсолютно каждому - мододелам, новичкам, профессионалам, и просто игрокам которые хотят создать " +
+                                "свой укромный уголок. Не верите? Прочтите реальные отзывы или оставьте свой!"
+                        }
+                    ].map((el,i)=> <div key={i}>
+                        <p className="text-2xl lg:text-4xl text-center mb-4 font-[Helvetica]">{el.h}</p>
+                        <p className="text-center lg:text-lg px-4 xl:px-24">{el.t}</p>
+                    </div>)}
 
                     <Carousel dots={{className:"!bottom-2"}}>
                         {reviews.map((u, i) => {
-                            return <div key={i} className="px-2 py-2 rounded-xl bg-[#333338aa] my-4 overflow-y-scroll
+                            return <div key={i} className="px-2 py-2 rounded-xl bg-[#333338aa] my-4 overflow-y-hidden
                              !w-5/6 lg:!w-2/3 h-96 mx-auto !flex flex-col glass">
                                 <div className="flex flex-col lg:flex-row items-center justify-between">
                                     <p>{u.date}</p>
@@ -157,13 +160,14 @@ export default function Home(props) {
 const ProdCard = (props) => (
     <Link href={props.link} legacyBehavior>
         <div className="p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e88] via-[#5a00ff88] to-[#0d6efd88] flex flex-col">
-            <div
-                className="flex-1 bg-[#333338cc] glass rounded-2xl p-4 pr-2 font-[Helvetica] cursor-pointer flex items-center hover:bg-[#33333888] transition-all duration-300 max-w-md">
-                <img alt="prod.logo" className="h-24 mr-2" src={props.logo}/>
+            <div className="flex-1 bg-[#333338cc] glass rounded-2xl p-2 lg:p-4 pr-2 font-[Helvetica]
+                 cursor-pointer flex items-center hover:bg-[#33333888] transition-all duration-300 max-w-md
+                 gap-2 lg:gap-4">
+                <img alt="prod.logo" className="h-24" src={props.logo}/>
                 <div>
-                    <h2 className="m-0">{props.name}</h2>
-                    <p className="leading-tight text-sm lg:text-md lg:leading-normal m-0">{props.description}</p>
-                    <p className="text-xs text-nowrap lg:text-sm m-0 mt-2 text-[#cacad0]">{props.stats}</p>
+                    <p className="m-0">{props.name}</p>
+                    <p className="opacity-85 leading-tight text-xs md:text-sm lg:leading-normal m-0">{props.description}</p>
+                    <p className="text-xs text-nowrap md:text-sm m-0 mt-2 text-[#cacad0]">{props.stats}</p>
                 </div>
                 <RightIcon className="flex-shrink-0 w-8 ml-auto"/>
             </div>
