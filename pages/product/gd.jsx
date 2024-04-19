@@ -40,26 +40,46 @@ import Image from "next/image";
 import {Button} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
+    fa2, faBarsProgress, faChartSimple, faCloudArrowDown,
     faCog,
     faCogs,
-    faDownload, faEllipsis,
-    faGem, faListDots,
+    faDownload, faEllipsis, faForward,
+    faGem, faInfinity, faListDots,
     faMap,
-    faMask, faPaintbrush, faPen,
-    faServer,
-    faTheaterMasks,
+    faMask, faPaintbrush, faPen, faPlay, faPlus,
+    faServer, faShop, faStar, faStopwatch, faStopwatch20,
+    faTheaterMasks, faUser, faUserGroup, faXmark,
     faZap
 } from "@fortawesome/free-solid-svg-icons";
 import {useRef} from "react";
+import {serverFiberAPI} from "@/fiber/fiber";
 
 import ScreenshotGaus from "@/assets/screenshots/gd_gaus2.png"
 import ScreenshotPacks from "@/assets/screenshots/gd_editpacks.png"
+import TariffPS from "@/assets/features/gd_pressstart.svg"
+import TariffSG from "@/assets/features/gd_singularity.svg"
+import TariffFD from "@/assets/features/gd_foundation.svg"
+import {faItunesNote} from "@fortawesome/free-brands-svg-icons";
 
+
+export async function getStaticProps(ctx) {
+    const api = serverFiberAPI(null)
+    let stats = await api.fetch.stats()
+    return {
+        revalidate: 60,
+        props: {
+            stats: stats
+        }
+    }
+}
 
 
 export default function GD(props) {
     const locale = useLocale(props.router)
     const localeGlobal = useGlobalLocale(props.router)
+
+    const getRegionalPostfix = localeGlobal.get('funcShowServers')
+    const getLvlsCnt = localeGlobal.get('funcLvlsServer')
 
     const orderRef = useRef(null)
     const selfRef = useRef(null)
@@ -91,7 +111,7 @@ export default function GD(props) {
                     </div>
                 </div>
 
-                <div className="flex flex-col-reverse lg:flex-row">
+                <div className="flex flex-col-reverse lg:flex-row select-none">
                     <div className="flex flex-col p-8 flex-1">
                         <p className="font-mono">простая и функиональная</p>
                         <p className="text-5xl uppercase font-semibold">панель</p>
@@ -123,13 +143,13 @@ export default function GD(props) {
                     </div>
                 </div>
 
-                <div className="mt-8">
+                <div className="mt-8 select-none">
                     <p className="text-center font-mono">полный</p>
                     <p className="text-5xl uppercase font-semibold text-center">кастом</p>
                     <p className="text-center ">хостинг построен с нуля специально для Geometry Dash</p>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
-                        <div className="flex gap-4 bg-active border-subtle rounded-2xl border-solid border-[1px]">
-                            <img src={FeatureCoreImg.src} className="w-[17rem]"/>
+                        <div className="flex flex-col 2xl:flex-row gap-4 bg-active border-subtle rounded-2xl border-solid border-[1px]">
+                            <img src={FeatureCoreImg.src} className="2xl:w-[17rem] 2xl:h-[17rem]"/>
                             <div className="flex flex-col gap-2 p-4 text-sm">
                                 <p className="text-2xl font-semibold rainbow mb-2">Ядро GhostCore</p>
                                 <p className="text-base">Написано с нуля на Go и быстрее Cvolton в 8-15 раз</p>
@@ -138,8 +158,8 @@ export default function GD(props) {
                             </div>
                         </div>
 
-                        <div className="flex gap-4 bg-active border-subtle rounded-2xl border-solid border-[1px]">
-                            <img src={FeatureShieldImg.src} className="w-[17rem]"/>
+                        <div className="flex flex-col 2xl:flex-row gap-4 bg-active border-subtle rounded-2xl border-solid border-[1px]">
+                            <img src={FeatureShieldImg.src} className="2xl:w-[17rem] 2xl:h-[17rem]"/>
                             <div className="flex flex-col gap-2 p-4 text-sm">
                                 <p className="text-2xl font-semibold rainbow mb-2">Защита от DDoS</p>
                                 <p className="text-base">Выращен в антиутопии и закален огнем</p>
@@ -148,8 +168,8 @@ export default function GD(props) {
                             </div>
                         </div>
 
-                        <div className="flex gap-4 bg-active border-subtle rounded-2xl border-solid border-[1px]">
-                            <img src={FeatureMusicImg.src} className="w-[17rem]"/>
+                        <div className="flex flex-col 2xl:flex-row gap-4 bg-active border-subtle rounded-2xl border-solid border-[1px]">
+                            <img src={FeatureMusicImg.src} className="2xl:w-[17rem] 2xl:h-[17rem]"/>
                             <div className="flex flex-col gap-2 p-4 text-sm">
                                 <p className="text-2xl font-semibold rainbow mb-2">Библиотека музыки</p>
                                 <p className="text-base">Ваш сервер - ваша музыка</p>
@@ -164,71 +184,78 @@ export default function GD(props) {
                     </div>
                 </div>
 
-                <h2 ref={orderRef} className="text-center my-12 text-white text-3xl">{locale.get('prodgd.tariffs')}</h2>
-                <div className={styles.productCardGrid} id="cloud">
-                    <ProductCardGD title="Press Start" btnText={locale.get('freeA')} link="order/gd?t=1">
-                        <ListItem>
-                            <ListItemIcon><PersonIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPressStart')[0]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><MusicNoteIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPressStart')[1]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><CloseIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tPressStart')[2]}/>
-                        </ListItem>
-                    </ProductCardGD>
-                    <ProductCardGD title="Singularity" btnText={locale.get('tSingularityPrice')} link="order/gd?t=2">
-                        <ListItem>
-                            <ListItemIcon><AllInclusiveIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tSingualrity')[0]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><MusicNoteIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tSingualrity')[1]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><PrecisionManufacturingIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tSingualrity')[2]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><DesktopMacIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tSingualrity')[3]}/>
-                        </ListItem>
-                    </ProductCardGD>
-                    <ProductCardGD title="Takeoff" btnText={locale.get('tTakeoffPrice')} link="order/gd?t=3">
-                        <ListItem>
-                            <ListItemIcon><AllInclusiveIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tTakeoff')[0]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><MusicNoteIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tTakeoff')[1]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><PrecisionManufacturingIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tTakeoff')[2]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><DesktopMacIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tTakeoff')[3]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><CloudDoneIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tTakeoff')[4]}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><AppleIcon/></ListItemIcon>
-                            <ListItemText primary={locale.get('tTakeoff')[5]}/>
-                        </ListItem>
-                    </ProductCardGD>
+                <div className="mt-16 select-none">
+                    <p className="text-5xl uppercase font-semibold text-center">тарифы</p>
+                    <p className="text-center font-mono">на любой вкус</p>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mt-8 w-fit mx-auto">
+                        <div
+                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-[1px] p-4 w-96">
+                            <TariffPS className="w-32 mt-2"/>
+                            <p className="text-2xl font-semibold font-avant uppercase -mt-6 tracking-wide">
+                                Press Start
+                            </p>
+                            <p>Отличный вариант для начинающих</p>
+                            <div className="flex flex-col gap-4 p-4">
+                                {[
+                                    [faUser, "100 игроков • 500 уровней"],
+                                    [faItunesNote, "Доступна музыка из NewGrounds"],
+                                    [faXmark, "Панель с ограниченными возможностями"],
+                                    [faPlay, "Поддержка только 2.2"],
+                                    [faBarsProgress, "Базовая статистика сервера"],
+                                    [faStopwatch20, "Временное хранение установщиков"]
+                                ].map((e, i) => <span className="flex gap-4 items-center" key={i}><FontAwesomeIcon
+                                    className="w-8 text-2xl" icon={e[0]}/> {e[1]}</span>)}
+                            </div>
+                            <Button type="primary" size="large" className="w-full mt-auto">Бесплатно*</Button>
+                        </div>
+
+                        <div
+                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-[1px] p-4 w-96">
+                            <TariffSG className="w-32 border-white border-2"/>
+                            <p className="text-2xl font-semibold font-avant uppercase -mt-3 tracking-wide">
+                                Singularity
+                            </p>
+                            <p>Для тех, кто знает что делает</p>
+                            <div className="flex flex-col gap-4 p-4">
+                                {[
+                                    [faInfinity, "Неограниченное количество игроков и уровней"],
+                                    [faItunesNote, "Музыка из NewGrounds и YouTube"],
+                                    [faCogs, "Полноценная панель для владельцев и игроков"],
+                                    [faForward, "Версии от 1.9 до 2.2"],
+                                    [faBarsProgress, "Базовая статистика сервера"],
+                                    [faZap, "Конфигуратор установщиков: кастомный логотип и вечное хранение"]
+                                ].map((e, i) => <span className="flex gap-4 items-center" key={i}><FontAwesomeIcon
+                                    className="w-8 text-2xl" icon={e[0]}/> {e[1]}</span>)}
+                            </div>
+                            <Button type="primary" size="large" className="w-full mt-auto">49₽/мес</Button>
+                        </div>
+
+                        <div
+                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-[1px] p-4 w-96">
+                            <TariffFD className="w-32"/>
+                            <p className="text-2xl font-semibold font-avant uppercase -mt-3 tracking-wide">
+                                Foundation
+                            </p>
+                            <p>Надежное основание для мощных проектов</p>
+                            <div className="flex flex-col gap-4 p-4">
+                                {[
+                                    [faPlus, "Все, что есть в Singularity"],
+                                    [faItunesNote, "Музыка из NewGrounds, YouTube, Deezer, VK и mp3 файлов"],
+                                    [faChartSimple, "Полная статистика сервера"],
+                                    [faZap, "BuildLab: логотип, текстуры, моды и поддержка iOS"],
+                                    [faUserGroup, "Доступ для совладельцев и админов к панели"],
+                                    [faShop, "Встроенный магазин для игроков"],
+                                    [faCloudArrowDown, "Автоматические резервные копии"],
+                                    [faStar, "Рейт-бот для Discord"]
+                                ].map((e, i) => <span className="flex gap-4 items-center" key={i}><FontAwesomeIcon
+                                    className="w-8 text-2xl" icon={e[0]}/> {e[1]}</span>)}
+                            </div>
+                            <Button type="primary" size="large" className="w-full mt-auto">149₽/мес</Button>
+                        </div>
+                    </div>
+                    <p className="text-center text-gray-400 mt-2 text-sm">*разрешен только 1 бесплатный GDPS на аккаунт</p>
                 </div>
-                <p style={{textAlign: 'center', margin: "0  1rem 1rem"}}>{locale.get('onlyOneGDPS')}</p>
 
-
-                {/*<h2 style={{textAlign:'center',margin:"3rem 0",color:"white"}} id="selfhosted">Наши преимущества</h2>*/}
 
                 <span className={styles.hyperSpan}></span>
                 <h2 style={{textAlign: 'center', margin: "3rem 0", color: "white"}}
