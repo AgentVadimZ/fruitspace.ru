@@ -9,6 +9,32 @@
     src: url("/ITCAvantGardeStd-Md.ttf");
 }
 
+@font-face {
+    font-family: "Helvetica Now Text";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/HelveticaNowText-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Helvetica Now Text";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("/HelveticaNowText-Medium.ttf");
+}
+
+@font-face {
+    font-family: "Helvetica Now Text";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("/HelveticaNowText-Bold.ttf");
+}
+
+
+
 
 :root {
     --bkg-color: #090912;
@@ -27,6 +53,7 @@
     color-scheme: dark;
 
 }
+
 
 .ant-btn-link {
     color: var(--primary-color);

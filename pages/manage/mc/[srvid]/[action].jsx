@@ -8,7 +8,6 @@ export default function ManageGD(props) {
     return (
         <>
             <GlobalHead title="Игровой хостинг"/>
-            {/*<Script src="//code.jivo.ru/widget/QDbblcMLJ0" strategy="lazyOnload"/>*/}
             <GlobalNav />
             <GDNavBar />
         </>

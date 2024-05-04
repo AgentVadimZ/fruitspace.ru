@@ -1,19 +1,20 @@
-import GlobalNav from "../components/GlobalNav";
-import styles from "../components/Index.module.css"
+import GlobalNav from "@/components/GlobalNav";
+import styles from "@/components/Index.module.css"
 
-import MinecraftLogo from "../assets/logos/minecraft.png"
-import GDLogo from "../assets/logos/geometrydash.png"
-import CSLogo from "../assets/logos/counterstrike.png"
+import MinecraftLogo from "@/assets/logos/minecraft.png"
+import GDLogo from "@/assets/logos/geometrydash.png"
+import CSLogo from "@/assets/logos/counterstrike.png"
+import BSLogo from "@/assets/logos/beatsaber.png"
 import RightIcon from '@/assets/icons/right.svg'
 
 
-import Footer from "../components/Global/Footer";
-import GlobalHead from "../components/GlobalHead";
-import useLocale, {useGlobalLocale} from "../locales/useLocale";
+import Footer from "@/components/Global/Footer";
+import GlobalHead from "@/components/GlobalHead";
+import useLocale, {useGlobalLocale} from "@/locales/useLocale";
 import Link from "next/link";
-import {serverFiberAPI} from "../fiber/fiber";
+import {serverFiberAPI} from "@/fiber/fiber";
 import {useRef} from "react";
-import {BetaData} from '../components/betadata';
+import {BetaData} from '@/components/betadata';
 import {Rate, Carousel} from "antd";
 
 export async function getStaticProps(ctx) {
@@ -28,8 +29,7 @@ export async function getStaticProps(ctx) {
 }
 
 export default function Home(props) {
-
-    const locale = useLocale(props.router)
+    useLocale(props.router);
     const localeGlobal = useGlobalLocale(props.router)
 
     const getRegionalPostfix = localeGlobal.get('funcShowServers')
@@ -37,24 +37,30 @@ export default function Home(props) {
 
 
     const scrollRef = useRef(null)
+    const carouselRef = useRef(null)
 
     return <>
         <GlobalHead og={og} />
         <div className="fixed top-0 left-0 w-screen h-screen -z-20 bg-[#191921]"></div>
         <div className="fixed top-0 left-0 w-screen h-screen -z-10 techBg"></div>
         <div className="">
-            {BetaData.beta && <div className="bg-slate-600 glass bg-opacity-20 h-12 flex items-center justify-between z-[9999] relative">
-                <p className="rounded-full bg-slate-600 mx-2 flex items-center h-fit">
-                    <span className="text-lg bg-blue-600 rounded-full px-4 py-1">Бета </span>
-                    <span className="mx-2 text-sm">Сборка от {BetaData.date}</span>
+            {BetaData.beta &&
+                <div className="bg-active backdrop-blur bg-opacity-20 h-12 flex items-center justify-between z-[9999] relative">
+                <p className="rounded-full bg-subtle  mx-2 flex items-baseline gap-2 h-fit">
+                    <span className="bg-blue-600 rounded-full px-4 py-1">Бета</span>
+                    <span className="mr-4 text-sm">Сборка от {BetaData.date}</span>
                 </p>
-                <p className="rounded-full bg-slate-600 mx-2 flex flex-col items-center h-fit z-[9999] group cursor-pointer">
-                    <span className="text-lg rounded-full px-4 py-1">Что нового? ›</span>
-                    <div className="flex-col gap-2 hidden group-hover:flex absolute top-full text-md right-4 rounded-xl p-2 bg-slate-600 z-[9999]">
+                <p className="rounded-full bg-subtle border-[1px] border-solid border-white border-opacity-25
+                 mx-2 flex flex-col items-center h-fit z-[9999] group cursor-pointer">
+                    <span className="rounded-full px-4 py-1 group-hover:bg-opacity-50">Что нового? ›</span>
+                    <div className="flex-col gap-4 hidden group-hover:flex absolute top-full text-md right-2 rounded-xl p-2 z-[9999]
+                    bg-active border-[1px] border-solid border-white border-opacity-25">
                         {BetaData.description.map((changes,i)=>{
-                            return <div key={i} className="rounded-lg p-2 bg-slate-800">
-                                <p className="my-1">Сборка от {changes.date}</p>
-                                <ul className="text-sm">
+                            return <div key={i}>
+                                <p className="text-sm rounded-t-lg px-2 w-fit border-[1px] border-b-active
+                                relative z-20 -mb-[1px]">Сборка от {changes.date}</p>
+                                <ul className="text-sm p-2 rounded-lg rounded-tl-none border-[1px] border-solid border-white border-opacity-25
+                                relative z-10">
                                     {changes.deltas.map((change,j)=>{
                                         return <li key={j}>• {change}</li>
                                     })}
@@ -75,7 +81,7 @@ export default function Home(props) {
                     <div className="mt-24 grid grid-cols-1 xl:grid-cols-3 gap-4 xl:gap-16 select-none">
                         <ProdCard link="/product/gd" name="Geometry Dash" description="Кастомная музыка, 2.2, моды и конфигуратор установщиков" logo={GDLogo.src} stats={`${props.stats.gdps_count} ${getRegionalPostfix(props.stats.gdps_count)} • ${getLvlsCnt(props.stats.gdps_levels)}`} />
                         <ProdCard link="/product/mc" name="Minecraft" description="Мощные сервера, динамические ресурсы и удобная панель" logo={MinecraftLogo.src} stats="Уже на FruitSpace!" />
-                        <ProdCard link="#" name="Counter Strike" description="128 тикрейт, быстрая установка модов и FastDL" logo={CSLogo.src} stats="Скоро. Q2 2024" />
+                        <ProdCard link="#" name="Beat Saber" description="Третья игра с кубиками. Шутку думайте сами" logo={BSLogo.src} stats="Не скоро" />
                     </div>
 
                     <Link href="/top/gd" legacyBehavior>
@@ -114,36 +120,41 @@ export default function Home(props) {
                         }
                     ].map((el,i)=> <div key={i}>
                         <p className="text-2xl lg:text-4xl text-center mb-4 font-[Helvetica]">{el.h}</p>
-                        <p className="text-center lg:text-lg px-4 xl:px-24">{el.t}</p>
+                        <p className="text-center text-gray-300 lg:text-base px-4 xl:px-24">{el.t}</p>
                     </div>)}
 
-                    <Carousel dots={{className:"!bottom-2"}}>
+                    <Carousel ref={carouselRef} dots={{className:"!bottom-2"}}>
                         {reviews.map((u, i) => {
-                            return <div key={i} className="px-2 py-2 rounded-xl bg-[#333338aa] my-4 overflow-y-hidden
-                             !w-5/6 lg:!w-2/3 h-96 mx-auto !flex flex-col glass">
+                            return <div key={i} className="p-4 my-4 overflow-y-hidden
+                             !w-5/6 lg:!w-2/3 h-96 mx-auto !flex flex-col bg-subtle bg-opacity-75 border-white border-opacity-25 rounded-2xl border-solid border-[1px]">
                                 <div className="flex flex-col lg:flex-row items-center justify-between">
+                                    <p className="text-lg w-40">{u.user}</p>
                                     <p>{u.date}</p>
-                                    <p className="text-lg m-0">{u.user}</p>
-                                    <Rate className="p-4 bg-[var(--active-color)] rounded-lg h-fit" allowHalf disabled
-                                          defaultValue={u.rating}/>
+                                    <Rate className="p-2 bg-active rounded-lg h-fit" allowHalf disabled defaultValue={u.rating}/>
                                 </div>
-                                <div>
-                                    {u.pros && <>
-                                        <p className="text-lg lg:text-xl mb-1">Что понравилось?</p>
-                                        <pre className="text-md rounded-lg bg-[var(--active-color)] p-2 whitespace-normal leading-tight mt-0">{u.pros}</pre>
-                                    </>}
-                                    {u.cons && <>
-                                        <p className="text-lg lg:text-xl mb-1">Что не понравилось, чего не хватает?</p>
-                                        <pre className="text-md rounded-lg bg-[var(--active-color)] p-2 whitespace-normal leading-tight mt-0">{u.cons}</pre>
-                                    </>}
-                                    {u.verdict && <>
-                                        <p className="text-lg lg:text-xl mb-1">Останетесь ли на FruitSpace?</p>
-                                        <pre className="text-md rounded-lg bg-[var(--active-color)] p-2 whitespace-normal leading-tight mt-0">{u.verdict}</pre>
-                                    </>}
+                                <div className="flex flex-col gap-4 mt-4">
+                                    {u.pros && <div>
+                                        <p className="bg-active text-lg rounded-t-lg px-2 w-fit border-[1px] border-b-active border-solid border-white border-opacity-25
+                                        relative z-20 -mb-[1px]">Что понравилось?</p>
+                                        <pre className="bg-active p-2 rounded-lg rounded-tl-none border-[1px] border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
+                                        relative z-10">{u.pros}</pre>
+                                    </div>}
+                                    {u.cons && <div>
+                                        <p className="bg-active text-lg rounded-t-lg px-2 w-fit border-[1px] border-b-active border-solid border-white border-opacity-25
+                                        relative z-20 -mb-[1px]">Что не понравилось, чего не хватает?</p>
+                                        <pre className="bg-active p-2 rounded-lg rounded-tl-none border-[1px] border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
+                                        relative z-10">{u.cons}</pre>
+                                    </div>}
+                                    {u.verdict && <div>
+                                        <p className="bg-active text-lg rounded-t-lg px-2 w-fit border-[1px] border-b-active border-solid border-white border-opacity-25
+                                        relative z-20 -mb-[1px]">Останетесь ли на FruitSpace?</p>
+                                        <pre className="bg-active p-2 rounded-lg rounded-tl-none border-[1px] border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
+                                        relative z-10">{u.verdict}</pre>
+                                    </div>}
                                 </div>
                                 <div className="flex flex-col lg:flex-row justify-between items-center mt-auto">
                                     <span className="text-gray-300">Хостинг: {u.product}</span>
-                                    <a href={u.url} className="text-[var(--primary-color)]">Отзыв в Discord →</a>
+                                    <a href={u.url} className="text-primary">Отзыв в Discord →</a>
                                 </div>
                             </div>
                         })}
@@ -165,9 +176,9 @@ const ProdCard = (props) => (
                  gap-2 lg:gap-4">
                 <img alt="prod.logo" className="h-24" src={props.logo}/>
                 <div>
-                    <p className="m-0">{props.name}</p>
+                    <p className="m-0 tracking-wide lg:text-lg">{props.name}</p>
                     <p className="opacity-85 leading-tight text-xs md:text-sm lg:leading-normal m-0">{props.description}</p>
-                    <p className="text-xs text-nowrap md:text-sm m-0 mt-2 text-[#cacad0]">{props.stats}</p>
+                    <p className="text-xs text-nowrap md:text-sm m-0 mt-2 text-[#cacad0] font-mono">{props.stats}</p>
                 </div>
                 <RightIcon className="flex-shrink-0 w-8 ml-auto"/>
             </div>

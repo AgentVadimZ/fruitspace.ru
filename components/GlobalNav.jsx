@@ -56,7 +56,7 @@ export default function GlobalNav(props) {
             </Link>
             {(props.mainpage&&!['/',''].includes(router.pathname))&&
                 <HideOn atHeight height={200}>
-                    <h1 className="fixed top-2 left-[50%] -translate-x-[50%] hidden md:block md:text-2xl xl:text-3xl font-[Coolvetica] tracking-wider font-normal fruitText m-0 select-none">FruitSpace</h1>
+                    <Link href="/" className="fixed top-2 left-[50%] -translate-x-[50%] hidden md:block md:text-2xl xl:text-3xl font-[Coolvetica] tracking-wider font-normal fruitText m-0 select-none">FruitSpace</Link>
                 </HideOn>
             }
 
@@ -113,7 +113,7 @@ export default function GlobalNav(props) {
                             <DropdownItem leftIcon={<LogoutOutlinedIcon/>} onClick={()=>logout()}>{localeGlobal.get('navLogout')}</DropdownItem>
                         </DropdownMenu>
                     </NavItem>
-                ): <Link href="/profile/login" className="bg-subtle py-2 px-4 rounded-full flex items-center gap-2 bg-opacity-75 backdrop-blur-sm
+                ): <Link href="/profile/login" className="select-none bg-subtle py-2 px-4 rounded-full flex items-center gap-2 bg-opacity-75 backdrop-blur-sm
                 border-[1px] border-solid border-white border-opacity-25 hover:bg-opacity-50">
                     <VpnKeyIcon />
                     Войти
