@@ -17,9 +17,7 @@ export default function Partnership(props) {
             <div className={styles.main}>
                 <div className={styles.innerMain}>
                     <h2>{locale.get('header')}</h2>
-                    <div className="m-8 bg-[color:var(--subtle-color)] text-center p-5 br-50 rounded-3xl">
-                        <p></p>
-                    </div>
+                    Временно нет
                 </div>
             </div>
             <Footer router={props.router}/>

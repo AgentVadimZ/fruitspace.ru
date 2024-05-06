@@ -98,6 +98,10 @@
     border: 1px solid rgba(255, 255, 255, 0.25) !important;
 }
 
+.ant-dropdown-menu {
+    @apply border-[1px] border-solid border-white border-opacity-25 bg-active !important;
+}
+
 @font-face {
     font-family: "Coolvetica";
     src: url("/coolvetica.otf");

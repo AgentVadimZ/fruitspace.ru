@@ -106,7 +106,7 @@ export default function GD(props) {
                     <div className="flex flex-col p-8 flex-1">
                         <p className="font-mono">простая и функиональная</p>
                         <p className="text-5xl uppercase font-semibold">панель</p>
-                        <div className="border-l-4 border-white h-96 p-4 text-lg max-w-3xl flex flex-col gap-4">
+                        <div className="h-96 py-4 text-lg max-w-3xl flex flex-col gap-4">
                             <p>
                                 Забудьте про головную боль с настройкой через PHP файлы и БД. Сосредоточьтесь на своем
                                 сообществе,
@@ -201,8 +201,11 @@ export default function GD(props) {
                                     [faPlay, "Поддержка только 2.2"],
                                     [faBarsProgress, "Базовая статистика сервера"],
                                     [faStopwatch20, "Временное хранение установщиков"]
-                                ].map((e, i) => <span className="flex gap-4 items-center" key={i}><FontAwesomeIcon
-                                    className="w-8 text-2xl" icon={e[0]}/> {e[1]}</span>)}
+                                ].map((e, i) => <span className="flex gap-4 items-center" key={i}>
+                                    <div className="flex justify-center !w-8">
+                                        <FontAwesomeIcon className="text-2xl" icon={e[0]}/>
+                                    </div> <span className="flex-1">{e[1]}</span>
+                                </span>)}
                             </div>
                             <Button type="primary" size="large" className="w-full mt-auto"
                                     onClick={() => router.push('order/gd?t=1')}>Бесплатно*</Button>
@@ -223,8 +226,11 @@ export default function GD(props) {
                                     [faForward, "Версии от 1.9 до 2.2"],
                                     [faBarsProgress, "Базовая статистика сервера"],
                                     [faZap, "Конфигуратор установщиков: кастомный логотип и вечное хранение"]
-                                ].map((e, i) => <span className="flex gap-4 items-center" key={i}><FontAwesomeIcon
-                                    className="w-8 text-2xl" icon={e[0]}/> {e[1]}</span>)}
+                                ].map((e, i) => <span className="flex gap-4 items-center" key={i}>
+                                    <div className="flex justify-center !w-8">
+                                        <FontAwesomeIcon className="text-2xl" icon={e[0]}/>
+                                    </div> <span className="flex-1">{e[1]}</span>
+                                </span>)}
                             </div>
                             <Button type="primary" size="large" className="w-full mt-auto"
                                     onClick={() => router.push('order/gd?t=2')}>49₽/мес</Button>
@@ -247,117 +253,25 @@ export default function GD(props) {
                                     [faShop, "Встроенный магазин для игроков"],
                                     [faCloudArrowDown, "Автоматические резервные копии"],
                                     [faStar, "Рейт-бот для Discord"]
-                                ].map((e, i) => <span className="flex gap-4 items-center" key={i}><FontAwesomeIcon
-                                    className="w-8 text-2xl" icon={e[0]}/> {e[1]}</span>)}
+                                ].map((e, i) => <span className="flex gap-4 items-center" key={i}>
+                                    <div className="flex justify-center !w-8">
+                                        <FontAwesomeIcon className="text-2xl" icon={e[0]}/>
+                                    </div> <span className="flex-1">{e[1]}</span>
+                                </span>)}
                             </div>
                             <Button type="primary" size="large" className="w-full mt-auto"
                                     onClick={() => router.push('order/gd?t=4')}>149₽/мес</Button>
                         </div>
                     </div>
-                    <p className="text-center text-gray-400 mt-2 text-sm">*разрешен только 1 бесплатный GDPS на
-                        аккаунт</p>
+                    <p className="text-center text-gray-400 mt-2 text-sm">
+                        *разрешен только 1 бесплатный GDPS на аккаунт
+                    </p>
                 </div>
 
-                <div className="mt-16 select-none">
-                    <p className="text-5xl uppercase font-semibold text-center">тарифы</p>
-                    <p className="text-center font-mono">на любой вкус</p>
-                </div>
-
-
-                <span className={styles.hyperSpan}></span>
-                <p className="text-3xl text-center mt-8">Запуск на своем сервере</p>
-                <h2 style={{textAlign: 'center', margin: "3rem 0", color: "white"}}
-                    ref={selfRef}>{locale.get('selfHost')}</h2>
-                <p className="text-center mx-auto max-w-3xl">{locale.get('selfHostText')}
-                </p>
-                <TableContainer sx={{
-                    borderRadius: "12px",
-                    backgroundColor: "var(--subtle-color)",
-                    width: "fit-content",
-                    maxWidth: "100%",
-                    margin: "0 auto"
-                }} className={styles.MrWhite}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell></TableCell>
-                                <TableCell align="right"><b>FruitSpace</b></TableCell>
-                                <TableCell align="right"><b>{locale.get('selfHostTableHeader')}</b></TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell component="th" scope="row">{locale.get('selfHostTable')[0]}</TableCell>
-                                <TableCell align="right"><CheckIcon/></TableCell>
-                                <TableCell align="right"><CheckIcon/></TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell component="th" scope="row">{locale.get('selfHostTable')[1]}</TableCell>
-                                <TableCell align="right"><CheckIcon/></TableCell>
-                                <TableCell align="right">{locale.get('selfHostTableAdd')[0]}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell component="th" scope="row">{locale.get('selfHostTable')[2]}</TableCell>
-                                <TableCell align="right"><CheckIcon/></TableCell>
-                                <TableCell align="right"><CheckIcon/></TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell component="th" scope="row">{locale.get('selfHostTable')[3]}</TableCell>
-                                <TableCell align="right"><CheckIcon/></TableCell>
-                                <TableCell align="right"><CloseIcon/></TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell component="th" scope="row">{locale.get('selfHostTable')[4]}</TableCell>
-                                <TableCell align="right"><CheckIcon/></TableCell>
-                                <TableCell align="right"><CloseIcon/></TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell component="th" scope="row">{locale.get('selfHostTable')[5]}</TableCell>
-                                <TableCell align="right"><CheckIcon/></TableCell>
-                                <TableCell align="right"><CloseIcon/></TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell component="th" scope="row">{locale.get('selfHostTable')[6]}</TableCell>
-                                <TableCell align="right"><CheckIcon/></TableCell>
-                                <TableCell align="right"><CloseIcon/></TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell component="th" scope="row">{locale.get('selfHostTable')[7]}</TableCell>
-                                <TableCell align="right">GhostCore</TableCell>
-                                <TableCell align="right">HalogenCore</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell component="th" scope="row">{locale.get('selfHostTable')[8]}</TableCell>
-                                <TableCell align="right">{locale.get('selfHostTableAdd')[1]}</TableCell>
-                                <TableCell align="right">{locale.get('selfHostTableAdd')[2]}</TableCell>
-                            </TableRow>
-                            <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                <TableCell component="th" scope="row">{locale.get('selfHostTable')[9]}</TableCell>
-                                <TableCell align="right"><CheckIcon/></TableCell>
-                                <TableCell align="right">{locale.get('selfHostTableAdd')[3]}</TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <p className="mx-auto text-center max-w-2xl">
-                    {locale.get('selfHostLinks')}
-                </p>
-                <div className="flex mx-auto gap-2 justify-center mb-2">
-                    <Button variant="contained"
-                            className="m-2 mt-auto font-bold rounded-lg bg-[#6e5494] h-12 hover:bg-[#5f4980]"
-                            onClick={() => window.open("https://github.com/FruitSpace/HalogenGDPSCore", "_blank")}>
-                        <img className="invert h-10 mr-3 h-3/4 rounded" src={GitHubIcon.src} alt="github"/>
-                        HalogenCore Github
-                    </Button>
-                    <Button variant="contained"
-                            className="m-2 mt-auto font-bold rounded-lg bg-[#7289da] h-12 hover:bg-[#5f73b8]"
-                            onClick={() => window.open("https://discord.gg/HgBQmMRKTB", "_blank")}>
-                        <img className="invert h-10 mr-3 h-3/4" src={discordLogo.src} alt="discord"/>
-                        HalogenCore Discord
-                    </Button>
-
-                </div>
-
+                {/*<div className="mt-16 select-none">*/}
+                {/*    <p className="text-5xl uppercase font-semibold text-center">тарифы</p>*/}
+                {/*    <p className="text-center font-mono">на любой вкус</p>*/}
+                {/*</div>*/}
             </div>
             <Footer router={props.router}/>
         </>

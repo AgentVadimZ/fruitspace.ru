@@ -141,7 +141,7 @@ export default function Login(props) {
 
     return <>
         <GlobalHead title={localeGlobal.get('navName')}/>
-        <GlobalNav />
+        <GlobalNav router={props.router} mainpage />
         <Toaster/>
         <div className="h-[calc(100vh-var(--nav-height))] flex flex-col justify-center items-center">
             <div className="bg-active border-subtle rounded-2xl border-solid border-[1px] p-4 flex flex-col gap-4">
