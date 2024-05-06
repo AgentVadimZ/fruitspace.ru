@@ -1,6 +1,8 @@
-/** @type {import('next').NextConfig} */
+import createMDX from '@next/mdx'
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   reactStrictMode: true,
   swcMinify: true,
   webpack: (config)=>{
@@ -44,9 +46,6 @@ const nextConfig = {
   // ]
 }
 
-const sentryWebpackPluginOptions = {
-  silent: true
-};
-
+const withMDX = createMDX({})
 // module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions);
-module.exports = nextConfig
+export default withMDX(nextConfig)
