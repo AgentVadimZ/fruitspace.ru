@@ -25,6 +25,16 @@ import {useRecoilState} from "recoil";
 import {userAtom} from "@/fiber/fiber.model";
 import {useState} from "react";
 import {HideOn} from "react-hide-on-scroll";
+import {Button, Dropdown} from "antd";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+    faChevronRight,
+    faCircleDollarToSlot,
+    faRightFromBracket,
+    faServer, faShop,
+    faWallet
+} from "@fortawesome/free-solid-svg-icons";
+import {BetaData} from "@/components/betadata";
 
 
 export default function GlobalNav(props) {
@@ -60,65 +70,81 @@ export default function GlobalNav(props) {
                 </HideOn>
             }
 
-            <div className="flex items-center">
-                {user.uname && (<>
-                    <NavItem icon={<ServerSvg/>} open={open} setOpen={setOpen} name="servers">
-                        <DropdownMenu centered>
-                            <Link href="/profile/servers?s=mc" legacyBehavior>
-                                <DropdownItem leftIcon={<img src={MinecraftLogo.src}/>} rightIcon={<RightSvg/>}>
-                                    <div className={styles.MultilineItem}>
-                                        Minecraft
-                                        <span>• {user.servers.mc} {getRegionalPostfix(user.servers.mc)}</span>
-                                    </div>
-                                </DropdownItem>
-                            </Link>
-                            <Link href="/profile/servers?s=gd" legacyBehavior>
-                                <DropdownItem leftIcon={<img src={GDLogo.src}/>} rightIcon={<RightSvg/>}>
-                                    <div className={styles.MultilineItem}>
-                                        Geometry Dash
-                                        <span>• {user.servers.gd} {getRegionalPostfix(user.servers.gd)}</span>
-                                    </div>
-                                </DropdownItem>
-                            </Link>
-                            <Link href="/profile/servers?s=cs" legacyBehavior>
-                                <DropdownItem leftIcon={<img src={CSLogo.src}/>} rightIcon={<RightSvg/>}>
-                                    <div className={styles.MultilineItem}>
-                                        Counter Strike
-                                        <span>• {user.servers.cs} {getRegionalPostfix(user.servers.cs)}</span>
-                                    </div>
-                                </DropdownItem>
-                            </Link>
-                        </DropdownMenu>
-                    </NavItem></>)}
+            <div className="flex items-center gap-2">
+                {user.uname &&
+                    <div className="relative">
+                        <img src={user.profile_pic} onClick={()=>setOpen(!open)}
+                             className="rounded-full h-10 border-[1px] border-solid border-white border-opacity-25
+                             cursor-pointer hover:brightness-110"/>
+                        {open && <div className="flex-col gap-4 group-hover:flex absolute top-full mt-2 right-0 rounded-xl p-2 z-[9999]
+                    bg-active border-[1px] border-solid border-white border-opacity-25 w-72">
 
-
-                {user.uname ? (
-                    <NavItem profile icon={<img src={user.profile_pic}/>} open={open} setOpen={setOpen} name="profile">
-                        <DropdownMenu>
-                            <Link href="/profile/" legacyBehavior>
-                                <DropdownItem leftIcon={<img src={user.profile_pic}/>}
-                                              rightIcon={<RightSvg />}>{user.uname}</DropdownItem>
+                            <Link href="/profile"
+                                  className="flex items-center gap-2 p-1 pr-3 cursor-pointer rounded-lg hover:bg-subtle">
+                                <img src={user.profile_pic} className="rounded-full h-12 w-12"/>
+                                <div className="flex flex-col flex-1">
+                                    <p className="text-lg font-mono -mb-1">{user.uname}</p>
+                                    <Button className="w-fit" size="small"
+                                            icon={<FontAwesomeIcon icon={faRightFromBracket}/>}
+                                            type="text" danger onClick={(e) => {
+                                        e.preventDefault()
+                                        logout()
+                                    }}>
+                                        Выйти
+                                    </Button>
+                                </div>
+                                <FontAwesomeIcon icon={faChevronRight}/>
                             </Link>
-                            <Link href="/profile/billing" legacyBehavior>
-                                <DropdownItem leftIcon={<MonetizationOnIcon/>} rightIcon={<AddCircleIcon/>}>
-                                    <p className={styles.BalBox}>
-                                        <span><AccountBalanceWalletIcon/> {prettyPrint(user.balance)}</span>
-                                        <span><StoreIcon/> {prettyPrint(user.shop_balance)}</span>
-                                    </p>
-                                </DropdownItem>
-                            </Link>
-                            <Link href="/manage/store" legacyBehavior>
-                                <DropdownItem leftIcon={<StoreIcon/>} rightIcon={<RightSvg/>}>{localeGlobal.get('navMyShops')}</DropdownItem>
-                            </Link>
-                            <DropdownItem leftIcon={<LogoutOutlinedIcon/>} onClick={()=>logout()}>{localeGlobal.get('navLogout')}</DropdownItem>
-                        </DropdownMenu>
-                    </NavItem>
-                ): <Link href="/profile/login" className="select-none bg-subtle py-2 px-4 rounded-full flex items-center gap-2 bg-opacity-75 backdrop-blur-sm
-                border-[1px] border-solid border-white border-opacity-25 hover:bg-opacity-50">
-                    <VpnKeyIcon />
-                    Войти
-                </Link>}
-            </div>
-        </NavBar>
-    );
-}
+                            <div className="flex items-center gap-2 p-1 rounded-lg">
+                                <div className="w-12 h-12 flex items-center justify-center"><FontAwesomeIcon
+                                    icon={faCircleDollarToSlot} className="text-2xl"/></div>
+                                <div className="flex flex-col flex-1 bg-subtle rounded-lg border-[1px] border-solid
+                                    border-white border-opacity-25">
+                                    <div className="flex items-center">
+                                        <span className="flex items-center gap-2 px-1.5 py-1 border-r-[1px]
+                                    border-white border-opacity-25 flex-1">
+                                            <FontAwesomeIcon icon={faWallet}/>
+                                            <span className="text-sm">{prettyPrint(user.balance)}</span>
+                                        </span>
+                                        <span className="flex items-center gap-2 px-1.5 py-1 flex-1">
+                                            <FontAwesomeIcon icon={faShop}/>
+                                            <span className="text-sm">{prettyPrint(user.shop_balance)}</span>
+                                        </span>
+                                    </div>
+                                    <Link href="/profile/billing" className="px-2 py-1 border-t-[1px] border-white border-opacity-25 text-sm
+                                    gap-1.5 flex items-center hover:bg-btn rounded-b-lg">
+                                        Кошелек <FontAwesomeIcon icon={faChevronRight} className="text-xs"/>
+                                    </Link>
+                                </div>
+                            </div>
+                            <div className="flex flex-col items-center gap-2 p-1 rounded-lg text-sm">
+                                <span className="w-full border-b-[1px] border-white border-opacity-25"></span>
+                                <div className="flex flex-col gap-2 w-full">
+                                    <Link className="flex gap-1 items-center rounded-lg hover:bg-subtle p-1
+                                    border-[1px] border-solid border-white border-opacity-25 cursor-pointer select-none"
+                                          href="/profile/servers?s=mc">
+                                        <img src={MinecraftLogo.src} className="h-12"/>
+                                        <div>
+                                            <p>Minecraft</p>
+                                            <p className="text-xs">{user.servers.mc} {getRegionalPostfix(user.servers.mc)}</p>
+                                        </div>
+                                    </Link>
+                                    <Link className="flex gap-1 items-center rounded-lg hover:bg-subtle p-1
+                                    border-[1px] border-solid border-white border-opacity-25 cursor-pointer select-none"
+                                          href="/profile/servers?s=gd">
+                                        <img src={GDLogo.src} className="h-12"/>
+                                        <div>
+                                            <p>Geometry Dash</p>
+                                            <p className="text-xs">{user.servers.gd} {getRegionalPostfix(user.servers.gd)}</p>
+                                        </div>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>}
+                        {open &&
+                            <div onClick={() => setOpen(false)} className="fixed top-0 left-0 w-full h-full"/>}
+                            </div>}
+                    </div>
+                    </NavBar>
+                    );
+                }
