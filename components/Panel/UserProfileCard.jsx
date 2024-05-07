@@ -11,7 +11,7 @@ import useLocale, {useGlobalLocale} from "@/locales/useLocale";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDiscord} from "@fortawesome/free-brands-svg-icons";
 import useFiberAPI from "@/fiber/fiber";
-import {Button, List} from "antd";
+import {Button, Input, List} from "antd";
 import useSWR, {mutate} from "swr";
 import {faKey} from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
@@ -168,7 +168,7 @@ export default function UserProfileCard(props) {
     }
 
     const updateProfilePic = (evt, reset=false)=> {
-        var input = document.createElement("input")
+        const input = document.createElement("input");
         input.type = "file"
         input.accept="image/png, image/jpeg"
         input.onchange=(e)=>{
@@ -195,7 +195,7 @@ export default function UserProfileCard(props) {
         }
         (reset===false)&&input.click()
         if (reset) {
-            var datax = new FormData()
+            const datax = new FormData();
             datax.append("reset","reset")
             api.user.resetAvatar().then((resp)=>{
                 if(resp.status==="ok") {
@@ -223,10 +223,10 @@ export default function UserProfileCard(props) {
 
     return <>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 w-fit">
-            <div className="flex bg-[var(--subtle-color)] p-2 rounded-2xl relative w-fit">
+            <div className="flex bg-active glassb rounded-2xl relative w-fit">
                 <img className="rounded-xl w-auto h-64" src={user.profile_pic} />
                 <Tooltip title={locale.get('picChange')} placement="right" arrow open={showEditPicHint}
-                className="absolute rounded-xl bg-[var(--btn-color)] p-2 bottom-3 right-3 h-8 w-8 fill-white
+                className="absolute rounded-xl bg-[var(--btn-color)] p-2 bottom-2 right-2 h-10 w-10 fill-white
                 transition-all duration-300 border-solid border-2 border-[var(--btn-color)] cursor-pointer
                 hover:bg-[var(--btn-hover)] hover:fill-[var(--primary-color)] hover:border-[var(--primary-color)]">
                     <EditIcon onMouseEnter={()=>setPicEditHint(true)} onMouseLeave={()=>setPicEditHint(false)}
@@ -234,27 +234,22 @@ export default function UserProfileCard(props) {
                 </Tooltip>
             </div>
 
-            <div className="col-span-1 lg:col-span-2 flex flex-col lg:w-[30rem] bg-[var(--subtle-color)] p-4 rounded-2xl">
-                <div className="flex flex-col gap-4 lg:flex-row">
-                    <FruitTextField fullWidth label={locale.get('accInfo')[0]} type="text" variant="outlined"
-                                value={user.name} onChange={(evt)=>{setUser({
-                    ...user,
-                    name: evt.target.value.replaceAll(/[^a-zA-Z]/g,'')
-                    })}} />
-                    <FruitTextField fullWidth label={locale.get('accInfo')[1]} type="text" variant="outlined"
-                                value={user.surname} onChange={(evt)=>{setUser({
-                    ...user,
-                    surname: evt.target.value.replaceAll(/[^a-zA-Z]/g,'')
+            <div className="col-span-1 lg:col-span-2 flex flex-col lg:w-[30rem] bg-active glassb p-4 rounded-2xl">
+                <div className="flex flex-col items-center gap-4 lg:flex-row">
+                    <p className="text-nowrap text-sm">Отображаемое имя</p>
+                    <Input value={user.name} onChange={(evt)=>{setUser({
+                        ...user,
+                        name: evt.target.value.replaceAll(/[^a-zA-Z]/g,'')
                     })}} />
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <span className="flex gap-2 bg-[var(--active-color)] w-fit px-2 py-1 rounded-md mt-4">
+                    <span className="flex gap-2 font-mono bg-subtle glassb w-fit px-2 py-1 rounded-md mt-4">
                         <Image src={Logo.src} width={24} height={24} />
                         @{user.uname}
                     </span>
                     {user.discord_id != "0" && discord &&
-                        <span className="flex gap-2 bg-[#5865F2] w-fit px-2 py-1 rounded-md mt-4">
+                        <span className="flex gap-2 bg-[#5865F2] glassb font-mono w-fit px-2 py-1 rounded-md mt-4">
                             <img src={discord.avatar.link} width={24} height={24} className="rounded-full"/>
                             {discord.username}
                         </span>
@@ -267,25 +262,29 @@ export default function UserProfileCard(props) {
                 </div>
             </div>
 
-            <div className="flex flex-col gap-2 bg-[var(--subtle-color)] p-2 rounded-2xl h-fit">
+            <div className="flex flex-col gap-2 bg-active glassb p-2 rounded-2xl h-fit">
                 <SettingsItem text={locale.get('options')[0]} onClick={()=>setBackdrop("password")}><PasswordIcon className="h-8 w-8" /></SettingsItem>
                 <SettingsItem text={locale.get('options')[user.is_2fa?1:2]} onClick={()=>setBackdrop("2fa")}><LockPersonIcon className="h-8 w-8" /></SettingsItem>
                 <SettingsItem text={locale.get('options')[user.discord_id!="0"?4:3]} onClick={()=>api.auth.discord()}><FontAwesomeIcon icon={faDiscord} className="!h-8 w-8" /></SettingsItem>
             </div>
 
-            <div className="col-span-1 lg:col-span-2 flex flex-col lg:w-[30rem] bg-[var(--subtle-color)] p-4 rounded-2xl relative">
-                <span className="absolute top-2 left-2 bg-[var(--active-color)] px-2 py-1 rounded-xl text-sm">Активные сессии</span>
-                <List className="mt-8 bg-[var(--active-color)] rounded-xl" dataSource={sessions} renderItem={(item, i) => (
-                    <div key={i} className="p-2 flex flex-col gap-2">
+            <div className="col-span-1 lg:col-span-2 flex flex-col gap-4 lg:w-[30rem] bg-active glassb p-4 rounded-2xl">
+                <div>
+                    <p className="text-sm rounded-t-lg px-2 w-fit border-1 border-b-active border-[#ffffff44]
+                                relative z-20 -mb-[1px]">Активные сессии</p>
+                    <List className="rounded-tl-none border-1 border-solid border-white border-opacity-25
+                                relative z-10 bg-active glassb rounded-xl" dataSource={sessions} renderItem={(item, i) => (
+                        <div key={i} className="p-2 flex flex-col gap-2">
                         <span className="flex gap-2 items-center">
                             <FontAwesomeIcon icon={faKey} className="h-4 w-4" />
                             {item.useragent}
-                            <span className="font-mono text-sm rounded-md bg-[var(--subtle-color)] px-1.5">{item.ip}</span>
+                            <span className="font-mono text-sm rounded-md bg-subtle px-1.5">{item.ip}</span>
                         </span>
-                        <span className="ml-6">Выполнен вход: {new Date(item.logindate).toLocaleString()}</span>
-                    </div>
-                )} />
-                <Button className="mt-4 !text-white" danger type="default" onClick={(e)=>resetSessions()}>Сбросить все сессии</Button>
+                            <span className="ml-6">Выполнен вход: {new Date(item.logindate).toLocaleString()}</span>
+                        </div>
+                    )} />
+                </div>
+                <Button className="!text-white !bg-red-600 !bg-opacity-10 hover:!bg-opacity-25" danger type="default" onClick={(e)=>resetSessions()}>Сбросить все сессии</Button>
             </div>
 
         </div>
@@ -402,7 +401,7 @@ const FruitThinField = styled(TextField)({
 function SettingsItem(props) {
 
     return (
-        <div className="bg-[var(--active-color)] rounded-xl p-2 flex items-center cursor-pointer hover:bg-[var(--btn-color)]" onClick={props.onClick}>
+        <div className="bg-ac rounded-xl p-2 flex items-center cursor-pointer hover:bg-btn" onClick={props.onClick}>
             {props.children}
             <span className="mx-auto my-0">{props.text}</span>
         </div>

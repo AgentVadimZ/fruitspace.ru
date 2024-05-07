@@ -20,18 +20,18 @@ export default function ServerItem(props) {
     }
     return props.add?(
         <Link href={"/product/order/"+props.type} legacyBehavior>
-            <div className="bg-[var(--active-color)] rounded-xl p-3 flex items-center cursor-pointer hover:bg-[var(--btn-color)]">
+            <div className="bg-active rounded-xl p-3 flex items-center cursor-pointer hover:bg-[var(--btn-color)]">
                 <AddCircleIcon className="h-12 w-12 ml-2"/>
-                <h3 className="mx-auto my-0">{localeGlobal.get('create')}</h3>
+                <h3 className="mx-auto my-0 text-lg">{localeGlobal.get('create')}</h3>
             </div>
         </Link>
     ):(
         <Link href={"/manage/"+props.type+"/"+props.uuid} legacyBehavior>
-            <div className="bg-[var(--active-color)] rounded-xl p-2 flex items-center cursor-pointer hover:bg-[var(--btn-color)] mb-2">
-                <img className="mr-4 w-16 h-16 rounded-lg bg-[var(--btn-color)]" src={props.icon?props.icon:(Types[props.type]||QuestionMark.src)} />
+            <div className="bg-active rounded-lg p-2 flex items-center cursor-pointer hover:bg-btn mb-2">
+                <img className="mr-4 w-16 h-16 rounded-lg bg-subtle glassb" src={props.icon?props.icon:(Types[props.type]||QuestionMark.src)} />
                 <div className="flex flex-1 flex-col justify-center">
-                    <h3 className="m-1">{props.name}</h3>
-                    <p className="mx-4 my-1 flex items-center gap-1"><b>{props.plan}</b> → {props.desc}</p>
+                    <h3 className="m-1 text-lg text-white">{props.name}</h3>
+                    <p className="mx-4 my-1 flex items-center gap-1 text-gray-300"><b>{props.plan}</b> → {props.desc}</p>
                 </div>
                 <RightSvg className="w-8"/>
             </div>

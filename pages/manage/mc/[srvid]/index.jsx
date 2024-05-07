@@ -6,7 +6,7 @@ import useLocale from "../../../../locales/useLocale";
 import PanelContent from "../../../../components/Global/PanelContent";
 import {Button, Alert, Input} from "antd";
 import {useRecoilState} from "recoil";
-import {userAtom} from "../../../../fiber/fiber.model";
+import {userAtom} from "@/fiber/fiber.model";
 import PanelSideNav from "../../../../components/PanelSideNav";
 
 

@@ -1,23 +1,12 @@
 import Link from "next/link";
 import styles from "@/components/NavBar/NavBar.module.css";
 import NavBar from "@/components/NavBar/NavBar";
-import NavItem from "@/components/NavBar/NavItem";
-import {DropdownItem, DropdownMenu} from "@/components/NavBar/DropDown";
-
-import RightSvg from "@/assets/icons/right.svg";
 import logo_sm from "@/assets/ava.png";
 import logo from "@/assets/Fruitspace2.png";
-import ServerSvg from "@/assets/icons/server.svg";
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
-import StoreIcon from '@mui/icons-material/Store';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 import MinecraftLogo from "@/assets/logos/minecraft.png"
 import GDLogo from "@/assets/logos/geometrydash.png"
-import CSLogo from "@/assets/logos/counterstrike.png"
 import {useRouter} from "next/router";
 import {useGlobalLocale} from "@/locales/useLocale";
 import useFiberAPI from "@/fiber/fiber";
@@ -25,23 +14,22 @@ import {useRecoilState} from "recoil";
 import {userAtom} from "@/fiber/fiber.model";
 import {useState} from "react";
 import {HideOn} from "react-hide-on-scroll";
-import {Button, Dropdown} from "antd";
+import {Button} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faChevronRight,
     faCircleDollarToSlot,
     faRightFromBracket,
-    faServer, faShop,
+    faShop,
     faWallet
 } from "@fortawesome/free-solid-svg-icons";
-import {BetaData} from "@/components/betadata";
 
 
 export default function GlobalNav(props) {
 
     const api = useFiberAPI()
 
-    const [user,setUser] = useRecoilState(userAtom)
+    const [user, setUser] = useRecoilState(userAtom)
     // const user = userModel
     const router = useRouter()
 
@@ -53,8 +41,8 @@ export default function GlobalNav(props) {
 
     const getRegionalPostfix = localeGlobal.get('funcShowServers')
 
-    const prettyPrint = (num)=>new Intl.NumberFormat(user.usd?'en-US':'ru-RU',
-        {style: 'currency',currency: user.usd?"USD":"RUB"}).format(num).replace(/[.|,]00/g, '')
+    const prettyPrint = (num) => new Intl.NumberFormat(user.usd ? 'en-US' : 'ru-RU',
+        {style: 'currency', currency: user.usd ? "USD" : "RUB"}).format(num).replace(/[.|,]00/g, '')
 
     const [open, setOpen] = useState(false)
 
@@ -64,20 +52,21 @@ export default function GlobalNav(props) {
                 {props.mainpage ? <img src={logo_sm.src} alt="logo" className={styles.logo}/>
                     : <img src={logo.src} alt="logo" className="h-8 ml-1 cursor-pointer"/>}
             </Link>
-            {(props.mainpage&&!['/',''].includes(router.pathname))&&
+            {(props.mainpage && !['/', ''].includes(router.pathname)) &&
                 <HideOn atHeight height={200}>
-                    <Link href="/" className="fixed top-2 left-[50%] -translate-x-[50%] hidden md:block md:text-2xl xl:text-3xl font-[Coolvetica] tracking-wider font-normal fruitText m-0 select-none">FruitSpace</Link>
+                    <Link href="/"
+                          className="fixed top-2 left-[50%] -translate-x-[50%] hidden md:block md:text-2xl xl:text-3xl font-[Coolvetica] tracking-wider font-normal fruitText m-0 select-none">FruitSpace</Link>
                 </HideOn>
             }
 
             <div className="flex items-center gap-2">
-                {user.uname &&
+                {user.uname ?
                     <div className="relative">
-                        <img src={user.profile_pic} onClick={()=>setOpen(!open)}
-                             className="rounded-full h-10 border-[1px] border-solid border-white border-opacity-25
+                        <img src={user.profile_pic} onClick={() => setOpen(!open)}
+                             className="rounded-full h-10 border-1 border-solid border-white border-opacity-25
                              cursor-pointer hover:brightness-110"/>
                         {open && <div className="flex-col gap-4 group-hover:flex absolute top-full mt-2 right-0 rounded-xl p-2 z-[9999]
-                    bg-active border-[1px] border-solid border-white border-opacity-25 w-72">
+                    bg-active border-1 border-solid border-white border-opacity-25 w-72">
 
                             <Link href="/profile"
                                   className="flex items-center gap-2 p-1 pr-3 cursor-pointer rounded-lg hover:bg-subtle">
@@ -98,7 +87,7 @@ export default function GlobalNav(props) {
                             <div className="flex items-center gap-2 p-1 rounded-lg">
                                 <div className="w-12 h-12 flex items-center justify-center"><FontAwesomeIcon
                                     icon={faCircleDollarToSlot} className="text-2xl"/></div>
-                                <div className="flex flex-col flex-1 bg-subtle rounded-lg border-[1px] border-solid
+                                <div className="flex flex-col flex-1 bg-subtle rounded-lg border-1 border-solid
                                     border-white border-opacity-25">
                                     <div className="flex items-center">
                                         <span className="flex items-center gap-2 px-1.5 py-1 border-r-[1px]
@@ -121,7 +110,7 @@ export default function GlobalNav(props) {
                                 <span className="w-full border-b-[1px] border-white border-opacity-25"></span>
                                 <div className="flex flex-col gap-2 w-full">
                                     <Link className="flex gap-1 items-center rounded-lg hover:bg-subtle p-1
-                                    border-[1px] border-solid border-white border-opacity-25 cursor-pointer select-none"
+                                    border-1 border-solid border-white border-opacity-25 cursor-pointer select-none"
                                           href="/profile/servers?s=mc">
                                         <img src={MinecraftLogo.src} className="h-12"/>
                                         <div>
@@ -130,7 +119,7 @@ export default function GlobalNav(props) {
                                         </div>
                                     </Link>
                                     <Link className="flex gap-1 items-center rounded-lg hover:bg-subtle p-1
-                                    border-[1px] border-solid border-white border-opacity-25 cursor-pointer select-none"
+                                    border-1 border-solid border-white border-opacity-25 cursor-pointer select-none"
                                           href="/profile/servers?s=gd">
                                         <img src={GDLogo.src} className="h-12"/>
                                         <div>
@@ -143,8 +132,13 @@ export default function GlobalNav(props) {
                         </div>}
                         {open &&
                             <div onClick={() => setOpen(false)} className="fixed top-0 left-0 w-full h-full"/>}
-                            </div>}
                     </div>
-                    </NavBar>
-                    );
-                }
+                    : <Link href="/profile/login" className="select-none bg-subtle py-2 px-4 rounded-full flex items-center gap-2 bg-opacity-75 backdrop-blur-sm
+                border-1 border-solid border-white border-opacity-25 hover:bg-opacity-50">
+                        <VpnKeyIcon/>
+                        Войти
+                    </Link>}
+            </div>
+        </NavBar>
+    );
+}
