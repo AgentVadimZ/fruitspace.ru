@@ -24,21 +24,9 @@
     margin: auto .5rem auto 0;
 }
 
-.MultilineItem {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
 .MultilineItem span {
     color: #adadad;
     font-size: 10pt;
-}
-
-.BalBox {
-    background-color: var(--btn-color);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
 }
 
 .BalBox span {
@@ -52,22 +40,6 @@
     border-right: 2px solid black;
 }
 
-
-
-
-.SideBar {
-    position: fixed;
-    top:var(--nav-height)px;
-    left: 0;
-    z-index: 99;
-    width: var(--nav-height);
-    background-color: var(--active-color);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-}
 
 .SideBar > li {
     margin: .25rem 0;

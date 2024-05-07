@@ -41,13 +41,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SettingsIcon from '@mui/icons-material/Settings';
 import BackupBox from '@/assets/icons/backup_box.svg'
 import TabsUnstyled from "@mui/base/TabsUnstyled";
-import {Tab, TabsList} from "../../../../components/Global/TinyTab";
+import {Tab, TabsList} from "@/components/Global/TinyTab";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAndroid, faApple, faWindows} from "@fortawesome/free-brands-svg-icons";
 import useLocale, {useGlobalLocale} from "../../../../locales/useLocale";
 import useFiberAPI from "../../../../fiber/fiber";
 import {faMusic, faQuestion, faStar, faUpload, faUser} from "@fortawesome/free-solid-svg-icons";
-import {SettingsTour} from "../../../../locales/tours/manage/gd";
+import {SettingsTour} from "@/locales/tours/manage/gd";
 import {FloatButton, Tour} from "antd";
 import {deepEqual} from "@/components/Hooks";
 

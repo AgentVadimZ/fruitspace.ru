@@ -8,7 +8,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import PersonIcon from '@mui/icons-material/Person';
-import {useGlobalLocale} from "../../locales/useLocale";
+import {useGlobalLocale} from "@/locales/useLocale";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelope, faPhone, faReceipt, faUser} from "@fortawesome/free-solid-svg-icons";
 

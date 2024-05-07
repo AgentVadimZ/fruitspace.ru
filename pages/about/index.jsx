@@ -52,9 +52,9 @@ export default function About(props) {
                             пинг 10мс до IXcellerate</span> - одного из крупнейших датацентров России
                         </p>
                         <div className="mt-auto">
-                            <p className="bg-active rounded-t-lg px-2 w-fit border-[1px] border-b-active border-solid border-white border-opacity-25
+                            <p className="bg-active rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
                                         relative z-20 -mb-[1px]">Что за оборудование?</p>
-                            <div className="bg-active p-2 rounded-lg rounded-tl-none border-[1px] border-solid border-white border-opacity-25 text-md mt-0
+                            <div className="bg-active p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25 text-md mt-0
                                         relative z-10 text-sm flex flex-col gap-2">
                                 <p>
                                     Серверы: сертифицированное оборудование от HP и Supermicro, никаких самосборок
@@ -82,9 +82,9 @@ export default function About(props) {
                             исправление уязвимостей
                         </p>
                         <div className="mt-auto">
-                            <p className="bg-active rounded-t-lg px-2 w-fit border-[1px] border-b-active border-solid border-white border-opacity-25
+                            <p className="bg-active rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
                                         relative z-20 -mb-[1px]">Смешная история</p>
-                            <div className="bg-active p-2 rounded-lg rounded-tl-none border-[1px] border-solid border-white border-opacity-25 text-md mt-0
+                            <div className="bg-active p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25 text-md mt-0
                                         relative z-10 text-sm flex flex-col gap-2">
                                 <p>
                                     В конце 2023 один из наших клиентов кому-то перешел дорогу.

@@ -9,7 +9,7 @@ const SideItem = React.forwardRef((props,ref)=> {
 
     return <li className={`h-[calc(var(--nav-height)*2/3)] mt-3 ml-[calc(var(--nav-height)*1/6)] overflow-hidden
             cursor-pointer transition-all duration-150 rounded-xl flex select-none
-            items-center ${props.active? "bg-[var(--primary-color)]":"bg-subtle hover:bg-btn"} 
+            items-center ${props.active? "bg-primary":"bg-subtle hover:bg-btn"} 
             ${isOpen ? "w-[calc(100%-var(--nav-height)*1/3)]" : "w-[calc(var(--nav-height)*2/3)]"} text-gray-300`}
     onClick={props.onClick}>
                 <span className="flex aspect-square h-full justify-center items-center">

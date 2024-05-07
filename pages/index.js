@@ -50,16 +50,16 @@ export default function Home(props) {
                     <span className="bg-blue-600 rounded-full px-4 py-1">Бета</span>
                     <span className="mr-4 text-sm">Сборка от {BetaData.date}</span>
                 </p>
-                <p className="rounded-full bg-subtle border-[1px] border-solid border-white border-opacity-25
+                <p className="rounded-full bg-subtle border-1 border-solid border-white border-opacity-25
                  mx-2 flex flex-col items-center h-fit z-[9999] group cursor-pointer">
                     <span className="rounded-full px-4 py-1 group-hover:bg-opacity-50">Что нового? ›</span>
                     <div className="flex-col gap-4 hidden group-hover:flex absolute top-full text-md right-2 rounded-xl p-2 z-[9999]
-                    bg-active border-[1px] border-solid border-white border-opacity-25">
+                    bg-active border-1 border-solid border-white border-opacity-25">
                         {BetaData.description.map((changes,i)=>{
                             return <div key={i}>
-                                <p className="text-sm rounded-t-lg px-2 w-fit border-[1px] border-b-active
+                                <p className="text-sm rounded-t-lg px-2 w-fit border-1 border-b-active
                                 relative z-20 -mb-[1px]">Сборка от {changes.date}</p>
-                                <ul className="text-sm p-2 rounded-lg rounded-tl-none border-[1px] border-solid border-white border-opacity-25
+                                <ul className="text-sm p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25
                                 relative z-10">
                                     {changes.deltas.map((change,j)=>{
                                         return <li key={j}>• {change}</li>
@@ -126,7 +126,7 @@ export default function Home(props) {
                     <Carousel ref={carouselRef} dots={{className:"!bottom-2"}}>
                         {reviews.map((u, i) => {
                             return <div key={i} className="p-4 my-4 overflow-y-hidden
-                             !w-5/6 lg:!w-2/3 h-96 mx-auto !flex flex-col bg-subtle bg-opacity-75 border-white border-opacity-25 rounded-2xl border-solid border-[1px]">
+                             !w-5/6 lg:!w-2/3 h-96 mx-auto !flex flex-col bg-subtle bg-opacity-75 border-white border-opacity-25 rounded-2xl border-solid border-1">
                                 <div className="flex flex-col lg:flex-row items-center justify-between">
                                     <p className="text-lg w-40">{u.user}</p>
                                     <p>{u.date}</p>
@@ -134,21 +134,21 @@ export default function Home(props) {
                                 </div>
                                 <div className="flex flex-col gap-4 mt-4">
                                     {u.pros && <div>
-                                        <p className="bg-active text-lg rounded-t-lg px-2 w-fit border-[1px] border-b-active border-solid border-white border-opacity-25
+                                        <p className="bg-active text-lg rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
                                         relative z-20 -mb-[1px]">Что понравилось?</p>
-                                        <pre className="bg-active p-2 rounded-lg rounded-tl-none border-[1px] border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
+                                        <pre className="bg-active p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
                                         relative z-10">{u.pros}</pre>
                                     </div>}
                                     {u.cons && <div>
-                                        <p className="bg-active text-lg rounded-t-lg px-2 w-fit border-[1px] border-b-active border-solid border-white border-opacity-25
+                                        <p className="bg-active text-lg rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
                                         relative z-20 -mb-[1px]">Что не понравилось, чего не хватает?</p>
-                                        <pre className="bg-active p-2 rounded-lg rounded-tl-none border-[1px] border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
+                                        <pre className="bg-active p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
                                         relative z-10">{u.cons}</pre>
                                     </div>}
                                     {u.verdict && <div>
-                                        <p className="bg-active text-lg rounded-t-lg px-2 w-fit border-[1px] border-b-active border-solid border-white border-opacity-25
+                                        <p className="bg-active text-lg rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
                                         relative z-20 -mb-[1px]">Останетесь ли на FruitSpace?</p>
-                                        <pre className="bg-active p-2 rounded-lg rounded-tl-none border-[1px] border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
+                                        <pre className="bg-active p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
                                         relative z-10">{u.verdict}</pre>
                                     </div>}
                                 </div>

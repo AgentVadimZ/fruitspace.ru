@@ -144,7 +144,7 @@ export default function Login(props) {
         <GlobalNav router={props.router} mainpage />
         <Toaster/>
         <div className="h-[calc(100vh-var(--nav-height))] flex flex-col justify-center items-center">
-            <div className="bg-active border-subtle rounded-2xl border-solid border-[1px] p-4 flex flex-col gap-4">
+            <div className="bg-active border-subtle rounded-2xl border-solid border-1 p-4 flex flex-col gap-4">
                 <div className="flex items-center gap-4">
                     {mode === "login" && <h1 className="text-xl font-bold">Вход</h1>}
                     {mode === "reg" && <h1 className="text-xl font-bold">Регистрация</h1>}

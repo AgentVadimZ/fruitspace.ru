@@ -42,7 +42,7 @@ export default function Footer(props) {
                     </Link>
                     <p className="flex items-center gap-2 text-sm group">
                         Designed by
-                        <Link href="https://m41den.com" target="_blank" className="flex items-center gap-2 border-[1px] border-solid border-transparent group-hover:border-white rounded-full pr-2">
+                        <Link href="https://m41den.com" target="_blank" className="flex items-center gap-2 border-1 border-solid border-transparent group-hover:border-white rounded-full pr-2">
                             <img src="https://cdn.fruitspace.one/profile_pics/c4ca4238a0b923820dcc509a6f75849b.png" className="w-6 h-6 rounded-full" />
                             M41den
                         </Link>

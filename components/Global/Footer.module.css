@@ -1,10 +1,5 @@
 
 
-.footerTop {
-    display: flex;
-    margin: 1rem;
-}
-
 .footerTop > div {
     margin-left: .5rem;
 }
@@ -31,26 +26,15 @@
     background: linear-gradient(135deg, #8e388e,#5a00ff 70%, #0d6efd);
 }
 
-.footerLinklist {
-    margin: .5rem;
-}
-
 .footerLinklist p {
     cursor: pointer;
     transition: 300ms;
 }
 
 @media screen and (max-width: 600px) {
-    .footerTop {
-        flex-direction: column;
-        border-left: white 4px solid;
-    }
     .footerTop > div {
         display: flex;
         align-items: baseline;
     }
 
-    .footerLinklist {
-        display: block !important;
-    }
 }

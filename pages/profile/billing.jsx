@@ -2,7 +2,7 @@ import GlobalNav from "../../components/GlobalNav";
 import PanelSideNav from "../../components/PanelSideNav";
 import GlobalHead from "../../components/GlobalHead";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
-import {Tab, TabPanel, TabsList} from "../../components/Global/Tab";
+import {Tab, TabPanel, TabsList} from "@/components/Global/Tab";
 import PanelContent from "../../components/Global/PanelContent";
 import {useEffect, useState} from "react";
 import {Avatar, IconButton, List, ListItem, ListItemAvatar, ListItemText} from "@mui/material";

@@ -5,7 +5,7 @@ import GlobalGDPSNav from "../../../components/UserZone/GlobalGDPSNav";
 import styles from "../../../components/Manage/GDManage.module.css";
 import {useRecoilState} from "recoil";
 import GDServer from "../../../states/gd_server";
-import {GDUserState} from "../../../states/gd_user";
+import {GDUserState} from "@/states/gd_user";
 import GDPSNavBar from "../../../components/UserZone/GDPSSIdeBar";
 
 

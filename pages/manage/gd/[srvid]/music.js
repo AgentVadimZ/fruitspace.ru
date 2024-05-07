@@ -42,7 +42,7 @@ import {Tooltip} from "@mui/material"
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import useLocale from "../../../../locales/useLocale";
 import useFiberAPI from "../../../../fiber/fiber";
-import {MusicTour} from "../../../../locales/tours/manage/gd";
+import {MusicTour} from "@/locales/tours/manage/gd";
 import {FloatButton, Tour} from "antd";
 
 

@@ -143,7 +143,7 @@ export default function GD(props) {
                     <p className="text-center ">хостинг построен с нуля специально для Geometry Dash</p>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
                         <div
-                            className="flex flex-col 2xl:flex-row gap-4 bg-active border-subtle rounded-2xl border-solid border-[1px]">
+                            className="flex flex-col 2xl:flex-row gap-4 bg-active border-subtle rounded-2xl border-solid border-1">
                             <img src={FeatureCoreImg.src} className="2xl:w-[17rem] 2xl:h-[17rem]"/>
                             <div className="flex flex-col gap-2 p-4 text-sm">
                                 <p className="text-2xl font-semibold rainbow mb-2">Ядро GhostCore</p>
@@ -154,7 +154,7 @@ export default function GD(props) {
                         </div>
 
                         <div
-                            className="flex flex-col 2xl:flex-row gap-4 bg-active border-subtle rounded-2xl border-solid border-[1px]">
+                            className="flex flex-col 2xl:flex-row gap-4 bg-active border-subtle rounded-2xl border-solid border-1">
                             <img src={FeatureShieldImg.src} className="2xl:w-[17rem] 2xl:h-[17rem]"/>
                             <div className="flex flex-col gap-2 p-4 text-sm">
                                 <p className="text-2xl font-semibold rainbow mb-2">Защита от DDoS</p>
@@ -166,7 +166,7 @@ export default function GD(props) {
                         </div>
 
                         <div
-                            className="flex flex-col 2xl:flex-row gap-4 bg-active border-subtle rounded-2xl border-solid border-[1px]">
+                            className="flex flex-col 2xl:flex-row gap-4 bg-active border-subtle rounded-2xl border-solid border-1">
                             <img src={FeatureMusicImg.src} className="2xl:w-[17rem] 2xl:h-[17rem]"/>
                             <div className="flex flex-col gap-2 p-4 text-sm">
                                 <p className="text-2xl font-semibold rainbow mb-2">Библиотека музыки</p>
@@ -187,7 +187,7 @@ export default function GD(props) {
                     <p className="text-center font-mono">на любой вкус</p>
                     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mt-8 w-fit mx-auto">
                         <div
-                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-[1px] p-4 w-96">
+                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 w-96">
                             <TariffPS className="w-32 mt-2"/>
                             <p className="text-2xl font-semibold font-avant uppercase -mt-6 tracking-wide">
                                 Press Start
@@ -212,7 +212,7 @@ export default function GD(props) {
                         </div>
 
                         <div
-                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-[1px] p-4 w-96">
+                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 w-96">
                             <TariffSG className="w-32 border-white border-2"/>
                             <p className="text-2xl font-semibold font-avant uppercase -mt-3 tracking-wide">
                                 Singularity
@@ -237,7 +237,7 @@ export default function GD(props) {
                         </div>
 
                         <div
-                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-[1px] p-4 w-96">
+                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 w-96">
                             <TariffFD className="w-32"/>
                             <p className="text-2xl font-semibold font-avant uppercase -mt-3 tracking-wide">
                                 Foundation

@@ -12,6 +12,7 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import NavItem from "@/components/NavBar/NavItem";
 import {useEffect, useState} from "react";
 import useFiberAPI from "@/fiber/fiber";
+import {PlusOne} from "@mui/icons-material";
 
 
 export default function GlobalGDPSNav(props) {
@@ -47,7 +48,7 @@ export default function GlobalGDPSNav(props) {
                         href={`/gdps/${router.query.srvid}?fresh=y`}
                         prefetch={false}
                         legacyBehavior>
-                        <DropdownItem key="fresh" leftIcon={<LogoutOutlinedIcon/>}>{globalLocale.get('addaccount')}</DropdownItem>
+                        <DropdownItem key="fresh" leftIcon={<PlusOne/>}>{globalLocale.get('addaccount')}</DropdownItem>
                     </Link>
                 </DropdownMenu>
             </NavItem>

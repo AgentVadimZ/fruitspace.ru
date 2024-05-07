@@ -2,11 +2,10 @@ import GlobalNav from "../../components/GlobalNav";
 import PanelSideNav from "../../components/PanelSideNav";
 import GlobalHead from "../../components/GlobalHead";
 import PanelContent from "../../components/Global/PanelContent";
-import {TabsList, TabPanel, Tab, TabButton} from "../../components/Global/Tab";
+import {TabsList, TabPanel, Tab, TabButton} from "@/components/Global/Tab";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ServerItem from "../../components/Cards/ServerItem";
 import useEffectOnce from "../../components/Hooks";
 import toast from "react-hot-toast";
@@ -19,7 +18,7 @@ import {faHardDrive, faMemory, faMicrochip} from "@fortawesome/free-solid-svg-ic
 export default function Servers(props) {
     const router = useRouter()
     const {s} = router.query;
-    var route = "gd";
+    const route = "gd";
     const [tab, setTab] = useState(route)
 
     const api = useFiberAPI()
@@ -60,7 +59,6 @@ export default function Servers(props) {
                         <Tab value="gd">GD</Tab>
                         <Tab value="mc">MC</Tab>
                         <Tab value="cs">CS</Tab>
-                        {/*<TabButton><ExpandMoreIcon/></TabButton>*/}
                     </TabsList>
                     <TabPanel value="gd">
                         {servers.gd?servers.gd.map((val, i)=>(

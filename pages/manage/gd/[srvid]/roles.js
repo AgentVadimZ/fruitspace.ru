@@ -39,7 +39,7 @@ import dynamic from "next/dynamic";
 import HelpIcon from "@mui/icons-material/Help";
 import useFiberAPI from "../../../../fiber/fiber";
 import {FloatButton, Tour} from "antd";
-import {RolesTour} from "../../../../locales/tours/manage/gd";
+import {RolesTour} from "@/locales/tours/manage/gd";
 
 const SketchPicker = dynamic(() => import("react-color").then((mod)=>mod.SketchPicker), { ssr: false });
 

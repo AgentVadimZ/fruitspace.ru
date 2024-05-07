@@ -10,7 +10,7 @@ import {
     ListItemText,Accordion, AccordionSummary, AccordionDetails
 } from "@mui/material";
 
-import {TabsList, TabPanel, Tab} from "../../components/Global/Tab";
+import {TabsList, TabPanel, Tab} from "@/components/Global/Tab";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
 import {useState} from "react";
 

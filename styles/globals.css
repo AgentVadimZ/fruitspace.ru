@@ -166,6 +166,9 @@ input {
     width: fit-content;
 }
 
+.nextborder {
+    @apply border-1 border-solid border-white border-opacity-25;
+}
 
 
 /* region OVERRIDES */

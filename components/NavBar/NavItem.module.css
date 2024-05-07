@@ -1,12 +1,5 @@
 
 
-.navItem {
-    width: calc(var(--nav-height)*0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .iconButton {
     --btn-size: calc(var(--nav-height)*0.5);
     width: calc(var(--btn-size) + 10px);

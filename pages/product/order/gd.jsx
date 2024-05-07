@@ -4,7 +4,7 @@ import styles from "../../../components/Index.module.css";
 import {styled} from "@mui/system";
 import {TextField} from "@mui/material";
 import {useEffect, useState} from "react";
-import {Tab, TabsList, TabPanel} from "../../../components/Global/Tab";
+import {Tab, TabsList, TabPanel} from "@/components/Global/Tab";
 import useEffectOnce from "../../../components/Hooks";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
 import toast, {Toaster} from "react-hot-toast";
@@ -138,7 +138,7 @@ export default function Order(props) {
         return (
             <div className="flex flex-col xl:flex-row gap-8">
                 {barrier <= 1 && <div
-                    className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-[1px] p-4 w-96">
+                    className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 w-96">
                     <TariffPS className="w-32 mt-2"/>
                     <p className="text-2xl font-semibold font-avant uppercase -mt-6 tracking-wide">
                         Press Start
@@ -163,7 +163,7 @@ export default function Order(props) {
                 </div>
                 }
                 {barrier <= 2 && <div
-                    className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-[1px] p-4 w-96">
+                    className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 w-96">
                     <TariffSG className="w-32 border-white border-2"/>
                     <p className="text-2xl font-semibold font-avant uppercase -mt-3 tracking-wide">
                         Singularity
@@ -192,7 +192,7 @@ export default function Order(props) {
                 </div>
                 }
                 {barrier === 3 && <div
-                    className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-[1px] p-4 w-96">
+                    className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 w-96">
                     <img src={TariffTO.src} className="w-32"/>
                     <p className="text-2xl font-semibold font-avant uppercase -mt-3 tracking-wide">
                         Takeoff
@@ -220,7 +220,7 @@ export default function Order(props) {
                     </Button>
                 </div>}
                 {barrier <= 4 && <div
-                    className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-[1px] p-4 w-96">
+                    className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 w-96">
                     <TariffFD className="w-32"/>
                     <p className="text-2xl font-semibold font-avant uppercase -mt-3 tracking-wide">
                         Foundation
@@ -299,7 +299,10 @@ export default function Order(props) {
                 {createCards(srv.payDuration)}
             </div>
         </div>
-        <p className="mx-auto w-fit my-4 text-gray-300">{locale.get('tosReminder').main}<Link href="/about/tos" passHref className="text-2xl" legacyBehavior>{locale.get('tosReminder').link}</Link></p>
+        <p className="mx-auto w-fit my-4 text-gray-300">
+            {locale.get('tosReminder').main}
+            <Link href="/about/tos" passHref className="hover:underline">{locale.get('tosReminder').link}</Link>
+        </p>
     </>;
 }
 
