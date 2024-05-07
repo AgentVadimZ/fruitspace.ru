@@ -102,6 +102,10 @@
     @apply border-[1px] border-solid border-white border-opacity-25 bg-active !important;
 }
 
+.ant-slider-handle::after {
+    background-color: white !important;
+}
+
 @font-face {
     font-family: "Coolvetica";
     src: url("/coolvetica.otf");

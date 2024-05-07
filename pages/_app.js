@@ -55,6 +55,18 @@ export default function WebApp({Component, pageProps}) {
                             footerBg: "rgba(0,0,0,0)",
                             colorBgContainer: "rgba(0,0,0,0)",
                             selectionColumnWidth: 48
+                        },
+                        Slider: {
+                            railBg: "rgba(255,255,255,0.2)",
+                            railHoverBg: "rgba(255,255,255,0.3)",
+                            trackBg: "rgba(255,255,255,0.7)",
+                            trackHoverBg: "rgba(255,255,255,1)",
+                            handleColor: "rgba(255,255,255,0.7)",
+                            handleSize: 8,
+                            handleSizeHover: 12,
+                            handleLineWidth: 0,
+                            handleLineWidthHover: 0,
+                            dotSize: 1
                         }
                     },
                     algorithm: theme.darkAlgorithm
