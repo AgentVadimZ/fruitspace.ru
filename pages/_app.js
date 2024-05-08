@@ -37,7 +37,8 @@ export default function WebApp({Component, pageProps}) {
                         },
                         Select: {
                             activeShadow: "0 0 0 1px #0d6efd",
-                            colorBgElevated: "var(--subtle-color)"
+                            colorBgElevated: "var(--subtle-color)",
+                            optionSelectedBg: "var(--btn-color)"
                         },
                         Button: {
                             primaryShadow: "none",

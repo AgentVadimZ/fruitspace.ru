@@ -14,9 +14,9 @@ import {
     faArrowDown19,
     faArrowDownAZ,
     faArrowDownWideShort,
-    faCompactDisc,
+    faCompactDisc, faDownload,
     faPause,
-    faPlay, faVolumeLow
+    faPlay, faSearch, faVolumeLow
 } from "@fortawesome/free-solid-svg-icons";
 import {
     Backdrop,
@@ -26,7 +26,7 @@ import {
     InputAdornment,
     MenuItem,
     MenuList,
-    Pagination,
+    Pagination as PaginationX,
     Slider as SliderX,
     TextField,
     Tooltip
@@ -46,7 +46,8 @@ import GlobalGDPSNav from "../../../components/UserZone/GlobalGDPSNav";
 import GDPSNavBar from "../../../components/UserZone/GDPSSIdeBar";
 import {useRouter} from "next/router";
 import useFiberAPI from "../../../fiber/fiber";
-import {Slider} from "antd";
+import {Input, Pagination, Select, Slider} from "antd";
+import {debounce} from "lodash";
 
 
 export default function MusicGD(props) {
@@ -109,17 +110,17 @@ export default function MusicGD(props) {
     const [sortMode, setSortModeX] = useState("downloads")
     const setSortMode = (mode) => {
         setSortModeX(mode)
-        searchMusic(mode)
+        searchMusic(search, mode)
         setSortShow(false)
     }
 
     const locale = useLocale(props.router)
 
-    const searchMusic = (mode) => {
-        api.gdps_users.getMusic(srvid, mode, search, page).then((resp) => {
+    const searchMusic = (query, mode=sortMode) => {
+        api.gdps_users.getMusic(srvid, mode, query||search, page).then((resp) => {
             if (resp.status === "ok") {
                 setMusic(resp.music)
-                setPageCount(Math.ceil(resp.count / 10))
+                setPageCount(resp.count)
             } else {
                 console.error(resp)
             }
@@ -168,8 +169,10 @@ export default function MusicGD(props) {
 
 
     useEffect(() => {
-        srv.srvid && searchMusic(sortMode)
+        srv.srvid && searchMusic()
     }, [srv, page])
+
+    const searchDebounced = debounce(searchMusic, 500)
 
     return (
         <>
@@ -187,15 +190,15 @@ export default function MusicGD(props) {
                         <p className="bg-active text-sm rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
                                         relative z-20 -mb-[1px]">Загрузить музыку</p>
                             <div className="bg-active flex gap-2 items-center p-2 rounded-xl rounded-tl-none border-1 border-white border-opacity-25 z-10">
-                                <img src={LogoNG.src} className="w-12 xl:w-16 rounded-lg"
+                                <img src={LogoNG.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
                                      onClick={() => setBackdrop("add-ng")}/>
-                                {srv.plan > 1 && <img src={LogoYT.src} className="w-12 xl:w-16 rounded-lg"
+                                {srv.plan > 1 && <img src={LogoYT.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
                                                       onClick={() => setBackdrop("add-yt")}/>}
-                                {srv.plan > 2 && <img src={LogoDZ.src} className="w-12 xl:w-16 rounded-lg"
+                                {srv.plan > 2 && <img src={LogoDZ.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
                                                       onClick={() => setBackdrop("add-dz")}/>}
-                                {srv.plan > 2 && <img src={LogoVK.src} className="w-12 xl:w-16 rounded-lg"
+                                {srv.plan > 2 && <img src={LogoVK.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
                                                       onClick={() => setBackdrop("add-vk")}/>}
-                                {srv.plan > 1 && <img src={LogoDBox.src} className="w-12 xl:w-16 rounded-lg"
+                                {srv.plan > 1 && <img src={LogoDBox.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
                                                       onClick={() => setBackdrop("add-db")}/>}
                             </div>
                     </div>
@@ -234,113 +237,68 @@ export default function MusicGD(props) {
                 </div>
 
 
-                <div className={styles.CardBox} style={{marginTop: "2rem"}}>
-                    <div className={styles.MusicSearchBox}>
-                        <div className={styles.MusicSearchSlick}>
-                            <ClickAwayListener onClickAway={() => setSortShow(false)}>
-                                <div>
-                                    <Tooltip
-                                        open={sortShow}
-                                        disableFocusListener disableHoverListener disableTouchListener
-                                        title={
-                                            <MenuList>
-                                                <MenuItem selected={false} style={{
-                                                    borderRadius: "4px",
-                                                    backgroundColor: (sortMode === "alpha" ? "#0d6efd" : "none")
-                                                }}
-                                                          onClick={() => setSortMode("alpha")}>
-                                                    <Button style={{color: "white"}} variant="text"
-                                                            startIcon={<FontAwesomeIcon icon={faArrowDownAZ}
-                                                                                        style={{height: "1.5rem"}}/>}>
-                                                        {locale.get("sort")[0]}
-                                                    </Button>
-                                                </MenuItem>
-                                                <MenuItem selected={false} style={{
-                                                    borderRadius: "4px",
-                                                    backgroundColor: (sortMode === "id" ? "#0d6efd" : "none")
-                                                }}
-                                                          onClick={() => setSortMode("id")}>
-                                                    <Button style={{color: "white"}} variant="text"
-                                                            startIcon={<FontAwesomeIcon icon={faArrowDown19}
-                                                                                        style={{height: "1.5rem"}}/>}>
-                                                        {locale.get("sort")[1]}
-                                                    </Button>
-                                                </MenuItem>
-                                                <MenuItem selected={false} style={{
-                                                    borderRadius: "4px",
-                                                    backgroundColor: (sortMode === "downloads" ? "#0d6efd" : "none")
-                                                }}
-                                                          onClick={() => setSortMode("downloads")}>
-                                                    <Button style={{color: "white"}} variant="text"
-                                                            startIcon={<FontAwesomeIcon icon={faArrowDownWideShort}
-                                                                                        style={{height: "1.5rem"}}/>}>
-                                                        {locale.get("sort")[2]}
-                                                    </Button>
-                                                </MenuItem>
-                                            </MenuList>
-                                        }>
-                                        <Button onClick={() => setSortShow(!sortShow)} className={styles.SlimButton}
-                                                style={{margin: "0 .5rem 0 0", color: "white"}}>
-                                            {sortMode === "alpha" &&
-                                                <FontAwesomeIcon icon={faArrowDownAZ} style={{height: "1.5rem"}}/>}
-                                            {sortMode === "id" &&
-                                                <FontAwesomeIcon icon={faArrowDown19} style={{height: "1.5rem"}}/>}
-                                            {sortMode === "downloads" && <FontAwesomeIcon icon={faArrowDownWideShort}
-                                                                                          style={{height: "1.5rem"}}/>}
-                                            <KeyboardArrowDownIcon style={{height: "1rem"}}/>
-                                        </Button>
-                                    </Tooltip>
-                                </div>
-                            </ClickAwayListener>
-
-                            <FruitThinField label={locale.get('search')}
-                                            value={search} onChange={(evt) => setSearch(evt.target.value)}
-                                            InputProps={{
-                                                endAdornment: (
-                                                    <InputAdornment position="end">
-                                                        <IconButton edge="end" onClick={() => searchMusic(sortMode)}>
-                                                            <Search/>
-                                                        </IconButton>
-                                                    </InputAdornment>
-                                                )
-                                            }}/>
-                        </div>
-                        <Pagination count={pageCount} page={page + 1} onChange={(e, val) => setPage(val - 1)}
-                                    shape="rounded" sx={{"& *": {color: "white !important"}}}/>
+                <div className="mt-4 flex flex-col gap-4 rounded-xl bg-active nextborder p-4 w-full xl:w-2/3">
+                    <div className="flex flex-col xl:flex-row items-center gap-2">
+                        <Select value={sortMode} options={[
+                            {label: <span className="flex items-center gap-2">
+                                    <FontAwesomeIcon icon={faArrowDownAZ}/>
+                                    По алфавиту
+                                </span>, value: "alpha"},
+                            {label: <span className="flex items-center gap-2">
+                                    <FontAwesomeIcon icon={faArrowDown19}/>
+                                    По ID
+                                </span>, value: "id"},
+                            {label: <span className="flex items-center gap-2">
+                                    <FontAwesomeIcon icon={faArrowDownWideShort}/>
+                                    По загрузкам
+                                </span>, value: "downloads"}
+                        ]} onChange={(val)=>setSortMode(val)} />
+                        <Input placeholder="Поиск" value={search} prefix={<FontAwesomeIcon icon={faSearch} />}
+                               rootClassName="xl:w-64 "
+                               onChange={(e)=>{
+                                   setSearch(e.target.value)
+                                   searchDebounced(e.target.value)
+                               }}/>
+                        <Pagination rootClassName="ml-auto" total={pageCount} current={page+1} onChange={(val)=>setPage(val-1)} showSizeChanger={false} />
                     </div>
-                    <List>
+                    <div className="flex flex-col gap-2">
                         {music && music.map((val, i) => (
-                            <ListItem key={i} className={styles.hoverable} secondaryAction={
-                                <IconButton edge="end" onClick={() => {
-                                    if (val.id === playerData.id) setPlayerData({
-                                        ...playerData,
-                                        playing: !playerData.playing
-                                    })
-                                    else setPlayerData({
-                                        ...playerData,
-                                        playing: true,
-                                        title: val.name,
-                                        artist: val.artist,
-                                        id: val.id,
-                                        src: val.url,
-                                        position: 0,
-                                        duration: 1
-                                    })
-                                }}>
-                                    {(playerData.playing && playerData.id === val.id) ? <PauseRounded/> :
-                                        <PlayArrowRounded/>}
-                                </IconButton>}>
-                                <ListItemAvatar>
-                                    <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg}
-                                                     style={{marginRight: "1rem", height: "3rem"}}/>
-                                </ListItemAvatar>
-                                <ListItemText primary={<>{val.name}</>}
-                                              secondary={<p style={{margin: 0}}>{val.artist} <span
-                                                  className={styles.MusicPlayerID}>ID {val.id}</span></p>}/>
-                            </ListItem>
+                            <div className="flex items-center rounded-lg py-2 px-4 gap-4 cursor-pointer hover:bg-btn" key={i}
+                                 onClick={() => {
+                                     if (val.id === playerData.id) setPlayerData({
+                                         ...playerData,
+                                         playing: !playerData.playing
+                                     })
+                                     else setPlayerData({
+                                         ...playerData,
+                                         playing: true,
+                                         title: val.name,
+                                         artist: val.artist,
+                                         id: val.id,
+                                         src: val.url,
+                                         position: 0,
+                                         duration: 1
+                                     })
+                                 }}>
+                                <FontAwesomeIcon icon={faCompactDisc} className="text-4xl" />
+                                <div>
+                                    <p className="text-ellipsis overflow-hidden text-nowrap max-w-40 xl:max-w-[64rem]">{val.name}</p>
+                                    <p className="text-sm text-gray-300 flex flex-col xl:flex-row xl:items-center gap-2">
+                                        {val.artist}
+                                        <p className="flex items-center gap-2">
+                                            <span className="rounded px-1.5 text-xs bg-btn text-white">ID {val.id}</span>
+                                            <span className="rounded px-1.5 text-xs bg-btn text-white">
+                                            <FontAwesomeIcon icon={faDownload}/> {val.downloads}
+                                        </span>
+                                        </p>
+                                    </p>
+                                </div>
+                                <FontAwesomeIcon
+                                    icon={(playerData.playing && playerData.id === val.id) ? faPause : faPlay}
+                                    className="ml-auto"/>
+                            </div>
                         ))}
-
-                    </List>
+                    </div>
                 </div>
             </PanelContent>
 
