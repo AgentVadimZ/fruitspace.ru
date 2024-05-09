@@ -178,7 +178,7 @@ export default function MusicGD(props) {
         <>
             <GlobalHead title={srv.srv_name}/>
             <GlobalGDPSNav name={srv.srv_name} icon={srv.icon} users={tokens}/>
-            <GDPSNavBar music={srv.plan > 1}/>
+            <GDPSNavBar plan={srv.plan} />
             <PanelContent>
 
                 <div className="flex flex-col gap-4 justify-center items-center xl:items-end w-full xl:w-2/3 xl:flex-row">

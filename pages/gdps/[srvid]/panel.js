@@ -22,7 +22,7 @@ import {Button} from "antd";
 
 export default function FrontPage(props) {
 
-    const router = useRouter()
+    const router = props.router
 
     const srvid = router.query.srvid
     const [srv, setSrv] = useState({})
@@ -140,7 +140,7 @@ export default function FrontPage(props) {
     return <>
         <GlobalHead title={srv.srv_name}/>
         <GlobalGDPSNav name={srv.srv_name} icon={srv.icon} users={tokens} />
-        <GDPSNavBar music={srv.plan>1}/>
+        <GDPSNavBar plan={srv.plan}/>
         <Toaster/>
         {user.uname && <PanelContent>
             <div>
