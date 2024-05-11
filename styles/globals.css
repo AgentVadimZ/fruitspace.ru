@@ -55,6 +55,10 @@
 }
 
 
+.nx-rounded {
+    border-radius: 8px !important;
+}
+
 .ant-btn-link {
     color: var(--primary-color);
 }

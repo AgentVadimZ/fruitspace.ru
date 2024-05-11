@@ -10,8 +10,8 @@ import {faDiscord, faTelegram, faVk, faYoutube} from "@fortawesome/free-brands-s
 
 export default function Footer(props) {
     const year = new Date().getFullYear()
-
-    const locale = useGlobalLocale(props.router)
+    
+    
 
     return (
         <div className="bg-black flex flex-col">

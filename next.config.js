@@ -1,8 +1,11 @@
-import createMDX from '@next/mdx'
+const withNextra = require('nextra')({
+  theme: 'nextra-theme-docs',
+  themeConfig: './theme.config.js'
+})
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
   reactStrictMode: true,
   swcMinify: true,
   webpack: (config)=>{
@@ -46,6 +49,4 @@ const nextConfig = {
   // ]
 }
 
-const withMDX = createMDX({})
-// module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions);
-export default withMDX(nextConfig)
+module.exports = withNextra(nextConfig)
