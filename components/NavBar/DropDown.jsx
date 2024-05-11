@@ -2,7 +2,7 @@ import styles from './DropDown.module.css'
 
 export function DropdownMenu(props) {
     return (
-        <div className={props.centered?styles.dropdownCentered:styles.dropdown}>
+        <div className={`${props.centered?styles.dropdownCentered:styles.dropdown} flex flex-col gap-2`}>
             {props.children}
         </div>
     )

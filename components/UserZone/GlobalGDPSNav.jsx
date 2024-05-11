@@ -13,6 +13,8 @@ import NavItem from "@/components/NavBar/NavItem";
 import {useEffect, useState} from "react";
 import useFiberAPI from "@/fiber/fiber";
 import {PlusOne} from "@mui/icons-material";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
 
 
 export default function GlobalGDPSNav(props) {
@@ -48,7 +50,7 @@ export default function GlobalGDPSNav(props) {
                         href={`/gdps/${router.query.srvid}?fresh=y`}
                         prefetch={false}
                         legacyBehavior>
-                        <DropdownItem key="fresh" leftIcon={<PlusOne/>}>{globalLocale.get('addaccount')}</DropdownItem>
+                        <DropdownItem key="fresh" leftIcon={<FontAwesomeIcon icon={faPlus} />}>{globalLocale.get('addaccount')}</DropdownItem>
                     </Link>
                 </DropdownMenu>
             </NavItem>
