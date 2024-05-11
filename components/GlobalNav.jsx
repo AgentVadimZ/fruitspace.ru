@@ -234,7 +234,7 @@ const NavLink = (props) => {
     return <div className={`relative group ${props.inner?"p-0":"p-2"}`} key={props.key}>
         {
             props.link
-                ? <Link href={props.link} className="flex gap-2 items-center font-now leading-none rounded-lg cursor-pointer
+                ? <Link href={props.link} className="flex gap-2 items-center font-now text-sm leading-none rounded-lg cursor-pointer
                 bg-subtle bg-opacity-75 backdrop-blur p-2 text-gray-300 hover:text-white hover:bg-opacity-100 text-nowrap">
                     {props.text}
                 </Link>
@@ -261,7 +261,7 @@ const DrawerLink = (props) => {
                 {props.text}
             </Link>
             : <div key={props.key} className="bg-subtle bg-opacity-50 backdrop-blur rounded-lg">
-                <p className="flex gap-2 items-center justify-between font-now text-sm leading-none cursor-pointer
+                <p className="flex gap-2 items-center justify-between font-now leading-none cursor-pointer
                 p-4 text-gray-300 hover:text-white text-nowrap border-b-1 border-white border-opacity-25">
                     {props.text}
                     <FontAwesomeIcon className="text-xs" icon={faChevronDown}/>

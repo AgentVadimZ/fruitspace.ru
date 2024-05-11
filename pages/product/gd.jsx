@@ -187,7 +187,7 @@ export default function GD(props) {
                     <p className="text-center font-mono">на любой вкус</p>
                     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mt-8 w-fit mx-auto">
                         <div
-                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 w-96">
+                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 lg:w-96">
                             <TariffPS className="w-32 mt-2"/>
                             <p className="text-2xl font-semibold font-avant uppercase -mt-6 tracking-wide">
                                 Press Start
@@ -212,7 +212,7 @@ export default function GD(props) {
                         </div>
 
                         <div
-                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 w-96">
+                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 lg:w-96">
                             <TariffSG className="w-32 border-white border-2"/>
                             <p className="text-2xl font-semibold font-avant uppercase -mt-3 tracking-wide">
                                 Singularity
@@ -237,7 +237,7 @@ export default function GD(props) {
                         </div>
 
                         <div
-                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 w-96">
+                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 lg:w-96">
                             <TariffFD className="w-32"/>
                             <p className="text-2xl font-semibold font-avant uppercase -mt-3 tracking-wide">
                                 Foundation
