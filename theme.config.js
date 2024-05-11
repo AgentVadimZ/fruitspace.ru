@@ -4,7 +4,7 @@ import Footer from "@/components/Global/Footer";
 
 
 export default {
-    logo: <span>My Nextra Documentation</span>,
+    logo: <span>Fruitspace</span>,
     useNextSeoProps: ()=>({
         titleTemplate: '%s | FruitSpace Docs',
     }),
