@@ -24,6 +24,7 @@ module.exports = {
       },
       fontFamily: {
         "avant": "ITC Avant Garde Std Md, sans-serif",
+        "now": "Helvetica Now Text, Helvetica, sans-serif",
       },
       height: {
         "112": "28rem",

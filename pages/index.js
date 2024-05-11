@@ -28,6 +28,18 @@ export async function getStaticProps(ctx) {
     }
 }
 
+const formatStat = (num) => {
+    if (num<1000) {
+        return num
+    } else if (num<1000000) {
+        return (num/1000).toFixed(1) + "K"
+    } else if (num<1000000000) {
+        return (num/1000000).toFixed(1) + "M"
+    } else {
+        return "1B+"
+    }
+}
+
 export default function Home(props) {
     useLocale(props.router);
     const localeGlobal = useGlobalLocale(props.router)
@@ -43,7 +55,7 @@ export default function Home(props) {
         <GlobalHead og={og} />
         <div className="fixed top-0 left-0 w-screen h-screen -z-20 bg-[#191921]"></div>
         <div className="fixed top-0 left-0 w-screen h-screen -z-10 techBg"></div>
-        <div className="">
+        <div>
             {BetaData.beta &&
                 <div className="bg-active backdrop-blur bg-opacity-20 h-12 flex items-center justify-between z-[9999] relative">
                 <p className="rounded-full bg-subtle  mx-2 flex items-baseline gap-2 h-fit">
@@ -79,7 +91,8 @@ export default function Home(props) {
                     <p className="text-md text-center xl:text-xl m-0 font-[Helvetica]">Удобный и надежный хостинг для ваших любимых игр. И ещё немножко магии ✨</p>
 
                     <div className="mt-24 grid grid-cols-1 xl:grid-cols-3 gap-4 xl:gap-16 select-none">
-                        <ProdCard link="/product/gd" name="Geometry Dash" description="Кастомная музыка, 2.2, моды и конфигуратор установщиков" logo={GDLogo.src} stats={`${props.stats.gdps_count} ${getRegionalPostfix(props.stats.gdps_count)} • ${getLvlsCnt(props.stats.gdps_levels)}`} />
+                        <ProdCard link="/product/gd" name="Geometry Dash" description="Кастомная музыка, 2.2, моды и конфигуратор установщиков" logo={GDLogo.src}
+                                  stats={`${formatStat(props.stats.gdps_count)} серверов • ${formatStat(props.stats.gdps_levels)} уровней`} />
                         <ProdCard link="/product/mc" name="Minecraft" description="Мощные сервера, динамические ресурсы и удобная панель" logo={MinecraftLogo.src} stats="Уже на FruitSpace!" />
                         <ProdCard link="#" name="Beat Saber" description="Третья игра с кубиками. Шутку думайте сами" logo={BSLogo.src} stats="Не скоро" />
                     </div>
@@ -178,7 +191,7 @@ const ProdCard = (props) => (
                 <div>
                     <p className="m-0 tracking-wide lg:text-lg">{props.name}</p>
                     <p className="opacity-85 leading-tight text-xs md:text-sm lg:leading-normal m-0">{props.description}</p>
-                    <p className="text-xs text-nowrap md:text-sm m-0 mt-2 text-[#cacad0] font-mono">{props.stats}</p>
+                    <p className="text-xs text-nowrap md:text-sm m-0 mt-2 text-[#cacad0] lg:font-mono">{props.stats}</p>
                 </div>
                 <RightIcon className="flex-shrink-0 w-8 ml-auto"/>
             </div>

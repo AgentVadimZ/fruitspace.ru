@@ -14,15 +14,18 @@ import {useRecoilState} from "recoil";
 import {userAtom} from "@/fiber/fiber.model";
 import {useState} from "react";
 import {HideOn} from "react-hide-on-scroll";
-import {Button} from "antd";
+import {Button, Drawer} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
+    faBurger,
+    faChevronDown,
     faChevronRight,
     faCircleDollarToSlot,
     faRightFromBracket,
     faShop,
     faWallet
 } from "@fortawesome/free-solid-svg-icons";
+import {faBars} from "@fortawesome/free-solid-svg-icons/faBars";
 
 
 export default function GlobalNav(props) {
@@ -46,6 +49,8 @@ export default function GlobalNav(props) {
 
     const [open, setOpen] = useState(false)
 
+    const [drawer, setDrawer] = useState(false)
+
     return (
         <NavBar mainpage={props.mainpage}>
             <Link href={"/"} legacyBehavior>
@@ -59,14 +64,51 @@ export default function GlobalNav(props) {
                 </HideOn>
             }
 
+            <div className="hidden lg:flex items-center gap-2 rounded-xl backdrop-blur bg-active bg-opacity-50">
+                {
+                    [
+                        {
+                            text: "Хостинг игр",
+                            items: [
+                                {
+                                    text: "Geometry Dash",
+                                    link: "/product/gd"
+                                },
+                                {
+                                    text: "Minecraft",
+                                    link: "/product/mc"
+                                }
+                            ]
+                        },
+                        {
+                            text: "Сообщество",
+                            items: [
+                                {
+                                    text: "Документация",
+                                    link: "/docs"
+                                },
+                                {
+                                    text: "Блог",
+                                    link: "/blog"
+                                }
+                            ]
+                        },
+                        {
+                            text: "О FruitSpace",
+                            link: "/about"
+                        }
+                    ].map((item, i) => NavLink({...item, key: i}))
+                }
+            </div>
+
             <div className="flex items-center gap-2">
                 {user.uname ?
                     <div className="relative">
                         <img src={user.profile_pic} onClick={() => setOpen(!open)}
                              className="rounded-full h-10 border-1 border-solid border-white border-opacity-25
                              cursor-pointer hover:brightness-110"/>
-                        {open && <div className="flex-col gap-4 group-hover:flex absolute top-full mt-2 right-0 rounded-xl p-2 z-[9999]
-                    bg-active border-1 border-solid border-white border-opacity-25 w-72">
+                        {open && <div className="flex flex-col gap-4 absolute top-full mt-2 right-0 rounded-xl p-2 z-[9999]
+                    bg-active backdrop-blur bg-opacity-50 border-1 border-solid border-white border-opacity-25 w-72">
 
                             <Link href="/profile"
                                   className="flex items-center gap-2 p-1 pr-3 cursor-pointer rounded-lg hover:bg-subtle">
@@ -133,12 +175,105 @@ export default function GlobalNav(props) {
                         {open &&
                             <div onClick={() => setOpen(false)} className="fixed top-0 left-0 w-full h-full"/>}
                     </div>
-                    : <Link href="/profile/login" className="select-none bg-subtle py-2 px-4 rounded-full flex items-center gap-2 bg-opacity-75 backdrop-blur-sm
+                    : <Link href="/profile/login" className="select-none bg-subtle py-2 px-4 rounded-full flex items-center gap-2 bg-opacity-50 backdrop-blur-sm
                 border-1 border-solid border-white border-opacity-25 hover:bg-opacity-50">
                         <VpnKeyIcon/>
                         Войти
                     </Link>}
+                <div className="relative lg:hidden">
+                    <p className="flex justify-center items-center h-12 w-12 rounded-xl backdrop-blur bg-subtle bg-opacity-50 -mr-2"
+                    onClick={()=>setDrawer(true)}>
+                        <FontAwesomeIcon className="text-lg" icon={faBars}/>
+                    </p>
+                    <Drawer open={drawer} onClose={()=>setDrawer(false)} width="75vw"
+                    className="!bg-active !bg-opacity-75 !backdrop-blur">
+                        <div className="flex flex-col gap-2">
+                            {
+                                [
+                                    {
+                                        text: "Хостинг игр",
+                                        items: [
+                                            {
+                                                text: "Geometry Dash",
+                                                link: "/product/gd"
+                                            },
+                                            {
+                                                text: "Minecraft",
+                                                link: "/product/mc"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: "Сообщество",
+                                        items: [
+                                            {
+                                                text: "Документация",
+                                                link: "/docs"
+                                            },
+                                            {
+                                                text: "Блог",
+                                                link: "/blog"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: "О FruitSpace",
+                                        link: "/about"
+                                    }
+                                ].map((item, i) => DrawerLink({...item, key: i}))
+                            }
+                        </div>
+                    </Drawer>
+                </div>
             </div>
         </NavBar>
     );
+}
+
+const NavLink = (props) => {
+    return <div className={`relative group ${props.inner?"p-0":"p-2"}`} key={props.key}>
+        {
+            props.link
+                ? <Link href={props.link} className="flex gap-2 items-center font-now leading-none rounded-lg cursor-pointer
+                bg-subtle bg-opacity-75 backdrop-blur p-2 text-gray-300 hover:text-white hover:bg-opacity-100 text-nowrap">
+                    {props.text}
+                </Link>
+                : <>
+                    <p className="flex gap-2 items-center font-now text-sm leading-none rounded-lg cursor-pointer
+                bg-subtle bg-opacity-50 backdrop-blur p-2 text-gray-300 group-hover:text-white group-hover:bg-opacity-100">
+                        {props.text}
+                        <FontAwesomeIcon className="text-xs" icon={faChevronDown}/>
+                    </p>
+                    <div className="hidden group-hover:flex flex-col bg-[#19191f] glassb rounded-xl
+                    absolute top-full left-0 z-[9999] p-2 gap-2 min-w-40">
+                        {props.items?.map((item, i)=>NavLink({...item, key: i, inner: true}))}
+                    </div>
+
+                </>
+        }
+    </div>
+}
+
+const DrawerLink = (props) => {
+    return props.link
+        ? <Link key={props.key} href={props.link} className={`flex gap-2 items-center font-now leading-none rounded-lg cursor-pointer
+    bg-subtle bg-opacity-50 backdrop-blur p-4 text-gray-300 hover:text-white hover:bg-opacity-100 text-nowrap`}>
+                {props.text}
+            </Link>
+            : <div key={props.key} className="bg-subtle bg-opacity-50 backdrop-blur rounded-lg">
+                <p className="flex gap-2 items-center justify-between font-now text-sm leading-none cursor-pointer
+                p-4 text-gray-300 hover:text-white text-nowrap border-b-1 border-white border-opacity-25">
+                    {props.text}
+                    <FontAwesomeIcon className="text-xs" icon={faChevronDown}/>
+                </p>
+            {
+                props.items?.map((val, i) => (
+                    <Link key={i} href={val.link} className={`flex gap-2 items-center font-now leading-none rounded-lg cursor-pointer
+                    p-4 text-gray-300 hover:text-white hover:bg-opacity-100 text-nowrap`}>
+                        {val.text}
+                    </Link>
+                ))
+            }
+        </div>
+
 }

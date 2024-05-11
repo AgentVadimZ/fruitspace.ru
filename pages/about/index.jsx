@@ -24,12 +24,12 @@ export default function About(props) {
                     <p className="text-lg">
                         👋 Добро пожаловать на FruitSpace - пуленепробиваемый игровой хостинг для Geometry Dash и Minecraft.
                     </p>
-                    <div className="py-2 px-4 border-l-4 rounded mt-2 max-w-7xl flex flex-col gap-2 text-gray-300">
-                        <p>
+                    <div className="py-2 px-4 border-l-4 rounded mt-2 max-w-7xl flex flex-col gap-2">
+                        <p className="text-gray-300">
                             Вам нужна надежная основа для вашего сообщества или уютное местечко для игры с друзьями?
                             Вы пришли по адресу!
                         </p>
-                        <p>
+                        <p className="text-gray-300">
                             Наши основные принципы - <span className="text-primary">честность, надежность и оптимизация</span>. На этих трех принципах и держится
                             FruitSpace.
                         </p>
@@ -56,13 +56,13 @@ export default function About(props) {
                                         relative z-20 -mb-[1px]">Что за оборудование?</p>
                             <div className="bg-active p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25 text-md mt-0
                                         relative z-10 text-sm flex flex-col gap-2">
-                                <p>
+                                <p className="text-gray-300">
                                     Серверы: сертифицированное оборудование от HP и Supermicro, никаких самосборок
                                 </p>
-                                <p>
+                                <p className="text-gray-300">
                                     Сетевое: Mikrotik уровня CRS, Cisco уровня Catalyst 9xxx
                                 </p>
-                                <p>
+                                <p className="text-gray-300">
                                     Наши провайдеры: ВымпелКом и Квант-Телеком - да, оба магистральные
                                 </p>
                             </div>
@@ -86,7 +86,7 @@ export default function About(props) {
                                         relative z-20 -mb-[1px]">Смешная история</p>
                             <div className="bg-active p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25 text-md mt-0
                                         relative z-10 text-sm flex flex-col gap-2">
-                                <p>
+                                <p className="text-gray-300">
                                     В конце 2023 один из наших клиентов кому-то перешел дорогу.
                                     Повалились &quot;разоблачения&quot;,
                                     угрозы в адрес него и хостинга, DDoS-атаки и даже попытки шантажа и подкупа
