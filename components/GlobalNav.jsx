@@ -20,12 +20,50 @@ import {
     faBurger,
     faChevronDown,
     faChevronRight,
-    faCircleDollarToSlot,
+    faCircleDollarToSlot, faCube, faLayerGroup, faNewspaper,
     faRightFromBracket,
-    faShop,
+    faShop, faSquare,
     faWallet
 } from "@fortawesome/free-solid-svg-icons";
 import {faBars} from "@fortawesome/free-solid-svg-icons/faBars";
+
+
+const links = [
+    {
+        text: "Хостинг игр",
+        items: [
+            {
+                text: "Geometry Dash",
+                link: "/product/gd",
+                icon: faSquare
+            },
+            {
+                text: "Minecraft",
+                link: "/product/mc",
+                icon: faCube
+            }
+        ]
+    },
+    {
+        text: "Сообщество",
+        items: [
+            {
+                text: "Документация",
+                link: "/docs",
+                icon: faLayerGroup
+            },
+            {
+                text: "Блог",
+                link: "/blog",
+                icon: faNewspaper
+            }
+        ]
+    },
+    {
+        text: "О FruitSpace",
+        link: "/about"
+    }
+]
 
 
 export default function GlobalNav(props) {
@@ -58,46 +96,15 @@ export default function GlobalNav(props) {
                     : <img src={logo.src} alt="logo" className="h-8 ml-1 cursor-pointer"/>}
             </Link>
             {(props.mainpage && !['/', ''].includes(router.pathname)) &&
-                <HideOn atHeight height={200}>
+                <HideOn atHeight height={120}>
                     <Link href="/"
-                          className="fixed top-2 left-[50%] -translate-x-[50%] hidden md:block md:text-2xl xl:text-3xl font-[Coolvetica] tracking-wider font-normal fruitText m-0 select-none">FruitSpace</Link>
+                          className="fixed top-4 xl:top-3 left-16 hidden md:block md:text-2xl xl:text-3xl font-[Coolvetica] tracking-wider font-normal fruitText m-0 select-none">FruitSpace</Link>
                 </HideOn>
             }
 
             <div className="hidden lg:flex items-center gap-2 rounded-xl backdrop-blur bg-active bg-opacity-50">
                 {
-                    [
-                        {
-                            text: "Хостинг игр",
-                            items: [
-                                {
-                                    text: "Geometry Dash",
-                                    link: "/product/gd"
-                                },
-                                {
-                                    text: "Minecraft",
-                                    link: "/product/mc"
-                                }
-                            ]
-                        },
-                        {
-                            text: "Сообщество",
-                            items: [
-                                {
-                                    text: "Документация",
-                                    link: "/docs"
-                                },
-                                {
-                                    text: "Блог",
-                                    link: "/blog"
-                                }
-                            ]
-                        },
-                        {
-                            text: "О FruitSpace",
-                            link: "/about"
-                        }
-                    ].map((item, i) => NavLink({...item, key: i}))
+                    links.map((item, i) => NavLink({...item, key: i}))
                 }
             </div>
 
@@ -189,38 +196,7 @@ export default function GlobalNav(props) {
                     className="!bg-active !bg-opacity-75 !backdrop-blur">
                         <div className="flex flex-col gap-2">
                             {
-                                [
-                                    {
-                                        text: "Хостинг игр",
-                                        items: [
-                                            {
-                                                text: "Geometry Dash",
-                                                link: "/product/gd"
-                                            },
-                                            {
-                                                text: "Minecraft",
-                                                link: "/product/mc"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        text: "Сообщество",
-                                        items: [
-                                            {
-                                                text: "Документация",
-                                                link: "/docs"
-                                            },
-                                            {
-                                                text: "Блог",
-                                                link: "/blog"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        text: "О FruitSpace",
-                                        link: "/about"
-                                    }
-                                ].map((item, i) => DrawerLink({...item, key: i}))
+                                links.map((item, i) => DrawerLink({...item, key: i}))
                             }
                         </div>
                     </Drawer>
@@ -236,11 +212,11 @@ const NavLink = (props) => {
             props.link
                 ? <Link href={props.link} className="flex gap-2 items-center font-now text-sm leading-none rounded-lg cursor-pointer
                 bg-subtle bg-opacity-75 backdrop-blur p-2 text-gray-300 hover:text-white hover:bg-opacity-100 text-nowrap">
-                    {props.text}
+                    {props.icon&&<FontAwesomeIcon icon={props.icon} />} {props.text}
                 </Link>
                 : <>
                     <p className="flex gap-2 items-center font-now text-sm leading-none rounded-lg cursor-pointer
-                bg-subtle bg-opacity-50 backdrop-blur p-2 text-gray-300 group-hover:text-white group-hover:bg-opacity-100">
+                bg-subtle bg-opacity-75 backdrop-blur p-2 text-gray-300 group-hover:text-white group-hover:bg-opacity-100">
                         {props.text}
                         <FontAwesomeIcon className="text-xs" icon={faChevronDown}/>
                     </p>
@@ -258,7 +234,7 @@ const DrawerLink = (props) => {
     return props.link
         ? <Link key={props.key} href={props.link} className={`flex gap-2 items-center font-now leading-none rounded-lg cursor-pointer
     bg-subtle bg-opacity-50 backdrop-blur p-4 text-gray-300 hover:text-white hover:bg-opacity-100 text-nowrap`}>
-                {props.text}
+            {props.icon&&<FontAwesomeIcon icon={props.icon} />} {props.text}
             </Link>
             : <div key={props.key} className="bg-subtle bg-opacity-50 backdrop-blur rounded-lg">
                 <p className="flex gap-2 items-center justify-between font-now leading-none cursor-pointer
@@ -270,7 +246,7 @@ const DrawerLink = (props) => {
                 props.items?.map((val, i) => (
                     <Link key={i} href={val.link} className={`flex gap-2 items-center font-now leading-none rounded-lg cursor-pointer
                     p-4 text-gray-300 hover:text-white hover:bg-opacity-100 text-nowrap`}>
-                        {val.text}
+                        {val.icon&&<FontAwesomeIcon icon={val.icon} />} {val.text}
                     </Link>
                 ))
             }
