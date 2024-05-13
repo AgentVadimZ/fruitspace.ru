@@ -34,7 +34,7 @@ export default function GD(props) {
     return (
         <>
             <GlobalHead title={localeGlobal.get('navName')}/>
-            <GlobalNav router={props.router}/>
+            <GlobalNav router={props.router} mainpage />
             <PanelContent nocorner>
                 <div className={"serversWindow"}>
                     <h1>{locale.get("top_servers")}</h1>

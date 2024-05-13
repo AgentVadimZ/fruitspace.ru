@@ -143,10 +143,9 @@ export default function RolesGD(props) {
             <Toaster/>
             <Tour open={tourOpen} onClose={()=>setTourOpen(false)} steps={tourSteps}/>
             <FloatButton
-                ref={r=>refs.current["help"]=r}
                 shape="square"
                 type="primary"
-                style={{right: 20, bottom: 20}}
+                style={{left: 72, bottom: 8}}
                 onClick={() => setTourOpen(true)}
                 icon={<FontAwesomeIcon icon={faQuestion} />}
             />

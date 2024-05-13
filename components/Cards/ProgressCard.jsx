@@ -27,17 +27,18 @@ export default function ProgressCard(props) {
 
 
     return (
-        <div className="mx-1 my-1.5 md:m-3 w-auto p-3 rounded-xl" style={{backgroundColor: "var(--active-color)"}}>
+        <div className="p-4 rounded-xl bg-active glassb h-36 flex flex-col">
             <div className="h-3 rounded-xl" style={{backgroundColor: "var(--btn-color)"}}>
-                <div className="h-full rounded-xl" style={{background: clr, width: width+"%"}} />
+                <div className="h-full rounded-xl" style={{background: clr, width: width + "%"}}/>
             </div>
-            <div className="flex flex-col lg:flex-col xl:flex-row justify-between items-center">
-                {props.date
-                    ?<p className="text-gray-400 m-2 text-lg">{props.text}</p>
-                :<><h2 className="text-gray-400 m-2 text-3xl flex items-center">{props.now}/{props.max===-1
-                        ?<span className={"text-3xl lg:text-5xl inline-block"} style={{margin:"-0.5rem 0"}}>∞</span>:props.max}</h2>
-                    <p className="text-gray-400 m-2 text-lg">{props.text}</p></>}
-            </div>
+            {props.date
+                ? <p className="text-gray-300 m-2 text-xl lg:text-2xl">{props.text}</p>
+                : <p className="text-gray-300 m-2 text-3xl flex items-center">
+                    {props.now}/{props.max === -1
+                    ? <span className="text-3xl lg:text-5xl">∞</span>
+                    : props.max}
+                </p>}
+            <span className="mt-auto text-sm">{props.bottom}</span>
         </div>
     )
 }

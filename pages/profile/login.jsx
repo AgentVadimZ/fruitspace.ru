@@ -152,7 +152,7 @@ export default function Login(props) {
                     <span className="flex-1 h-0.5 bg-subtle"></span>
                 </div>
                 {mode==="login" &&
-                    <Form className="w-96" labelCol={{span: 8}} wrapperCol={{span: 16}} onFinish={rush}>
+                    <Form className="lg:w-96" labelCol={{span: 8}} wrapperCol={{span: 16}} onFinish={rush}>
                         <Form.Item label="Логин" name="uname" colon={false} rules={[
                             {
                                 required: true,
@@ -205,7 +205,7 @@ export default function Login(props) {
                 }
 
                 {mode==="reg" &&
-                    <Form className="w-96" labelCol={{span: 8}} wrapperCol={{span: 16}} onFinish={rush}>
+                    <Form className="lg:w-96" labelCol={{span: 8}} wrapperCol={{span: 16}} onFinish={rush}>
                         <Form.Item label="Логин" name="uname" colon={false} rules={[
                             {
                                 required: true,
@@ -278,7 +278,7 @@ export default function Login(props) {
                 }
 
                 {mode==="forgot" &&
-                    <Form className="w-96" labelCol={{span: 8}} wrapperCol={{span: 16}} onFinish={rush}>
+                    <Form className="lg:w-96" labelCol={{span: 8}} wrapperCol={{span: 16}} onFinish={rush}>
                         <Form.Item label="Email" name="email" colon={false} rules={[
                             {
                                 required: true,

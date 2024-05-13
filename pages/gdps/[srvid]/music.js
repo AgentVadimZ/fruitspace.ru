@@ -2,8 +2,6 @@ import GlobalHead from "../../../components/GlobalHead";
 
 import PanelContent from "../../../components/Global/PanelContent";
 import styles from "../../../components/Manage/GDManage.module.css"
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import LogoNG from '../../../assets/logos/ng-logo.jpeg'
 import LogoYT from '../../../assets/logos/yt-logo.jpeg'
 import LogoVK from '../../../assets/logos/vk-logo.png'
@@ -20,27 +18,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {
     Backdrop,
-    Button,
-    ClickAwayListener,
-    IconButton,
-    InputAdornment,
-    MenuItem,
-    MenuList,
-    Pagination as PaginationX,
-    Slider as SliderX,
     TextField,
-    Tooltip
 } from "@mui/material";
-import {PauseRounded, PlayArrowRounded, Search, VolumeUpRounded} from "@mui/icons-material";
 import {useEffect, useRef, useState} from "react";
 import {styled} from "@mui/system";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemText from "@mui/material/ListItemText";
-import List from "@mui/material/List";
 import ReactPlayer from "react-player";
 import {LoadingButton} from "@mui/lab";
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import useLocale from "../../../locales/useLocale";
 import GlobalGDPSNav from "../../../components/UserZone/GlobalGDPSNav";
 import GDPSNavBar from "../../../components/UserZone/GDPSSIdeBar";
