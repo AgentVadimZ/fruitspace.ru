@@ -54,7 +54,7 @@ const links = [
             },
             {
                 text: "Блог",
-                link: "/blog",
+                link: "https://blog.fruitspace.one",
                 icon: faNewspaper
             }
         ]
@@ -220,7 +220,7 @@ const NavLink = (props) => {
                         {props.text}
                         <FontAwesomeIcon className="text-xs" icon={faChevronDown}/>
                     </p>
-                    <div className="hidden group-hover:flex flex-col bg-[#19191f] glassb rounded-xl
+                    <div className="hidden group-hover:flex flex-col bg-[#1a1a20] glassb rounded-xl
                     absolute top-full left-2 z-[9999] p-2 gap-2 min-w-40">
                         {props.items?.map((item, i)=>NavLink({...item, key: i, inner: true}))}
                     </div>

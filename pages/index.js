@@ -16,6 +16,7 @@ import {serverFiberAPI} from "@/fiber/fiber";
 import {useRef} from "react";
 import {BetaData} from '@/components/betadata';
 import {Rate, Carousel} from "antd";
+import Script from "next/script";
 
 export async function getStaticProps(ctx) {
     const api = serverFiberAPI(null)
@@ -52,64 +53,76 @@ export default function Home(props) {
     const carouselRef = useRef(null)
 
     return <>
-        <GlobalHead og={og} />
+        <GlobalHead og={og}/>
+        <Script src="//code.jivo.ru/widget/QDbblcMLJ0" async></Script>
         <div className="fixed top-0 left-0 w-screen h-screen -z-20 bg-[#191921]"></div>
         <div className="fixed top-0 left-0 w-screen h-screen -z-10 techBg"></div>
         <div>
             {BetaData.beta &&
-                <div className="bg-active backdrop-blur bg-opacity-20 h-12 flex items-center justify-between z-[9999] relative">
-                <p className="rounded-full bg-subtle  mx-2 flex items-baseline gap-2 h-fit">
-                    <span className="bg-blue-600 rounded-full px-4 py-1">Бета</span>
-                    <span className="mr-4 text-sm">Сборка от {BetaData.date}</span>
-                </p>
-                <p className="rounded-full bg-subtle border-1 border-solid border-white border-opacity-25
+                <div
+                    className="bg-active backdrop-blur bg-opacity-20 h-12 flex items-center justify-between z-[9999] relative">
+                    <p className="rounded-full bg-subtle  mx-2 flex items-baseline gap-2 h-fit">
+                        <span className="bg-blue-600 rounded-full px-4 py-1">Бета</span>
+                        <span className="mr-4 text-sm">Сборка от {BetaData.date}</span>
+                    </p>
+                    <p className="rounded-full bg-subtle border-1 border-solid border-white border-opacity-25
                  mx-2 flex flex-col items-center h-fit z-[9999] group cursor-pointer">
-                    <span className="rounded-full px-4 py-1 group-hover:bg-opacity-50">Что нового? ›</span>
-                    <div className="flex-col gap-4 hidden group-hover:flex absolute top-full text-md right-2 rounded-xl p-2 z-[9999]
+                        <span className="rounded-full px-4 py-1 group-hover:bg-opacity-50">Что нового? ›</span>
+                        <div className="flex-col gap-4 hidden group-hover:flex absolute top-full text-md right-2 rounded-xl p-2 z-[9999]
                     bg-active border-1 border-solid border-white border-opacity-25">
-                        {BetaData.description.map((changes,i)=>{
-                            return <div key={i}>
-                                <p className="text-sm rounded-t-lg px-2 w-fit border-1 border-b-active
+                            {BetaData.description.map((changes, i) => {
+                                return <div key={i}>
+                                    <p className="text-sm rounded-t-lg px-2 w-fit border-1 border-b-active
                                 relative z-20 -mb-[1px]">Сборка от {changes.date}</p>
-                                <ul className="text-sm p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25
+                                    <ul className="text-sm p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25
                                 relative z-10">
-                                    {changes.deltas.map((change,j)=>{
-                                        return <li key={j}>• {change}</li>
-                                    })}
-                                </ul>
-                            </div>
-                        })}
-                    </div>
-                </p>
-            </div>}
-            <GlobalNav router={props.router} mainpage />
+                                        {changes.deltas.map((change, j) => {
+                                            return <li key={j}>• {change}</li>
+                                        })}
+                                    </ul>
+                                </div>
+                            })}
+                        </div>
+                    </p>
+                </div>}
+            <GlobalNav router={props.router} mainpage/>
 
             <div className={styles.main}>
 
                 <div className="flex flex-col items-center justify-center lg:h-[100vh] relative">
                     <h1 className="text-6xl mt-48 lg:mt-2 xl:text-8xl font-[Coolvetica] tracking-wider font-normal fruitText m-2 select-none">FruitSpace</h1>
-                    <p className="text-md text-center xl:text-xl m-0 font-[Helvetica]">Удобный и надежный хостинг для ваших любимых игр. И ещё немножко магии ✨</p>
+                    <p className="text-md text-center xl:text-xl m-0 font-[Helvetica]">Удобный и надежный хостинг для
+                        ваших любимых игр. И ещё немножко магии ✨</p>
 
                     <div className="mt-24 grid grid-cols-1 xl:grid-cols-3 gap-4 xl:gap-16 select-none">
-                        <ProdCard link="/product/gd" name="Geometry Dash" description="Кастомная музыка, 2.2, моды и конфигуратор установщиков" logo={GDLogo.src}
-                                  stats={`${formatStat(props.stats.gdps_count)} серверов • ${formatStat(props.stats.gdps_levels)} уровней`} />
-                        <ProdCard link="/product/mc" name="Minecraft" description="Мощные сервера, динамические ресурсы и удобная панель" logo={MinecraftLogo.src} stats="Уже на FruitSpace!" />
-                        <ProdCard link="#" name="Beat Saber" description="Третья игра с кубиками. Шутку думайте сами" logo={BSLogo.src} stats="Не скоро" />
+                        <ProdCard link="/product/gd" name="Geometry Dash"
+                                  description="Кастомная музыка, 2.2, моды и конфигуратор установщиков"
+                                  logo={GDLogo.src}
+                                  stats={`${formatStat(props.stats.gdps_count)} серверов • ${formatStat(props.stats.gdps_levels)} уровней`}/>
+                        <ProdCard link="/product/mc" name="Minecraft"
+                                  description="Мощные сервера, динамические ресурсы и удобная панель"
+                                  logo={MinecraftLogo.src} stats="Уже на FruitSpace!"/>
+                        <ProdCard link="#" name="Beat Saber" description="Третья игра с кубиками. Шутку думайте сами"
+                                  logo={BSLogo.src} stats="Не скоро"/>
                     </div>
 
                     <Link href="/top/gd" legacyBehavior>
-                        <div className="w-full md:w-fit mt-4 xl:mt-8 p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e88] via-[#5a00ff88] to-[#0d6efd88] flex flex-col">
-                            <div className="flex-1 bg-[#333338cc] glass rounded-2xl p-2 font-[Helvetica] cursor-pointer flex items-center justify-between hover:bg-[#33333888] transition-all duration-300 md:max-w-md">
-                                <img alt="prod.logo" className="h-16 lg:mr-2" src="https://img.icons8.com/nolan/96/1A6DFF/C822FF/prize.png" />
+                        <div
+                            className="w-full md:w-fit mt-4 xl:mt-8 p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e88] via-[#5a00ff88] to-[#0d6efd88] flex flex-col">
+                            <div
+                                className="flex-1 bg-[#333338cc] glass rounded-2xl p-2 font-[Helvetica] cursor-pointer flex items-center justify-between hover:bg-[#33333888] transition-all duration-300 md:max-w-md">
+                                <img alt="prod.logo" className="h-16 lg:mr-2"
+                                     src="https://img.icons8.com/nolan/96/1A6DFF/C822FF/prize.png"/>
                                 <h2 className="m-0 w-fit">Топ серверов</h2>
-                                <RightIcon className="flex-shrink-0 w-8 lg:ml-auto" />
+                                <RightIcon className="flex-shrink-0 w-8 lg:ml-auto"/>
                             </div>
                         </div>
                     </Link>
 
                 </div>
 
-                <div className="bg-black bg-opacity-25 rounded-t-2xl glassb !border-b-0 mt-16 py-8 flex flex-col gap-8" ref={scrollRef}>
+                <div className="bg-black bg-opacity-25 rounded-t-2xl glassb !border-b-0 mt-16 py-8 flex flex-col gap-8"
+                     ref={scrollRef}>
                     {[
                         {
                             h: "На грани возможного",
@@ -131,19 +144,20 @@ export default function Home(props) {
                                 "абсолютно каждому - мододелам, новичкам, профессионалам, и просто игрокам которые хотят создать " +
                                 "свой укромный уголок. Не верите? Прочтите реальные отзывы или оставьте свой!"
                         }
-                    ].map((el,i)=> <div key={i}>
+                    ].map((el, i) => <div key={i}>
                         <p className="text-2xl lg:text-4xl text-center mb-4 font-[Helvetica]">{el.h}</p>
                         <p className="text-center text-gray-300 lg:text-base px-4 xl:px-24">{el.t}</p>
                     </div>)}
 
-                    <Carousel ref={carouselRef} dots={{className:"!bottom-2"}}>
+                    <Carousel ref={carouselRef} dots={{className: "!bottom-2"}}>
                         {reviews.map((u, i) => {
                             return <div key={i} className="p-4 my-4 overflow-y-hidden
                              !w-5/6 lg:!w-2/3 h-96 mx-auto !flex flex-col bg-subtle bg-opacity-75 border-white border-opacity-25 rounded-2xl border-solid border-1">
                                 <div className="flex flex-col lg:flex-row items-center justify-between">
                                     <p className="text-lg w-40">{u.user}</p>
                                     <p>{u.date}</p>
-                                    <Rate className="p-2 bg-active rounded-lg h-fit" allowHalf disabled defaultValue={u.rating}/>
+                                    <Rate className="p-2 bg-active rounded-lg h-fit" allowHalf disabled
+                                          defaultValue={u.rating}/>
                                 </div>
                                 <div className="flex flex-col gap-4 mt-4">
                                     {u.pros && <div>

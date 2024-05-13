@@ -38,6 +38,7 @@ import {faDatabase, faFloppyDisk, faPuzzlePiece, faServer, faZap} from "@fortawe
 import Image from "next/image";
 import BannerGD from "@/assets/BannerGD.png";
 import {Button} from "antd";
+import Script from "next/script";
 
 export default function MC(props) {
     const locale = useLocale(props.router)
@@ -47,6 +48,7 @@ export default function MC(props) {
         <>
             <GlobalHead title="Игровой хостинг"/>
             <GlobalNav mainpage />
+            <Script src="//code.jivo.ru/widget/QDbblcMLJ0" async></Script>
             <div className={styles.main}>
 
                 <div className="rounded-t-2xl h-112 relative select-none">

@@ -17,17 +17,19 @@ import Image from "next/image";
 import {Button} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
+    faArrowDown,
+    faArrowUpRightFromSquare,
     faBarsProgress,
-    faChartSimple,
+    faChartSimple, faChevronRight,
     faCloudArrowDown,
     faCog,
-    faCogs,
+    faCogs, faComment,
     faDownload,
     faEllipsis,
     faForward,
     faGem,
     faInfinity,
-    faMap,
+    faMap, faNewspaper,
     faPaintbrush,
     faPlay,
     faPlus,
@@ -48,7 +50,8 @@ import ScreenshotGaus from "@/assets/screenshots/gd_gaus2.png"
 import TariffPS from "@/assets/features/gd_pressstart.svg"
 import TariffSG from "@/assets/features/gd_singularity.svg"
 import TariffFD from "@/assets/features/gd_foundation.svg"
-import {faItunesNote} from "@fortawesome/free-brands-svg-icons";
+import {faDiscord, faItunesNote} from "@fortawesome/free-brands-svg-icons";
+import Script from "next/script";
 
 
 export async function getStaticProps(ctx) {
@@ -79,6 +82,7 @@ export default function GD(props) {
         <>
             <GlobalHead title={localeGlobal.get('navName')}/>
             <GlobalNav mainpage router={props.router}/>
+            <Script src="//code.jivo.ru/widget/QDbblcMLJ0" async></Script>
             <div className={styles.main}>
                 <div className="rounded-t-2xl h-112 relative select-none">
                     <Image className="rounded-t-2xl" src={BannerGD} fill="object-fit" objectFit="cover" layout="fill"
@@ -93,11 +97,12 @@ export default function GD(props) {
                                     onClick={() => orderRef.current.scrollIntoView({behavior: 'smooth'})}>
                                 заказать на fruitspace
                             </Button>
-                            <Button className="uppercase font-semibold" size="large"
-                                    icon={<FontAwesomeIcon icon={faServer}/>}
-                                    onClick={() => selfRef.current.scrollIntoView({behavior: 'smooth'})}>
-                                запустить на своем сервере
-                            </Button>
+                            {/* To be done Fruitspace Agency */}
+                            {/*<Button className="uppercase font-semibold" size="large"*/}
+                            {/*        icon={<FontAwesomeIcon icon={faServer}/>}*/}
+                            {/*        onClick={() => selfRef.current.scrollIntoView({behavior: 'smooth'})}>*/}
+                            {/*    запустить на своем сервере*/}
+                            {/*</Button>*/}
                         </div>
                     </div>
                 </div>
@@ -133,7 +138,7 @@ export default function GD(props) {
                         <img src={ScreenshotGaus.src}
                              className="lg:object-none object-left-top object-cover h-64 lg:h-full"/>
                         {/*<div className="absolute h-full w-full z-10 bg-gradient-to-t from-dark from-15% to-50%"></div>*/}
-                        {/*<div className="absolute h-full w-full z-10 bg-gradient-to-l from-dark to-50%"></div>*/}
+                        <div className="absolute 2xl:hidden h-full w-full z-10 bg-gradient-to-l from-dark to-25%"></div>
                     </div>
                 </div>
 
@@ -268,10 +273,37 @@ export default function GD(props) {
                     </p>
                 </div>
 
-                {/*<div className="mt-16 select-none">*/}
-                {/*    <p className="text-5xl uppercase font-semibold text-center">тарифы</p>*/}
-                {/*    <p className="text-center font-mono">на любой вкус</p>*/}
-                {/*</div>*/}
+                <div className="mt-16 select-none">
+                    <p className="text-5xl uppercase font-semibold text-center">Остались вопросы?</p>
+                    <p className="text-center font-mono">Напишите нам!</p>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 p-8">
+                        <div className="flex flex-col gap-2 items-center">
+                            <FontAwesomeIcon icon={faComment} className="!h-20 mb-8"/>
+                            <span className="lg:text-lg text-center">
+                                Нужен срочный ответ, пока не ушла мысль? Напишите нам в чат
+                            </span>
+                            <span className="text-sm mt-auto">💬 Синий пузырек справа в углу</span>
+                        </div>
+                        <div className="flex flex-col gap-2 items-center">
+                            <FontAwesomeIcon icon={faDiscord} className="!h-20 mb-8"/>
+                            <span className="lg:text-lg text-center">
+                                Присоединяйтесь к нашему сообществу в Discord!
+                                Тикеты, мнение реальных клиентов, ивенты и многое другое
+                            </span>
+                            <Button type="primary" className="text-base mt-auto flex items-center gap-2">
+                                <FontAwesomeIcon icon={faDiscord}/> Discord <FontAwesomeIcon className="text-xs"
+                                                                                             icon={faChevronRight}/>
+                            </Button>
+                        </div>
+                        <div className="flex flex-col gap-2 items-center">
+                            <FontAwesomeIcon icon={faNewspaper} className="!h-20 mb-8"/>
+                            <span className="lg:text-lg text-center">
+                                Будьте в курсе всех новостей — присоединяйтесь к нашим сообществам ВК, Telegram, Discord и Youtube
+                            </span>
+                            <FontAwesomeIcon icon={faArrowDown} className="mt-auto" />
+                        </div>
+                    </div>
+                </div>
             </div>
             <Footer router={props.router}/>
         </>

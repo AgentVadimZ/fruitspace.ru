@@ -30,7 +30,7 @@ export default function About(props) {
                             Вы пришли по адресу!
                         </p>
                         <p className="text-gray-300">
-                            Наши основные принципы - <span className="text-primary">честность, надежность и оптимизация</span>. На этих трех принципах и держится
+                            Наши основные принципы - <span className="text-primary">честность, надежность и инновации</span>. На этих трех принципах и держится
                             FruitSpace.
                         </p>
                     </div>
