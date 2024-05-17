@@ -65,7 +65,7 @@ export default function ManageGD(props) {
             <FloatButton
                 shape="square"
                 type="primary"
-                style={{left: 72, bottom: 8}}
+                style={{right: 20, bottom: 20}}
                 onClick={() => setTourOpen(true)}
                 icon={<FontAwesomeIcon icon={faQuestion} />}
             />

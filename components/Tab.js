@@ -19,8 +19,8 @@ const Tab = ({addbtn, defaultTab, onChange, tabs}) => {
     const [activeTab, setActiveTab] = useState(defaultTab||tabItems[0].value)
 
     return (
-        <div className="w-full">
-            <div className="bg-active flex justify-between items-center p-3 border-subtle border-solid border-1 rounded-t-xl border-b-0">
+        <div className="w-full glassb rounded-2xl">
+            <div className="bg-active flex justify-between items-center p-3 border-subtle border-solid border-1 rounded-t-2xl border-b-0">
                 <Segmented rootClassName="bg-btn select-none" options={tabItems}
                            defaultValue={defaultTab} onChange={(value) => {
                     setActiveTab(value);

@@ -206,10 +206,10 @@ export default function DownloadPage(props) {
     }
 
     // const config = {
-    //         bg: "https://cdn.pixelvault.nl/wp-content/uploads/2024/01/Alan-Wake-2.jpg",
-    //         accent: "#dc2626",
-    //         variant: "primary", // primary/default
-    //         ...srv.downloadpage_style || {}
+    //         bg: "https://i.redd.it/4vztk5m7p9651.jpg",
+    //         accent: "#36906b",
+    //         variant: "default", // primary/default
+    //         // ...srv.downloadpage_style || {}
     //     }
 
     return (<>
@@ -224,7 +224,7 @@ export default function DownloadPage(props) {
                 }
             }
         }}>
-            <div className="h-screen flex justify-center items-center flex-col bg-center" style={{
+            <div className="h-screen flex justify-center items-center flex-col bg-center bg-cover" style={{
                 backgroundImage: `url(${config.bg})`
             }}>
                 <div className="w-fit max-w-full lg:max-w-xl flex flex-col gap-4">
