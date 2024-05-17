@@ -151,7 +151,7 @@ export default function RolesGD(props) {
                 icon={<FontAwesomeIcon icon={faQuestion} />}
             />
             <PanelContent>
-                <div className="flex-col w-2/3 p-2 box-border">
+                <div className="flex-col lg:w-2/3 p-2">
                     <Tab addbtn={<div className="flex gap-2">
                         <Button type="primary" className="flex gap-2 items-center" onClick={
                             ()=>{
@@ -236,38 +236,40 @@ export default function RolesGD(props) {
                             <p className="w-20">Название</p>
                             <Input placeholder="Название роли" value={crole?.role_name} onChange={(e)=>setCRole({...crole, name: e.target.value})} />
                         </div>
-                        <div className="flex gap-2 items-center">
+                        <div className="flex gap-2 lg:items-center">
                             <p className="w-20">Значок</p>
-                            <Segmented rootClassName="bg-subtle select-none" options={[
-                                {
-                                    value: 0,
-                                    icon: <FontAwesomeIcon icon={faBan} className="text-lg"/>
-                                },
-                                {
-                                    value: 1,
-                                    icon: <div className="flex items-center justify-center h-7">
-                                        <img src={modBadge.src} className="h-6"/>
-                                    </div>
-                                },
-                                {
-                                    value: 2,
-                                    icon: <div className="flex items-center justify-center h-7">
-                                        <img src={modElderBadge.src} className="h-6"/>
-                                    </div>
-                                },
-                                {
-                                    value: 3,
-                                    icon: <div className="flex items-center justify-center h-7">
-                                        <img src={modListBadge.src} className="h-6"/>
-                                    </div>
-                                },
-                            ]} value={crole?.mod_level} onChange={(val) => {
-                                setCRole({...crole, mod_level: val})
-                            }}/>
-                            <InputNumber className="lg:w-24" addonBefore="ID" min={0} placeholder="значка"
-                                         value={crole?.mod_level} onChange={(val) => {
-                                setCRole({...crole, mod_level: val})
-                            }}/>
+                            <div className="flex flex-col lg:flex-row gap-2 lg:items-center">
+                                <Segmented rootClassName="bg-subtle select-none" options={[
+                                    {
+                                        value: 0,
+                                        icon: <FontAwesomeIcon icon={faBan} className="text-lg"/>
+                                    },
+                                    {
+                                        value: 1,
+                                        icon: <div className="flex items-center justify-center h-7">
+                                            <img src={modBadge.src} className="h-6"/>
+                                        </div>
+                                    },
+                                    {
+                                        value: 2,
+                                        icon: <div className="flex items-center justify-center h-7">
+                                            <img src={modElderBadge.src} className="h-6"/>
+                                        </div>
+                                    },
+                                    {
+                                        value: 3,
+                                        icon: <div className="flex items-center justify-center h-7">
+                                            <img src={modListBadge.src} className="h-6"/>
+                                        </div>
+                                    },
+                                ]} value={crole?.mod_level} onChange={(val) => {
+                                    setCRole({...crole, mod_level: val})
+                                }}/>
+                                <InputNumber className="w-24" addonBefore="ID" min={0} placeholder="значка"
+                                             value={crole?.mod_level} onChange={(val) => {
+                                    setCRole({...crole, mod_level: val})
+                                }}/>
+                            </div>
                         </div>
                         <div className="flex gap-2 items-center">
                             <p className="w-20">Цвет роли</p>
@@ -391,14 +393,15 @@ export default function RolesGD(props) {
                                     <Select options={queryUsers} showSearch
                                             className="flex-1" placeholder="Поиск игроков" filterOption={false}
                                             onSearch={enqueueUserSearchDebounced} loading={searchingRN}
-                                            onChange={(e, v) => {
-                                                crole.users.push(val)
-                                                setCRole(crole)
+                                            onChange={(uid) => {
+                                                if (crole.users.find(v => v.uid === uid)) return
+                                                let delta = crole.users
+                                                delta.push(queryUsers.find(v => v.uid === uid))
+                                                setCRole({...crole, users: delta})
                                             }} fieldNames={{
                                         label: "uname",
                                         value: "uid"
                                     }}/>
-                                    <Button icon={<FontAwesomeIcon icon={faPlus}/>} type="primary"/>
                                 </p>
                                 {crole?.users.map((v, i) => <p key={i} className="flex items-center gap-2">
                                     <span className="font-mono text-sm rounded bg-btn px-1.5">
