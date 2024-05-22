@@ -6,11 +6,8 @@ import {useEffect, useRef, useState} from "react";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-    faBan,
-    faCircleDot,
-    faCircleQuestion, faEdit,
-    faHashtag,
-    faPlus, faPlusCircle, faQuestion, faQuestionCircle, faRefresh, faTrash, faUser
+    faBan, faCircleCheck, faCircleDot, faCircleQuestion, faCircleXmark, faClock, faEdit, faEnvelope, faHashtag,
+    faPlusCircle, faQuestion, faQuestionCircle, faRefresh, faTrash, faUser
 } from "@fortawesome/free-solid-svg-icons";
 
 import modBadge from "@/assets/gd/mod.png"
@@ -30,7 +27,7 @@ import {
     ColorPicker,
     Popover,
     Select,
-    Input
+    Input, Pagination
 } from "antd";
 import {RolesTour} from "@/locales/tours/manage/gd";
 import Tab from "@/components/Tab";
@@ -67,12 +64,10 @@ export default function RolesGD(props) {
     const [roleid, setRoleid] = useState(-1)
     const [crole, setCRole] = useState(roles[roleid])
 
-    const [pickerOpen, setPickerOpen] = useState(false)
-    const [iconOpen, setIconOpen] = useState(false)
-    const [searchUserOpen, setSearchUserOpen] = useState(false)
-
     const [queryUsers, setQueryUsers] = useState([])
     const [searchingRN, setSearchingRN] = useState(false)
+    const [uPage, setUPage] = useState(0)
+    const [users, setUsers] = useState([])
 
     const api = useFiberAPI()
 
@@ -103,11 +98,6 @@ export default function RolesGD(props) {
         setRoleid(-1)
     }
 
-    const reset_role = () => {
-        getRoles()
-        setCRole(roles[roleid])
-    }
-
     const enqueueUserSearch = async (val)=> {
         if (val.length<3) return
         setSearchingRN(true)
@@ -118,13 +108,19 @@ export default function RolesGD(props) {
 
     const enqueueUserSearchDebounced = debounce(enqueueUserSearch, 500)
 
+    const getUserList = async (page=uPage) => {
+        let r = await api.gdps_manage.getUserList(srv.Srv.srvid, page)
+        r.users&&setUsers(r.users)
+    }
+
     useEffect(()=>{
         srv.Srv.srvid&&getRoles()
+        srv.Srv.srvid&&getUserList()
     },[srv])
     let el_icon = (lvl)=>{
         switch(lvl) {
             case 0:
-                return <FontAwesomeIcon icon={faBan} className="w-12 !h-12 p-2 rounded-lg"/>
+                return <FontAwesomeIcon icon={faBan} className="w-8 !h-6 p-2 rounded-lg"/>
             case 1:
                 return <img src={modBadge.src} className="w-12 !h-12 p-2 rounded-lg" />
             case 2:
@@ -151,37 +147,35 @@ export default function RolesGD(props) {
                 icon={<FontAwesomeIcon icon={faQuestion} />}
             />
             <PanelContent>
-                <div className="flex-col lg:w-2/3 p-2">
+                <div className="flex-col w-full xl:w-2/3 p-2">
                     <Tab addbtn={<div className="flex gap-2">
-                        <Button type="primary" className="flex gap-2 items-center" onClick={
+                        {tab==="roles"&&<Button type="primary" className="flex gap-2 items-center" onClick={
                             ()=>{
-                                switch (tab) {
-                                    case "roles":
-                                    {
-                                        setRoleid(roles.length)
-                                        roles.push({
-                                            id: roles.length + 1,
-                                            role_name: "New role",
-                                            mod_level: 1,
-                                            comment_color: "255,0,0",
-                                            privs: {},
-                                            users: []
-                                        })
-                                        setRoles(roles)
-                                        setCRole(roles[roles.length - 1])
-                                        return
-                                    }
-                                }
+                                setRoleid(roles.length)
+                                roles.push({
+                                    id: roles.length + 1,
+                                    role_name: "New role",
+                                    mod_level: 1,
+                                    comment_color: "255,0,0",
+                                    privs: {},
+                                    users: []
+                                })
+                                setRoles(roles)
+                                setCRole(roles[roles.length - 1])
                             }
                         }>
                             <FontAwesomeIcon icon={faPlusCircle}/>
                             <span className="!hidden sm:!inline">Создать</span>
-                        </Button>
+                        </Button>}
                         <Button icon={<FontAwesomeIcon icon={faRefresh} />} onClick={()=>{
                             switch (tab) {
                                 case "roles":
                                 {
                                     srv.Srv.srvid&&getRoles()
+                                    return
+                                }
+                                case "players": {
+                                    srv.Srv.srvid&&getUserList()
                                     return
                                 }
                             }
@@ -223,7 +217,44 @@ export default function RolesGD(props) {
                         {
                             label: "Игроки",
                             key: "players",
-                            children: <p>sex2</p>
+                            children: <div className="p-4 flex flex-col">
+                                {users.map((user, i)=>(
+                                    <div className="flex items-center p-4 gap-4
+                                    border-b-1 last:border-b-0 border-white border-opacity-25" key={i}>
+                                        <img src={fastIconLink("cube", 1)} className="w-8"/>
+                                        <div>
+                                            <p className="flex gap-2 items-center">
+                                                {user.uname}
+                                                <span className="text-xs rounded-sm px-1.5 py-0.5 bg-active">
+                                                    <FontAwesomeIcon icon={faHashtag}/> {user.uid}
+                                                </span>
+                                                {
+                                                    user.is_banned === 2
+                                                        ? <span className="text-xs rounded px-1.5 py-0.5 bg-red-700">
+                                                            <FontAwesomeIcon icon={faCircleXmark}/> Забанен
+                                                        </span>
+                                                        : (
+                                                            user.is_banned === 1
+                                                                ? <span className="text-xs rounded px-1.5 py-0.5 bg-amber-700">
+                                                                    <FontAwesomeIcon icon={faClock}/> Не подтвержден
+                                                                </span>
+                                                                : <span className="text-xs rounded px-1.5 py-0.5 bg-active">
+                                                                    <FontAwesomeIcon icon={faCircleCheck}/> Активирован
+                                                                </span>
+                                                        )
+                                                }
+                                            </p>
+                                            <p className="text-gray-300 text-xs flex items-center gap-2">
+                                            <FontAwesomeIcon icon={faEnvelope}/> {user.email}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))}
+                                <Pagination current={uPage} total={users.length*500} onChange={(page)=>{
+                                    setUPage(page)
+                                    getUserList(page)
+                                }} showSizeChanger={false} />
+                            </div>
                         }
                     ]} onChange={setTab} />
                 </div>
@@ -234,7 +265,7 @@ export default function RolesGD(props) {
                     <div className="flex flex-col gap-4">
                         <div className="flex gap-2 items-center">
                             <p className="w-20">Название</p>
-                            <Input placeholder="Название роли" value={crole?.role_name} onChange={(e)=>setCRole({...crole, name: e.target.value})} />
+                            <Input placeholder="Название роли" value={crole?.role_name} onChange={(e)=>setCRole({...crole, role_name: e.target.value})} />
                         </div>
                         <div className="flex gap-2 lg:items-center">
                             <p className="w-20">Значок</p>
@@ -423,3 +454,22 @@ export default function RolesGD(props) {
 }
 
 RolesGD.RequireAuth = true
+
+
+const getIconTypeById = (id)=>{
+    switch (id) {
+        case 1: return "ship"
+        case 2: return "ball"
+        case 3: return "ufo"
+        case 4: return "wave"
+        case 5: return "robot"
+        case 6: return "spider"
+        case 7: return "swing"
+        default: return "cube"
+    }
+}
+
+const fastIconLink = (type, id) => {
+    id = Math.max(1, id)
+    return "https://cdn.fruitspace.one/assets/icons/" + type + "/" + id + ".png"
+}
