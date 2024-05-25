@@ -493,7 +493,7 @@ const MappackView = ({api, srvid, packs}) => {
 
 
     return <>
-        <Table columns={structure} dataSource={packs} className="bg-transparent bg-opacity-20 rounded-2xl"
+        <Table columns={structure} dataSource={packs} className="bg-transparent bg-opacity-20 rounded-2xl overflow-y-scroll"
                pagination={false}/>
         <MapPackModal api={api} srvid={srvid} open={editModpackOpen} onCancel={() => setEditModpackOpen(false)} />
     </>
