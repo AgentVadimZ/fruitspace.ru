@@ -1,18 +1,18 @@
-import GlobalHead from "../../components/GlobalHead";
-import GlobalNav from "../../components/GlobalNav";
-import styles from "../../components/Index.module.css";
-import Footer from "../../components/Global/Footer";
-import BannerGD from "../../assets/BannerGD.png"
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import styles from "@/components/Index.module.css";
+import Footer from "@/components/Global/Footer";
+import BannerGD from "@/assets/BannerGD.png"
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 
-import FeatureCoreImg from "../../assets/features/core_3d-sm.png"
-import FeatureShieldImg from "../../assets/features/shield_3d-sm.png"
-import FeatureMusicImg from "../../assets/features/music_3d-sm.png"
-import useLocale, {useGlobalLocale} from "../../locales/useLocale";
+import FeatureCoreImg from "@/assets/features/core_3d-sm.png"
+import FeatureShieldImg from "@/assets/features/shield_3d-sm.png"
+import FeatureMusicImg from "@/assets/features/music_3d-sm.png"
+import useLocale, {useGlobalLocale} from "@/locales/useLocale";
 import discordLogo from "@/assets/social/discord.png";
-import GitHubIcon from "../../assets/logos/GithubIcon.png";
+import GitHubIcon from "@/assets/logos/GithubIcon.png";
 import Image from "next/image";
 import {Button} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

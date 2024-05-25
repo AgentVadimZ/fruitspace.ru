@@ -1,17 +1,17 @@
-import GlobalNav from "../../components/GlobalNav";
+import GlobalNav from "@/components/GlobalNav";
 
-import styles from '../../components/Manage/GDManage.module.css'
-import ustyles from  '../../components/Panel/PanelPage.module.css'
-import PanelSideNav from "../../components/PanelSideNav";
-import GlobalHead from "../../components/GlobalHead";
-import useEffectOnce from "../../components/Hooks";
+import styles from '@/components/Manage/GDManage.module.css'
+import ustyles from  '@/components/Panel/PanelPage.module.css'
+import PanelSideNav from "@/components/PanelSideNav";
+import GlobalHead from "@/components/GlobalHead";
+import useEffectOnce from "@/components/Hooks";
 import toast, {Toaster} from "react-hot-toast";
-import PanelContent from "../../components/Global/PanelContent";
+import PanelContent from "@/components/Global/PanelContent";
 
-import cardImg from '../../assets/bg_2.jpeg'
+import cardImg from '@/assets/bg_2.jpeg'
 import Link from "next/link";
-import useLocale, {useGlobalLocale} from "../../locales/useLocale";
-import useFiberAPI from "../../fiber/fiber";
+import useLocale, {useGlobalLocale} from "@/locales/useLocale";
+import useFiberAPI from "@/fiber/fiber";
 
 
 

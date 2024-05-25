@@ -1,13 +1,8 @@
-import GlobalHead from "../../components/GlobalHead";
-import GlobalNav from "../../components/GlobalNav";
-import styles from "../../components/Index.module.css";
-import Footer from "../../components/Global/Footer";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import styles from "@/components/Index.module.css";
+import Footer from "@/components/Global/Footer";
 import Link from "next/link";
-import {Chip} from "@mui/material";
-import EmailIcon from '@mui/icons-material/Email';
-import PhoneIcon from '@mui/icons-material/Phone';
-import ReceiptIcon from '@mui/icons-material/Receipt';
-import PersonIcon from '@mui/icons-material/Person';
 import {useGlobalLocale} from "@/locales/useLocale";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelope, faPhone, faReceipt, faUser} from "@fortawesome/free-solid-svg-icons";

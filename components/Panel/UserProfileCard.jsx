@@ -15,7 +15,7 @@ import {Button, Input, List} from "antd";
 import useSWR, {mutate} from "swr";
 import {faKey} from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
-import Logo from "../../assets/ava.png"
+import Logo from "@/assets/ava.png"
 
 export default function UserProfileCard(props) {
 

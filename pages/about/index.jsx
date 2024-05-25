@@ -1,12 +1,8 @@
-import GlobalHead from "../../components/GlobalHead";
-import GlobalNav from "../../components/GlobalNav";
-import styles from "../../components/Index.module.css";
-import Footer from "../../components/Global/Footer";
-import pSrvList from "../../assets/panel1.png";
-import pAnalytics from "../../assets/panel2.png";
-import pSettings from "../../assets/panel3.png";
-import useLocale, {useGlobalLocale} from "../../locales/useLocale";
-import { Image } from 'antd';
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import styles from "@/components/Index.module.css";
+import Footer from "@/components/Global/Footer";
+import useLocale, {useGlobalLocale} from "@/locales/useLocale";
 
 
 export default function About(props) {

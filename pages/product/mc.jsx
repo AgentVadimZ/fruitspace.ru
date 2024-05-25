@@ -1,9 +1,9 @@
-import GlobalHead from "../../components/GlobalHead";
-import GlobalNav from "../../components/GlobalNav";
-import styles from "../../components/Index.module.css";
-import Footer from "../../components/Global/Footer";
-import BannerMC from "../../assets/BannerMC.png";
-import ProductHeader from "../../components/Global/ProductHeader";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import styles from "@/components/Index.module.css";
+import Footer from "@/components/Global/Footer";
+import BannerMC from "@/assets/BannerMC.png";
+import ProductHeader from "@/components/Global/ProductHeader";
 import {
     ListItem,
     ListItemIcon,
@@ -14,25 +14,25 @@ import {TabsList, TabPanel, Tab} from "@/components/Global/Tab";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
 import {useState} from "react";
 
-import useLocale from "../../locales/useLocale";
+import useLocale from "@/locales/useLocale";
 
 import MemoryIcon from '@mui/icons-material/Memory';
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 import StorageIcon from '@mui/icons-material/Storage';
-import ProductCardMC from "../../components/Cards/ProductCardMC";
+import ProductCardMC from "@/components/Cards/ProductCardMC";
 import discordLogo from "@/assets/social/discord.png";
 import vkLogo from "@/assets/social/vkontakte.png";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import CoreVanilla from "../../assets/logos/minecraft.png"
-import CorePaper from "../../assets/logos/mccore/paper.png"
-import CoreSpigot from "../../assets/logos/mccore/spigot.png"
-import CoreFabric from "../../assets/logos/mccore/fabric.png"
-import CoreQuilt from "../../assets/logos/mccore/quilt.png"
-import CoreForge from "../../assets/logos/mccore/forge.png"
-import CoreSponge from "../../assets/logos/mccore/sponge.png"
-import CoreFolia from "../../assets/logos/mccore/folia.png"
-import CorePurpur from "../../assets/logos/mccore/purpur.png"
+import CoreVanilla from "@/assets/logos/minecraft.png"
+import CorePaper from "@/assets/logos/mccore/paper.png"
+import CoreSpigot from "@/assets/logos/mccore/spigot.png"
+import CoreFabric from "@/assets/logos/mccore/fabric.png"
+import CoreQuilt from "@/assets/logos/mccore/quilt.png"
+import CoreForge from "@/assets/logos/mccore/forge.png"
+import CoreSponge from "@/assets/logos/mccore/sponge.png"
+import CoreFolia from "@/assets/logos/mccore/folia.png"
+import CorePurpur from "@/assets/logos/mccore/purpur.png"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDatabase, faFloppyDisk, faPuzzlePiece, faServer, faZap} from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";

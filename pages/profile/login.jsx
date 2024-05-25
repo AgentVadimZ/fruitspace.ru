@@ -1,10 +1,10 @@
-import GlobalHead from "../../components/GlobalHead";
-import GlobalNav from "../../components/GlobalNav";
-import styles from "../../components/Index.module.css";
-import Footer from "../../components/Global/Footer";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import styles from "@/components/Index.module.css";
+import Footer from "@/components/Global/Footer";
 import {useEffect, useRef, useState} from "react";
 
-import logo from "../../assets/Fruitspace2.png"
+import logo from "@/assets/Fruitspace2.png"
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import {Button as MuiButton, IconButton, InputAdornment, TextField} from "@mui/material";
 import {LoadingButton} from "@mui/lab"
@@ -12,9 +12,9 @@ import {styled} from "@mui/system";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import toast, {Toaster} from "react-hot-toast";
 import {useRouter} from "next/router";
-import useEffectOnce from "../../components/Hooks";
-import useLocale, {useGlobalLocale} from "../../locales/useLocale";
-import useFiberAPI from "../../fiber/fiber";
+import useEffectOnce from "@/components/Hooks";
+import useLocale, {useGlobalLocale} from "@/locales/useLocale";
+import useFiberAPI from "@/fiber/fiber";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDiscord} from "@fortawesome/free-brands-svg-icons";
 import {Button, Form, Input, Popover} from "antd";

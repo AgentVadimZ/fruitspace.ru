@@ -1,12 +1,12 @@
-import GlobalHead from "../../../components/GlobalHead";
+import GlobalHead from "@/components/GlobalHead";
 
-import PanelContent from "../../../components/Global/PanelContent";
-import styles from "../../../components/Manage/GDManage.module.css"
-import LogoNG from '../../../assets/logos/ng-logo.jpeg'
-import LogoYT from '../../../assets/logos/yt-logo.jpeg'
-import LogoVK from '../../../assets/logos/vk-logo.png'
-import LogoDZ from '../../../assets/logos/dz-logo.png'
-import LogoDBox from '../../../assets/logos/dbox-logo.png'
+import PanelContent from "@/components/Global/PanelContent";
+import styles from "@/components/Manage/GDManage.module.css"
+import LogoNG from '@/assets/logos/ng-logo.jpeg'
+import LogoYT from '@/assets/logos/yt-logo.jpeg'
+import LogoVK from '@/assets/logos/vk-logo.png'
+import LogoDZ from '@/assets/logos/dz-logo.png'
+import LogoDBox from '@/assets/logos/dbox-logo.png'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faArrowDown19,
@@ -24,11 +24,11 @@ import {useEffect, useRef, useState} from "react";
 import {styled} from "@mui/system";
 import ReactPlayer from "react-player";
 import {LoadingButton} from "@mui/lab";
-import useLocale from "../../../locales/useLocale";
-import GlobalGDPSNav from "../../../components/UserZone/GlobalGDPSNav";
-import GDPSNavBar from "../../../components/UserZone/GDPSSIdeBar";
+import useLocale from "@/locales/useLocale";
+import GlobalGDPSNav from "@/components/UserZone/GlobalGDPSNav";
+import GDPSNavBar from "@/components/UserZone/GDPSSIdeBar";
 import {useRouter} from "next/router";
-import useFiberAPI from "../../../fiber/fiber";
+import useFiberAPI from "@/fiber/fiber";
 import {Input, Pagination, Select, Slider} from "antd";
 import {debounce} from "lodash";
 

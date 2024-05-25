@@ -1,11 +1,11 @@
-import GlobalNav from "../../components/GlobalNav";
-import PanelSideNav from "../../components/PanelSideNav";
-import GlobalHead from "../../components/GlobalHead";
-import PanelContent from "../../components/Global/PanelContent";
-import UserProfileCard from "../../components/Panel/UserProfileCard";
+import GlobalNav from "@/components/GlobalNav";
+import PanelSideNav from "@/components/PanelSideNav";
+import GlobalHead from "@/components/GlobalHead";
+import PanelContent from "@/components/Global/PanelContent";
+import UserProfileCard from "@/components/Panel/UserProfileCard";
 import toast, {Toaster} from "react-hot-toast";
-import useEffectOnce from "../../components/Hooks";
-import useLocale from "../../locales/useLocale";
+import useEffectOnce from "@/components/Hooks";
+import useLocale from "@/locales/useLocale";
 
 
 export default function User(props) {

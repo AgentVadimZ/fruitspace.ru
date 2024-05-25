@@ -1,16 +1,16 @@
-import GlobalNav from "../../components/GlobalNav";
-import PanelSideNav from "../../components/PanelSideNav";
-import GlobalHead from "../../components/GlobalHead";
-import PanelContent from "../../components/Global/PanelContent";
+import GlobalNav from "@/components/GlobalNav";
+import PanelSideNav from "@/components/PanelSideNav";
+import GlobalHead from "@/components/GlobalHead";
+import PanelContent from "@/components/Global/PanelContent";
 import {TabsList, TabPanel, Tab, TabButton} from "@/components/Global/Tab";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
-import ServerItem from "../../components/Cards/ServerItem";
-import useEffectOnce from "../../components/Hooks";
+import ServerItem from "@/components/Cards/ServerItem";
+import useEffectOnce from "@/components/Hooks";
 import toast from "react-hot-toast";
-import useLocale, {useGlobalLocale} from "../../locales/useLocale";
-import useFiberAPI from "../../fiber/fiber";
+import useLocale, {useGlobalLocale} from "@/locales/useLocale";
+import useFiberAPI from "@/fiber/fiber";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHardDrive, faMemory, faMicrochip} from "@fortawesome/free-solid-svg-icons";
 

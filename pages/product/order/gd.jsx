@@ -1,15 +1,13 @@
-import GlobalHead from "../../../components/GlobalHead";
-import GlobalNav from "../../../components/GlobalNav";
-import styles from "../../../components/Index.module.css";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import styles from "@/components/Index.module.css";
 import {styled} from "@mui/system";
 import {TextField} from "@mui/material";
 import {useEffect, useState} from "react";
-import {Tab, TabsList, TabPanel} from "@/components/Global/Tab";
-import useEffectOnce from "../../../components/Hooks";
-import TabsUnstyled from "@mui/base/TabsUnstyled";
+import useEffectOnce from "@/components/Hooks";
 import toast, {Toaster} from "react-hot-toast";
-import useLocale, {useGlobalLocale} from "../../../locales/useLocale";
-import useFiberAPI from "../../../fiber/fiber";
+import useLocale, {useGlobalLocale} from "@/locales/useLocale";
+import useFiberAPI from "@/fiber/fiber";
 import Link from 'next/link';
 import TariffPS from "@/assets/features/gd_pressstart.svg";
 import {

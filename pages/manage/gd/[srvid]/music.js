@@ -1,15 +1,15 @@
-import GlobalHead from "../../../../components/GlobalHead";
-import GlobalNav from "../../../../components/GlobalNav";
-import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
-import PanelContent from "../../../../components/Global/PanelContent";
-import styles from "../../../../components/Manage/GDManage.module.css"
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import GDNavBar from "@/components/Manage/NavBars/GDNavBar";
+import PanelContent from "@/components/Global/PanelContent";
+import styles from "@/components/Manage/GDManage.module.css"
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import LogoNG from '../../../../assets/logos/ng-logo.jpeg'
-import LogoYT from '../../../../assets/logos/yt-logo.jpeg'
-import LogoVK from '../../../../assets/logos/vk-logo.png'
-import LogoDZ from '../../../../assets/logos/dz-logo.png'
-import LogoDBox from '../../../../assets/logos/dbox-logo.png'
+import LogoNG from '@/assets/logos/ng-logo.jpeg'
+import LogoYT from '@/assets/logos/yt-logo.jpeg'
+import LogoVK from '@/assets/logos/vk-logo.png'
+import LogoDZ from '@/assets/logos/dz-logo.png'
+import LogoDBox from '@/assets/logos/dbox-logo.png'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faArrowDown19,
@@ -31,8 +31,8 @@ import {useEffect, useRef, useState} from "react";
 import {styled} from "@mui/system";
 import ReactPlayer from "react-player";
 import {LoadingButton} from "@mui/lab";
-import useLocale from "../../../../locales/useLocale";
-import useFiberAPI from "../../../../fiber/fiber";
+import useLocale from "@/locales/useLocale";
+import useFiberAPI from "@/fiber/fiber";
 import {MusicTour} from "@/locales/tours/manage/gd";
 import {FloatButton, Input, Select, Tour, Slider, Pagination} from "antd";
 import {debounce} from "lodash";

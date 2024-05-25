@@ -1,21 +1,20 @@
-import GlobalHead from "../../../components/GlobalHead";
+import GlobalHead from "@/components/GlobalHead";
 import toast, {Toaster} from "react-hot-toast";
-import PanelContent from "../../../components/Global/PanelContent";
-import GlobalGDPSNav from "../../../components/UserZone/GlobalGDPSNav";
-import GDPSNavBar from "../../../components/UserZone/GDPSSIdeBar";
+import PanelContent from "@/components/Global/PanelContent";
+import GlobalGDPSNav from "@/components/UserZone/GlobalGDPSNav";
+import GDPSNavBar from "@/components/UserZone/GDPSSIdeBar";
 import {useEffect, useState} from "react";
-import {useRouter} from "next/router";
-import starImg from "../../../assets/gd/star.png"
-import cpImg from "../../../assets/gd/cp.png"
-import ucoinImg from "../../../assets/gd/browncoin.png"
-import coinImg from "../../../assets/gd/silvercoin.png"
-import diamondsImg from "../../../assets/gd/diamond.png"
-import orbsImg from "../../../assets/gd/orbs.png"
-import demonImg from "../../../assets/gd/demon.png"
-import playImg from "../../../assets/gd/play.png"
-import useFiberAPI from "../../../fiber/fiber";
+import starImg from "@/assets/gd/star.png"
+import cpImg from "@/assets/gd/cp.png"
+import ucoinImg from "@/assets/gd/browncoin.png"
+import coinImg from "@/assets/gd/silvercoin.png"
+import diamondsImg from "@/assets/gd/diamond.png"
+import orbsImg from "@/assets/gd/orbs.png"
+import demonImg from "@/assets/gd/demon.png"
+import playImg from "@/assets/gd/play.png"
+import useFiberAPI from "@/fiber/fiber";
 import {getBrowserLocale} from "@/components/Hooks";
-import useLocale from "../../../locales/useLocale";
+import useLocale from "@/locales/useLocale";
 import {Backdrop, TextField} from "@mui/material";
 import {styled} from "@mui/system";
 import {Button} from "antd";

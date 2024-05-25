@@ -1,9 +1,9 @@
-import GlobalHead from "../../../../components/GlobalHead";
-import GlobalNav from "../../../../components/GlobalNav";
-import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
-import PanelContent from "../../../../components/Global/PanelContent";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import GDNavBar from "@/components/Manage/NavBars/GDNavBar";
+import PanelContent from "@/components/Global/PanelContent";
 import {useRouter} from "next/router";
-import styles from "../../../../components/Manage/GDManage.module.css"
+import styles from "@/components/Manage/GDManage.module.css"
 import {
     Avatar,
     Badge, Button, ClickAwayListener,
@@ -31,7 +31,7 @@ import {faContao} from "@fortawesome/free-brands-svg-icons";
 import {useEffect, useState} from "react";
 import Skeleton from '@mui/material/Skeleton';
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import useFiberAPI from "../../../../fiber/fiber";
+import useFiberAPI from "@/fiber/fiber";
 
 
 const SqBadge = (text) => <span className="rounded-md bg-[var(--btn-color)] group-hover:bg-[var(--active-color)] px-2 py-1 ml-2">{text}</span>

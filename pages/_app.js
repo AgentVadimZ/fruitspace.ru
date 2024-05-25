@@ -1,10 +1,10 @@
-import '../styles/globals.css'
+import '@/styles/globals.css'
 import {StyledEngineProvider} from "@mui/material";
 import {RecoilRoot} from "recoil";
-import AuthProvider from "../components/AuthProvider";
+import AuthProvider from "@/components/AuthProvider";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
-import LoadingAnim from "../components/ProgressBar";
+import LoadingAnim from "@/components/ProgressBar";
 import {ConfigProvider, theme} from "antd";
 
 export default function WebApp({Component, pageProps}) {
@@ -68,6 +68,11 @@ export default function WebApp({Component, pageProps}) {
                             handleLineWidth: 0,
                             handleLineWidthHover: 0,
                             dotSize: 1
+                        },
+                        DatePicker: {
+                            activeShadow: "0 0 0 1px #0d6efd",
+                            colorBgElevated: "var(--subtle-color)",
+                            controlItemBgActive: "var(--btn-color)"
                         }
                     },
                     algorithm: theme.darkAlgorithm

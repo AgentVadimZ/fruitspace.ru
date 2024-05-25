@@ -1,8 +1,8 @@
-import GlobalHead from "../../components/GlobalHead";
-import GlobalNav from "../../components/GlobalNav";
-import styles from "../../components/Index.module.css";
-import Footer from "../../components/Global/Footer";
-import useLocale, {useGlobalLocale} from "../../locales/useLocale";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import styles from "@/components/Index.module.css";
+import Footer from "@/components/Global/Footer";
+import useLocale, {useGlobalLocale} from "@/locales/useLocale";
 
 
 export default function Partnership(props) {

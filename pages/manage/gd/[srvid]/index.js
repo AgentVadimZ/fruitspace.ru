@@ -1,16 +1,16 @@
-import GlobalHead from "../../../../components/GlobalHead";
-import GlobalNav from "../../../../components/GlobalNav";
-import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
-import PanelContent from "../../../../components/Global/PanelContent";
-import styles from "../../../../components/Manage/GDManage.module.css"
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import GDNavBar from "@/components/Manage/NavBars/GDNavBar";
+import PanelContent from "@/components/Global/PanelContent";
+import styles from "@/components/Manage/GDManage.module.css"
 import {useRef, useState} from "react";
 
 import toast, {Toaster} from "react-hot-toast";
-import useEffectOnce from "../../../../components/Hooks";
-import useLocale from "../../../../locales/useLocale";
-import ProgressCard from "../../../../components/Cards/ProgressCard";
-import GDPSCard, {DownloadCard} from "../../../../components/Cards/GDPSCard";
-import useFiberAPI from "../../../../fiber/fiber";
+import useEffectOnce from "@/components/Hooks";
+import useLocale from "@/locales/useLocale";
+import ProgressCard from "@/components/Cards/ProgressCard";
+import GDPSCard, {DownloadCard} from "@/components/Cards/GDPSCard";
+import useFiberAPI from "@/fiber/fiber";
 import {mutate} from "swr";
 import {IndexTour} from "@/locales/tours/manage/gd";
 import {FloatButton, Tour} from "antd";
@@ -76,7 +76,7 @@ export default function ManageGD(props) {
                                   icon={"https://cdn.fruitspace.one/server_icons/"+srv.Srv.icon} onClick={()=>props.router.push("/product/order/gd?id="+srv.Srv.srvid)}/>
                         <ProgressCard color max={srv.CoreConfig&&srv.CoreConfig.ServerConfig.MaxUsers} now={srv.Srv.user_count} bottom="Игроки" />
                         <ProgressCard color max={srv.CoreConfig&&srv.CoreConfig.ServerConfig.MaxLevels} now={srv.Srv.level_count} bottom="Уровни" />
-                        <ProgressCard color date max={preMax>30?365:30} text={expireText.endsWith("2050")?"Навсегда":expireText} bottom="Действует до" />
+                        <ProgressCard color date max={preMax>30?365:30} now={expireDate} text={expireText.endsWith("2050")?"Навсегда":expireText} bottom="Действует до" />
                         <DownloadCard sref={r=>refs.current["build"] = r} api={api} srvid={srv.Srv.srvid} locale={locale} srv={srv.Srv} copyR={copyValueR} />
                     </div>
                     <div className="crossx col-span-2 rounded-2xl bg-active glassb p-4 flex flex-col gap-4 items-center justify-center">

@@ -1,7 +1,7 @@
-import GlobalHead from "../../../../components/GlobalHead";
-import GlobalNav from "../../../../components/GlobalNav";
-import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
-import PanelContent from "../../../../components/Global/PanelContent";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import GDNavBar from "@/components/Manage/NavBars/GDNavBar";
+import PanelContent from "@/components/Global/PanelContent";
 import {useEffect, useRef, useState} from "react";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -128,7 +128,7 @@ export default function RolesGD(props) {
             case 3:
                 return <img src={modListBadge.src} className="w-12 !h-12 p-2 rounded-lg" />
             default:
-                return <FontAwesomeIcon icon={faCircleDot} className="w-12 !h-12 p-2 rounded-lg" />
+                return <FontAwesomeIcon icon={faCircleDot} className="w-8 !h-6 p-2 rounded-lg" />
         }
     }
 

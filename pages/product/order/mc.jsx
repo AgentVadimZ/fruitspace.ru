@@ -1,15 +1,15 @@
-import GlobalHead from "../../../components/GlobalHead";
-import GlobalNav from "../../../components/GlobalNav";
-import useLocale, {useGlobalLocale} from "../../../locales/useLocale";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import useLocale, {useGlobalLocale} from "@/locales/useLocale";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
 import {styled} from "@mui/system";
 import {Button, Backdrop, MenuItem, Switch, TextField} from "@mui/material";
 import {useEffect, useState} from "react";
 import {TabsList, TabPanel, Tab} from "@/components/Global/Tab";
 import {Form, Input, Select} from "antd";
-import useFiberAPI from "../../../fiber/fiber";
+import useFiberAPI from "@/fiber/fiber";
 import semver from "semver";
-import BackgroundMC from "../../../assets/MCOrderBG.png"
+import BackgroundMC from "@/assets/MCOrderBG.png"
 import toast, {Toaster} from "react-hot-toast";
 
 export default function OrderMC(props){

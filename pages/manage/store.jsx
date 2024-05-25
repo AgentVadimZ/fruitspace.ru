@@ -1,9 +1,9 @@
 
 
-import GlobalHead from "../../components/GlobalHead";
-import GlobalNav from "../../components/GlobalNav";
-import styles from "../../components/Index.module.css";
-import useLocale from "../../locales/useLocale";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import styles from "@/components/Index.module.css";
+import useLocale from "@/locales/useLocale";
 
 
 export default function Store(props) {

@@ -1,4 +1,4 @@
-import useLocale, {useGlobalLocale} from "../../../locales/useLocale";
+import useLocale, {useGlobalLocale} from "@/locales/useLocale";
 import {faCircleInfo, faRightToBracket} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAndroid, faApple, faDiscord, faVk, faWindows} from "@fortawesome/free-brands-svg-icons";
@@ -9,8 +9,8 @@ import {Backdrop, TextField} from "@mui/material";
 import toast, {Toaster} from "react-hot-toast";
 import {getBrowserLocale} from "@/components/Hooks";
 import Linkify from "linkify-react";
-import useFiberAPI, {serverFiberAPI} from "../../../fiber/fiber";
-import GlobalHead from "../../../components/GlobalHead";
+import useFiberAPI, {serverFiberAPI} from "@/fiber/fiber";
+import GlobalHead from "@/components/GlobalHead";
 import {useCaptchaHook} from "@aacn.eu/use-friendly-captcha";
 import {Button, ConfigProvider, Form, Input} from "antd";
 
@@ -206,9 +206,9 @@ export default function DownloadPage(props) {
     }
 
     // const config = {
-    //         bg: "https://i.redd.it/4vztk5m7p9651.jpg",
-    //         accent: "#36906b",
-    //         variant: "default", // primary/default
+    //         bg: "https://cdn.discordapp.com/attachments/971151059106029568/1243588306680152165/peakpx.jpg?ex=6652055d&is=6650b3dd&hm=6011717ded2db7d012f333fc865a0cc8175f3d721e9ed2d0a20866f059d0967a&",
+    //         accent: "#a83434",
+    //         variant: "primary", // primary/default
     //         // ...srv.downloadpage_style || {}
     //     }
 
@@ -238,7 +238,7 @@ export default function DownloadPage(props) {
                                 <span className="text-sm">{showPlayers(srv.user_count, srv.level_count)}</span>
                             </div>
                         </div>
-                        <Linkify as="pre" className="p-2 rounded-xl mt-2 text-sm whitespace-normal"
+                        <Linkify as="pre" className="p-2 rounded-xl mt-2 text-sm whitespace-pre"
                                  options={{className: "text-primary"}}>
                             {srv.description}
                         </Linkify>
