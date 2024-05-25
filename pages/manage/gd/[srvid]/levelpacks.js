@@ -121,7 +121,7 @@ export default function LevelpackGD(props) {
             <GDNavBar />
             <Toaster/>
             <PanelContent>
-                <div className="flex-col w-full p-2 box-border">
+                <div className="flex-col w-full lg:p-2 box-border">
                     <Tab addbtn={<Button type="primary" className="flex gap-2 items-center" onClick={()=>setShowModal(true)}>
                         <FontAwesomeIcon icon={faPlusCircle}/>
                         <span className="!hidden sm:!inline">Создать новый</span>

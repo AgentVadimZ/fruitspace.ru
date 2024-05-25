@@ -151,7 +151,7 @@ export default function Home(props) {
 
                     <Carousel ref={carouselRef} dots={{className: "!bottom-2"}}>
                         {reviews.map((u, i) => {
-                            return <div key={i} className="p-4 my-4 overflow-y-hidden
+                            return <div key={i} className="p-4 my-4 overflow-y-scroll lg:overflow-y-hidden
                              !w-5/6 lg:!w-2/3 h-96 mx-auto !flex flex-col bg-subtle bg-opacity-75 border-white border-opacity-25 rounded-2xl border-solid border-1">
                                 <div className="flex flex-col lg:flex-row items-center justify-between">
                                     <p className="text-lg w-40">{u.user}</p>

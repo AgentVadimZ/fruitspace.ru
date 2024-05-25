@@ -71,7 +71,7 @@ export default function ManageGD(props) {
             />
             {srv.Srv&&<PanelContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full md:w-auto">
-                    <div className="grid grid-cols-2 gap-4 col-span-2">
+                    <div className="grid gap-4 col-span-2">
                         <GDPSCard sref={r=>refs.current["servcard"] = r} tref={r=>refs.current["servtariff"] = r} name={srv.Srv.srv_name} planid={srv.Srv.plan} plan={GetGDPlan(srv.Srv.plan)} id={<span style={{color:"white"}} className={styles.CodeBlock}>{srv.Srv.srvid}</span>}
                                   icon={"https://cdn.fruitspace.one/server_icons/"+srv.Srv.icon} onClick={()=>props.router.push("/product/order/gd?id="+srv.Srv.srvid)}/>
                         <ProgressCard color max={srv.CoreConfig&&srv.CoreConfig.ServerConfig.MaxUsers} now={srv.Srv.user_count} bottom="Игроки" />
@@ -79,7 +79,7 @@ export default function ManageGD(props) {
                         <ProgressCard color date max={preMax>30?365:30} now={expireDate} text={expireText.endsWith("2050")?"Навсегда":expireText} bottom="Действует до" />
                         <DownloadCard sref={r=>refs.current["build"] = r} api={api} srvid={srv.Srv.srvid} locale={locale} srv={srv.Srv} router={props.router} copyR={copyValueR} />
                     </div>
-                    <div className="crossx col-span-2 rounded-2xl bg-active glassb p-4 flex flex-col gap-4 items-center justify-center">
+                    <div className="crossx lg:col-span-2 rounded-2xl bg-active glassb p-4 flex flex-col gap-4 items-center justify-center">
                         <FontAwesomeIcon icon={faHourglassHalf} className="text-3xl" />
                         <span className="text-lg">Полная аналитика скоро</span>
                     </div>

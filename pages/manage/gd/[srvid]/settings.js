@@ -488,9 +488,9 @@ export default function SettingsGD(props) {
                             <FontAwesomeIcon className="hover:bg-btn p-1.5 rounded-full" icon={faCog} onClick={()=>setBackdrop("gdpsbot")} />
                         </div>
                     </div>
-                    <div className="flex gap-4 items-center justify-between">
+                    <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
                         Управление
-                        <p className="flex flex-wrap items-center gap-2">
+                        <p className="flex items-center gap-2">
                             <Button danger type="primary" onClick={() => setBackdrop("delete")}>
                                 Удалить GDPS
                             </Button>
