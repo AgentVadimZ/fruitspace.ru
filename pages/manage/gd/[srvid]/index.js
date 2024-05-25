@@ -130,7 +130,7 @@ const GetGDPlan=(plan)=> {
         case 1: return "Press Start"
         case 2: return "Singularity"
         case 3: return "Takeoff"
-        case 4: return "Overkill"
+        case 4: return "Foundation"
         default: return "???"
     }
 }
