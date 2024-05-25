@@ -147,7 +147,7 @@ export default function RolesGD(props) {
                 icon={<FontAwesomeIcon icon={faQuestion} />}
             />
             <PanelContent>
-                <div className="flex-col w-full xl:w-2/3 p-2">
+                <div className="flex-col w-full xl:w-2/3 lg:p-2">
                     <Tab addbtn={<div className="flex gap-2">
                         {tab==="roles"&&<Button type="primary" className="flex gap-2 items-center" onClick={
                             ()=>{
@@ -184,13 +184,13 @@ export default function RolesGD(props) {
                         {
                             label: "Роли",
                             key: "roles",
-                            children: <div className="p-4 flex flex-col">
+                            children: <div className="lg:p-4 flex flex-col overflow-y-scroll">
                                 {roles.map((v, i) => (
                                     <div className="flex items-center p-4 gap-4
                                     border-b-1 last:border-b-0 border-white border-opacity-25" key={i}>
                                         {el_icon(v.mod_level)}
                                         <div>
-                                            <p className="flex gap-2 items-center">
+                                            <p className="flex gap-2 items-center text-sm lg:text-base">
                                                 <p className="w-3 h-3 rounded border-1 border-white border-opacity-75" style={{
                                                     backgroundColor: `rgb(${v.comment_color})`
                                                 }}></p>
@@ -217,28 +217,28 @@ export default function RolesGD(props) {
                         {
                             label: "Игроки",
                             key: "players",
-                            children: <div className="p-4 flex flex-col">
+                            children: <div className="p-4 flex flex-col overflow-y-scroll">
                                 {users.map((user, i)=>(
-                                    <div className="flex items-center p-4 gap-4
+                                    <div className="flex items-center p-2 lg:p-4 gap-4
                                     border-b-1 last:border-b-0 border-white border-opacity-25" key={i}>
                                         <img src={fastIconLink("cube", 1)} className="w-8"/>
                                         <div>
                                             <p className="flex gap-2 items-center">
                                                 {user.uname}
-                                                <span className="text-xs rounded-sm px-1.5 py-0.5 bg-active">
+                                                <span className="text-xs rounded-sm px-1.5 py-0.5 bg-active text-nowrap">
                                                     <FontAwesomeIcon icon={faHashtag}/> {user.uid}
                                                 </span>
                                                 {
                                                     user.is_banned === 2
-                                                        ? <span className="text-xs rounded px-1.5 py-0.5 bg-red-700">
+                                                        ? <span className="text-xs rounded px-1.5 py-0.5 bg-red-700 text-nowrap">
                                                             <FontAwesomeIcon icon={faCircleXmark}/> Забанен
                                                         </span>
                                                         : (
                                                             user.is_banned === 1
-                                                                ? <span className="text-xs rounded px-1.5 py-0.5 bg-amber-700">
+                                                                ? <span className="text-xs rounded px-1.5 py-0.5 bg-amber-700 text-nowrap">
                                                                     <FontAwesomeIcon icon={faClock}/> Не подтвержден
                                                                 </span>
-                                                                : <span className="text-xs rounded px-1.5 py-0.5 bg-active">
+                                                                : <span className="text-xs rounded px-1.5 py-0.5 bg-active text-nowrap">
                                                                     <FontAwesomeIcon icon={faCircleCheck}/> Активирован
                                                                 </span>
                                                         )

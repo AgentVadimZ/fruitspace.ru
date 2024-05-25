@@ -168,7 +168,7 @@ export default function MusicGD(props) {
                         <p className="bg-active text-sm rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
                                         relative z-20 -mb-[1px]">Загрузить музыку</p>
                         <div
-                            className="bg-active flex gap-2 items-center p-2 rounded-xl rounded-tl-none border-1 border-white border-opacity-25 z-10">
+                            className="bg-active flex gap-2 items-center p-2 rounded-xl rounded-tl-none border-1 border-white border-opacity-25 z-10 overflow-y-scroll">
                             <img src={LogoNG.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
                                  onClick={() => setBackdrop("add-ng")}/>
                             {srv.Srv.plan > 1 && <img src={LogoYT.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
@@ -184,19 +184,19 @@ export default function MusicGD(props) {
 
                     <div
                         className="flex-1 w-full xl:w-auto bg-active flex items-center gap-4 nextborder h-20 rounded-xl px-4 py-2">
-                        <p className="w-10 h-10 rounded-full bg-white hover:bg-gray-300 cursor-pointer flex items-center justify-center"
+                        <p className="!w-10 !h-10 rounded-full bg-white hover:bg-gray-300 cursor-pointer flex items-center justify-center"
                            onClick={() => setPlayerData({
                                ...playerData,
                                playing: !playerData.playing
                            })}>
                             <FontAwesomeIcon icon={playerData.playing ? faPause : faPlay}
-                                             className="text-lg text-active aspect-square"/>
+                                             className="text-lg text-active w-10"/>
                         </p>
                         <div className="flex-1">
                             <p className="flex items-center gap-2">
                                 <span
-                                    className="text-ellipsis overflow-hidden text-nowrap max-w-40 xl:max-w-lg">{playerData.title}</span>
-                                <span className="bg-btn rounded text-sm px-1.5">ID {playerData.id}</span>
+                                    className="text-sm lg:text-base text-ellipsis overflow-hidden text-nowrap max-w-24 md:max-w-40 xl:max-w-lg">{playerData.title}</span>
+                                <span className="bg-btn rounded text-xs lg:text-sm px-1.5">ID {playerData.id}</span>
                             </p>
                             <p className="text-xs text-gray-300">{playerData.artist}</p>
                             <div className="flex items-center gap-4 -mr-2">
@@ -274,8 +274,8 @@ export default function MusicGD(props) {
                                  }}>
                                 <FontAwesomeIcon icon={faCompactDisc} className="text-4xl"/>
                                 <div>
-                                    <p className="text-ellipsis overflow-hidden text-nowrap max-w-40 xl:max-w-[64rem]">{val.name}</p>
-                                    <p className="text-sm text-gray-300 flex flex-col xl:flex-row xl:items-center gap-2">
+                                    <p className="text-sm lg:text-base text-ellipsis overflow-hidden text-nowrap max-w-24 md:max-w-40 xl:max-w-[64rem]">{val.name}</p>
+                                    <p className="text-xs lg:text-sm text-gray-300 flex flex-col xl:flex-row xl:items-center gap-2">
                                         {val.artist}
                                         <p className="flex items-center gap-2">
                                             <span

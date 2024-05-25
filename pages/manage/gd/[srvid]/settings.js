@@ -368,7 +368,7 @@ export default function SettingsGD(props) {
                             }}/>
                         }/>
                     </div>
-                    <div className="flex gap-4 items-center justify-end mt-auto">
+                    <div className="flex flex-col lg:flex-row gap-4 items-end lg:items-center justify-end mt-auto">
                         <Button onClick={()=>setBackdrop("dbreset")} danger>Сбросить пароль</Button>
                         <Button onClick={()=>redirectToDB()} type="primary">Перейти в БД</Button>
                     </div>
@@ -445,7 +445,7 @@ export default function SettingsGD(props) {
                                     onChange={(evt)=>{setSettings({...settings,
                                         description: {...settings.description, text: evt.target.value}
                                     })}} style={{textAlign: aligns[settings.description.align]}} />
-                    <div className="flex gap-2 items-center justify-end mt-auto">
+                    <div className="flex flex-wrap gap-2 items-center justify-end mt-auto">
                         {srv.Tariff && srv.Tariff.GDLab.Enabled &&
                             <Button type="primary" className="bg-success hover:!bg-green-700"
                                     onClick={()=>setBackdrop("buildlab")}>🔨 BuildLab™</Button>}
@@ -490,7 +490,7 @@ export default function SettingsGD(props) {
                     </div>
                     <div className="flex gap-4 items-center justify-between">
                         Управление
-                        <p className="flex items-center gap-2">
+                        <p className="flex flex-wrap items-center gap-2">
                             <Button danger type="primary" onClick={() => setBackdrop("delete")}>
                                 Удалить GDPS
                             </Button>

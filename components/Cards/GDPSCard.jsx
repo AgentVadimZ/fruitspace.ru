@@ -59,7 +59,9 @@ export function DownloadCard(props) {
                 },
             }} buttonsRender={(btns)=> {
                 btns[0] = <Button type="primary" className="w-full" onClick={()=>props.router.push(`https://gofruit.space/gdps/${props.srvid}`)}
-                                  icon={<FontAwesomeIcon className="!hidden md:!inline-block" icon={faDownload} />}>Скачать</Button>
+                                  icon={<FontAwesomeIcon icon={faDownload} />}>
+                    <span className="!hidden lg:!inline">Скачать</span>
+                </Button>
                 return btns
             }}>
                 <FontAwesomeIcon icon={faDownload}/> Скачать

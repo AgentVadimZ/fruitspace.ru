@@ -238,7 +238,7 @@ export default function DownloadPage(props) {
                                 <span className="text-sm">{showPlayers(srv.user_count, srv.level_count)}</span>
                             </div>
                         </div>
-                        <Linkify as="pre" className="p-2 rounded-xl mt-2 text-sm whitespace-pre"
+                        <Linkify as="pre" className="p-2 rounded-xl mt-2 text-sm whitespace-pre-wrap"
                                  options={{className: "text-primary"}}>
                             {srv.description}
                         </Linkify>
