@@ -77,7 +77,7 @@ export default function ManageGD(props) {
                         <ProgressCard color max={srv.CoreConfig&&srv.CoreConfig.ServerConfig.MaxUsers} now={srv.Srv.user_count} bottom="Игроки" />
                         <ProgressCard color max={srv.CoreConfig&&srv.CoreConfig.ServerConfig.MaxLevels} now={srv.Srv.level_count} bottom="Уровни" />
                         <ProgressCard color date max={preMax>30?365:30} now={expireDate} text={expireText.endsWith("2050")?"Навсегда":expireText} bottom="Действует до" />
-                        <DownloadCard sref={r=>refs.current["build"] = r} api={api} srvid={srv.Srv.srvid} locale={locale} srv={srv.Srv} copyR={copyValueR} />
+                        <DownloadCard sref={r=>refs.current["build"] = r} api={api} srvid={srv.Srv.srvid} locale={locale} srv={srv.Srv} router={props.router} copyR={copyValueR} />
                     </div>
                     <div className="crossx col-span-2 rounded-2xl bg-active glassb p-4 flex flex-col gap-4 items-center justify-center">
                         <FontAwesomeIcon icon={faHourglassHalf} className="text-3xl" />
