@@ -82,7 +82,6 @@ export default function Reupload(props) {
     const [levels, setLevels] = useState([])
 
     const searchLevels = async (page=0) => {
-        gdaccount.uname="Dorami"
         let levels = await axios.get(`/api/gdproxy/get_levels?user=${gdaccount.uname}&page=${page}`)
         levels.status===200&&setLevels(levels.data)
     }

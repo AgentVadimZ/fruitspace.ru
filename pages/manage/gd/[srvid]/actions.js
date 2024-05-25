@@ -251,7 +251,7 @@ export default function ActionsGD(props) {
             <GlobalNav />
             <GDNavBar />
             <PanelContent>
-                <div className={styles.CardBox} style={{marginBottom:"2rem"}}>
+                <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4" style={{marginBottom:"2rem"}}>
                     <div className="flex items-center flex-col lg:flex-row gap-2">
                         <h3 className="!my-0 !mx-4">Лог действий</h3>
                         <div className="flex items-center rounded-lg bg-[var(--btn-color)] px-4 py-2">
@@ -262,7 +262,7 @@ export default function ActionsGD(props) {
                         </div>
                     </div>
                 </div>
-                <div className={styles.CardBox} style={{width:"100%"}}>
+                <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4" style={{width:"100%"}}>
                     <div className="flex items-center">
                         <ClickAwayListener onClickAway={()=>setSortShow(false)}>
                             <div>
