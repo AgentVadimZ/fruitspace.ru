@@ -6,7 +6,7 @@ module.exports = {
     "./locales/tours/**/*.{js,ts,jsx,tsx}",
   ],
   corePlugins: {
-    preflight: false
+    preflight: true
   },
   theme: {
     extend: {
@@ -21,8 +21,25 @@ module.exports = {
         "subtle": "#333338",
         "active": "#212125",
         "dark": "#090912",
+      },
+      fontFamily: {
+        "avant": "ITC Avant Garde Std Md, sans-serif",
+        "now": "Helvetica Now Text, Helvetica, sans-serif",
+      },
+      height: {
+        "112": "28rem",
+        "128": "32rem",
+        "144": "36rem",
+        "160": "40rem",
+        "176": "44rem",
+        "192": "48rem",
+      },
+      borderWidth: {
+        "1": "1px"
       }
     },
   },
-  plugins: [],
+  plugins: [
+      require('@tailwindcss/typography')
+  ],
 }

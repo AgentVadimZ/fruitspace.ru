@@ -1,54 +1,53 @@
-import GlobalHead from "../../../../components/GlobalHead";
-import GlobalNav from "../../../../components/GlobalNav";
-import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
-import PanelContent from "../../../../components/Global/PanelContent";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import GDNavBar from "@/components/Manage/NavBars/GDNavBar";
+import PanelContent from "@/components/Global/PanelContent";
 import {useRouter} from "next/router";
 
-import styles from "../../../../components/Manage/GDManage.module.css"
+import styles from "@/components/Manage/GDManage.module.css"
 import {styled} from "@mui/system";
 import {
     Backdrop,
-    Button,
-    ButtonGroup, Chip,
     IconButton,
     InputAdornment,
-    MenuItem,
-    Switch,
     TextField,
-    Tooltip
 } from "@mui/material";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
-import {AddPhotoAlternate, Restore, Visibility, VisibilityOff, Warning} from "@mui/icons-material";
+import {AddPhotoAlternate, Restore} from "@mui/icons-material";
 import {useEffect, useRef, useState} from "react";
 import SaveIcon from '@mui/icons-material/Save';
 
 import discordLogo from '@/assets/social/discord.png'
 import vkLogo from '@/assets/social/vkontakte.png'
-import GDLablogo from '../../../../assets/logos/geometrydash.png'
-import GDLogo from '../../../../assets/logos/gd_icon.png'
+import GDLablogo from '@/assets/logos/geometrydash.png'
+import GDLogo from '@/assets/logos/gd_icon.png'
 import toast, {Toaster} from "react-hot-toast";
-import ContentPasteIcon from '@mui/icons-material/ContentPaste';
-import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
-import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
-import FormatAlignRightIcon from '@mui/icons-material/FormatAlignRight';
-import {Alert, ToggleButton, ToggleButtonGroup} from "@mui/material";
-import HelpIcon from '@mui/icons-material/Help';
+import {Alert} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import SettingsIcon from '@mui/icons-material/Settings';
 import BackupBox from '@/assets/icons/backup_box.svg'
 import TabsUnstyled from "@mui/base/TabsUnstyled";
-import {Tab, TabsList} from "../../../../components/Global/TinyTab";
+import {Tab, TabsList} from "@/components/Global/TinyTab";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAndroid, faApple, faWindows} from "@fortawesome/free-brands-svg-icons";
-import useLocale, {useGlobalLocale} from "../../../../locales/useLocale";
-import useFiberAPI from "../../../../fiber/fiber";
-import {faMusic, faQuestion, faStar, faUpload, faUser} from "@fortawesome/free-solid-svg-icons";
-import {SettingsTour} from "../../../../locales/tours/manage/gd";
-import {FloatButton, Tour} from "antd";
+import {faAndroid, faApple, faDiscord, faVk, faWindows} from "@fortawesome/free-brands-svg-icons";
+import useLocale, {useGlobalLocale} from "@/locales/useLocale";
+import useFiberAPI from "@/fiber/fiber";
+import {
+    faAlignCenter,
+    faAlignLeft, faAlignRight, faCog,
+    faCopy,
+    faMusic,
+    faQuestion,
+    faQuestionCircle,
+    faStar,
+    faUpload,
+    faUser
+} from "@fortawesome/free-solid-svg-icons";
+import {SettingsTour} from "@/locales/tours/manage/gd";
+import {FloatButton, Input, Tour, Button, Select, Popover, Switch, Segmented} from "antd";
 import {deepEqual} from "@/components/Hooks";
 
 
@@ -348,184 +347,159 @@ export default function SettingsGD(props) {
             icon={<FontAwesomeIcon icon={faQuestion} />}
         />
         <PanelContent>
-            <div className={styles.CardGrid}>
-                <div ref={r=>refs.current["db"]=r} className={styles.CardBox}>
-                    <h3>{locale.get('db')}</h3>
-                    <div className={styles.CardInbox}>
-                        <FruitTextField fullWidth label={locale.get('dbFields')[0]} value={"halgd_"+srv.Srv.srvid||''}
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText("halgd_"+srv.Srv.srvid);copyValueR()}}>
-                                                        <ContentPasteIcon/>
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            )
-                                        }}
-                                        disabled/>
-                        <FruitTextField fullWidth label={locale.get('dbFields')[1]} type={showPass?"text":"password"}
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton edge="end" onClick={()=>setShowPass(!showPass)}>
-                                                        {showPass ? <VisibilityOff /> : <Visibility />}
-                                                    </IconButton>
-                                                    <IconButton edge="end" onClick={()=>{navigator.clipboard.writeText(srv.Srv.db_password);copyValueR()}}>
-                                                        <ContentPasteIcon/>
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            )
-                                        }}
-                                        value={srv.Srv.db_password||''}
-                        disabled/>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full xl:w-5/6">
+                <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4 flex-1" ref={r => refs.current["db"] = r}>
+                    <p className="rounded-md px-1.5 py-0.5 glassb w-fit">База данных</p>
+                    <div className="flex gap-4 items-center">
+                        <p className="w-20">Логин</p>
+                        <Input value={"halgd_" + srv.Srv.srvid || ''} addonAfter={
+                            <FontAwesomeIcon className="cursor-pointer" icon={faCopy} onClick={() => {
+                                navigator.clipboard.writeText("halgd_" + srv.Srv.srvid);
+                                copyValueR()
+                            }}/>
+                        }/>
                     </div>
-                    <div className={styles.CardBottom}>
-                        <Button variant="contained" className={`${styles.SlimButton} ${styles.btnError}`}
-                                onClick={()=>setBackdrop("dbreset")}>{locale.get('dbSettings')[0]}</Button>
-                        <form method="post" action="https://db.fruitspace.one" target="_blank" ref={dbRef}>
-                            <input type="hidden" name="auth[server]" value="FruitSpace GDPS Database" />
-                            <input type="hidden" name="auth[username]" value={"halgd_"+srv.Srv.srvid||''} />
-                            <input type="hidden" name="auth[password]" value={srv.Srv.db_password||''} />
-                            <input type="hidden" name="auth[db]" value={"gdps_"+srv.Srv.srvid||''} />
-                            <Button variant="contained" className={styles.SlimButton} onClick={()=>redirectToDB()}>{locale.get('dbSettings')[1]}</Button>
-                        </form>
+                    <div className="flex gap-4 items-center">
+                        <p className="w-20">Пароль</p>
+                        <Input.Password value={srv.Srv.db_password||''} addonAfter={
+                            <FontAwesomeIcon className="cursor-pointer" icon={faCopy} onClick={() => {
+                                navigator.clipboard.writeText(srv.Srv.db_password);
+                                copyValueR()
+                            }}/>
+                        }/>
+                    </div>
+                    <div className="flex gap-4 items-center justify-end mt-auto">
+                        <Button onClick={()=>setBackdrop("dbreset")} danger>Сбросить пароль</Button>
+                        <Button onClick={()=>redirectToDB()} type="primary">Перейти в БД</Button>
                     </div>
                 </div>
 
-                <div className={styles.CardBox}>
-                    <h3>{locale.get('coreSettings')[0]}</h3>
-                    <div className={styles.CardInbox}>
-                        <div className={styles.SettingsPlato} ref={r=>refs.current["topsize"]=r}>
-                            <p>{locale.get('coreSettings')[1]}</p>
-                            <FruitTextField
-                                select label={locale.get('coreSettings')[2]} value={settings.topSize}
-                                sx={{minWidth:"8rem"}}
-                                onChange={(evt)=>setSettings({
-                                    ...settings, topSize: evt.target.value,
-                                })}>
-                                {topSizes.map((option) => (
-                                    <MenuItem key={option} value={option}>
-                                        {option} {locale.get('coreSettings')[3]}
-                                    </MenuItem>
-                                ))}
-                            </FruitTextField>
+
+                <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4 flex-1"
+                     ref={r => refs.current["db"] = r}>
+                    <p className="rounded-md px-1.5 py-0.5 glassb w-fit">Настройки ядра</p>
+                    <div className="flex gap-4 items-center justify-between" ref={r => refs.current["topsize"] = r}>
+                        <p>Размер топа игроков</p>
+                        <Select value={settings.topSize}
+                                options={topSizes.map((opt) => ({label: `${opt} игроков`, value: opt}))}
+                                onChange={(val) => setSettings({...settings, topSize: val})}/>
+                    </div>
+                    {srv.Tariff && srv.Tariff.CustomMusic &&
+                        <div className="flex gap-4 items-center justify-between" ref={r => refs.current["topsize"] = r}>
+                            <p className="flex gap-2 items-center">
+                                <Popover arrow={false} overlayClassName="w-96 glassb rounded-lg"  title="Кастомная музыка" content={
+                                    <p>Кастомная музыка из NewGrounds, YouTube, VK и др. добавляется через панель.<br/>
+                                        В отключенном состоянии используется музыка с NewGrounds напрямую (с обходом вайтлиста) <br/>
+                                        ⚠️ Можно включить один раз, так как треки будут преобразованы
+                                    </p>
+                                }>
+                                    <FontAwesomeIcon icon={faQuestionCircle} />
+                                </Popover>
+                                Музыка FruitSpace
+                            </p>
+                            <Switch checked={settings.spaceMusic} onChange={(val)=>setSettings({
+                                ...settings, spaceMusic: val,
+                            })} disabled={!!srv.Srv.is_space_music}  />
                         </div>
-                        {srv.Tariff && srv.Tariff.CustomMusic
-                        && <div className={styles.SettingsPlato}>
+                    }
+                    <div className="flex flex-col gap-4 rounded-xl glassb p-4 mt-4 relative"
+                         ref={r => refs.current["antibot"] = r}>
+                        <p className="flex gap-4 items-center absolute left-2 -top-4 bg-active rounded-lg glassb px-1.5 py-0.5">
+                            <Popover arrow={false} className="-mr-2" overlayClassName="w-96 glassb rounded-lg"
+                                     title="Антибот" content={
                                 <p>
-                                    <Tooltip title={locale.get('tips')[0]}>
-                                        <IconButton><HelpIcon/></IconButton>
-                                    </Tooltip>
-
-                                    {locale.get('coreSettings')[5]}</p>
-                                <FruitSwitch checked={settings.spaceMusic} onChange={(e, val)=>setSettings({
-                                    ...settings, spaceMusic: val,
-                                })} disabled={!!srv.Srv.is_space_music} />
-                            </div>
-                        }
-                        <fieldset className={styles.SettingsFieldset} ref={r=>refs.current["antibot"]=r}>
-                            <legend> <Tooltip title={locale.get('tips')[1]}>
-                                <IconButton><HelpIcon/></IconButton></Tooltip>
-                                {locale.get('coreSettings')[4]} <FruitSwitch checked={settings.security.enabled} onChange={(e, val)=>setSettings({
+                                    Кулдаун сообщений, комментариев, защита от накрутки и спама уровнями<br/>
+                                    • Защита от спама уровнями работает на основе частоты выкладывания уровней,
+                                    поэтому иногда может по ошибке банить игроков (например после рекламы игроки
+                                    начинают строить очень много уровней за сутки). Отключите, если это является
+                                    проблемой
+                                </p>
+                            }>
+                                <FontAwesomeIcon icon={faQuestionCircle}/>
+                            </Popover>
+                            Антибот
+                            <Switch checked={settings.security.enabled} onChange={(val) => setSettings({
                                 ...settings, security: {...settings.security, enabled: val},
-                            })} />
-                            </legend>
-                            <div className={styles.SettingsPlato}>
-                                <p>{locale.get('coreSettings')[6]}</p>
-                                <FruitSwitch checked={settings.security.autoActivate} onChange={(e, val)=>setSettings({
-                                    ...settings, security: {...settings.security, autoActivate: val},
-                                })} disabled={!settings.security.enabled}/>
-                            </div>
-                            <div className={styles.SettingsPlato}>
-                                <p>{locale.get('coreSettings')[7]}</p>
-                                <FruitSwitch checked={settings.security.levelLimit} onChange={(e, val)=>setSettings({
-                                    ...settings, security: {...settings.security, levelLimit: val},
-                                })} disabled={!settings.security.enabled}/>
-                            </div>
-                        </fieldset>
-                    </div>
-                </div>
+                            })}/>
+                        </p>
 
-                <div ref={r=>refs.current["customization"]=r} className={styles.CardBox}>
-                    <h3>{locale.get('customSettings')[0]}</h3>
-                    <div className={styles.CardInbox}>
-                    <FruitTextField
-                        label={locale.get('customSettings')[1]} multiline fullWidth
-                        value={settings.description.text||''}
-                        onChange={(evt)=>{setSettings({...settings,
-                            description: {...settings.description, text: evt.target.value}
-                        })}}
-                        inputProps={{style:{textAlign: aligns[settings.description.align]}}}
-                    />
-                        <p>{locale.get('aboutSectDesc')[0]} <span className={styles.CodeBlock}>#players#</span> {locale.get('aboutSectDesc')[1]} <span className={styles.CodeBlock}>#levels#</span>
-                            {' '+locale.get('aboutSectDesc')[2]}</p>
-
-                    </div>
-
-
-                    <div className={styles.CardBottom}>
-
-                        {srv.Tariff && srv.Tariff.GDLab.Enabled && <Button variant="contained"
-                            className={`${styles.cardButton} ${styles.btnSuccess}`} style={{height:40}}
-                            onClick={()=>setBackdrop("buildlab")}>🔨 BuildLab™</Button>}
-
-                        <ButtonGroup variant="contained"
-                        sx={{backgroundColor: "var(--btn-color)"}}
-                        className={styles.ToggleGroupImitator}>
-                            <FruitIconButton className={settings.description.vk&&styles.btnLinked}
-                                             onClick={()=>setBackdrop("linksocial")}>
-                                <img src={vkLogo.src} />
-                            </FruitIconButton>
-                            <FruitIconButton className={settings.description.discord&&styles.btnLinked}
-                                             onClick={()=>setBackdrop("linksocial")}>
-                                <img src={discordLogo.src} />
-                            </FruitIconButton>
-                        </ButtonGroup>
-
-                    <FruitToggleButtonGroup
-                        size={"small"}
-                        sx={{backgroundColor:"var(--bkg-color)", width:"fit-content", borderRadius: "8px"}}
-                        value={settings.description.align} exclusive
-                        onChange={(e,val)=>{setSettings({...settings,
-                            description: {...settings.description, align: val}
-                        })}}>
-                        <ToggleButton value={0} aria-label="left aligned">
-                            <FormatAlignLeftIcon />
-                        </ToggleButton>
-                        <ToggleButton value={1} aria-label="centered">
-                            <FormatAlignCenterIcon />
-                        </ToggleButton>
-                        <ToggleButton value={2} aria-label="right aligned">
-                            <FormatAlignRightIcon />
-                        </ToggleButton>
-                    </FruitToggleButtonGroup>
-                </div>
-                </div>
-
-                <div className={styles.CardBox}>
-                    <h3>{locale.get('systemSettings')[0]}</h3>
-                    <div className={styles.CardInbox}>
-                        <p>{locale.get('systemSettings')[1]} <span className={styles.CodeBlock}>GhostCore | v2.X (Hybrid)</span></p>
-                        <div className={styles.SettingsPlato}>
-                            <b>{locale.get('systemSettings')[2]}</b>
-                            <span>
-                                <Button variant="contained" className={`${styles.SlimButton} ${styles.btnError}`}
-                                        onClick={()=>setBackdrop("delete")}>{locale.get('systemSettings')[3]}</Button>
-                                {srv.Tariff && srv.Tariff.Backups
-                                    && <Button variant="contained" className={styles.SlimButton}
-                                        onClick={()=>setBackdrop("backups")}>{locale.get('systemSettings')[4]}</Button>}
-                            </span>
+                        <div className="flex gap-4 items-center justify-between">
+                            Автоактивация аккаунтов
+                            <Switch checked={settings.security.autoActivate} onChange={(val) => setSettings({
+                                ...settings, security: {...settings.security, autoActivate: val},
+                            })} disabled={!settings.security.enabled}/>
                         </div>
-                        <fieldset className={styles.SettingsFieldset} disabled={srv.Srv.plan<3}>
-                            <legend>{locale.get('systemSettings')[5]}
-                                <FruitSwitch  checked={!!(settings.modules&&settings.modules.discord)}
-                                onChange={(e, val)=>setSettings({...settings, modules: {...settings.modules, discord: val}})}/>
-                            </legend>
-                            <div className={styles.SettingsPlato}>
-                                <span><IconButton><img src={discordLogo.src} className={styles.adornments}/></IconButton>{locale.get('systemSettings')[6]}</span>
-                                <IconButton onClick={()=>setBackdrop("gdpsbot")}><SettingsIcon/></IconButton>
-                            </div>
-                        </fieldset>
+                        <div className="flex gap-4 items-center justify-between">
+                            Защита от спама уровнями
+                            <Switch checked={settings.security.levelLimit} onChange={(val) => setSettings({
+                                ...settings, security: {...settings.security, levelLimit: val},
+                            })} disabled={!settings.security.enabled}/>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4 flex-1"
+                     ref={r=>refs.current["customization"]=r}>
+                    <p className="rounded-md px-1.5 py-0.5 glassb w-fit">Страница загрузки</p>
+                    <Input.TextArea value={settings.description.text||''}
+                                    onChange={(evt)=>{setSettings({...settings,
+                                        description: {...settings.description, text: evt.target.value}
+                                    })}} style={{textAlign: aligns[settings.description.align]}} />
+                    <div className="flex gap-2 items-center justify-end mt-auto">
+                        {srv.Tariff && srv.Tariff.GDLab.Enabled &&
+                            <Button type="primary" className="bg-success hover:!bg-green-700"
+                                    onClick={()=>setBackdrop("buildlab")}>🔨 BuildLab™</Button>}
+                        <Button.Group>
+                            <Button icon={<FontAwesomeIcon icon={faVk} className="text-white text-xl" />} style={{
+                                backgroundColor: settings.description.vk&&"var(--primary-color)"
+                            }} onClick={()=>setBackdrop("linksocial")}/>
+                            <Button icon={<FontAwesomeIcon icon={faDiscord} className="text-white" />} style={{
+                                backgroundColor: settings.description.discord&&"var(--primary-color)"
+                            }} onClick={()=>setBackdrop("linksocial")}/>
+                        </Button.Group>
+                        <Segmented rootClassName="bg-btn select-none" options={[
+                            {icon: <FontAwesomeIcon icon={faAlignLeft}/>, value: 0},
+                            {label: <FontAwesomeIcon icon={faAlignCenter} />, value: 1},
+                            {label: <FontAwesomeIcon icon={faAlignRight} />, value: 2},
+                        ]} value={settings.description.align} onChange={(val)=>{setSettings({...settings,
+                            description: {...settings.description, align: val}
+                        })}} />
+                    </div>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4 flex-1">
+                    <p className="rounded-md px-1.5 py-0.5 glassb w-fit">Настройки ядра</p>
+                    <div className="flex gap-4 items-center justify-between">
+                        <p>Ядро</p>
+                        <p className="font-mono text-sm bg-btn rounded px-1.5 py-0.5">GhostCore | v2.X (Hybrid)</p>
+                    </div>
+                    <div className="flex flex-col gap-4 rounded-xl glassb p-4 mt-4 relative">
+                        <p className="flex gap-4 items-center absolute left-2 -top-4 bg-active rounded-lg glassb px-1.5 py-0.5">
+                            Модули ядра
+                            <Switch checked={!!(settings.modules&&settings.modules.discord)} onChange={(val) => setSettings({
+                                ...settings, modules: {...settings.modules, discord: val},
+                            })} disabled={srv.Srv.plan<3}/>
+                        </p>
+
+                        <div className="flex gap-4 items-center justify-between">
+                            <p className="flex items-center gap-2">
+                                <FontAwesomeIcon icon={faDiscord} /> Discord
+                            </p>
+                            <FontAwesomeIcon className="hover:bg-btn p-1.5 rounded-full" icon={faCog} onClick={()=>setBackdrop("gdpsbot")} />
+                        </div>
+                    </div>
+                    <div className="flex gap-4 items-center justify-between">
+                        Управление
+                        <p className="flex items-center gap-2">
+                            <Button danger type="primary" onClick={() => setBackdrop("delete")}>
+                                Удалить GDPS
+                            </Button>
+                            {srv.Tariff && srv.Tariff.Backups &&
+                                <Button onClick={()=>setBackdrop("backups")}>
+                                Резервные копии
+                            </Button>
+                            }
+                        </p>
                     </div>
                 </div>
             </div>
@@ -619,7 +593,7 @@ export default function SettingsGD(props) {
             {backdrop==="backups" && <div className={styles.BackdropBox} onClick={(e)=>e.stopPropagation()}>
                 <h3>{locale.get('backups')[0]}</h3>
                 <List>
-                    {srv.backups.map((val,i)=>(
+                    {srv.backups?.map((val,i)=>(
                             <ListItem key={i} className={styles.hoverable} secondaryAction={
                                 <IconButton edge="end">
                                     <CloudUploadIcon onClick={()=>toast.success(locale.get('backups')[1]+val.date+locale.get('backups')[2],{style: {
@@ -860,33 +834,6 @@ const FruitThinField = styled(TextField)({
         color: "white",
     },
 });
-
-const FruitToggleButtonGroup = styled(ToggleButtonGroup)({
-    '& .MuiToggleButtonGroup-grouped': {
-        margin: "0",
-        backgroundColor: "var(--btn-color)",
-        borderRadius: "8px",
-        '&.Mui-disabled': {
-            border: 0,
-        },
-        '&.Mui-selected': {
-            backgroundColor: "var(--primary-color)",
-        },
-    },
-})
-
-const FruitIconButton = styled(IconButton)({
-    borderRadius: "0",
-    '&:hover': {
-        backgroundColor: "var(--primary-color)"
-    },
-    '&:first-of-type': {
-        borderRadius: "8px 0 0 8px"
-    },
-    '&:last-child': {
-        borderRadius: "0 8px 8px 0"
-    },
-})
 
 const FruitSwitch = styled(Switch)({
     height: 46,

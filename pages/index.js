@@ -1,20 +1,22 @@
-import GlobalNav from "../components/GlobalNav";
-import styles from "../components/Index.module.css"
+import GlobalNav from "@/components/GlobalNav";
+import styles from "@/components/Index.module.css"
 
-import MinecraftLogo from "../assets/logos/minecraft.png"
-import GDLogo from "../assets/logos/geometrydash.png"
-import CSLogo from "../assets/logos/counterstrike.png"
+import MinecraftLogo from "@/assets/logos/minecraft.png"
+import GDLogo from "@/assets/logos/geometrydash.png"
+import CSLogo from "@/assets/logos/counterstrike.png"
+import BSLogo from "@/assets/logos/beatsaber.png"
 import RightIcon from '@/assets/icons/right.svg'
 
 
-import Footer from "../components/Global/Footer";
-import GlobalHead from "../components/GlobalHead";
-import useLocale, {useGlobalLocale} from "../locales/useLocale";
+import Footer from "@/components/Global/Footer";
+import GlobalHead from "@/components/GlobalHead";
+import useLocale, {useGlobalLocale} from "@/locales/useLocale";
 import Link from "next/link";
-import {serverFiberAPI} from "../fiber/fiber";
+import {serverFiberAPI} from "@/fiber/fiber";
 import {useRef} from "react";
-import {BetaData} from '../components/betadata';
+import {BetaData} from '@/components/betadata';
 import {Rate, Carousel} from "antd";
+import Script from "next/script";
 
 export async function getStaticProps(ctx) {
     const api = serverFiberAPI(null)
@@ -27,9 +29,20 @@ export async function getStaticProps(ctx) {
     }
 }
 
-export default function Home(props) {
+const formatStat = (num) => {
+    if (num<1000) {
+        return num
+    } else if (num<1000000) {
+        return (num/1000).toFixed(1) + "K"
+    } else if (num<1000000000) {
+        return (num/1000000).toFixed(1) + "M"
+    } else {
+        return "1B+"
+    }
+}
 
-    const locale = useLocale(props.router)
+export default function Home(props) {
+    useLocale(props.router);
     const localeGlobal = useGlobalLocale(props.router)
 
     const getRegionalPostfix = localeGlobal.get('funcShowServers')
@@ -37,110 +50,138 @@ export default function Home(props) {
 
 
     const scrollRef = useRef(null)
+    const carouselRef = useRef(null)
 
     return <>
-        <GlobalHead og={og} />
+        <GlobalHead og={og}/>
+        <Script src="//code.jivo.ru/widget/QDbblcMLJ0" async></Script>
         <div className="fixed top-0 left-0 w-screen h-screen -z-20 bg-[#191921]"></div>
         <div className="fixed top-0 left-0 w-screen h-screen -z-10 techBg"></div>
-        <div className="">
-            {BetaData.beta && <div className="bg-slate-600 glass bg-opacity-20 h-12 flex items-center justify-between z-[9999] relative">
-                <p className="rounded-full bg-slate-600 mx-2 flex items-center h-fit">
-                    <span className="text-lg bg-blue-600 rounded-full px-4 py-1">Бета </span>
-                    <span className="mx-2 text-sm">Сборка от {BetaData.date}</span>
-                </p>
-                <p className="rounded-full bg-slate-600 mx-2 flex flex-col items-center h-fit z-[9999] group cursor-pointer">
-                    <span className="text-lg rounded-full px-4 py-1">Что нового? ›</span>
-                    <div className="flex-col gap-2 hidden group-hover:flex absolute top-full text-md right-4 rounded-xl p-2 bg-slate-600 z-[9999]">
-                        {BetaData.description.map((changes,i)=>{
-                            return <div key={i} className="rounded-lg p-2 bg-slate-800">
-                                <p className="my-1">Сборка от {changes.date}</p>
-                                <ul className="text-sm">
-                                    {changes.deltas.map((change,j)=>{
-                                        return <li key={j}>• {change}</li>
-                                    })}
-                                </ul>
-                            </div>
-                        })}
-                    </div>
-                </p>
-            </div>}
-            <GlobalNav router={props.router} mainpage />
+        <div>
+            {BetaData.beta &&
+                <div
+                    className="bg-active backdrop-blur bg-opacity-20 h-12 flex items-center justify-between z-[9999] relative">
+                    <p className="rounded-full bg-subtle  mx-2 flex items-baseline gap-2 h-fit">
+                        <span className="bg-blue-600 rounded-full px-4 py-1">Бета</span>
+                        <span className="mr-4 text-sm">Сборка от {BetaData.date}</span>
+                    </p>
+                    <p className="rounded-full bg-subtle border-1 border-solid border-white border-opacity-25
+                 mx-2 flex flex-col items-center h-fit z-[9999] group cursor-pointer">
+                        <span className="rounded-full px-4 py-1 group-hover:bg-opacity-50">Что нового? ›</span>
+                        <div className="flex-col gap-4 hidden group-hover:flex absolute top-full text-md right-2 rounded-xl p-2 z-[9999]
+                    bg-active border-1 border-solid border-white border-opacity-25">
+                            {BetaData.description.map((changes, i) => {
+                                return <div key={i}>
+                                    <p className="text-sm rounded-t-lg px-2 w-fit border-1 border-b-active
+                                relative z-20 -mb-[1px]">Сборка от {changes.date}</p>
+                                    <ul className="text-sm p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25
+                                relative z-10">
+                                        {changes.deltas.map((change, j) => {
+                                            return <li key={j}>• {change}</li>
+                                        })}
+                                    </ul>
+                                </div>
+                            })}
+                        </div>
+                    </p>
+                </div>}
+            <GlobalNav router={props.router} mainpage/>
 
             <div className={styles.main}>
 
                 <div className="flex flex-col items-center justify-center lg:h-[100vh] relative">
-                    <h1 className="text-5xl mt-48 lg:mt-2 xl:text-8xl font-[Coolvetica] tracking-wider font-normal fruitText m-2 select-none">FruitSpace</h1>
-                    <p className="text-lg text-center xl:text-2xl m-0 font-[Helvetica]">Удобный и надежный хостинг для ваших любимых игр. И ещё немножко магии ✨</p>
+                    <h1 className="text-6xl mt-48 lg:mt-2 xl:text-8xl font-[Coolvetica] tracking-wider font-normal fruitText m-2 select-none">FruitSpace</h1>
+                    <p className="text-md text-center xl:text-xl m-0 font-[Helvetica]">Удобный и надежный хостинг для
+                        ваших любимых игр. И ещё немножко магии ✨</p>
 
                     <div className="mt-24 grid grid-cols-1 xl:grid-cols-3 gap-4 xl:gap-16 select-none">
-                        <ProdCard link="/product/gd" name="Geometry Dash" description="Кастомная музыка, 2.2, моды и конфигуратор установщиков" logo={GDLogo.src} stats={`${props.stats.gdps_count} ${getRegionalPostfix(props.stats.gdps_count)} • ${getLvlsCnt(props.stats.gdps_levels)}`} />
-                        <ProdCard link="/product/mc" name="Minecraft" description="Мощные сервера, динамические ресурсы и удобная панель" logo={MinecraftLogo.src} stats="Уже на FruitSpace!" />
-                        <ProdCard link="#" name="Counter Strike" description="128 тикрейт, быстрая установка модов и FastDL" logo={CSLogo.src} stats="Скоро. Q2 2024" />
+                        <ProdCard link="/product/gd" name="Geometry Dash"
+                                  description="Кастомная музыка, 2.2, моды и конфигуратор установщиков"
+                                  logo={GDLogo.src}
+                                  stats={`${formatStat(props.stats.gdps_count)} серверов • ${formatStat(props.stats.gdps_levels)} уровней`}/>
+                        <ProdCard link="/product/mc" name="Minecraft"
+                                  description="Мощные сервера, динамические ресурсы и удобная панель"
+                                  logo={MinecraftLogo.src} stats="Уже на FruitSpace!"/>
+                        <ProdCard link="#" name="Beat Saber" description="Третья игра с кубиками. Шутку думайте сами"
+                                  logo={BSLogo.src} stats="Не скоро"/>
                     </div>
 
                     <Link href="/top/gd" legacyBehavior>
-                        <div className="w-full md:w-fit mt-4 xl:mt-8 p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e88] via-[#5a00ff88] to-[#0d6efd88] flex flex-col">
-                            <div className="flex-1 bg-[#333338cc] glass rounded-2xl p-2 font-[Helvetica] cursor-pointer flex items-center justify-between hover:bg-[#33333888] transition-all duration-300 md:max-w-md">
-                                <img alt="prod.logo" className="h-16 lg:mr-2" src="https://img.icons8.com/nolan/96/1A6DFF/C822FF/prize.png" />
+                        <div
+                            className="w-full md:w-fit mt-4 xl:mt-8 p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e88] via-[#5a00ff88] to-[#0d6efd88] flex flex-col">
+                            <div
+                                className="flex-1 bg-[#333338cc] glass rounded-2xl p-2 font-[Helvetica] cursor-pointer flex items-center justify-between hover:bg-[#33333888] transition-all duration-300 md:max-w-md">
+                                <img alt="prod.logo" className="h-16 lg:mr-2"
+                                     src="https://img.icons8.com/nolan/96/1A6DFF/C822FF/prize.png"/>
                                 <h2 className="m-0 w-fit">Топ серверов</h2>
-                                <RightIcon className="flex-shrink-0 w-8 lg:ml-auto" />
+                                <RightIcon className="flex-shrink-0 w-8 lg:ml-auto"/>
                             </div>
                         </div>
                     </Link>
 
                 </div>
 
-                <div className="bg-black bg-opacity-25 rounded-t-2xl glassb !border-b-0 mt-16 py-8">
-                    <p className="text-4xl text-center m-0 font-[Helvetica]" ref={scrollRef}>На грани
-                        возможного</p>
-                    <p className="text-center text-lg px-4 xl:px-24">Неважно, любите ли вы добавлять массу модов и
-                        плагинов или предпочитаете
-                        ванильные версии игр — FruitSpace позволит вам насладиться всеми возможностями игры по
-                        максимуму. Музыка из любых источников и быстрые обновления текстур/модов для Geometry Dash.
-                        SourceMod и MetaMod для Counter Strike (fastDL в комплекте). Поддержка многопоточных ядер и
-                        объединения нескольких серверов для Minecraft.
-                        Если для чего-то не нужно переписывать игру с нуля, у нас скорее всего это есть.</p>
-                    <p className="text-4xl text-center m-0 mt-16 font-[Helvetica]">Для новичков и профи</p>
-                    <p className="text-center text-lg px-4 xl:px-24">Мы стремимся делать управление серверами простым и
-                        удобным, не забирая возможности тонко кастомизировать
-                        каждый аспект ваших любимых игр. Для каждой игры мы предоставляем отдельную удобную панель, в
-                        которой могут разобраться даже те, кто до этого не имеел
-                        свой собственный сервер. </p>
-                    <p className="text-4xl text-center m-0 mt-16 font-[Helvetica]">Нам доверяют <span
-                        className="text-blue-600">{props.stats.clients}</span> клиентов</p>
-                    <p className="text-center text-lg px-4 xl:px-24">Не решаетесь, стоит ли вам входить в нишу игровых
-                        серверов? Наш хостинг помогает достичь своих целей
-                        абсолютно каждому - мододелам, новичкам, профессионалам, и просто игрокам которые хотят создать
-                        свой укромный уголок. Не верите?
-                        Прочтите реальные отзывы или оставьте свой!</p>
+                <div className="bg-black bg-opacity-25 rounded-t-2xl glassb !border-b-0 mt-16 py-8 flex flex-col gap-8"
+                     ref={scrollRef}>
+                    {[
+                        {
+                            h: "На грани возможного",
+                            t: "Неважно, любите ли вы добавлять массу модов и плагинов или предпочитаете ванильные версии игр" +
+                                " — FruitSpace позволит вам насладиться всеми возможностями игры по максимуму. Музыка из любых" +
+                                " источников и быстрые обновления текстур/модов для Geometry Dash. Поддержка многопоточных ядер" +
+                                " и объединения нескольких серверов для Minecraft. Если для чего-то не нужно переписывать игру" +
+                                " с нуля, у нас скорее всего это есть."
+                        },
+                        {
+                            h: "Для новичков и профи",
+                            t: "Мы стремимся делать управление серверами простым и удобным, не забирая возможности тонко " +
+                                "кастомизировать каждый аспект ваших любимых игр. Для каждой игры мы предоставляем отдельную" +
+                                " удобную панель, в которой могут разобраться даже те, кто до этого не имеел свой собственный сервер."
+                        },
+                        {
+                            h: <>Нам доверяют <span className="text-blue-600">{props.stats.clients}</span> клиентов</>,
+                            t: "Не решаетесь, стоит ли вам входить в нишу игровых серверов? Наш хостинг помогает достичь своих целей " +
+                                "абсолютно каждому - мододелам, новичкам, профессионалам, и просто игрокам которые хотят создать " +
+                                "свой укромный уголок. Не верите? Прочтите реальные отзывы или оставьте свой!"
+                        }
+                    ].map((el, i) => <div key={i}>
+                        <p className="text-2xl lg:text-4xl text-center mb-4 font-[Helvetica]">{el.h}</p>
+                        <p className="text-center text-gray-300 lg:text-base px-4 xl:px-24">{el.t}</p>
+                    </div>)}
 
-                    <Carousel dots={{className:"!bottom-2"}}>
+                    <Carousel ref={carouselRef} dots={{className: "!bottom-2"}}>
                         {reviews.map((u, i) => {
-                            return <div key={i} className="px-2 py-2 rounded-xl bg-[#333338aa] my-4 overflow-y-scroll
-                             !w-5/6 lg:!w-2/3 h-96 mx-auto !flex flex-col glass">
+                            return <div key={i} className="p-4 my-4 overflow-y-hidden
+                             !w-5/6 lg:!w-2/3 h-96 mx-auto !flex flex-col bg-subtle bg-opacity-75 border-white border-opacity-25 rounded-2xl border-solid border-1">
                                 <div className="flex flex-col lg:flex-row items-center justify-between">
+                                    <p className="text-lg w-40">{u.user}</p>
                                     <p>{u.date}</p>
-                                    <p className="text-lg m-0">{u.user}</p>
-                                    <Rate className="p-4 bg-[var(--active-color)] rounded-lg h-fit" allowHalf disabled
+                                    <Rate className="p-2 bg-active rounded-lg h-fit" allowHalf disabled
                                           defaultValue={u.rating}/>
                                 </div>
-                                <div>
-                                    {u.pros && <>
-                                        <p className="text-lg lg:text-xl mb-1">Что понравилось?</p>
-                                        <pre className="text-md rounded-lg bg-[var(--active-color)] p-2 whitespace-normal leading-tight mt-0">{u.pros}</pre>
-                                    </>}
-                                    {u.cons && <>
-                                        <p className="text-lg lg:text-xl mb-1">Что не понравилось, чего не хватает?</p>
-                                        <pre className="text-md rounded-lg bg-[var(--active-color)] p-2 whitespace-normal leading-tight mt-0">{u.cons}</pre>
-                                    </>}
-                                    {u.verdict && <>
-                                        <p className="text-lg lg:text-xl mb-1">Останетесь ли на FruitSpace?</p>
-                                        <pre className="text-md rounded-lg bg-[var(--active-color)] p-2 whitespace-normal leading-tight mt-0">{u.verdict}</pre>
-                                    </>}
+                                <div className="flex flex-col gap-4 mt-4">
+                                    {u.pros && <div>
+                                        <p className="bg-active text-lg rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
+                                        relative z-20 -mb-[1px]">Что понравилось?</p>
+                                        <pre className="bg-active p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
+                                        relative z-10">{u.pros}</pre>
+                                    </div>}
+                                    {u.cons && <div>
+                                        <p className="bg-active text-lg rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
+                                        relative z-20 -mb-[1px]">Что не понравилось, чего не хватает?</p>
+                                        <pre className="bg-active p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
+                                        relative z-10">{u.cons}</pre>
+                                    </div>}
+                                    {u.verdict && <div>
+                                        <p className="bg-active text-lg rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
+                                        relative z-20 -mb-[1px]">Останетесь ли на FruitSpace?</p>
+                                        <pre className="bg-active p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
+                                        relative z-10">{u.verdict}</pre>
+                                    </div>}
                                 </div>
                                 <div className="flex flex-col lg:flex-row justify-between items-center mt-auto">
                                     <span className="text-gray-300">Хостинг: {u.product}</span>
-                                    <a href={u.url} className="text-[var(--primary-color)]">Отзыв в Discord →</a>
+                                    <a href={u.url} className="text-primary">Отзыв в Discord →</a>
                                 </div>
                             </div>
                         })}
@@ -157,13 +198,14 @@ export default function Home(props) {
 const ProdCard = (props) => (
     <Link href={props.link} legacyBehavior>
         <div className="p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e88] via-[#5a00ff88] to-[#0d6efd88] flex flex-col">
-            <div
-                className="flex-1 bg-[#333338cc] glass rounded-2xl p-4 pr-2 font-[Helvetica] cursor-pointer flex items-center hover:bg-[#33333888] transition-all duration-300 max-w-md">
-                <img alt="prod.logo" className="h-24 mr-2" src={props.logo}/>
+            <div className="flex-1 bg-[#333338cc] glass rounded-2xl p-2 lg:p-4 pr-2 font-[Helvetica]
+                 cursor-pointer flex items-center hover:bg-[#33333888] transition-all duration-300 max-w-md
+                 gap-2 lg:gap-4">
+                <img alt="prod.logo" className="h-24" src={props.logo}/>
                 <div>
-                    <h2 className="m-0">{props.name}</h2>
-                    <p className="leading-tight text-sm lg:text-md lg:leading-normal m-0">{props.description}</p>
-                    <p className="text-xs text-nowrap lg:text-sm m-0 mt-2 text-[#cacad0]">{props.stats}</p>
+                    <p className="m-0 tracking-wide lg:text-lg">{props.name}</p>
+                    <p className="opacity-85 leading-tight text-xs md:text-sm lg:leading-normal m-0">{props.description}</p>
+                    <p className="text-xs text-nowrap md:text-sm m-0 mt-2 text-[#cacad0] lg:font-mono">{props.stats}</p>
                 </div>
                 <RightIcon className="flex-shrink-0 w-8 ml-auto"/>
             </div>

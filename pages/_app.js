@@ -1,10 +1,10 @@
-import '../styles/globals.css'
+import '@/styles/globals.css'
 import {StyledEngineProvider} from "@mui/material";
 import {RecoilRoot} from "recoil";
-import AuthProvider from "../components/AuthProvider";
+import AuthProvider from "@/components/AuthProvider";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
-import LoadingAnim from "../components/ProgressBar";
+import LoadingAnim from "@/components/ProgressBar";
 import {ConfigProvider, theme} from "antd";
 
 export default function WebApp({Component, pageProps}) {
@@ -37,10 +37,12 @@ export default function WebApp({Component, pageProps}) {
                         },
                         Select: {
                             activeShadow: "0 0 0 1px #0d6efd",
-                            colorBgElevated: "var(--btn-color)"
+                            colorBgElevated: "var(--subtle-color)",
+                            optionSelectedBg: "var(--btn-color)"
                         },
                         Button: {
                             primaryShadow: "none",
+                            colorPrimaryHover: "rgb(30 64 175)"
                         },
                         Menu: {
                             itemHeight: "4rem"
@@ -54,6 +56,23 @@ export default function WebApp({Component, pageProps}) {
                             footerBg: "rgba(0,0,0,0)",
                             colorBgContainer: "rgba(0,0,0,0)",
                             selectionColumnWidth: 48
+                        },
+                        Slider: {
+                            railBg: "rgba(255,255,255,0.2)",
+                            railHoverBg: "rgba(255,255,255,0.3)",
+                            trackBg: "rgba(255,255,255,0.7)",
+                            trackHoverBg: "rgba(255,255,255,1)",
+                            handleColor: "rgba(255,255,255,0.7)",
+                            handleSize: 8,
+                            handleSizeHover: 12,
+                            handleLineWidth: 0,
+                            handleLineWidthHover: 0,
+                            dotSize: 1
+                        },
+                        DatePicker: {
+                            activeShadow: "0 0 0 1px #0d6efd",
+                            colorBgElevated: "var(--subtle-color)",
+                            controlItemBgActive: "var(--btn-color)"
                         }
                     },
                     algorithm: theme.darkAlgorithm

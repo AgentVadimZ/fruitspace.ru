@@ -1,7 +1,7 @@
-import GlobalHead from "../../../../components/GlobalHead";
-import GlobalNav from "../../../../components/GlobalNav";
-import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
-import PanelContent from "../../../../components/Global/PanelContent";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import GDNavBar from "@/components/Manage/NavBars/GDNavBar";
+import PanelContent from "@/components/Global/PanelContent";
 import {useRouter} from "next/router";
 import * as Gauntlets from "@/assets/gauntlets"
 
@@ -298,10 +298,23 @@ function MapPackModal({isnew, open, onCancel, api, srvid}) {
     const searchDebounced = debounce(search, 500)
 
     const savePack = async (val) => {
+        let clr = val.pack_color
+        switch (typeof clr) {
+            case "string":
+                clr = clr.length===0
+                    ? formatRgb({r:255,g:255,b:255})
+                    : clr.replace("rgb(", "").replace(")", "")
+                break
+            case "object":
+                clr = formatRgb(clr.toRgb())
+                break
+            default:
+                clr = formatRgb({r:255,g:255,b:255})
+        }
         let d = await api.gdps_manage.editLevelpack(srvid, selected.id, {
             ...selected, ...val,
             pack_difficulty: demonize(val.pack_difficulty, true),
-            pack_color: formatRgb(val.pack_color?.toRgb()||{r:255,g:255,b:255}),
+            pack_color: clr,
             levels: selectedLevels.map((lvl)=>({id:lvl.value}))
         })
         if (d.status=="ok") {
@@ -543,7 +556,7 @@ const GauntletItem = ({pack, api, srvid}) => {
         }
     }
 
-    return <div className={`rounded-xl p-2 bg-dark flex flex-col items-center box-border ${deepEqual(selectedLevels, levels)?"border-[#ffffff40]":"border-red-600"} border-[1px] border-solid`}>
+    return <div className={`rounded-xl p-2 bg-dark flex flex-col items-center box-border ${deepEqual(selectedLevels, levels)?"border-[#ffffff40]":"border-red-600"} border-1 border-solid`}>
         <img src={pdata ? gauntletParams[pdata].icon : Gauntlets.Unknown.src} className="h-24 lg:h-48 select-none"/>
         <span className="text-white lg:text-lg flex gap-2 items-center justify-center select-none">
             {pdata || "Unknown"} {(!pdata || gauntletParams[pdata].is22) && <span className="text-xs lg:text-sm bg-primary rounded-md px-1.5">2.2+</span>}

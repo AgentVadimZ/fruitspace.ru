@@ -18,10 +18,6 @@
     transform: translateX(-25%);
 }
 
-.menu {
-    width: 100%;
-}
-
 .menuItem {
     height: 50px;
     display: flex;

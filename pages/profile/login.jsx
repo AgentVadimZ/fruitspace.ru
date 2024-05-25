@@ -1,42 +1,35 @@
-import GlobalHead from "../../components/GlobalHead";
-import GlobalNav from "../../components/GlobalNav";
-import styles from "../../components/Index.module.css";
-import Footer from "../../components/Global/Footer";
-import {useState} from "react";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import styles from "@/components/Index.module.css";
+import Footer from "@/components/Global/Footer";
+import {useEffect, useRef, useState} from "react";
 
-import logo from "../../assets/Fruitspace2.png"
+import logo from "@/assets/Fruitspace2.png"
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-import {Button, IconButton, InputAdornment, TextField} from "@mui/material";
+import {Button as MuiButton, IconButton, InputAdornment, TextField} from "@mui/material";
 import {LoadingButton} from "@mui/lab"
 import {styled} from "@mui/system";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import toast, {Toaster} from "react-hot-toast";
 import {useRouter} from "next/router";
-import useEffectOnce from "../../components/Hooks";
-import useLocale, {useGlobalLocale} from "../../locales/useLocale";
-import useFiberAPI from "../../fiber/fiber";
+import useEffectOnce from "@/components/Hooks";
+import useLocale, {useGlobalLocale} from "@/locales/useLocale";
+import useFiberAPI from "@/fiber/fiber";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDiscord} from "@fortawesome/free-brands-svg-icons";
+import {Button, Form, Input, Popover} from "antd";
+import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
 
 
 export default function Login(props) {
     const router = useRouter()
 
-
-    const [regMode, setRegMode] = useState(false)
-    const [forgotPass, setForgotPass] = useState(false)
+    const hcaptchaRef = useRef(null)
+    const [mode, setMode] = useState("login") //login, reg, forgot
     const [show2FA, setShow2FA] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [formData, setFormData] = useState({
-        uname: "",
-        name: "",
-        email: "",
-        surname: "",
-        password: "",
-        hCaptchaToken: "",
-        showPassword: false,
-        TOTP: ""
-    })
+    const [formData, setFormData] = useState({})
+    const [htoken, setHtoken] = useState(null)
 
     const locale = useLocale(props.router)
     const localeGlobal= useGlobalLocale(props.router)
@@ -49,10 +42,15 @@ export default function Login(props) {
 
     const api = useFiberAPI()
 
+    const rush = (vals) => {
+        hcaptchaRef.current.execute()
+        setFormData(vals)
+        setLoading(true)
+    }
+
 
     const register = async ()=> {
-        setLoading(true)
-        let resp = await api.auth.register(formData.uname, formData.name, formData.surname, formData.email, formData.password, formData.hCaptchaToken, locale.locale)
+        let resp = await api.auth.register(formData.uname, formData.name, formData.surname, formData.email, formData.password, htoken, locale.locale)
         if (resp.status==="ok") {
             toast(locale.get('confirmationSent'), {
                 duration: 5000,
@@ -68,6 +66,7 @@ export default function Login(props) {
                     backgroundColor: "var(--btn-color)"
                 }
             })
+            setMode("login")
         }else{
             toast.error(locale.get('err')+ParseError(resp.code, resp.message), {
                 duration: 10000,
@@ -81,8 +80,7 @@ export default function Login(props) {
     }
 
     const login = async ()=> {
-        setLoading(true)
-        let resp = await api.auth.login(formData.uname, formData.password, formData.hCaptchaToken, formData.TOTP)
+        let resp = await api.auth.login(formData.uname, formData.password, htoken, formData.otp||"")
         if (resp.status==="ok") {
             toast.success(locale.get('loginSuccess'), {
                 duration: 1000,
@@ -112,8 +110,7 @@ export default function Login(props) {
     }
 
     const resetPassword = async ()=> {
-        setLoading(true)
-        let resp = await api.auth.recover(formData.email, formData.hCaptchaToken, locale.locale)
+        let resp = await api.auth.recover(formData.email, htoken, locale.locale)
         if (resp.status==="ok") {
             toast.success(locale.get('passResetSuccess'), {
                 duration: 1000,
@@ -135,86 +132,188 @@ export default function Login(props) {
         setLoading(false)
     }
 
+    useEffect(() => {
+        if (!htoken || !loading) return
+        if (mode === "login") login()
+        if (mode === "reg") register()
+        if (mode === "forgot") resetPassword()
+    }, [htoken]);
+
     return <>
         <GlobalHead title={localeGlobal.get('navName')}/>
-        <GlobalNav />
+        <GlobalNav router={props.router} mainpage />
         <Toaster/>
-        <div className={styles.main}>
-            <div className={styles.form}>
-                <img src={logo.src} />
-                <h3>{regMode?locale.get('loginO')[0]:locale.get('loginO')[forgotPass?1:2]}</h3>
-                <form>
-                    {!forgotPass && <FruitTextField fullWidth label="@username" type="text" variant="outlined" style={{margin:".5rem"}}
-                                    value={formData.uname||''} onChange={(evt)=>{setFormData({
-                                        ...formData,
-                                        uname: evt.target.value.replaceAll(/[^a-zA-Z0-9_.-]/g,'')
-                                    })}}/> }
+        <div className="h-[calc(100vh-var(--nav-height))] flex flex-col justify-center items-center">
+            <div className="bg-active border-subtle rounded-2xl border-solid border-1 p-4 flex flex-col gap-4">
+                <div className="flex items-center gap-4">
+                    {mode === "login" && <h1 className="text-xl font-bold">Вход</h1>}
+                    {mode === "reg" && <h1 className="text-xl font-bold">Регистрация</h1>}
+                    {mode === "forgot" && <h1 className="text-xl font-bold">Сброс пароля</h1>}
+                    <span className="flex-1 h-0.5 bg-subtle"></span>
+                </div>
+                {mode==="login" &&
+                    <Form className="lg:w-96" labelCol={{span: 8}} wrapperCol={{span: 16}} onFinish={rush}>
+                        <Form.Item label="Логин" name="uname" colon={false} rules={[
+                            {
+                                required: true,
+                                min: 5,
+                                max: 32,
+                                message: "Длина логина должна быть от 5 до 32 символов"
+                            },
+                            {
+                                pattern: new RegExp("^[a-zA-Z0-9_.-]+$"),
+                                message: "Логин может содержать только английские буквы, цифры и знаки _ . -"
+                            }
+                        ]}>
+                            <Input/>
+                        </Form.Item>
+                        <Form.Item label="Пароль" name="password" colon={false} rules={[
+                            {
+                                required: true,
+                                min: 8,
+                                max: 128,
+                                message: "Длина пароля должна быть от 8 до 128 символов"
+                            },
+                            {
+                                pattern: new RegExp("^[a-zA-Z0-9~!@#$%^&*()_\\-+={}\\[\\]|\\\\:;\"'<,>.?/]+$"),
+                                message: "Пароль содержит неверные символы"
+                            }
+                        ]}>
+                            <Input.Password />
+                        </Form.Item>
+                        {show2FA&&<Form.Item label="Код 2ФА" name="otp" colon={false} rules={[
+                            {
+                                required: true,
+                                len: 6,
+                                pattern: new RegExp("^[0-9]+$"),
+                                message: "Код 2ФА должен состоять из 6 цифр"
+                            }
+                        ]}>
+                            <Input.OTP />
+                        </Form.Item>}
+                        <div className="flex items-center gap-2">
+                            <Button type="primary" ghost onClick={() => api.auth.discord()}
+                                    className="!text-white flex items-center justify-center gap-2">
+                                <FontAwesomeIcon className="text-lg" icon={faDiscord}/> Discord
+                            </Button>
+                            <Popover content="Привяжите Discord аккаунт в панели, чтобы входить без пароля">
+                                <FontAwesomeIcon className="text-gray-400" icon={faQuestionCircle}/>
+                            </Popover>
+                            <Button loading={loading} type="primary" htmlType="submit" className="ml-auto">Войти</Button>
+                        </div>
+                    </Form>
+                }
 
+                {mode==="reg" &&
+                    <Form className="lg:w-96" labelCol={{span: 8}} wrapperCol={{span: 16}} onFinish={rush}>
+                        <Form.Item label="Логин" name="uname" colon={false} rules={[
+                            {
+                                required: true,
+                                min: 5,
+                                max: 32,
+                                message: "Длина логина должна быть от 5 до 32 символов"
+                            },
+                            {
+                                pattern: new RegExp("^[a-zA-Z0-9_.-]+$"),
+                                message: "Логин может содержать только английские буквы, цифры и знаки _ . -"
+                            }
+                        ]}>
+                            <Input/>
+                        </Form.Item>
+                        <Form.Item label="Email" name="email" colon={false} rules={[
+                            {
+                                required: true,
+                                type: "email",
+                                message: "Неверный формат почты"
+                            }
+                        ]}>
+                            <Input />
+                        </Form.Item>
+                        <Form.Item label="Имя" name="name" colon={false} rules={[
+                            {
+                                required: true,
+                                min: 3,
+                                max: 120,
+                                message: "Длина имени должна быть от 3 до 120 символов"
+                            },
+                            {
+                                pattern: new RegExp("^[a-zA-Z]+$"),
+                                message: "Укажите имя на английском языке"
+                            }
+                        ]}>
+                            <Input />
+                        </Form.Item>
+                        <Form.Item label="Фамилия" name="surname" colon={false} rules={[
+                            {
+                                required: true,
+                                min: 3,
+                                max: 120,
+                                message: "Длина имени должна быть от 3 до 120 символов"
+                            },
+                            {
+                                pattern: new RegExp("^[a-zA-Z]+$"),
+                                message: "Укажите фамилию на английском языке"
+                            }
+                        ]}>
+                            <Input />
+                        </Form.Item>
+                        <Form.Item label="Пароль" name="password" colon={false} rules={[
+                            {
+                                required: true,
+                                min: 8,
+                                max: 128,
+                                message: "Длина пароля должна быть от 8 до 128 символов"
+                            },
+                            {
+                                pattern: new RegExp("^[a-zA-Z0-9~!@#$%^&*()_\\-+={}\\[\\]|\\\\:;\"'<,>.?/]+$"),
+                                message: "Пароль содержит неверные символы"
+                            }
+                        ]}>
+                            <Input.Password />
+                        </Form.Item>
+                        <div className="flex items-center justify-end">
+                            <Button loading={loading} type="primary" htmlType="submit" className="ml-auto">Зарегистрироваться</Button>
+                        </div>
+                    </Form>
+                }
 
-                    {(regMode||forgotPass) && <FruitTextField fullWidth label="Email" type="email" variant="outlined" style={{margin:".5rem"}}
-                                                value={formData.email||''} onChange={(evt)=>{setFormData({
-                        ...formData,
-                        email: evt.target.value.replaceAll(/[^a-zA-Z0-9!#$%&'*+\-/=?^_`{|}~.@]/g,'')
-                    })}} />}
+                {mode==="forgot" &&
+                    <Form className="lg:w-96" labelCol={{span: 8}} wrapperCol={{span: 16}} onFinish={rush}>
+                        <Form.Item label="Email" name="email" colon={false} rules={[
+                            {
+                                required: true,
+                                type: "email",
+                                message: "Неверный формат почты"
+                            }
+                        ]} className="mb-0">
+                            <Input />
+                        </Form.Item>
+                        <span className="block text-xs text-gray-400 my-2 text-center">На указанную почту будет отправлен новый пароль</span>
+                        <div className="flex items-center gap-2 justify-end">
+                            <Button loading={loading} type="primary" htmlType="submit" className="ml-auto">Сброс пароля</Button>
+                        </div>
+                    </Form>
+                }
 
-                    {regMode && <FruitTextField fullWidth label={(locale.get('regField')[0])} type="text" variant="outlined" style={{margin:".5rem"}}
-                                    value={formData.name||''} onChange={(evt)=>{setFormData({
-                        ...formData,
-                        name: evt.target.value.replaceAll(/[^a-zA-Z]/g,'')
-                    })}} />}
-
-                    {regMode && <FruitTextField fullWidth label={(locale.get('regField')[1])} type="text" variant="outlined" style={{margin:".5rem"}}
-                                                value={formData.surname||''} onChange={(evt)=>{setFormData({
-                        ...formData,
-                        surname: evt.target.value.replaceAll(/[^a-zA-Z]/g,'')
-                    })}} />}
-
-                    {!forgotPass && <FruitTextField fullWidth label={(locale.get('regField')[2])} type={formData.showPassword?"text":"password"}
-                                    variant="outlined"
-                                    style={{margin:".5rem"}} value={formData.password||''}
-                                    onChange={(evt)=>{setFormData({
-                                        ...formData,
-                                        password: evt.target.value.replaceAll(/[^a-zA-Z0-9~!@#$%^&*()_\-+={}\[\]|\\:;"'<,>.?/]/g,'')
-                                    })}}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton edge="end"
-                                                    onClick={()=>setFormData({...formData,showPassword: !formData.showPassword})}>
-                                                    {formData.showPassword ? <VisibilityOff /> : <Visibility />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        )
-                                    }}/>}
-
-                    {show2FA && <FruitTextField fullWidth label={(locale.get('regField')[3])} type="text" variant="outlined"
-                                                style={{margin:".5rem",border:"4px solid var(--error-color)",borderRadius:"12px"}}
-                                                value={formData.TOTP||''} onChange={(evt)=>{setFormData({
-                        ...formData,
-                        TOTP: evt.target.value.replaceAll(/[^0-9]/g,'')
-                    })}} />}
-
+                <div className="flex items-center gap-2 justify-between">
+                    <Button type="link"
+                            onClick={() => setMode(mode === "forgot" ? "login" : "forgot")}>
+                        {mode === "forgot" ? "Войти" : "Я забыл пароль"}
+                    </Button>
+                    <Button type="link"
+                            onClick={() => setMode(mode === "reg" ? "login" : "reg")}>
+                        {mode === "reg" ? "Войти" : "Регистрация"}
+                    </Button>
+                </div>
+                <div>
+                    <span className="text-xs text-gray-400 block text-center">Мы используем hCaptcha для защиты от ботов</span>
                     <HCaptcha
                         sitekey="c17bb027-5ed7-4e3d-9f67-6f3ed2d78090"
-                        onVerify={(val,idk)=>setFormData({
-                            ...formData,
-                            hCaptchaToken: val
-                        })}
-                        theme="dark"
+                        onVerify={(val) => setHtoken(val)}
+                        theme="dark" size="invisible" ref={hcaptchaRef}
+                        onExpire={() => hcaptcha.reset()}
                     />
-                    <LoadingButton loading={loading} className={styles.formButton} onClick={(regMode?register:(forgotPass?resetPassword:login))}>
-                        {regMode?locale.get('loginO')[0]:locale.get('loginO')[forgotPass?1:2]}
-                    </LoadingButton>
-                    <Button className={styles.formButton} startIcon={<FontAwesomeIcon icon={faDiscord} />} onClick={()=>api.auth.discord()}>DISCORD</Button>
-
-                    { !forgotPass && <p style={{margin:".5rem"}}>{locale.get('accPass')[regMode?0:1]}
-                        <span style={{cursor:"pointer", color:"#0d6efd", fontWeight:"bolder"}}
-                        onClick={()=>setRegMode(!regMode)}> {locale.get('loginO')[regMode?2:0]}</span></p>}
-                    {!regMode && <p style={{margin:".5rem"}}>{locale.get('accPass')[forgotPass?4:5]}
-                        <span style={{cursor:"pointer", color:"#0d6efd", fontWeight:"bolder"}}
-                              onClick={()=>setForgotPass(!forgotPass)}> {locale.get('accPass')[forgotPass?2:3]}</span></p>}
-
-                </form>
+                </div>
             </div>
         </div>
         <Footer router={props.router}/>

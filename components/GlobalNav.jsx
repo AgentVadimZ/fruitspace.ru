@@ -1,23 +1,12 @@
 import Link from "next/link";
 import styles from "@/components/NavBar/NavBar.module.css";
 import NavBar from "@/components/NavBar/NavBar";
-import NavItem from "@/components/NavBar/NavItem";
-import {DropdownItem, DropdownMenu} from "@/components/NavBar/DropDown";
-
-import RightSvg from "@/assets/icons/right.svg";
 import logo_sm from "@/assets/ava.png";
 import logo from "@/assets/Fruitspace2.png";
-import ServerSvg from "@/assets/icons/server.svg";
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
-import StoreIcon from '@mui/icons-material/Store';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 import MinecraftLogo from "@/assets/logos/minecraft.png"
 import GDLogo from "@/assets/logos/geometrydash.png"
-import CSLogo from "@/assets/logos/counterstrike.png"
 import {useRouter} from "next/router";
 import {useGlobalLocale} from "@/locales/useLocale";
 import useFiberAPI from "@/fiber/fiber";
@@ -25,13 +14,64 @@ import {useRecoilState} from "recoil";
 import {userAtom} from "@/fiber/fiber.model";
 import {useState} from "react";
 import {HideOn} from "react-hide-on-scroll";
+import {Button, Drawer} from "antd";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+    faBurger,
+    faChevronDown,
+    faChevronRight,
+    faCircleDollarToSlot, faCube, faLayerGroup, faNewspaper,
+    faRightFromBracket,
+    faShop, faSquare,
+    faWallet
+} from "@fortawesome/free-solid-svg-icons";
+import {faBars} from "@fortawesome/free-solid-svg-icons/faBars";
+
+
+const links = [
+    {
+        text: "Хостинг игр",
+        items: [
+            {
+                text: "Geometry Dash",
+                link: "/product/gd",
+                icon: faSquare
+            },
+            {
+                text: "Minecraft",
+                link: "/product/mc",
+                icon: faCube
+            }
+        ]
+    },
+    {
+        text: "Сообщество",
+        items: [
+            {
+                text: "Документация",
+                // link: "/docs",
+                link: "https://fruitspace.gitbook.io/gdps_docs",
+                icon: faLayerGroup
+            },
+            {
+                text: "Блог",
+                link: "https://blog.fruitspace.one",
+                icon: faNewspaper
+            }
+        ]
+    },
+    {
+        text: "О FruitSpace",
+        link: "/about"
+    }
+]
 
 
 export default function GlobalNav(props) {
 
     const api = useFiberAPI()
 
-    const [user,setUser] = useRecoilState(userAtom)
+    const [user, setUser] = useRecoilState(userAtom)
     // const user = userModel
     const router = useRouter()
 
@@ -43,10 +83,12 @@ export default function GlobalNav(props) {
 
     const getRegionalPostfix = localeGlobal.get('funcShowServers')
 
-    const prettyPrint = (num)=>new Intl.NumberFormat(user.usd?'en-US':'ru-RU',
-        {style: 'currency',currency: user.usd?"USD":"RUB"}).format(num).replace(/[.|,]00/g, '')
+    const prettyPrint = (num) => new Intl.NumberFormat(user.usd ? 'en-US' : 'ru-RU',
+        {style: 'currency', currency: user.usd ? "USD" : "RUB"}).format(num).replace(/[.|,]00/g, '')
 
     const [open, setOpen] = useState(false)
+
+    const [drawer, setDrawer] = useState(false)
 
     return (
         <NavBar mainpage={props.mainpage}>
@@ -54,67 +96,161 @@ export default function GlobalNav(props) {
                 {props.mainpage ? <img src={logo_sm.src} alt="logo" className={styles.logo}/>
                     : <img src={logo.src} alt="logo" className="h-8 ml-1 cursor-pointer"/>}
             </Link>
-            {(props.mainpage&&!['/',''].includes(router.pathname))&&
-                <HideOn atHeight height={200}>
-                    <h1 className="fixed top-2 left-[50%] -translate-x-[50%] hidden md:block md:text-2xl xl:text-3xl font-[Coolvetica] tracking-wider font-normal fruitText m-0 select-none">FruitSpace</h1>
+            {(props.mainpage && !['/', ''].includes(router.pathname)) &&
+                <HideOn atHeight height={120}>
+                    <Link href="/"
+                          className="fixed top-4 xl:top-3 left-16 hidden md:block md:text-2xl xl:text-3xl font-[Coolvetica] tracking-wider font-normal fruitText m-0 select-none">FruitSpace</Link>
                 </HideOn>
             }
 
-            <div className="flex items-center">
-                {user.uname && (<>
-                    <NavItem icon={<ServerSvg/>} open={open} setOpen={setOpen} name="servers">
-                        <DropdownMenu centered>
-                            <Link href="/profile/servers?s=mc" legacyBehavior>
-                                <DropdownItem leftIcon={<img src={MinecraftLogo.src}/>} rightIcon={<RightSvg/>}>
-                                    <div className={styles.MultilineItem}>
-                                        Minecraft
-                                        <span>• {user.servers.mc} {getRegionalPostfix(user.servers.mc)}</span>
-                                    </div>
-                                </DropdownItem>
-                            </Link>
-                            <Link href="/profile/servers?s=gd" legacyBehavior>
-                                <DropdownItem leftIcon={<img src={GDLogo.src}/>} rightIcon={<RightSvg/>}>
-                                    <div className={styles.MultilineItem}>
-                                        Geometry Dash
-                                        <span>• {user.servers.gd} {getRegionalPostfix(user.servers.gd)}</span>
-                                    </div>
-                                </DropdownItem>
-                            </Link>
-                            <Link href="/profile/servers?s=cs" legacyBehavior>
-                                <DropdownItem leftIcon={<img src={CSLogo.src}/>} rightIcon={<RightSvg/>}>
-                                    <div className={styles.MultilineItem}>
-                                        Counter Strike
-                                        <span>• {user.servers.cs} {getRegionalPostfix(user.servers.cs)}</span>
-                                    </div>
-                                </DropdownItem>
-                            </Link>
-                        </DropdownMenu>
-                    </NavItem></>)}
+            <div className="hidden lg:flex items-center gap-2 rounded-xl backdrop-blur bg-active bg-opacity-50">
+                {
+                    links.map((item, i) => NavLink({...item, key: i}))
+                }
+            </div>
 
+            <div className="flex items-center gap-2">
+                {user.uname ?
+                    <div className="relative">
+                        <img src={user.profile_pic} onClick={() => setOpen(!open)}
+                             className="rounded-full h-10 border-1 border-solid border-white border-opacity-25
+                             cursor-pointer hover:brightness-110"/>
+                        {open && <div className="flex flex-col gap-4 absolute top-full mt-2 right-0 rounded-xl p-2 z-[9999]
+                    bg-active backdrop-blur bg-opacity-50 border-1 border-solid border-white border-opacity-25 w-72">
 
-                {user.uname ? (
-                    <NavItem profile icon={<img src={user.profile_pic}/>} open={open} setOpen={setOpen} name="profile">
-                        <DropdownMenu>
-                            <Link href="/profile/" legacyBehavior>
-                                <DropdownItem leftIcon={<img src={user.profile_pic}/>}
-                                              rightIcon={<RightSvg />}>{user.uname}</DropdownItem>
+                            <Link href="/profile"
+                                  className="flex items-center gap-2 p-1 pr-3 cursor-pointer rounded-lg hover:bg-subtle">
+                                <img src={user.profile_pic} className="rounded-full h-12 w-12"/>
+                                <div className="flex flex-col flex-1">
+                                    <p className="text-lg font-mono -mb-1">{user.uname}</p>
+                                    <Button className="w-fit" size="small"
+                                            icon={<FontAwesomeIcon icon={faRightFromBracket}/>}
+                                            type="text" danger onClick={(e) => {
+                                        e.preventDefault()
+                                        logout()
+                                    }}>
+                                        Выйти
+                                    </Button>
+                                </div>
+                                <FontAwesomeIcon icon={faChevronRight}/>
                             </Link>
-                            <Link href="/profile/billing" legacyBehavior>
-                                <DropdownItem leftIcon={<MonetizationOnIcon/>} rightIcon={<AddCircleIcon/>}>
-                                    <p className={styles.BalBox}>
-                                        <span><AccountBalanceWalletIcon/> {prettyPrint(user.balance)}</span>
-                                        <span><StoreIcon/> {prettyPrint(user.shop_balance)}</span>
-                                    </p>
-                                </DropdownItem>
-                            </Link>
-                            <Link href="/manage/store" legacyBehavior>
-                                <DropdownItem leftIcon={<StoreIcon/>} rightIcon={<RightSvg/>}>{localeGlobal.get('navMyShops')}</DropdownItem>
-                            </Link>
-                            <DropdownItem leftIcon={<LogoutOutlinedIcon/>} onClick={()=>logout()}>{localeGlobal.get('navLogout')}</DropdownItem>
-                        </DropdownMenu>
-                    </NavItem>
-                ): (<NavItem icon={<VpnKeyIcon/>} setOpen={()=>router.push("/profile/login")}></NavItem>)}
+                            <div className="flex items-center gap-2 p-1 rounded-lg">
+                                <div className="w-12 h-12 flex items-center justify-center"><FontAwesomeIcon
+                                    icon={faCircleDollarToSlot} className="text-2xl"/></div>
+                                <div className="flex flex-col flex-1 bg-subtle rounded-lg border-1 border-solid
+                                    border-white border-opacity-25">
+                                    <div className="flex items-center">
+                                        <span className="flex items-center gap-2 px-1.5 py-1 border-r-[1px]
+                                    border-white border-opacity-25 flex-1">
+                                            <FontAwesomeIcon icon={faWallet}/>
+                                            <span className="text-sm">{prettyPrint(user.balance)}</span>
+                                        </span>
+                                        <span className="flex items-center gap-2 px-1.5 py-1 flex-1">
+                                            <FontAwesomeIcon icon={faShop}/>
+                                            <span className="text-sm">{prettyPrint(user.shop_balance)}</span>
+                                        </span>
+                                    </div>
+                                    <Link href="/profile/billing" className="px-2 py-1 border-t-[1px] border-white border-opacity-25 text-sm
+                                    gap-1.5 flex items-center hover:bg-btn rounded-b-lg">
+                                        Кошелек <FontAwesomeIcon icon={faChevronRight} className="text-xs"/>
+                                    </Link>
+                                </div>
+                            </div>
+                            <div className="flex flex-col items-center gap-2 p-1 rounded-lg text-sm">
+                                <span className="w-full border-b-[1px] border-white border-opacity-25"></span>
+                                <div className="flex flex-col gap-2 w-full">
+                                    <Link className="flex gap-1 items-center rounded-lg hover:bg-subtle p-1
+                                    border-1 border-solid border-white border-opacity-25 cursor-pointer select-none"
+                                          href="/profile/servers?s=mc">
+                                        <img src={MinecraftLogo.src} className="h-12"/>
+                                        <div>
+                                            <p>Minecraft</p>
+                                            <p className="text-xs">{user.servers.mc} {getRegionalPostfix(user.servers.mc)}</p>
+                                        </div>
+                                    </Link>
+                                    <Link className="flex gap-1 items-center rounded-lg hover:bg-subtle p-1
+                                    border-1 border-solid border-white border-opacity-25 cursor-pointer select-none"
+                                          href="/profile/servers?s=gd">
+                                        <img src={GDLogo.src} className="h-12"/>
+                                        <div>
+                                            <p>Geometry Dash</p>
+                                            <p className="text-xs">{user.servers.gd} {getRegionalPostfix(user.servers.gd)}</p>
+                                        </div>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>}
+                        {open &&
+                            <div onClick={() => setOpen(false)} className="fixed top-0 left-0 w-full h-full"/>}
+                    </div>
+                    : <Link href="/profile/login" className="select-none bg-subtle py-2 px-4 rounded-full flex items-center gap-2 bg-opacity-50 backdrop-blur-sm
+                border-1 border-solid border-white border-opacity-25 hover:bg-opacity-50">
+                        <VpnKeyIcon/>
+                        Войти
+                    </Link>}
+                <div className="relative lg:hidden">
+                    <p className="flex justify-center items-center h-12 w-12 rounded-xl backdrop-blur bg-subtle bg-opacity-50 -mr-2"
+                    onClick={()=>setDrawer(true)}>
+                        <FontAwesomeIcon className="text-lg" icon={faBars}/>
+                    </p>
+                    <Drawer open={drawer} onClose={()=>setDrawer(false)} width="75vw"
+                    className="!bg-active !bg-opacity-75 !backdrop-blur">
+                        <div className="flex flex-col gap-2">
+                            {
+                                links.map((item, i) => DrawerLink({...item, key: i}))
+                            }
+                        </div>
+                    </Drawer>
+                </div>
             </div>
         </NavBar>
     );
+}
+
+const NavLink = (props) => {
+    return <div className={`relative group ${props.inner?"p-0":"p-2"}`} key={props.key}>
+        {
+            props.link
+                ? <Link href={props.link} className="flex gap-2 items-center font-now text-sm leading-none rounded-lg cursor-pointer
+                bg-subtle bg-opacity-75 backdrop-blur p-2 text-gray-300 hover:text-white hover:bg-opacity-100 text-nowrap">
+                    {props.icon&&<FontAwesomeIcon icon={props.icon} />} {props.text}
+                </Link>
+                : <>
+                    <p className="flex gap-2 items-center font-now text-sm leading-none rounded-lg cursor-pointer
+                bg-subtle bg-opacity-75 backdrop-blur p-2 text-gray-300 group-hover:text-white group-hover:bg-opacity-100">
+                        {props.text}
+                        <FontAwesomeIcon className="text-xs" icon={faChevronDown}/>
+                    </p>
+                    <div className="hidden group-hover:flex flex-col bg-[#1a1a20] glassb rounded-xl
+                    absolute top-full left-2 z-[9999] p-2 gap-2 min-w-40">
+                        {props.items?.map((item, i)=>NavLink({...item, key: i, inner: true}))}
+                    </div>
+
+                </>
+        }
+    </div>
+}
+
+const DrawerLink = (props) => {
+    return props.link
+        ? <Link key={props.key} href={props.link} className={`flex gap-2 items-center font-now leading-none rounded-lg cursor-pointer
+    bg-subtle bg-opacity-50 backdrop-blur p-4 text-gray-300 hover:text-white hover:bg-opacity-100 text-nowrap`}>
+            {props.icon&&<FontAwesomeIcon icon={props.icon} />} {props.text}
+            </Link>
+            : <div key={props.key} className="bg-subtle bg-opacity-50 backdrop-blur rounded-lg">
+                <p className="flex gap-2 items-center justify-between font-now leading-none cursor-pointer
+                p-4 text-gray-300 hover:text-white text-nowrap border-b-1 border-white border-opacity-25">
+                    {props.text}
+                    <FontAwesomeIcon className="text-xs" icon={faChevronDown}/>
+                </p>
+            {
+                props.items?.map((val, i) => (
+                    <Link key={i} href={val.link} className={`flex gap-2 items-center font-now leading-none rounded-lg cursor-pointer
+                    p-4 text-gray-300 hover:text-white hover:bg-opacity-100 text-nowrap`}>
+                        {val.icon&&<FontAwesomeIcon icon={val.icon} />} {val.text}
+                    </Link>
+                ))
+            }
+        </div>
+
 }

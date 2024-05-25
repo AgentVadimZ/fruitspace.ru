@@ -1,18 +1,5 @@
 
 
-.chartBox {
-    background-color: var(--active-color);
-    border-radius: 12px;
-    padding: .5rem;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    width: 100%;
-    height: 22rem;
-    margin-bottom: 2rem;
-    z-index: 3;
-}
-
 .chartBox h3 {
     margin: 0;
     text-align: center;
@@ -23,10 +10,6 @@
     top: .5rem;
     right: .5rem;
     z-index: 90;
-}
-
-.chart {
-    height: 20rem !important;
 }
 
 
@@ -171,10 +154,6 @@ img.adornments {
     fill: var(--error-color) !important;
 }
 
-.greensvg {
-    fill: var(--success-color) !important;
-}
-
 .bluesvg {
     fill: var(--primary-color) !important;
 }
@@ -201,10 +180,6 @@ img.adornments {
 
 .SquareIconRed:hover {
     background-color: var(--error-color);
-}
-
-.SquareIconBlue:hover {
-    background-color: var(--primary-color);
 }
 
 .SquareIcon path {
@@ -270,22 +245,6 @@ img.adornments {
     height: 100%;
     border-radius: 8px;
     background: linear-gradient(0deg, var(--bkg-color), transparent);
-}
-
-.Smallbanner {
-    position: relative;
-    width: 20rem;
-    height: 6rem;
-    background: url("/banana.jpg") 0 40%;
-    background-size: 100% auto;
-    border-radius: 9px;
-    transition: background-position 300ms ease;
-    margin-bottom: 1rem;
-    user-select: none;
-}
-
-.Smallbanner:hover {
-    background-position: 0 70%;
 }
 
 .Smallbanner:hover p {
@@ -523,7 +482,4 @@ img.adornments {
         justify-content: center;
     }
 
-    .Smallbanner {
-        width: 100%;
-    }
 }

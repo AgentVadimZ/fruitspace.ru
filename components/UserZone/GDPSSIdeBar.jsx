@@ -8,6 +8,8 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 import {useGlobalLocale} from "@/locales/useLocale";
 import SideItem from "@/components/NavBar/SideItem";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCloudArrowUp} from "@fortawesome/free-solid-svg-icons";
 
 
 export default function GDPSNavBar(props) {
@@ -24,19 +26,12 @@ export default function GDPSNavBar(props) {
             <Link href={"/gdps/"+srvid+"/panel"} legacyBehavior>
                 <SideItem icon={<PersonIcon className="h-5" />} active={action==="panel"} text={globalLocale.get('panelGDPSNav').profile} />
             </Link>
-            {props.music && <Link href={"/gdps/"+srvid+"/music"} passHref legacyBehavior>
+            {props.plan>1 && <Link href={"/gdps/"+srvid+"/music"} passHref legacyBehavior>
                 <SideItem icon={<MusicIcon className="h-5" />} active={action==="music"} text={globalLocale.get('panelGDPSNav').music} />
             </Link>}
-            {/*{srv.tariffConfig.Roles && <Link href={"/manage/gd/"+srvid+"/roles"}>*/}
-            {/*    <NavItem icon={<RolesIcon/>} acetone square active={action==="roles"}>*/}
-            {/*        <Tooltip title="Игроки и роли" placement="right" arrow open><span /></Tooltip>*/}
-            {/*    </NavItem>*/}
-            {/*</Link>}*/}
-            {/*<Link href={"/manage/gd/"+srvid+"/chests"}>*/}
-            {/*    <NavItem icon={<ChestsIcon/>} acetone square active={action==="chests"}>*/}
-            {/*        <Tooltip title="Сундуки" placement="right" arrow open><span /></Tooltip>*/}
-            {/*    </NavItem>*/}
-            {/*</Link>*/}
+            {props.plan>1 && <Link href={"/gdps/"+srvid+"/reupload"} passHref legacyBehavior>
+                <SideItem icon={<FontAwesomeIcon icon={faCloudArrowUp} className="h-5" />} active={action==="reupload"} text="Миграция" />
+            </Link>}
             {/*{srv.tariffConfig.Quests && <Link href={"/manage/gd/"+srvid+"/quests"}>*/}
             {/*    <NavItem icon={<QuestsIcon/>} acetone square active={action==="quests"}>*/}
             {/*        <Tooltip title="Уровни и квесты" placement="right" arrow open><span /></Tooltip>*/}

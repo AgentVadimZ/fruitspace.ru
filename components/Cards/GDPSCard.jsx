@@ -3,6 +3,7 @@ import {faArrowUpFromBracket, faDownload, faGem, faLink, faZap} from "@fortaweso
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import useSWR from "swr";
 import {CircularProgress, circularProgressClasses} from "@mui/material";
+import {Button, Dropdown} from "antd";
 
 
 export default function GDPSCard(props) {
@@ -23,10 +24,10 @@ export default function GDPSCard(props) {
     }
 
     return (
-        <div ref={props.sref} className="col-span-2 md:col-span-2 mx-1 my-1.5 md:m-3 p-3 rounded-xl w-auto flex items-center" style={{backgroundColor: "var(--active-color)"}}>
-            <img src={props.icon} className="rounded-lg h-20 mr-2" />
-            <div className="">
-                <h2 className="my-2">{props.name}</h2>
+        <div ref={props.sref} className="col-span-2 p-4 rounded-2xl flex gap-4 items-center bg-active glassb">
+            <img src={props.icon} className="rounded-lg h-20" />
+            <div className="flex flex-col gap-1">
+                <p className="text-lg text-nowrap text-ellipsis overflow-hidden max-w-64">{props.name}</p>
                 <p className="m-0 text-gray-400 flex items-center gap-2">
                     {props.id} •
                     <span ref={props.tref} className={`text-white rounded-lg cursor-pointer flex gap-2 items-center group border-solid box-border border-2 hover:!border-${hover}`}
@@ -45,19 +46,31 @@ export function DownloadCard(props) {
     const {data, isLoading, error} = useSWR(props.srvid, api.gdps_manage.fetchBuildStatus, {refreshInterval:3000})
 
     return (
-        <div ref={props.sref} className="mx-1 my-1.5 md:m-3 p-3 rounded-xl w-auto md:w-fit" style={{backgroundColor: "var(--active-color)"}}>
-            <span className="flex rounded-lg" style={{backgroundColor: "var(--primary-color)"}}>
-                <a href={`https://gofruit.space/gdps/${props.srvid}`} target="_blank" rel="noreferrer" className="rounded-l-lg flex justify-center p-2 hover:bg-blue-800 cursor-pointer flex-1">
-                    <FontAwesomeIcon icon={faDownload}/> <span className="ml-2 hidden md:inline">{props.locale.get('download')}</span>
-                </a>
-                    <span className="flex rounded-r-lg p-2 hover:bg-blue-800 cursor-pointer">
-                        <FontAwesomeIcon icon={faLink}
-                                         onClick={()=>{navigator.clipboard.writeText(`https://gofruit.space/gdps/${props.srvid}`);props.copyR()}}/>
-                    </span>
-            </span>
-            <p className="text-center mb-1">{props.locale.get('platforms')}</p>
-            <div className="flex justify-center rounded-lg bg-[var(--btn-color)]">
-                {(data&&data.message!=="") ? <span className="flex items-center justify-center h-8 gap-2">
+        <div ref={props.sref} className="flex flex-col p-4 rounded-xl bg-active glassb">
+            <Dropdown.Button type="primary" icon={<FontAwesomeIcon icon={faLink} />} menu={{
+                items: [
+                    {
+                        label: "Скопировать ссылку"
+                    }
+                ],
+                onClick: (key) => {
+                    navigator.clipboard.writeText(`https://gofruit.space/gdps/${props.srvid}`)
+                    props.copyR()
+                },
+            }} buttonsRender={(btns)=> {
+                btns[0] = <Button type="primary" className="w-full" icon={<FontAwesomeIcon className="!hidden md:!inline-block" icon={faDownload} />}>Скачать</Button>
+                return btns
+            }}>
+                <FontAwesomeIcon icon={faDownload}/> Скачать
+            </Dropdown.Button>
+            <div className="mt-auto">
+                <p className="bg-active text-sm rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
+                                        relative z-20 -mb-[1px]">
+                    Платформы
+                </p>
+                <div className="bg-active p-1 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
+                                        relative z-10 flex items-center justify-between">
+                    {(data && data.message !== "") ? <span className="flex items-center justify-center h-8 gap-2">
                     <CircularProgress
                         variant="indeterminate"
                         disableShrink
@@ -72,18 +85,26 @@ export function DownloadCard(props) {
                         size={24}
                         thickness={6}
                     />
-                    {data.message=="waiting"&&"Ждем сборки"}
-                    {data.message=="building"&&"Идет сборка"}
+                        {data.message == "waiting" && "Ждем сборки"}
+                        {data.message == "building" && "Идет сборка"}
                 </span> : (<>
-                {props.srv.client_windows_url && <FontAwesomeIcon className="rounded-lg p-2 hover:bg-[var(--primary-color)] cursor-pointer aspect-square" icon={faWindows}
-                       onClick={()=>window.location.href=props.srv.client_windows_url}/>}
-                {props.srv.client_android_url && <FontAwesomeIcon className="rounded-lg p-2 hover:bg-[var(--primary-color)] cursor-pointer aspect-square" icon={faAndroid}
-                       onClick={()=>window.location.href=props.srv.client_android_url}/>}
-                {props.srv.client_ios_url && <FontAwesomeIcon className="rounded-lg p-2 hover:bg-[var(--primary-color)] cursor-pointer aspect-square" icon={faApple}
-                       onClick={()=>window.location.href=props.srv.client_ios_url}/>}
-                {props.srv.client_macos_url &&  <img src="/macbook-48.png" className="rounded-lg h-[1.75em] p-0.5 hover:bg-[var(--primary-color)] cursor-pointer aspect-square"
-                       onClick={()=>window.location.href=props.srv.client_macos_url} />}
-            </>) }
+                        {props.srv.client_windows_url && <FontAwesomeIcon
+                            className="rounded-md p-2 hover:bg-primary cursor-pointer aspect-square"
+                            icon={faWindows}
+                            onClick={() => window.location.href = props.srv.client_windows_url}/>}
+                        {props.srv.client_android_url && <FontAwesomeIcon
+                            className="rounded-md p-2 hover:bg-primary cursor-pointer aspect-square"
+                            icon={faAndroid}
+                            onClick={() => window.location.href = props.srv.client_android_url}/>}
+                        {props.srv.client_ios_url && <FontAwesomeIcon
+                            className="rounded-md p-2 hover:bg-primary cursor-pointer aspect-square"
+                            icon={faApple}
+                            onClick={() => window.location.href = props.srv.client_ios_url}/>}
+                        {props.srv.client_macos_url && <img src="/macbook-48.png"
+                                                            className="rounded-lg h-[1.75em] p-0.5 hover:bg-[var(--primary-color)] cursor-pointer aspect-square"
+                                                            onClick={() => window.location.href = props.srv.client_macos_url}/>}
+                    </>)}
+                </div>
             </div>
 
         </div>

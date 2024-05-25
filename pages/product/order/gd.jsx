@@ -1,28 +1,30 @@
-import GlobalHead from "../../../components/GlobalHead";
-import GlobalNav from "../../../components/GlobalNav";
-import styles from "../../../components/Index.module.css";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import styles from "@/components/Index.module.css";
 import {styled} from "@mui/system";
-import {ListItem, ListItemIcon, ListItemText, TextField} from "@mui/material";
+import {TextField} from "@mui/material";
 import {useEffect, useState} from "react";
-import {Tab, TabsList, TabPanel} from "../../../components/Global/Tab";
-import useEffectOnce from "../../../components/Hooks";
-import TabsUnstyled from "@mui/base/TabsUnstyled";
+import useEffectOnce from "@/components/Hooks";
 import toast, {Toaster} from "react-hot-toast";
-import {useCookies} from "react-cookie";
-import useLocale, {useGlobalLocale} from "../../../locales/useLocale";
-import TariffCard from "../../../components/Cards/TariffCard";
-import PersonIcon from "@mui/icons-material/Person";
-import MusicNoteIcon from "@mui/icons-material/MusicNote";
-import CloseIcon from "@mui/icons-material/Close";
-import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
-import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturing";
-import DesktopMacIcon from "@mui/icons-material/DesktopMac";
-import AddIcon from "@mui/icons-material/Add";
-import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
-import CloudDoneIcon from "@mui/icons-material/CloudDone";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import useFiberAPI from "../../../fiber/fiber";
+import useLocale, {useGlobalLocale} from "@/locales/useLocale";
+import useFiberAPI from "@/fiber/fiber";
 import Link from 'next/link';
+import TariffPS from "@/assets/features/gd_pressstart.svg";
+import {
+    faBarsProgress, faChartSimple, faCloudArrowDown,
+    faCogs, faForward,
+    faInfinity,
+    faPlay, faPlus, faShop, faStar,
+    faStopwatch20,
+    faUser, faUserGroup,
+    faXmark, faZap
+} from "@fortawesome/free-solid-svg-icons";
+import {faItunesNote} from "@fortawesome/free-brands-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Button, Input, Segmented} from "antd";
+import TariffSG from "@/assets/features/gd_singularity.svg";
+import TariffFD from "@/assets/features/gd_foundation.svg";
+import TariffTO from "@/assets/features/autosetup_3d-sm.png";
 
 
 export default function Order(props) {
@@ -44,7 +46,6 @@ export default function Order(props) {
 
     const [tariffs,setTariffs] = useState({});
     const [loading, setLoading] = props.globalLoader
-    const [cookies, setCookie, delCookie] = useCookies(["token"])
 
     const locale = useLocale(props.router)
     const localeGlobal = useGlobalLocale(props.router)
@@ -133,67 +134,121 @@ export default function Order(props) {
         if(srvData.Srv) barrier = srvData.Srv.plan
 
         return (
-            <div className="flex flex-col lg:flex-row gap-8">
-                {barrier<=1 && <TariffCard card={locale.get('cardPack')} discount={discount} i={suffix} name={tariffs['1'].Title} price={prc[duration](tariffs['1'])}
-                                           img="https://img.freepik.com/free-vector/abstract-background-with-wavy-shapes_23-2148534078.jpg"
-                                           desc={locale.get('tPressStart').desc} onClick={()=>createServer(1)}>
-                    <ListItem className="py-0">
-                        <ListItemIcon><PersonIcon className="text-white"/></ListItemIcon>
-                        <ListItemText primary={<span className="text-sm">{locale.get('tPressStart').perks[0]}</span>}/>
-                    </ListItem>
-                    <ListItem className="py-0">
-                        <ListItemIcon><MusicNoteIcon className="text-white"/></ListItemIcon>
-                        <ListItemText primary={<span className="text-sm">{locale.get('tPressStart').perks[1]}</span>}/>
-                    </ListItem>
-                    <ListItem className="py-0">
-                        <ListItemIcon><CloseIcon className="text-white"/></ListItemIcon>
-                        <ListItemText primary={<span className="text-sm">{locale.get('tPressStart').perks[2]}</span>}/>
-                    </ListItem>
-                </TariffCard>}
-                {barrier<=2 && <TariffCard card={locale.get('cardPack')} discount={discount} i={suffix} name={tariffs['2'].Title} price={prc[duration](tariffs['2'])}
-                                           img="https://img.freepik.com/free-vector/gradient-wavy-background_23-2149115482.jpg"
-                                           desc={locale.get('tSingularity').desc} onClick={()=>createServer(2)}>
-                    <ListItem className="py-0">
-                        <ListItemIcon><AllInclusiveIcon className="text-white"/></ListItemIcon>
-                        <ListItemText primary={<span className="text-sm">{locale.get('tSingularity').perks[0]}</span>}/>
-                    </ListItem>
-                    <ListItem className="py-0">
-                        <ListItemIcon><MusicNoteIcon className="text-white"/></ListItemIcon>
-                        <ListItemText primary={<span className="text-sm">{locale.get('tSingularity').perks[1]}</span>}/>
-                    </ListItem>
-                    <ListItem className="py-0">
-                        <ListItemIcon><PrecisionManufacturingIcon className="text-white"/></ListItemIcon>
-                        <ListItemText primary={<span className="text-sm">{locale.get('tSingularity').perks[2]}</span>}/>
-                    </ListItem>
-                    <ListItem className="py-0">
-                        <ListItemIcon><DesktopMacIcon className="text-white"/></ListItemIcon>
-                        <ListItemText primary={<span className="text-sm">{locale.get('tSingularity').perks[3]}</span>}/>
-                    </ListItem>
-                </TariffCard>}
-                {barrier<=3 && <TariffCard card={locale.get('cardPack')} discount={discount} i={suffix} name={tariffs['3'].Title} price={prc[duration](tariffs['3'])}
-                                            img="https://img.freepik.com/free-vector/modern-colorful-flow-poster-wave-liquid-shape-blue-color-background-art-design-your-design-project-vector-illustration_1142-7676.jpg"
-                                            desc={locale.get('tTakeoff').desc} onClick={()=>createServer(3)}>
-                    <ListItem className="py-0">
-                        <ListItemIcon><AddIcon className="text-white"/></ListItemIcon>
-                        <ListItemText primary={<span className="text-sm">{locale.get('tTakeoff').perks[0]} <span className="text-base">Singularity</span></span>}/>
-                    </ListItem>
-                    <ListItem className="py-0">
-                        <ListItemIcon><MusicNoteIcon className="text-white"/></ListItemIcon>
-                        <ListItemText primary={<span className="text-sm">{locale.get('tTakeoff').perks[1]}</span>}/>
-                    </ListItem>
-                    <ListItem className="py-0">
-                        <ListItemIcon><SettingsSuggestIcon className="text-white"/></ListItemIcon>
-                        <ListItemText primary={<span className="text-sm">{locale.get('tTakeoff').perks[2]}</span>}/>
-                    </ListItem>
-                    <ListItem className="py-0">
-                        <ListItemIcon><CloudDoneIcon className="text-white"/></ListItemIcon>
-                        <ListItemText primary={<span className="text-sm">{locale.get('tTakeoff').perks[3]}</span>}/>
-                    </ListItem>
-                    <ListItem className="py-0">
-                        <ListItemIcon><AttachMoneyIcon className="text-white"/></ListItemIcon>
-                        <ListItemText primary={<span className="text-sm">{locale.get('tTakeoff').perks[4]}</span>}/>
-                    </ListItem>
-                </TariffCard>}
+            <div className="flex flex-col xl:flex-row gap-8">
+                {barrier <= 1 && <div
+                    className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 w-96">
+                    <TariffPS className="w-32 mt-2"/>
+                    <p className="text-2xl font-semibold font-avant uppercase -mt-6 tracking-wide">
+                        Press Start
+                    </p>
+                    <p>Отличный вариант для начинающих</p>
+                    <div className="flex flex-col gap-4 p-4">
+                        {[
+                            [faUser, "100 игроков • 500 уровней"],
+                            [faItunesNote, "Доступна музыка из NewGrounds"],
+                            [faXmark, "Панель с ограниченными возможностями"],
+                            [faPlay, "Поддержка только 2.2"],
+                            [faBarsProgress, "Базовая статистика сервера"],
+                            [faStopwatch20, "Временное хранение установщиков"]
+                        ].map((e, i) => <span className="flex gap-4 items-center" key={i}>
+                            <div className="flex justify-center !w-8">
+                                        <FontAwesomeIcon className="text-2xl" icon={e[0]}/>
+                                    </div> <span className="flex-1">{e[1]}</span>
+                        </span>)}
+                    </div>
+                    <Button type="primary" size="large" className="w-full mt-auto"
+                            onClick={() => createServer(1)}>Бесплатно</Button>
+                </div>
+                }
+                {barrier <= 2 && <div
+                    className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 w-96">
+                    <TariffSG className="w-32 border-white border-2"/>
+                    <p className="text-2xl font-semibold font-avant uppercase -mt-3 tracking-wide">
+                        Singularity
+                    </p>
+                    <p>Для тех, кто знает что делает</p>
+                    <div className="flex flex-col gap-4 p-4">
+                        {[
+                            [faInfinity, "Неограниченное количество игроков и уровней"],
+                            [faItunesNote, "Музыка из NewGrounds и YouTube"],
+                            [faCogs, "Полноценная панель для владельцев и игроков"],
+                            [faForward, "Версии от 1.9 до 2.2"],
+                            [faBarsProgress, "Базовая статистика сервера"],
+                            [faZap, "Конфигуратор установщиков: кастомный логотип и вечное хранение"]
+                        ].map((e, i) => <span className="flex gap-4 items-center" key={i}>
+                            <div className="flex justify-center !w-8">
+                                        <FontAwesomeIcon className="text-2xl" icon={e[0]}/>
+                                    </div> <span className="flex-1">{e[1]}</span>
+                        </span>)}
+                    </div>
+                    <Button type="primary" size="large"
+                            className="w-full mt-auto flex items-center justify-center gap-2"
+                            onClick={() => createServer(2)}>
+                    {prc[duration](tariffs['2'])}{suffix}
+                        {discount>0&&<span className="border-success border-2 bg-subtle text-white rounded-md px-1.5">-{discount}%</span>}
+                    </Button>
+                </div>
+                }
+                {barrier === 3 && <div
+                    className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 w-96">
+                    <img src={TariffTO.src} className="w-32"/>
+                    <p className="text-2xl font-semibold font-avant uppercase -mt-3 tracking-wide">
+                        Takeoff
+                    </p>
+                    <p>Тариф устарел</p>
+                    <div className="flex flex-col gap-4 p-4">
+                        {[
+                            [faPlus, "Все, что есть в Singularity"],
+                            [faItunesNote, "Музыка из NewGrounds, YouTube, Deezer, VK и mp3 файлов"],
+                            [faZap, "BuildLab: логотип, текстуры и поддержка iOS"],
+                            [faCloudArrowDown, "Автоматические резервные копии"],
+                            [faStar, "Рейт-бот для Discord"]
+                        ].map((e, i) => <span className="flex gap-4 items-center" key={i}>
+                            <div className="flex justify-center !w-8">
+                                        <FontAwesomeIcon className="text-2xl" icon={e[0]}/>
+                                    </div> <span className="flex-1">{e[1]}</span>
+                        </span>)}
+                    </div>
+                    <Button type="primary" size="large"
+                            className="w-full mt-auto flex items-center justify-center gap-2"
+                            onClick={() => createServer(4)}>
+                        {prc[duration](tariffs['3'])}{suffix}
+                        {discount > 0 && <span
+                            className="border-success border-2 bg-subtle text-white rounded-md px-1.5">-{discount}%</span>}
+                    </Button>
+                </div>}
+                {barrier <= 4 && <div
+                    className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 w-96">
+                    <TariffFD className="w-32"/>
+                    <p className="text-2xl font-semibold font-avant uppercase -mt-3 tracking-wide">
+                        Foundation
+                    </p>
+                    <p>Надежное основание для мощных проектов</p>
+                    <div className="flex flex-col gap-4 p-4">
+                        {[
+                            [faPlus, "Все, что есть в Singularity"],
+                            [faItunesNote, "Музыка из NewGrounds, YouTube, Deezer, VK и mp3 файлов"],
+                            [faChartSimple, "Полная статистика сервера"],
+                            [faZap, "BuildLab: логотип, текстуры, моды и поддержка iOS"],
+                            [faUserGroup, "Доступ для совладельцев и админов к панели"],
+                            [faShop, "Встроенный магазин для игроков"],
+                            [faCloudArrowDown, "Автоматические резервные копии"],
+                            [faStar, "Рейт-бот для Discord"]
+                        ].map((e, i) => <span className="flex gap-4 items-center" key={i}>
+                            <div className="flex justify-center !w-8">
+                                        <FontAwesomeIcon className="text-2xl" icon={e[0]}/>
+                                    </div> <span className="flex-1">{e[1]}</span>
+                        </span>)}
+                    </div>
+                    <Button type="primary" size="large"
+                            className="w-full mt-auto flex items-center justify-center gap-2"
+                            onClick={() => createServer(4)}>
+                        {prc[duration](tariffs['4'])}{suffix}
+                        {discount > 0 && <span
+                            className="border-success border-2 bg-subtle text-white rounded-md px-1.5">-{discount}%</span>}
+                    </Button>
+                </div>
+                }
             </div>
         )
     }
@@ -202,53 +257,50 @@ export default function Order(props) {
     //---------------------------------------------------------------------------
     //---------------------------------------------------------------------------
 
+
     return <>
         <GlobalHead title={localeGlobal.get('navName')}/>
         <GlobalNav router={props.router}/>
         <Toaster/>
         <div className={styles.main}>
 
-            <h2 className="text-center">{props.router?.query.id ? "Продлить GDPS" : locale.get('createTitle')}</h2>
-            <div className="mx-auto w-fit grid grid-cols-1 lg:grid-cols-3">
-                <FruitTextField label={locale.get('createGDPSTitle')} type="text" variant="outlined"
-                                style={{margin: ".5rem", flex: 1}}
-                                value={srv.name || ''} onChange={(evt) => {
-                    setSrv({
-                        ...srv, name: evt.target.value.replaceAll(/[^a-zA-Z\d .\-_]/g, '')
-                    })
-                }} className="col-span-2" disabled={srv.srvid.length === 4}/>
-                <FruitTextField label={locale.get('createPromo')} type="text" variant="outlined"
-                                style={{margin: ".5rem"}}
-                                value={srv.promocode || ''} onChange={(evt) => {
-                    setSrv({
-                        ...srv, promocode: evt.target.value.toUpperCase().replaceAll(/[^a-zA-Z\d\-_]/g, '')
-                    })
-                }}/>
+            <h2 className="text-center text-2xl font-semibold">{props.router?.query.id ? "Продлить GDPS" : locale.get('createTitle')}</h2>
+            <div className="mx-auto w-fit m-4">
+                <div className="flex flex-col gap-2 p-4 glassb rounded-xl bg-active w-96">
+                    <div className="flex items-center gap-4">
+                        <p className="w-20">Название:</p>
+                        <Input rootClassName="flex-1" value={srv.name || ''} onChange={(evt) => {
+                            setSrv({
+                                ...srv, name: evt.target.value.replaceAll(/[^a-zA-Z\d .\-_]/g, '')
+                            })
+                        }} disabled={srv.srvid.length === 4}/>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <p className="w-20">Промокод:</p>
+                        <Input rootClassName="flex-1" value={srv.promocode || ''} onChange={(evt) => {
+                            setSrv({
+                                ...srv, promocode: evt.target.value.toUpperCase().replaceAll(/[^a-zA-Z\d\-_]/g, '')
+                            })
+                        }} placeholder="(при наличии)" />
+                    </div>
+                </div>
             </div>
 
-            <TabsUnstyled value={srv.payDuration} onChange={(e, val) => setSrv({...srv, payDuration: val})}
-                          className="mt-2rem w-fit mx-auto">
-                <TabsList className="mx-auto">
-                    {!(srv.payDuration !== "mo" && payDurLock) && <Tab value="mo">{locale.get('tTabs')[0]}</Tab>}
-                    {!(srv.payDuration !== "yr" && payDurLock) && <Tab value="yr" className="flex items-center">
-                        {locale.get('tTabs')[1]} <span className="text-xs font-normal ml-1 rounded-md px-1 py-0.5"
-                                                       style={{backgroundColor: (srv.payDuration === "yr" ? "var(--btn-color)" : "var(--primary-color)")}}>-15%</span>
-                    </Tab>}
-                    <Tab value="all">{locale.get('tTabs')[2]}</Tab>
-                </TabsList>
+            <div className="flex flex-col gap-4 mx-auto items-center">
+                <Segmented rootClassName="bg-subtle select-none w-fit" options={[
+                    {value: "mo", label: "Месяц"},
+                    {value: "yr", label: <span>Год <span className="bg-primary rounded px-1">-15%</span></span>},
+                    {value: "all", label: "Навсегда"}
+                ]} value={srv.payDuration} onChange={(val) => setSrv({...srv, payDuration: val})}/>
 
-                <TabPanel value="mo" className="border-none !p-0">
-                    {createCards('mo')}
-                </TabPanel>
-                <TabPanel value="yr" className="border-none !p-0">
-                    {createCards('yr')}
-                </TabPanel>
-                <TabPanel value="all" className="border-none !p-0">
-                    {createCards('all')}
-                </TabPanel>
-            </TabsUnstyled>
+
+                {createCards(srv.payDuration)}
+            </div>
         </div>
-        <p className="mx-auto w-fit ">{locale.get('tosReminder').main}<Link href="/about/tos" passHref className="text-2xl" legacyBehavior>{locale.get('tosReminder').link}</Link></p>
+        <p className="mx-auto w-fit my-4 text-gray-300">
+            {locale.get('tosReminder').main}
+            <Link href="/about/tos" passHref className="hover:underline">{locale.get('tosReminder').link}</Link>
+        </p>
     </>;
 }
 

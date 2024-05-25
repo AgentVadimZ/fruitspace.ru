@@ -312,6 +312,9 @@ class gdps_manage {
     searchUsers = async (srvid, keyword) => {
         return await this._api.do(`servers/gd/${srvid}/get/users?user=${encodeURI(keyword)}`, "GET")
     }
+    getUserList = async (srvid, page=0) => {
+        return await this._api.do(`servers/gd/${srvid}/get/lusers?page=${page}`, "GET")
+    }
 
     searchLevels = async (srvid, keyword) => {
         return await this._api.do(`servers/gd/${srvid}/get/levels?lvl=${encodeURI(keyword)}`, "GET")

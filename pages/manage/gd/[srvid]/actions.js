@@ -1,9 +1,9 @@
-import GlobalHead from "../../../../components/GlobalHead";
-import GlobalNav from "../../../../components/GlobalNav";
-import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
-import PanelContent from "../../../../components/Global/PanelContent";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import GDNavBar from "@/components/Manage/NavBars/GDNavBar";
+import PanelContent from "@/components/Global/PanelContent";
 import {useRouter} from "next/router";
-import styles from "../../../../components/Manage/GDManage.module.css"
+import styles from "@/components/Manage/GDManage.module.css"
 import {
     Avatar,
     Badge, Button, ClickAwayListener,
@@ -31,7 +31,7 @@ import {faContao} from "@fortawesome/free-brands-svg-icons";
 import {useEffect, useState} from "react";
 import Skeleton from '@mui/material/Skeleton';
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import useFiberAPI from "../../../../fiber/fiber";
+import useFiberAPI from "@/fiber/fiber";
 
 
 const SqBadge = (text) => <span className="rounded-md bg-[var(--btn-color)] group-hover:bg-[var(--active-color)] px-2 py-1 ml-2">{text}</span>
@@ -251,7 +251,7 @@ export default function ActionsGD(props) {
             <GlobalNav />
             <GDNavBar />
             <PanelContent>
-                <div className={styles.CardBox} style={{marginBottom:"2rem"}}>
+                <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4" style={{marginBottom:"2rem"}}>
                     <div className="flex items-center flex-col lg:flex-row gap-2">
                         <h3 className="!my-0 !mx-4">Лог действий</h3>
                         <div className="flex items-center rounded-lg bg-[var(--btn-color)] px-4 py-2">
@@ -262,7 +262,7 @@ export default function ActionsGD(props) {
                         </div>
                     </div>
                 </div>
-                <div className={styles.CardBox} style={{width:"100%"}}>
+                <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4" style={{width:"100%"}}>
                     <div className="flex items-center">
                         <ClickAwayListener onClickAway={()=>setSortShow(false)}>
                             <div>

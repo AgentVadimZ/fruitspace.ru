@@ -1,29 +1,20 @@
-import GlobalHead from "../../../../components/GlobalHead";
-import GlobalNav from "../../../../components/GlobalNav";
-import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
-import PanelContent from "../../../../components/Global/PanelContent";
-import styles from "../../../../components/Manage/GDManage.module.css"
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import GDNavBar from "@/components/Manage/NavBars/GDNavBar";
+import PanelContent from "@/components/Global/PanelContent";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
-import {styled} from "@mui/system";
-import {Button, IconButton, Switch, TextField, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import {useEffect, useState} from "react";
 
-import shardFire from "@/assets/shards/fire.webp"
 import shardIce from "@/assets/shards/ice.webp"
-import shardLava from "@/assets/shards/lava.webp"
-import shardPoison from "@/assets/shards/poison.webp"
-import shardShadow from "@/assets/shards/shadow.webp"
 import orbsIcon from "@/assets/shards/orbs.webp"
 import keysIcon from "@/assets/shards/keys.webp"
 import diamondsIcon from "@/assets/shards/diamonds.webp"
 import timeIcon from "@/assets/shards/time.png"
-import {TimePicker} from "@mui/x-date-pickers/TimePicker";
-import {LocalizationProvider} from "@mui/x-date-pickers";
-import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import toast, {Toaster} from "react-hot-toast";
-import useLocale from "../../../../locales/useLocale";
-import useFiberAPI from "../../../../fiber/fiber";
+import useLocale from "@/locales/useLocale";
+import useFiberAPI from "@/fiber/fiber";
+import {InputNumber, TimePicker, Button} from "antd";
 
 
 const darkTheme = createTheme({
@@ -90,297 +81,156 @@ export default function ChestsGD(props) {
     }, [srv])
 
     return (
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <>
             <GlobalHead title={locale.get("nav")}/>
             <GlobalNav />
             <GDNavBar />
             <Toaster/>
             <PanelContent>
-                <ThemeProvider theme={darkTheme}>
-                <div className={styles.CardGrid}>
-                    <div className={styles.CardBox}>
-                        <h3>{locale.get("small")}</h3>
-                        <div className={styles.SettingsPlato}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={orbsIcon.src} style={{height:"1em"}}/></IconButton>{locale.get("drop")[0]}</span>
-                            <span>
-                                <FruitThinField label={locale.get("minMax")[0]} value={chestConfig.ChestSmallOrbsMin}
-                                                onChange={(evt)=>setChestConfig({...chestConfig,
-                                                    ChestSmallOrbsMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
-                                                })}/>
-                                <span style={{margin:".5rem"}} />
-                            <FruitThinField label={locale.get("minMax")[1]} value={chestConfig.ChestSmallOrbsMax}
-                                            onChange={(evt)=>setChestConfig({...chestConfig,
-                                                ChestSmallOrbsMax: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
-                                            })}/>
-                            </span>
+                <div className="flex flex-col lg:flex-row gap-8 w-full xl:w-5/6">
+                    <div className="p-4 rounded-xl bg-active glassb flex flex-col gap-4 flex-1">
+                        <p className="rounded-md px-1.5 py-0.5 glassb w-fit">Малый сундук</p>
+                        <div className="flex flex-wrap gap-2 items-center">
+                            <div className="w-12"><img src={orbsIcon.src} className="h-6 "/></div>
+                                Орбы
+                            <span className="lg:flex-1 w-full"/>
+                            от
+                            <InputNumber value={chestConfig.ChestSmallOrbsMin}
+                                         onChange={(val) => setChestConfig({
+                                             ...chestConfig,
+                                             ChestSmallOrbsMin: val
+                                         })}/>
+                            до
+                            <InputNumber value={chestConfig.ChestSmallOrbsMax}
+                                         onChange={(val) => setChestConfig({
+                                             ...chestConfig,
+                                             ChestSmallOrbsMax: val
+                                         })}/>
                         </div>
-                        <div className={styles.SettingsPlato} style={{marginTop:"1rem"}}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={diamondsIcon.src} style={{height:"1em"}}/></IconButton>{locale.get("drop")[1]}</span>
-                            <span>
-                                <FruitThinField label={locale.get("minMax")[0]} value={chestConfig.ChestSmallDiamondsMin}
-                                                onChange={(evt)=>setChestConfig({...chestConfig,
-                                                    ChestSmallDiamondsMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
-                                                })}/>
-                                <span style={{margin:".5rem"}} />
-                            <FruitThinField label={locale.get("minMax")[1]} value={chestConfig.ChestSmallDiamondsMax}
-                                            onChange={(evt)=>setChestConfig({...chestConfig,
-                                                ChestSmallDiamondsMax: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
-                                            })}/>
-                            </span>
+                        <div className="flex flex-wrap gap-2 items-center">
+                            <div className="w-12"><img src={diamondsIcon.src} className="h-6"/></div>
+                                Алмазы
+                            <span className="lg:flex-1 w-full"/>
+                            от
+                            <InputNumber value={chestConfig.ChestSmallDiamondsMin}
+                                         onChange={(val) => setChestConfig({
+                                             ...chestConfig,
+                                             ChestSmallDiamondsMin: val
+                                         })}/>
+                            до
+                            <InputNumber value={chestConfig.ChestSmallDiamondsMax}
+                                         onChange={(val) => setChestConfig({
+                                             ...chestConfig,
+                                             ChestSmallDiamondsMax: val
+                                         })}/>
                         </div>
-                        <div className={styles.SettingsPlato} style={{marginTop:"1rem"}}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={keysIcon.src} style={{height:"1em"}}/></IconButton>{locale.get("drop")[2]}</span>
-                            <span>
-                                <FruitThinField label={locale.get("minMax")[0]} value={chestConfig.ChestSmallKeysMin}
-                                                onChange={(evt)=>setChestConfig({...chestConfig,
-                                                    ChestSmallKeysMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
-                                                })}/>
-                                <span style={{margin:".5rem"}} />
-                            <FruitThinField label={locale.get("minMax")[1]} value={chestConfig.ChestSmallKeysMax}
-                                            onChange={(evt)=>setChestConfig({...chestConfig,
-                                                ChestSmallKeysMax: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
-                                            })}/>
-                            </span>
+                        <div className="flex flex-wrap gap-2 items-center">
+                            <div className="w-12"><img src={keysIcon.src} className="h-6"/></div>
+                                Ключи
+                            <span className="lg:flex-1 w-full"/>
+                            от
+                            <InputNumber value={chestConfig.ChestSmallKeysMin}
+                                         onChange={(val) => setChestConfig({
+                                             ...chestConfig,
+                                             ChestSmallKeysMin: val
+                                         })}/>
+                            до
+                            <InputNumber value={chestConfig.ChestSmallKeysMax}
+                                         onChange={(val) => setChestConfig({
+                                             ...chestConfig,
+                                             ChestSmallKeysMax: val
+                                         })}/>
                         </div>
-                        <div className={styles.SettingsPlato} style={{marginTop:"1rem"}}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={shardIce.src} style={{height:"1em"}}/></IconButton>{locale.get("drop")[3]}</span>
-                            <FruitToggleButtonGroup
-                                size={"small"}
-                                sx={{backgroundColor:"var(--bkg-color)", width:"fit-content", borderRadius: "8px"}}
-                                value={chestConfig.ChestSmallShards}
-                                onChange={(e,val)=>{setChestConfig({
-                                    ...chestConfig, ChestSmallShards: val
-                                })}}>
-                                <ToggleButton value={1}>
-                                    <img src={shardFire.src} />
-                                </ToggleButton>
-                                <ToggleButton value={2}>
-                                    <img src={shardIce.src} />
-                                </ToggleButton>
-                                <ToggleButton value={3}>
-                                    <img src={shardPoison.src} />
-                                </ToggleButton>
-                                <ToggleButton value={4}>
-                                    <img src={shardShadow.src} />
-                                </ToggleButton>
-                                <ToggleButton value={5}>
-                                    <img src={shardLava.src} />
-                                </ToggleButton>
-                            </FruitToggleButtonGroup>
+                        <div className="flex flex-wrap gap-2 items-center">
+                            <div className="w-12"><img src={shardIce.src} className="h-6"/></div>
+                                Шарды
+                            <span className="lg:flex-1 w-full"/>
+                            Факт дня: их больше нельзя настраивать в 2.2
                         </div>
-                        <div className={styles.SettingsPlato} style={{marginTop:"1rem"}}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={timeIcon.src} style={{height:"1em"}}/></IconButton>{locale.get("timeout")}</span>
-                                <TimePicker
-                                    ampm={false}
-                                    openTo="hours"
-                                    views={['hours', 'minutes', 'seconds']}
-                                    inputFormat={locale.get('timeFormat').input}
-                                    mask={locale.get('timeFormat').mask}
-                                    label={locale.get('timeFormat').title}
-                                    value={s}
-                                    onChange={(val) => {
-                                        setChestConfig({...chestConfig, ChestSmallWait: toSeconds(val)})
-                                    }}
-                                    showToolbar
-                                    renderInput={(params) => <FruitThinField {...params} />}
-                                />
+                        <div className="flex flex-wrap gap-2 items-center">
+                            <div className="w-12"><img src={timeIcon.src} className="h-6"/></div>
+                                Таймаут
+                            <span className="lg:flex-1 w-full"/>
+                            <TimePicker onChange={(val) => {
+                                setChestConfig({...chestConfig, ChestSmallWait: toSeconds(val)})
+                            }} value={s} allowClear={false} showNow={false}/>
                         </div>
                     </div>
 
-
-                    <div className={styles.CardBox}>
-                        <h3>{locale.get("big")}</h3>
-                        <div className={styles.SettingsPlato}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={orbsIcon.src} style={{height:"1em"}}/></IconButton>{locale.get("drop")[0]}</span>
-                            <span>
-                                <FruitThinField label={locale.get("minMax")[0]} value={chestConfig.ChestBigOrbsMin}
-                                                onChange={(evt)=>setChestConfig({...chestConfig,
-                                                    ChestBigOrbsMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
-                                                })}/>
-                                <span style={{margin:".5rem"}} />
-                            <FruitThinField label={locale.get("minMax")[1]} value={chestConfig.ChestBigOrbsMax}
-                                            onChange={(evt)=>setChestConfig({...chestConfig,
-                                                ChestBigOrbsMax: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
-                                            })}/>
-                            </span>
+                    <div className="p-4 rounded-xl bg-active glassb flex flex-col gap-4 flex-1">
+                        <p className="rounded-md px-1.5 py-0.5 glassb w-fit">Большой сундук</p>
+                        <div className="flex flex-wrap gap-2 items-center">
+                            <div className="w-12"><img src={orbsIcon.src} className="h-6 "/></div>
+                                Орбы
+                            <span className="lg:flex-1 w-full"/>
+                            от
+                            <InputNumber value={chestConfig.ChestBigOrbsMin}
+                                         onChange={(val) => setChestConfig({
+                                             ...chestConfig,
+                                             ChestBigOrbsMin: val
+                                         })}/>
+                            до
+                            <InputNumber value={chestConfig.ChestBigOrbsMax}
+                                         onChange={(val) => setChestConfig({
+                                             ...chestConfig,
+                                             ChestBigOrbsMax: val
+                                         })}/>
                         </div>
-                        <div className={styles.SettingsPlato} style={{marginTop:"1rem"}}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={diamondsIcon.src} style={{height:"1em"}}/></IconButton>{locale.get("drop")[1]}</span>
-                            <span>
-                                <FruitThinField label={locale.get("minMax")[0]} value={chestConfig.ChestBigDiamondsMin}
-                                                onChange={(evt)=>setChestConfig({...chestConfig,
-                                                    ChestBigDiamondsMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
-                                                })}/>
-                                <span style={{margin:".5rem"}} />
-                            <FruitThinField label={locale.get("minMax")[1]} value={chestConfig.ChestBigDiamondsMax}
-                                            onChange={(evt)=>setChestConfig({...chestConfig,
-                                                ChestBigDiamondsMax: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
-                                            })}/>
-                            </span>
+                        <div className="flex flex-wrap gap-2 items-center">
+                            <div className="w-12"><img src={diamondsIcon.src} className="h-6"/></div>
+                                Алмазы
+                            <span className="lg:flex-1 w-full"/>
+                            от
+                            <InputNumber value={chestConfig.ChestBigDiamondsMin}
+                                         onChange={(val) => setChestConfig({
+                                             ...chestConfig,
+                                             ChestBigDiamondsMin: val
+                                         })}/>
+                            до
+                            <InputNumber value={chestConfig.ChestBigDiamondsMax}
+                                         onChange={(val) => setChestConfig({
+                                             ...chestConfig,
+                                             ChestBigDiamondsMax: val
+                                         })}/>
                         </div>
-                        <div className={styles.SettingsPlato} style={{marginTop:"1rem"}}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={keysIcon.src} style={{height:"1em"}}/></IconButton>{locale.get("drop")[2]}</span>
-                            <span>
-                                <FruitThinField label={locale.get("minMax")[0]} value={chestConfig.ChestBigKeysMin}
-                                                onChange={(evt)=>setChestConfig({...chestConfig,
-                                                    ChestBigKeysMin: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
-                                                })}/>
-                                <span style={{margin:".5rem"}} />
-                            <FruitThinField label={locale.get("minMax")[1]} value={chestConfig.ChestBigKeysMax}
-                                            onChange={(evt)=>setChestConfig({...chestConfig,
-                                                ChestBigKeysMax: Number(evt.target.value.replaceAll(/[^0-9]/g,''))
-                                            })}/>
-                            </span>
+                        <div className="flex flex-wrap gap-2 items-center">
+                            <div className="w-12"><img src={keysIcon.src} className="h-6"/></div>
+                                Ключи
+                            <span className="lg:flex-1 w-full"/>
+                            от
+                            <InputNumber value={chestConfig.ChestBigKeysMin}
+                                         onChange={(val) => setChestConfig({
+                                             ...chestConfig,
+                                             ChestBigKeysMin: val
+                                         })}/>
+                            до
+                            <InputNumber value={chestConfig.ChestBigKeysMax}
+                                         onChange={(val) => setChestConfig({
+                                             ...chestConfig,
+                                             ChestBigKeysMax: val
+                                         })}/>
                         </div>
-                        <div className={styles.SettingsPlato} style={{marginTop:"1rem"}}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={shardIce.src} style={{height:"1em"}}/></IconButton>{locale.get("drop")[3]}</span>
-                            <FruitToggleButtonGroup
-                                size={"small"}
-                                sx={{backgroundColor:"var(--bkg-color)", width:"fit-content", borderRadius: "8px"}}
-                                value={chestConfig.ChestBigShards}
-                                onChange={(e,val)=>{setChestConfig({
-                                    ...chestConfig, ChestBigShards: val
-                                })}}>
-                                <ToggleButton value={1}>
-                                    <img src={shardFire.src} />
-                                </ToggleButton>
-                                <ToggleButton value={2}>
-                                    <img src={shardIce.src} />
-                                </ToggleButton>
-                                <ToggleButton value={3}>
-                                    <img src={shardPoison.src} />
-                                </ToggleButton>
-                                <ToggleButton value={4}>
-                                    <img src={shardShadow.src} />
-                                </ToggleButton>
-                                <ToggleButton value={5}>
-                                    <img src={shardLava.src} />
-                                </ToggleButton>
-                            </FruitToggleButtonGroup>
+                        <div className="flex flex-wrap gap-2 items-center">
+                            <div className="w-12"><img src={shardIce.src} className="h-6"/></div>
+                                Шарды
+                            <span className="lg:flex-1 w-full"/>
+                            Факт дня: их больше нельзя настраивать в 2.2
                         </div>
-                        <div className={styles.SettingsPlato} style={{marginTop:"1rem"}}>
-                            <span style={{fontSize:"13pt"}}><IconButton><img src={timeIcon.src} style={{height:"1em"}}/></IconButton>{locale.get("timeout")}</span>
-                            <TimePicker
-                                ampm={false}
-                                openTo="hours"
-                                views={['hours', 'minutes', 'seconds']}
-                                inputFormat={locale.get('timeFormat').input}
-                                mask={locale.get('timeFormat').mask}
-                                label={locale.get('timeFormat').title}
-                                value={sb}
-                                onChange={(val) => {
-                                    setChestConfig({...chestConfig, ChestBigWait: toSeconds(val)})
-                                }}
-                                showToolbar
-                                renderInput={(params) => <FruitThinField {...params} />}
-                            />
+                        <div className="flex flex-wrap gap-2 items-center">
+                            <div className="w-12"><img src={timeIcon.src} className="h-6"/></div>
+                            Таймаут
+                            <span className="lg:flex-1 w-full"/>
+                            <TimePicker onChange={(val) => {
+                                setChestConfig({...chestConfig, ChestBigWait: toSeconds(val)})
+                            }} value={sb} allowClear={false} showNow={false}/>
                         </div>
                     </div>
                 </div>
-                </ThemeProvider>
 
-                <Button variant="contained" className={styles.SlimButton}
-                        style={{marginTop:"2rem"}}
-                        onClick={saveChests}>{locale.get("save")}</Button>
+                <Button type="primary" className="my-8" onClick={saveChests}>Сохранить</Button>
             </PanelContent>
-        </LocalizationProvider>
+        </>
     );
 }
 
-ChestsGD.RequireAuth=true
-
-
-
-const FruitThinField = styled(TextField)({
-    marginTop:".5rem",
-    '& label.Mui-focused': {
-        color: '#0d6efd',
-    },
-    '& .MuiInput-underline:after': {
-        borderBottomColor: 'green',
-    },
-    '& .MuiInputLabel-root[data-shrink="false"]:not(.Mui-focused)': {
-        transform: "translate(14px, 10px) scale(1)"
-    },
-    '& .MuiOutlinedInput-root': {
-        height: 40,
-        '& fieldset': {
-            borderColor: 'white !important',
-        },
-        '&:hover fieldset': {
-            borderColor: '#cacad0',
-        },
-        '&.Mui-focused fieldset': {
-            borderColor: '#0d6efd',
-        },
-        borderRadius: "8px",
-        color: "white",
-    },
-});
-
-const FruitToggleButtonGroup = styled(ToggleButtonGroup)({
-    '& .MuiToggleButtonGroup-grouped': {
-        margin: "0",
-        backgroundColor: "var(--btn-color)",
-        borderRadius: "8px",
-        '&.Mui-disabled': {
-            border: 0,
-        },
-        '&.Mui-selected': {
-            backgroundColor: "var(--primary-color)",
-        },
-        '& img': {
-            height: "2.5rem",
-        }
-    },
-})
-
-const FruitIconButton = styled(IconButton)({
-    borderRadius: "0",
-    '&:hover': {
-        backgroundColor: "var(--primary-color)"
-    },
-    '&:first-of-type': {
-        borderRadius: "8px 0 0 8px"
-    },
-    '&:last-child': {
-        borderRadius: "0 8px 8px 0"
-    },
-})
-
-const FruitSwitch = styled(Switch)({
-    height: 46,
-    width: 70,
-    padding: 8,
-    '& .MuiSwitch-switchBase': {
-        '&.Mui-checked': {
-            transform: 'translateX(24px)',
-            // color: 'var(--success-color)'
-        },
-    },
-    '& .MuiSwitch-track': {
-        borderRadius: 22,
-        '&:before, &:after': {
-            content: '""',
-            position: 'absolute',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            width: 16,
-            height: 16,
-        },
-        '&:before': {
-            backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="white" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>')`,
-            left: 12,
-        },
-        '&:after': {
-            backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="white" d="M19,13H5V11H19V13Z" /></svg>')`,
-            right: 12,
-        },
-    },
-    '& .MuiSwitch-thumb': {
-        boxShadow: 'none',
-        width: 24,
-        height: 24,
-        margin: 2,
-    },
-});
+ChestsGD.RequireAuth = true

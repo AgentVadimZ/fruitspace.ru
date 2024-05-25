@@ -1,27 +1,25 @@
-import GlobalHead from "../../../../components/GlobalHead";
-import GlobalNav from "../../../../components/GlobalNav";
-import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
-import PanelContent from "../../../../components/Global/PanelContent";
-import styles from "../../../../components/Manage/GDManage.module.css"
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import GDNavBar from "@/components/Manage/NavBars/GDNavBar";
+import PanelContent from "@/components/Global/PanelContent";
+import styles from "@/components/Manage/GDManage.module.css"
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import LogoNG from '../../../../assets/logos/ng-logo.jpeg'
-import LogoYT from '../../../../assets/logos/yt-logo.jpeg'
-import LogoVK from '../../../../assets/logos/vk-logo.png'
-import LogoDZ from '../../../../assets/logos/dz-logo.png'
-import LogoDBox from '../../../../assets/logos/dbox-logo.png'
+import LogoNG from '@/assets/logos/ng-logo.jpeg'
+import LogoYT from '@/assets/logos/yt-logo.jpeg'
+import LogoVK from '@/assets/logos/vk-logo.png'
+import LogoDZ from '@/assets/logos/dz-logo.png'
+import LogoDBox from '@/assets/logos/dbox-logo.png'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faArrowDown19,
     faArrowDownAZ,
     faArrowDownWideShort,
-    faCompactDisc,
+    faCompactDisc, faDownload,
     faPause,
-    faPlay, faQuestion
+    faPlay, faQuestion, faSearch, faVolumeLow
 } from "@fortawesome/free-solid-svg-icons";
 import {
-    Slider,
-    Pagination,
     TextField,
     InputAdornment,
     IconButton,
@@ -29,21 +27,15 @@ import {
     Button,
     ClickAwayListener, MenuList, MenuItem
 } from "@mui/material";
-import {PauseRounded, PlayArrowRounded, Search, VolumeUpRounded} from "@mui/icons-material";
 import {useEffect, useRef, useState} from "react";
 import {styled} from "@mui/system";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemText from "@mui/material/ListItemText";
-import List from "@mui/material/List";
 import ReactPlayer from "react-player";
 import {LoadingButton} from "@mui/lab";
-import {Tooltip} from "@mui/material"
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import useLocale from "../../../../locales/useLocale";
-import useFiberAPI from "../../../../fiber/fiber";
-import {MusicTour} from "../../../../locales/tours/manage/gd";
-import {FloatButton, Tour} from "antd";
+import useLocale from "@/locales/useLocale";
+import useFiberAPI from "@/fiber/fiber";
+import {MusicTour} from "@/locales/tours/manage/gd";
+import {FloatButton, Input, Select, Tour, Slider, Pagination} from "antd";
+import {debounce} from "lodash";
 
 
 export default function MusicGD(props) {
@@ -101,8 +93,8 @@ export default function MusicGD(props) {
 
     const locale = useLocale(props.router)
 
-    const searchMusic = (mode) => {
-            api.gdps_manage.getMusic(srv.Srv.srvid, mode, search, page).then((resp)=>{
+    const searchMusic = (query, mode=sortMode) => {
+            api.gdps_manage.getMusic(srv.Srv.srvid, mode, query||search, page).then((resp)=>{
             if(resp.status==="ok") {
                 setMusic(resp.music)
                 setPageCount(Math.ceil(resp.count/10))
@@ -145,8 +137,11 @@ export default function MusicGD(props) {
 
 
     useEffect(()=>{
-        srv.Srv.srvid&&searchMusic(sortMode)
+        srv.Srv.srvid&&searchMusic()
     },[srv, page])
+
+    const searchDebounced = debounce(searchMusic, 500)
+
 
     return (
         <>
@@ -162,302 +157,284 @@ export default function MusicGD(props) {
                 icon={<FontAwesomeIcon icon={faQuestion} />}
             />
             <PanelContent>
-                <div className={`${styles.CardBox} ${styles.MusicSlider}`}>
-                    <ReactPlayer style={{display:"none"}} url={playerData.src||''} playing={playerData.playing}
-                                 volume={playerData.volume/100} progressInterval={250} onProgress={updateMusic}
-                    onEnded={()=>setPlayerData({...playerData,playing: false})} ref={playerRef}
-                    onSeek={(val)=>setPlayerData({...playerData, position: val})}/>
-                    <div ref={r=>refs.current["newsong"]=r} className={styles.MusicSliderSelector}>
-                        <AddCircleIcon />
-                        <KeyboardArrowRightIcon />
-                        <img src={LogoNG.src} onClick={()=>setBackdrop("add-ng")} />
-                        {srv.Tariff && srv.Tariff.Music.YouTube && <img src={LogoYT.src} onClick={()=>setBackdrop("add-yt")} /> }
-                        {srv.Tariff && srv.Tariff.Music.Deezer &&<img src={LogoDZ.src} onClick={()=>setBackdrop("add-dz")} /> }
-                        {srv.Tariff && srv.Tariff.Music.VK &&<img src={LogoVK.src} onClick={()=>setBackdrop("add-vk")} /> }
-                        {srv.Tariff && srv.Tariff.Music.Files &&<img src={LogoDBox.src} onClick={()=>setBackdrop("add-db")} /> }
-                    </div>
-                    <span className={styles.SliderDelimiter} />
-                    <div ref={r=>refs.current["player"]=r} className={styles.MusicSliderPlayer}>
-                        <div aria-label='top'>
-                            {playerData.playing
-                            ? <FontAwesomeIcon icon={faPause} onClick={()=>setPlayerData({...playerData, playing: !playerData.playing})} />
-                            : <FontAwesomeIcon icon={faPlay} onClick={()=>setPlayerData({...playerData, playing: !playerData.playing})} />}
-                            <div className={styles.MusicPlayerText}>
-                                <h3>{playerData.title}</h3>
-                                <p>{playerData.artist}</p>
-                            </div>
-                            <p className={styles.MusicPlayerID}>ID {playerData.id}</p>
+
+                <div
+                    className="flex flex-col gap-4 justify-center items-center xl:items-end w-full xl:w-2/3 xl:flex-row">
+                    <ReactPlayer style={{display: "none"}} url={playerData.src || ''} playing={playerData.playing}
+                                 volume={playerData.volume / 100} progressInterval={250} onProgress={updateMusic}
+                                 onEnded={() => setPlayerData({...playerData, playing: false})} ref={playerRef}
+                                 onSeek={(val) => setPlayerData({...playerData, position: val})}/>
+                    <div>
+                        <p className="bg-active text-sm rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
+                                        relative z-20 -mb-[1px]">Загрузить музыку</p>
+                        <div
+                            className="bg-active flex gap-2 items-center p-2 rounded-xl rounded-tl-none border-1 border-white border-opacity-25 z-10">
+                            <img src={LogoNG.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
+                                 onClick={() => setBackdrop("add-ng")}/>
+                            {srv.Srv.plan > 1 && <img src={LogoYT.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
+                                                  onClick={() => setBackdrop("add-yt")}/>}
+                            {srv.Srv.plan > 2 && <img src={LogoDZ.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
+                                                  onClick={() => setBackdrop("add-dz")}/>}
+                            {srv.Srv.plan > 2 && <img src={LogoVK.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
+                                                  onClick={() => setBackdrop("add-vk")}/>}
+                            {srv.Srv.plan > 1 && <img src={LogoDBox.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
+                                                  onClick={() => setBackdrop("add-db")}/>}
                         </div>
-                        <div aria-label='bottom'>
-                            <div style={{flex:1}}>
-                                <Slider
-                                    aria-label="time-indicator"
-                                    size="small"
-                                    value={playerData.position}
-                                    min={0}
-                                    step={1}
-                                    max={playerData.duration}
-                                    onChange={(_, val) => playerRef.current.seekTo(val)}
-                                    sx={{
-                                        color: '#fff',
-                                        height: 4,
-                                        padding: "0",
-                                        minWidth: "8rem",
-                                        '& .MuiSlider-thumb': {
-                                            width: 8,
-                                            height: 8,
-                                            transition: '0.3s cubic-bezier(.47,1.64,.41,.8)',
-                                            '&:before': {
-                                                boxShadow: '0 2px 12px 0 rgba(0,0,0,0.4)',
-                                            },
-                                            '&:hover, &.Mui-focusVisible': {
-                                                boxShadow: `0px 0px 0px 8px rgb(255 255 255 / 16%)`,
-                                            },
-                                            '&.Mui-active': {
-                                                width: 20,
-                                                height: 20,
-                                            },
-                                        },
-                                        '& .MuiSlider-rail': {
-                                            opacity: 0.28,
-                                        },
-                                    }}
-                                />
-                                <div className={styles.PlayerTimelineText}>
-                                    <span>{formatTime(playerData.position)}</span>
-                                    <span>{formatTime(playerData.duration)}</span>
+                    </div>
+
+                    <div
+                        className="flex-1 w-full xl:w-auto bg-active flex items-center gap-4 nextborder h-20 rounded-xl px-4 py-2">
+                        <p className="w-10 h-10 rounded-full bg-white hover:bg-gray-300 cursor-pointer flex items-center justify-center"
+                           onClick={() => setPlayerData({
+                               ...playerData,
+                               playing: !playerData.playing
+                           })}>
+                            <FontAwesomeIcon icon={playerData.playing ? faPause : faPlay}
+                                             className="text-lg text-active aspect-square"/>
+                        </p>
+                        <div className="flex-1">
+                            <p className="flex items-center gap-2">
+                                <span
+                                    className="text-ellipsis overflow-hidden text-nowrap max-w-40 xl:max-w-lg">{playerData.title}</span>
+                                <span className="bg-btn rounded text-sm px-1.5">ID {playerData.id}</span>
+                            </p>
+                            <p className="text-xs text-gray-300">{playerData.artist}</p>
+                            <div className="flex items-center gap-4 -mr-2">
+                                <Slider className="m-0 flex-1" value={playerData.position} min={0} step={1}
+                                        max={playerData.duration}
+                                        onChange={(val) => playerRef.current.seekTo(val)} tooltip={{
+                                    formatter: formatTime,
+                                    placement: "bottom"
+                                }}/>
+                                <div className="flex items-center gap-2 w-24 nextborder rounded-lg px-2 py-1">
+                                    <FontAwesomeIcon icon={faVolumeLow}/>
+                                    <Slider className="m-0 flex-1 mr-1" value={playerData.volume} min={0} step={1}
+                                            max={100}
+                                            onChange={(val) => setPlayerData({...playerData, volume: val})} tooltip={{
+                                        formatter: val => `${val}%`,
+                                        placement: "bottom"
+                                    }}/>
                                 </div>
                             </div>
-                            <div className={styles.PlayerVolumeBox}>
-                                <VolumeUpRounded />
-                                <Slider
-                                    aria-label="Volume"
-                                    defaultValue={100}
-                                    value={playerData.volume}
-                                    max={100}
-                                    onChange={(_,val)=>setPlayerData({...playerData, volume: val})}
-                                    sx={{
-                                        color: '#fff',
-                                        marginLeft:".5rem",
-                                        '& .MuiSlider-track': {
-                                            border: 'none',
-                                        },
-                                        '& .MuiSlider-thumb': {
-                                            width: 16,
-                                            height: 16,
-                                            backgroundColor: '#fff',
-                                            '&:before': {
-                                                boxShadow: '0 4px 8px rgba(0,0,0,0.4)',
-                                            },
-                                            '&:hover, &.Mui-focusVisible, &.Mui-active': {
-                                                boxShadow: 'none',
-                                            },
-                                        },
-                                    }}
-                                />
-                            </div>
                         </div>
-
                     </div>
                 </div>
 
 
-
-
-                <div ref={r=>refs.current["songlist"]=r} className={styles.CardBox} style={{marginTop:"2rem"}}>
-                    <div className={styles.MusicSearchBox}>
-                        <div className={styles.MusicSearchSlick}>
-                            <ClickAwayListener onClickAway={()=>setSortShow(false)}>
+                <div className="mt-4 flex flex-col gap-4 rounded-xl bg-active nextborder p-4 w-full xl:w-2/3">
+                    <div className="flex flex-col xl:flex-row items-center gap-2">
+                        <Select value={sortMode} options={[
+                            {
+                                label: <span className="flex items-center gap-2">
+                                    <FontAwesomeIcon icon={faArrowDownAZ}/>
+                                    По алфавиту
+                                </span>, value: "alpha"
+                            },
+                            {
+                                label: <span className="flex items-center gap-2">
+                                    <FontAwesomeIcon icon={faArrowDown19}/>
+                                    По ID
+                                </span>, value: "id"
+                            },
+                            {
+                                label: <span className="flex items-center gap-2">
+                                    <FontAwesomeIcon icon={faArrowDownWideShort}/>
+                                    По загрузкам
+                                </span>, value: "downloads"
+                            }
+                        ]} onChange={(val) => setSortMode(val)}/>
+                        <Input placeholder="Поиск" value={search} prefix={<FontAwesomeIcon icon={faSearch}/>}
+                               rootClassName="xl:w-64 "
+                               onChange={(e) => {
+                                   setSearch(e.target.value)
+                                   searchDebounced(e.target.value)
+                               }}/>
+                        <Pagination rootClassName="ml-auto" total={pageCount} current={page + 1}
+                                    onChange={(val) => setPage(val - 1)} showSizeChanger={false}/>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        {music && music.map((val, i) => (
+                            <div className="flex items-center rounded-lg py-2 px-4 gap-4 cursor-pointer hover:bg-btn"
+                                 key={i}
+                                 onClick={() => {
+                                     if (val.id === playerData.id) setPlayerData({
+                                         ...playerData,
+                                         playing: !playerData.playing
+                                     })
+                                     else setPlayerData({
+                                         ...playerData,
+                                         playing: true,
+                                         title: val.name,
+                                         artist: val.artist,
+                                         id: val.id,
+                                         src: val.url,
+                                         position: 0,
+                                         duration: 1
+                                     })
+                                 }}>
+                                <FontAwesomeIcon icon={faCompactDisc} className="text-4xl"/>
                                 <div>
-                            <Tooltip
-                                open={sortShow}
-                                disableFocusListener disableHoverListener disableTouchListener
-                                title={
-                                    <MenuList>
-                                        <MenuItem selected={false} style={{borderRadius:"4px", backgroundColor: (sortMode==="alpha"?"#0d6efd":"none")}}
-                                            onClick={()=>setSortMode("alpha")}>
-                                            <Button style={{color: "white"}} variant="text"
-                                                    startIcon={<FontAwesomeIcon icon={faArrowDownAZ} style={{height:"1.5rem"}}/>}>
-                                                {locale.get("sort")[0]}
-                                            </Button>
-                                        </MenuItem>
-                                        <MenuItem selected={false} style={{borderRadius:"4px", backgroundColor: (sortMode==="id"?"#0d6efd":"none")}}
-                                                  onClick={()=>setSortMode("id")}>
-                                            <Button style={{color: "white"}} variant="text"
-                                                    startIcon={<FontAwesomeIcon icon={faArrowDown19} style={{height:"1.5rem"}}/>}>
-                                                {locale.get("sort")[1]}
-                                            </Button>
-                                        </MenuItem>
-                                        <MenuItem selected={false} style={{borderRadius:"4px", backgroundColor: (sortMode==="downloads"?"#0d6efd":"none")}}
-                                                  onClick={()=>setSortMode("downloads")}>
-                                            <Button style={{color: "white"}} variant="text"
-                                                    startIcon={<FontAwesomeIcon icon={faArrowDownWideShort} style={{height:"1.5rem"}}/>}>
-                                                {locale.get("sort")[2]}
-                                            </Button>
-                                        </MenuItem>
-                                    </MenuList>
-                                }>
-                                <Button onClick={()=>setSortShow(!sortShow)} className={styles.SlimButton}
-                                style={{margin: "0 .5rem 0 0", color: "white"}}>
-                                    {sortMode==="alpha"&&<FontAwesomeIcon icon={faArrowDownAZ} style={{height:"1.5rem"}}/>}
-                                    {sortMode==="id"&&<FontAwesomeIcon icon={faArrowDown19} style={{height:"1.5rem"}}/>}
-                                    {sortMode==="downloads"&&<FontAwesomeIcon icon={faArrowDownWideShort} style={{height:"1.5rem"}}/>}
-                                    <KeyboardArrowDownIcon style={{height:"1rem"}} />
-                                </Button>
-                            </Tooltip>
+                                    <p className="text-ellipsis overflow-hidden text-nowrap max-w-40 xl:max-w-[64rem]">{val.name}</p>
+                                    <p className="text-sm text-gray-300 flex flex-col xl:flex-row xl:items-center gap-2">
+                                        {val.artist}
+                                        <p className="flex items-center gap-2">
+                                            <span
+                                                className="rounded px-1.5 text-xs bg-btn text-white">ID {val.id}</span>
+                                            <span className="rounded px-1.5 text-xs bg-btn text-white">
+                                            <FontAwesomeIcon icon={faDownload}/> {val.downloads}
+                                        </span>
+                                        </p>
+                                    </p>
                                 </div>
-                            </ClickAwayListener>
-
-                            <FruitThinField label={locale.get('search')}
-                                            value={search} onChange={(evt)=>setSearch(evt.target.value)}
-                                            InputProps={{
-                                                endAdornment: (
-                                                    <InputAdornment position="end">
-                                                        <IconButton edge="end" onClick={()=>searchMusic(sortMode)}>
-                                                            <Search />
-                                                        </IconButton>
-                                                    </InputAdornment>
-                                                )
-                                            }} />
-                        </div>
-                        <Pagination count={pageCount} page={page+1} onChange={(e,val)=>setPage(val-1)} shape="rounded" sx={{"& *": {color:"white !important"}}} />
-                    </div>
-                    <List>
-                        {music&&music.map((val,i)=>(
-                            <ListItem key={i} className={styles.hoverable} secondaryAction={
-                                <IconButton edge="end" onClick={()=>{
-                                    if (val.id===playerData.id) setPlayerData({...playerData, playing: !playerData.playing})
-                                    else setPlayerData({...playerData, playing: true,
-                                        title: val.name, artist: val.artist, id: val.id, src: val.url, position: 0, duration: 1})
-                                }} >
-                                    {(playerData.playing&&playerData.id===val.id)? <PauseRounded/> :<PlayArrowRounded/> }
-                                </IconButton>}>
-                                <ListItemAvatar>
-                                    <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg} style={{marginRight:"1rem", height:"3rem"}}/>
-                                </ListItemAvatar>
-                                <ListItemText primary={<>{val.name} <span className={styles.MusicPlayerID}>ID {val.id}</span></>}
-                                              secondary={<p style={{margin:0}}>{val.artist}</p>}/>
-                            </ListItem>
+                                <FontAwesomeIcon
+                                    icon={(playerData.playing && playerData.id === val.id) ? faPause : faPlay}
+                                    className="ml-auto"/>
+                            </div>
                         ))}
-
-                    </List>
+                    </div>
                 </div>
-            </PanelContent>
+
+               </PanelContent>
 
             <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                open={backdrop!="none"} onClick={()=>setBackdrop("none")}>
-                {backdrop==="add-ng" && <div className={styles.BackdropBox} style={{minWidth:"20rem",padding:".5rem"}} onClick={(e)=>e.stopPropagation()}>
-                    <div className={styles.UploadMusicBox}>
-                        <img src={LogoNG.src} />
-                        <h3>NewGrounds</h3>
-                    </div>
-                    <FruitThinField fullWidth label={locale.get("url")} value={musUrl.ng||''}
-                                    onChange={(evt)=>setMusUrl({...musUrl,ng:evt.target.value})} />
-                    <p style={{textAlign:"center"}}>{locale.get("oruse")[0]}<span className={styles.CodeBlock}>hal:ng:&lt;ID&gt;</span>{locale.get("oruse")[1]}</p>
-                    {musUploadData.id!==0 && <div className={styles.UploadTrackBox}>
-                        <div>
-                            <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg} style={{marginRight:"1rem", height:"3rem"}}/>
-                            <h3>ID: {musUploadData.id}</h3>
+                sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
+                open={backdrop != "none"} onClick={() => setBackdrop("none")}>
+                {backdrop === "add-ng" &&
+                    <div className={styles.BackdropBox} style={{minWidth: "20rem", padding: ".5rem"}}
+                         onClick={(e) => e.stopPropagation()}>
+                        <div className={styles.UploadMusicBox}>
+                            <img src={LogoNG.src}/>
+                            <h3>NewGrounds</h3>
                         </div>
-                        <p>{musUploadData.name} — {musUploadData.artist}</p>
+                        <FruitThinField fullWidth label={locale.get("url")} value={musUrl.ng || ''}
+                                        onChange={(evt) => setMusUrl({...musUrl, ng: evt.target.value})}/>
+                        <p style={{textAlign: "center"}}>{locale.get("oruse")[0]}<span
+                            className={styles.CodeBlock}>hal:ng:&lt;ID&gt;</span>{locale.get("oruse")[1]}</p>
+                        {musUploadData.id !== 0 && <div className={styles.UploadTrackBox}>
+                            <div>
+                                <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg}
+                                                 style={{marginRight: "1rem", height: "3rem"}}/>
+                                <h3>ID: {musUploadData.id}</h3>
+                            </div>
+                            <p>{musUploadData.name} — {musUploadData.artist}</p>
+                        </div>}
+                        <div className={styles.CardBottom}>
+                            <LoadingButton loading={loading} variant="contained" className={styles.cardButton}
+                                           style={{width: "100%", margin: "0"}}
+                                           onClick={() => addMusic("ng")}>{locale.get("upload")}</LoadingButton>
+                        </div>
                     </div>}
-                    <div className={styles.CardBottom}>
-                        <LoadingButton loading={loading} variant="contained" className={styles.cardButton} style={{width:"100%",margin:"0"}}
-                                       onClick={()=>addMusic("ng")}>{locale.get("upload")}</LoadingButton>
-                    </div>
-                </div>}
 
-                {backdrop==="add-yt" && <div className={styles.BackdropBox} style={{minWidth:"20rem",padding:".5rem"}} onClick={(e)=>e.stopPropagation()}>
-                    <div className={styles.UploadMusicBox}>
-                        <img src={LogoYT.src} />
-                        <h3>YouTube</h3>
-                    </div>
-                    <FruitThinField fullWidth label={locale.get("videolink")} value={musUrl.yt||''}
-                                    onChange={(evt)=>setMusUrl({...musUrl,yt:evt.target.value})} />
-                    <p style={{textAlign:"center"}}>{locale.get("oruse")[0]}<span className={styles.CodeBlock}>hal:yt:&lt;ID&gt;</span>{locale.get("oruse")[1]}</p>
-                    {musUploadData.id!==0 && <div className={styles.UploadTrackBox}>
-                        <div>
-                            <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg} style={{marginRight:"1rem", height:"3rem"}}/>
-                            <h3>ID: {musUploadData.id}</h3>
+                {backdrop === "add-yt" &&
+                    <div className={styles.BackdropBox} style={{minWidth: "20rem", padding: ".5rem"}}
+                         onClick={(e) => e.stopPropagation()}>
+                        <div className={styles.UploadMusicBox}>
+                            <img src={LogoYT.src}/>
+                            <h3>YouTube</h3>
                         </div>
-                        <p>{musUploadData.name} — {musUploadData.artist}</p>
+                        <FruitThinField fullWidth label={locale.get("videolink")} value={musUrl.yt || ''}
+                                        onChange={(evt) => setMusUrl({...musUrl, yt: evt.target.value})}/>
+                        <p style={{textAlign: "center"}}>{locale.get("oruse")[0]}<span
+                            className={styles.CodeBlock}>hal:yt:&lt;ID&gt;</span>{locale.get("oruse")[1]}</p>
+                        {musUploadData.id !== 0 && <div className={styles.UploadTrackBox}>
+                            <div>
+                                <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg}
+                                                 style={{marginRight: "1rem", height: "3rem"}}/>
+                                <h3>ID: {musUploadData.id}</h3>
+                            </div>
+                            <p>{musUploadData.name} — {musUploadData.artist}</p>
+                        </div>}
+                        <div className={styles.CardBottom}>
+                            <LoadingButton loading={loading} variant="contained" className={styles.cardButton}
+                                           style={{width: "100%", margin: "0"}}
+                                           onClick={() => addMusic("yt")}>{locale.get("upload")}</LoadingButton>
+                        </div>
                     </div>}
-                    <div className={styles.CardBottom}>
-                        <LoadingButton loading={loading} variant="contained" className={styles.cardButton} style={{width:"100%",margin:"0"}}
-                                       onClick={()=>addMusic("yt")}>{locale.get("upload")}</LoadingButton>
-                    </div>
-                </div>}
 
-                {backdrop==="add-dz" && <div className={styles.BackdropBox} style={{minWidth:"20rem",padding:".5rem"}} onClick={(e)=>e.stopPropagation()}>
-                    <div className={styles.UploadMusicBox}>
-                        <img src={LogoDZ.src} />
-                        <h3>Deezer</h3>
-                    </div>
-                    <FruitThinField fullWidth label={locale.get("url")} value={musUrl.dz||''}
-                                    onChange={(evt)=>setMusUrl({...musUrl,dz:evt.target.value})} />
-                    <p style={{textAlign:"center"}}>{locale.get("oruse")[0]} <span className={styles.CodeBlock}>hal:dz:&lt;ID&gt;</span>{locale.get("oruse")[1]}</p>
-                    {musUploadData.id!==0 && <div className={styles.UploadTrackBox}>
-                        <div>
-                            <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg} style={{marginRight:"1rem", height:"3rem"}}/>
-                            <h3>ID: {musUploadData.id}</h3>
+                {backdrop === "add-dz" &&
+                    <div className={styles.BackdropBox} style={{minWidth: "20rem", padding: ".5rem"}}
+                         onClick={(e) => e.stopPropagation()}>
+                        <div className={styles.UploadMusicBox}>
+                            <img src={LogoDZ.src}/>
+                            <h3>Deezer</h3>
                         </div>
-                        <p>{musUploadData.name} — {musUploadData.artist}</p>
+                        <FruitThinField fullWidth label={locale.get("url")} value={musUrl.dz || ''}
+                                        onChange={(evt) => setMusUrl({...musUrl, dz: evt.target.value})}/>
+                        <p style={{textAlign: "center"}}>{locale.get("oruse")[0]} <span
+                            className={styles.CodeBlock}>hal:dz:&lt;ID&gt;</span>{locale.get("oruse")[1]}</p>
+                        {musUploadData.id !== 0 && <div className={styles.UploadTrackBox}>
+                            <div>
+                                <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg}
+                                                 style={{marginRight: "1rem", height: "3rem"}}/>
+                                <h3>ID: {musUploadData.id}</h3>
+                            </div>
+                            <p>{musUploadData.name} — {musUploadData.artist}</p>
+                        </div>}
+                        <div className={styles.CardBottom}>
+                            <LoadingButton loading={loading} variant="contained" className={styles.cardButton}
+                                           style={{width: "100%", margin: "0"}}
+                                           onClick={() => addMusic("dz")}>{locale.get("upload")}</LoadingButton>
+                        </div>
                     </div>}
-                    <div className={styles.CardBottom}>
-                        <LoadingButton loading={loading} variant="contained" className={styles.cardButton} style={{width:"100%",margin:"0"}}
-                                       onClick={()=>addMusic("dz")}>{locale.get("upload")}</LoadingButton>
-                    </div>
-                </div>}
 
-                {backdrop==="add-vk" && <div className={styles.BackdropBox} style={{minWidth:"20rem",padding:".5rem"}} onClick={(e)=>e.stopPropagation()}>
-                    <div className={styles.UploadMusicBox}>
-                        <img src={LogoVK.src} />
-                        <h3>VK</h3>
-                    </div>
-                    <p style={{textAlign:"center"}}>{locale.get("bot")}</p>
-                    <p style={{textAlign:"center"}}>{locale.get("oruse")[0]}<span className={styles.CodeBlock}>hal:vk:&lt;ID&gt;</span>{locale.get("oruse")[1]}</p>
-                    {musUploadData.id!==0 && <div className={styles.UploadTrackBox}>
-                        <div>
-                            <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg} style={{marginRight:"1rem", height:"3rem"}}/>
-                            <h3>ID: {musUploadData.id}</h3>
+                {backdrop === "add-vk" &&
+                    <div className={styles.BackdropBox} style={{minWidth: "20rem", padding: ".5rem"}}
+                         onClick={(e) => e.stopPropagation()}>
+                        <div className={styles.UploadMusicBox}>
+                            <img src={LogoVK.src}/>
+                            <h3>VK</h3>
                         </div>
-                        <p>{musUploadData.name} — {musUploadData.artist}</p>
+                        <p style={{textAlign: "center"}}>{locale.get("bot")}</p>
+                        <p style={{textAlign: "center"}}>{locale.get("oruse")[0]}<span
+                            className={styles.CodeBlock}>hal:vk:&lt;ID&gt;</span>{locale.get("oruse")[1]}</p>
+                        {musUploadData.id !== 0 && <div className={styles.UploadTrackBox}>
+                            <div>
+                                <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg}
+                                                 style={{marginRight: "1rem", height: "3rem"}}/>
+                                <h3>ID: {musUploadData.id}</h3>
+                            </div>
+                            <p>{musUploadData.name} — {musUploadData.artist}</p>
+                        </div>}
+                        <div className={styles.CardBottom}>
+                            <LoadingButton loading={loading} variant="contained" className={styles.cardButton}
+                                           style={{width: "100%", margin: "0"}}
+                                           onClick={() => addMusic("vk")}
+                                           disabled>{locale.get("upload")}</LoadingButton>
+                        </div>
                     </div>}
-                    <div className={styles.CardBottom}>
-                        <LoadingButton loading={loading} variant="contained" className={styles.cardButton} style={{width:"100%",margin:"0"}}
-                                       onClick={()=>addMusic("vk")} disabled>{locale.get("upload")}</LoadingButton>
-                    </div>
-                </div>}
 
-                {backdrop==="add-db" && <div className={styles.BackdropBox} style={{minWidth:"20rem",padding:".5rem"}} onClick={(e)=>e.stopPropagation()}>
-                    <div className={styles.UploadMusicBox}>
-                        <img src={LogoDBox.src} />
-                        <h3>Dropbox</h3>
-                    </div>
-                    <FruitThinField fullWidth label={locale.get("filelink")} value={musUrl.db||''}
-                                    onChange={(evt)=>setMusUrl({...musUrl,db:evt.target.value})} />
-                    <p style={{textAlign:"center"}}>{locale.get("oruse")[0]}<span className={styles.CodeBlock}>&lt;URL&gt;</span>{locale.get("oruse")[1]}</p>
-                    {musUploadData.id!==0 && <div className={styles.UploadTrackBox}>
-                        <div>
-                            <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg} style={{marginRight:"1rem", height:"3rem"}}/>
-                            <h3>ID: {musUploadData.id}</h3>
+                {backdrop === "add-db" &&
+                    <div className={styles.BackdropBox} style={{minWidth: "20rem", padding: ".5rem"}}
+                         onClick={(e) => e.stopPropagation()}>
+                        <div className={styles.UploadMusicBox}>
+                            <img src={LogoDBox.src}/>
+                            <h3>Dropbox</h3>
                         </div>
-                        <p>{musUploadData.name} — {musUploadData.artist}</p>
+                        <FruitThinField fullWidth label={locale.get("filelink")} value={musUrl.db || ''}
+                                        onChange={(evt) => setMusUrl({...musUrl, db: evt.target.value})}/>
+                        <p style={{textAlign: "center"}}>{locale.get("oruse")[0]}<span
+                            className={styles.CodeBlock}>&lt;URL&gt;</span>{locale.get("oruse")[1]}</p>
+                        {musUploadData.id !== 0 && <div className={styles.UploadTrackBox}>
+                            <div>
+                                <FontAwesomeIcon icon={faCompactDisc} className={styles.bluesvg}
+                                                 style={{marginRight: "1rem", height: "3rem"}}/>
+                                <h3>ID: {musUploadData.id}</h3>
+                            </div>
+                            <p>{musUploadData.name} — {musUploadData.artist}</p>
+                        </div>}
+                        <div className={styles.CardBottom}>
+                            <LoadingButton loading={loading} variant="contained" className={styles.cardButton}
+                                           style={{width: "100%", margin: "0"}}
+                                           onClick={() => addMusic("db")}>{locale.get("upload")}</LoadingButton>
+                        </div>
                     </div>}
-                    <div className={styles.CardBottom}>
-                        <LoadingButton loading={loading} variant="contained" className={styles.cardButton} style={{width:"100%",margin:"0"}}
-                                       onClick={()=>addMusic("db")}>{locale.get("upload")}</LoadingButton>
-                    </div>
-                </div>}
 
             </Backdrop>
         </>
     )
 }
 
-MusicGD.RequireAuth=true
-
+MusicGD.RequireAuth = true
 
 
 const FruitThinField = styled(TextField)({
