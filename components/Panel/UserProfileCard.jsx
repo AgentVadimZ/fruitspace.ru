@@ -16,6 +16,7 @@ import useSWR, {mutate} from "swr";
 import {faKey} from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import Logo from "@/assets/ava.png"
+import {flushSync} from "react-dom";
 
 export default function UserProfileCard(props) {
 
@@ -29,7 +30,9 @@ export default function UserProfileCard(props) {
     const [backdrop, setBackdrop] = useState("none")
 
 
-    const {data:discord} = useSWR(`https://discordlookup.mesavirep.xyz/v1/user/${user.discord_id}`, async r=>fetch(r).then(r=>r.json()))
+    // const {data:discord} = useSWR(`https://discordlookup.mesavirep.xyz/v1/user/${user.discord_id}`, async r=>fetch(r).then(r=>r.json()))
+
+    const discord = null
 
     const [pwdResetData, setPwdResetData] = useState({
         current: "",
@@ -237,10 +240,12 @@ export default function UserProfileCard(props) {
             <div className="col-span-1 lg:col-span-2 flex flex-col lg:w-[30rem] bg-active glassb p-4 rounded-2xl">
                 <div className="flex flex-col items-center gap-4 lg:flex-row">
                     <p className="text-nowrap text-sm">Отображаемое имя</p>
-                    <Input value={user.name} onChange={(evt)=>{setUser({
+                    <Input value={user.name} onChange={(evt)=>flushSync(()=>{
+                        setUser({
                         ...user,
-                        name: evt.target.value.replaceAll(/[^a-zA-Z]/g,'')
-                    })}} />
+                        name: evt.target.value.replaceAll(/[^a-zA-Z0-9_.]/g,'')
+                        })
+                    })} />
                 </div>
 
                 <div className="flex items-center gap-2">

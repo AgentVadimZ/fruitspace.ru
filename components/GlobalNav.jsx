@@ -49,7 +49,8 @@ const links = [
         items: [
             {
                 text: "Документация",
-                link: "/docs",
+                // link: "/docs",
+                link: "https://fruitspace.gitbook.io/gdps_docs",
                 icon: faLayerGroup
             },
             {
