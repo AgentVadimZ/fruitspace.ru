@@ -1,10 +1,10 @@
-import GlobalHead from "../../../components/GlobalHead";
-import GlobalNav from "../../../components/GlobalNav";
-import PanelSideNav from "../../../components/PanelSideNav";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import PanelSideNav from "@/components/PanelSideNav";
 import toast, {Toaster} from "react-hot-toast";
-import PanelContent from "../../../components/Global/PanelContent";
-import useLocale, {useGlobalLocale} from "../../../locales/useLocale";
-import useFiberAPI from "../../../fiber/fiber";
+import PanelContent from "@/components/Global/PanelContent";
+import useLocale, {useGlobalLocale} from "@/locales/useLocale";
+import useFiberAPI from "@/fiber/fiber";
 import useSWR from "swr";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

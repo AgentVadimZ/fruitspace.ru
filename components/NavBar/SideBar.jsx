@@ -16,8 +16,8 @@ export default function SideBar(props) {
                 {props.children}
             </SideBarContext.Provider>
             <li className={`h-[calc(var(--nav-height)*2/3)] mt-auto mb-2 ml-[calc(var(--nav-height)*1/6)] overflow-hidden
-            hover:bg-[var(--btn-hover)] cursor-pointer transition-all duration-150 rounded-xl flex select-none
-            items-center ${!isOpen&&"bg-[var(--btn-color)]"} ${isOpen?"w-[calc(100%-var(--nav-height)*1/3)]":"w-[calc(var(--nav-height)*2/3)]"}`}
+            hover:bg-btn cursor-pointer transition-all duration-150 rounded-xl flex select-none
+            items-center ${!isOpen&&"bg-subtle"} ${isOpen?"w-[calc(100%-var(--nav-height)*1/3)]":"w-[calc(var(--nav-height)*2/3)]"}`}
             onClick={()=>setOpen(!isOpen)}>
                 <span className="flex aspect-square h-full justify-center items-center">
                     <FontAwesomeIcon icon={faBars} />

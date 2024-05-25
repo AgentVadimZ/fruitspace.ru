@@ -1,17 +1,16 @@
-import GlobalHead from "../../components/GlobalHead";
-import GlobalNav from "../../components/GlobalNav";
-import PanelSideNav from "../../components/PanelSideNav";
-import PanelContent from "../../components/Global/PanelContent";
-import useLocale, {useGlobalLocale} from "../../locales/useLocale";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import PanelSideNav from "@/components/PanelSideNav";
+import PanelContent from "@/components/Global/PanelContent";
+import useLocale, {useGlobalLocale} from "@/locales/useLocale";
 import {Input, Form, Menu, Button, Select, Checkbox, List, Modal, Pagination} from "antd";
 import {faCircleCheck, faClock, faCopy, faDownload} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import toast, {Toaster} from "react-hot-toast";
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import SettingsIcon from "@/assets/icons/panel_settings.svg"
-import {faHeart} from "@fortawesome/free-solid-svg-icons/faHeart";
 import Link from "next/link";
-import useFiberAPI from "../../fiber/fiber";
+import useFiberAPI from "@/fiber/fiber";
 import {useEffect, useState} from "react";
 import useSWR, {mutate} from "swr";
 

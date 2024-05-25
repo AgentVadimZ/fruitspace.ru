@@ -1,27 +1,27 @@
-import GlobalHead from "../../../components/GlobalHead";
+import GlobalHead from "@/components/GlobalHead";
 import toast, {Toaster} from "react-hot-toast";
-import PanelContent from "../../../components/Global/PanelContent";
-import GlobalGDPSNav from "../../../components/UserZone/GlobalGDPSNav";
-import GDPSNavBar from "../../../components/UserZone/GDPSSIdeBar";
+import PanelContent from "@/components/Global/PanelContent";
+import GlobalGDPSNav from "@/components/UserZone/GlobalGDPSNav";
+import GDPSNavBar from "@/components/UserZone/GDPSSIdeBar";
 import {useEffect, useState} from "react";
-import {useRouter} from "next/router";
-import starImg from "../../../assets/gd/star.png"
-import cpImg from "../../../assets/gd/cp.png"
-import ucoinImg from "../../../assets/gd/browncoin.png"
-import coinImg from "../../../assets/gd/silvercoin.png"
-import diamondsImg from "../../../assets/gd/diamond.png"
-import orbsImg from "../../../assets/gd/orbs.png"
-import demonImg from "../../../assets/gd/demon.png"
-import playImg from "../../../assets/gd/play.png"
-import useFiberAPI from "../../../fiber/fiber";
-import {getBrowserLocale} from "../../../components/Hooks";
-import useLocale from "../../../locales/useLocale";
+import starImg from "@/assets/gd/star.png"
+import cpImg from "@/assets/gd/cp.png"
+import ucoinImg from "@/assets/gd/browncoin.png"
+import coinImg from "@/assets/gd/silvercoin.png"
+import diamondsImg from "@/assets/gd/diamond.png"
+import orbsImg from "@/assets/gd/orbs.png"
+import demonImg from "@/assets/gd/demon.png"
+import playImg from "@/assets/gd/play.png"
+import useFiberAPI from "@/fiber/fiber";
+import {getBrowserLocale} from "@/components/Hooks";
+import useLocale from "@/locales/useLocale";
 import {Backdrop, TextField} from "@mui/material";
 import {styled} from "@mui/system";
+import {Button} from "antd";
 
 export default function FrontPage(props) {
 
-    const router = useRouter()
+    const router = props.router
 
     const srvid = router.query.srvid
     const [srv, setSrv] = useState({})
@@ -139,11 +139,11 @@ export default function FrontPage(props) {
     return <>
         <GlobalHead title={srv.srv_name}/>
         <GlobalGDPSNav name={srv.srv_name} icon={srv.icon} users={tokens} />
-        <GDPSNavBar music={srv.plan>1}/>
+        <GDPSNavBar plan={srv.plan}/>
         <Toaster/>
         {user.uname && <PanelContent>
             <div>
-                <div className="bg-[var(--subtle-color)] p-2 rounded-xl flex flex-col w-fit">
+                <div className="bg-active nextborder p-2 rounded-xl flex flex-col w-fit">
                     <h3 className="flex items-center mx-auto my-2">
                         {user.uname}
                         <span className="font-normal text-sm ml-2 px-2 py-0.5 rounded-md bg-[var(--btn-color)]">uid:{user.uid}</span>
@@ -211,13 +211,10 @@ export default function FrontPage(props) {
                         </span>
                     </div>
                 </div>
-                <div className="bg-[var(--subtle-color)] p-1 w-[available] flex flex-col rounded-xl mt-4">
-                    <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-base flex items-center m-1 justify-center h-8 rounded-lg flex-1"
-                       onClick={()=>setBackdrop("chusername")}>{locale.get('changeUsername')}</a>
-                    <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-base flex items-center m-1 justify-center h-8 rounded-lg flex-1"
-                       onClick={()=>setBackdrop("chemail")}>{locale.get('changeEmail')}</a>
-                    <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-base flex items-center m-1 justify-center h-8 rounded-lg flex-1"
-                       onClick={()=>setBackdrop("chpassword")}>{locale.get('changePassword')}</a>
+                <div className="bg-active nextborder p-2 w-[available] flex flex-col gap-2 rounded-xl mt-4">
+                    <Button onClick={()=>setBackdrop("chusername")} type="primary">Изменить юзернейм</Button>
+                    <Button onClick={()=>setBackdrop("chemail")} type="primary">Изменить почту</Button>
+                    <Button onClick={()=>setBackdrop("chpassword")} type="primary">Изменить пароль</Button>
                 </div>
             </div>
             <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -232,7 +229,7 @@ export default function FrontPage(props) {
                         onChange={(evt)=>setCreds({...creds, uname: evt.target.value})}
                         className="mb-1"
                     />
-                    <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-lg flex items-center justify-center h-12 rounded-xl flex-1 mt-1"
+                    <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] text-lg flex items-center justify-center h-12 rounded-xl flex-1 mt-1"
                        onClick={()=>changeLogin()}>{locale.get('change')}</a>
                 </div>}
                 {backdrop==="chemail" && <div className="bg-[var(--subtle-color)] p-2 rounded-xl"
@@ -244,7 +241,7 @@ export default function FrontPage(props) {
                         onChange={(evt)=>setCreds({...creds, email: evt.target.value})}
                         className="mb-1"
                     />
-                    <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-lg flex items-center justify-center h-12 rounded-xl flex-1 mt-1"
+                    <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] text-lg flex items-center justify-center h-12 rounded-xl flex-1 mt-1"
                        onClick={()=>changeEmail()}>{locale.get('change')}</a>
                 </div>}
                 {backdrop==="chpassword" && <div className="bg-[var(--subtle-color)] p-2 rounded-xl"
@@ -256,7 +253,7 @@ export default function FrontPage(props) {
                     onChange={(evt)=>setCreds({...creds, password: evt.target.value})}
                     className="mb-1"
                 />
-                <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] block text-lg flex items-center justify-center h-12 rounded-xl flex-1 mt-1"
+                <a className="hover:bg-blue-800 cursor-pointer bg-[var(--primary-color)] text-lg flex items-center justify-center h-12 rounded-xl flex-1 mt-1"
                    onClick={()=>changePassword()}>{locale.get('change')}</a>
             </div>}
 

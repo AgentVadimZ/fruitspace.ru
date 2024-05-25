@@ -1,15 +1,15 @@
-import GlobalHead from "../../../components/GlobalHead";
-import GlobalNav from "../../../components/GlobalNav";
-import useLocale, {useGlobalLocale} from "../../../locales/useLocale";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import useLocale, {useGlobalLocale} from "@/locales/useLocale";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
 import {styled} from "@mui/system";
 import {Button, Backdrop, MenuItem, Switch, TextField} from "@mui/material";
 import {useEffect, useState} from "react";
-import {TabsList, TabPanel, Tab} from "../../../components/Global/Tab";
+import {TabsList, TabPanel, Tab} from "@/components/Global/Tab";
 import {Form, Input, Select} from "antd";
-import useFiberAPI from "../../../fiber/fiber";
+import useFiberAPI from "@/fiber/fiber";
 import semver from "semver";
-import BackgroundMC from "../../../assets/MCOrderBG.png"
+import BackgroundMC from "@/assets/MCOrderBG.png"
 import toast, {Toaster} from "react-hot-toast";
 
 export default function OrderMC(props){
@@ -82,7 +82,7 @@ export default function OrderMC(props){
                 <GlobalHead title={localeGlobal.get('navName')}/>
                 <GlobalNav mainpage router={props.router}/>
                 <Toaster />
-                <p className="text-center color-white pt-2 text-xl">Создание нового Minecraft сервера</p>
+                <p className="text-center color-white pt-2 text-xl mb-4">Создание нового Minecraft сервера</p>
                 <div className="grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mx-auto w-11/12 lg:w-3/4">
                     <TariffCard tariffData={tariffData} main setBackdrop={setBackdrop} setTariff={setTariff} />
                     <ConfigCard config={config} setConfig={setConfig} cores={cores} versions={versions} />
@@ -130,7 +130,7 @@ OrderMC.RequireAuth = true
 
 
 const TariffCard = ({tariffData, main, setBackdrop, setTariff}) => {
-    return <div className="glassb flex flex-col relative bg-[var(--subtle-color)] p-4 rounded-xl group hover:cursor-pointer nohighlight"
+    return <div className="glassb flex flex-col gap-2 relative bg-active p-4 rounded-xl group hover:cursor-pointer nohighlight"
                 onClick={() => {
                     setBackdrop(main?"tariff":"none")
                     if(!main)
@@ -140,7 +140,7 @@ const TariffCard = ({tariffData, main, setBackdrop, setTariff}) => {
         <span className="text-xs rounded-md w-fit px-2 py-1 bg-[var(--btn-color)] group-hover:bg-[var(--btn-hover)] absolute top-2 right-2">
             {main?"Изменить":"Выбрать"}
         </span>
-        <p className="mt-0">Тариф</p>
+        <p className="mt-0 text-sm glassb rounded-lg w-fit px-2 py-1">Тариф</p>
         <p className="my-0 transtext bg-gradient-to-t from-red-300 to-blue-500 font-[Coolvetica] text-4xl text-transparent bg-clip-text text-white">
             {tariffData.title}
         </p>
@@ -153,21 +153,21 @@ const TariffCard = ({tariffData, main, setBackdrop, setTariff}) => {
         </div>
         <div className="flex items-center justify-between mt-auto">
             <span className="text-gray-300 text-xs">{tariffData.id}</span>
-            <p className="px-2 py-1 rounded-md bg-[var(--primary-color)] w-fit text-lg font-light my-0 ml-auto">{tariffData.price}₽/мес</p>
+            <p className="px-2 py-1 rounded-md bg-primary w-fit text-lg font-thin my-0 ml-auto">{tariffData.price}₽/мес</p>
         </div>
     </div>
 }
 
 const AdditionalCard = ({config, setConfig}) => {
-    return <div className="glassb flex flex-col relative bg-[var(--subtle-color)] p-4 rounded-xl group">
+    return <div className="glassb flex flex-col gap-2 relative bg-active p-4 rounded-xl group">
 
-        <p className="mt-0">Доп. услуги</p>
+        <p className="mt-0 text-sm glassb rounded-lg w-fit px-2 py-1">Доп. услуги</p>
         <div className="flex flex-col gap-2">
             {/*<div className="rounded-lg bg-[var(--btn-color)] p-2 flex items-center justify-between h-12">*/}
             {/*    <span>Выделенный IP + Порт 25565</span>*/}
             {/*    <FruitSwitch checked={addPort} onChange={(e, val)=>setAddPort(val)} />*/}
             {/*</div>*/}
-            <div className="rounded-lg bg-[var(--btn-color)] p-2 flex items-center justify-between h-12">
+            <div className="rounded-lg bg-btn p-2 flex items-center justify-between h-12">
                 <span>Доп. место</span>
                 <span className="flex items-center gap-2 bg-black bg-opacity-[38%] p-1 rounded-full select-none">
                     <span className="nohighlight hover:cursor-pointer flex items-center justify-center rounded-full h-7 bg-[var(--btn-color)] hover:bg-[var(--btn-hover)] aspect-square"
@@ -190,10 +190,10 @@ const ConfigCard = ({config, setConfig, cores, versions}) => {
     const [form] = Form.useForm()
 
     return (
-        <div className="glassb flex flex-col relative bg-[var(--subtle-color)] p-4 rounded-xl group"
+        <div className="glassb flex flex-col gap-2 relative bg-active p-4 rounded-xl group"
                     onClick={() => {}}>
 
-            <p className="mt-0">Настройки</p>
+            <p className="mt-0 text-sm glassb rounded-lg w-fit px-2 py-1">Настройки</p>
             <div className="flex flex-col gap-2 h-full">
                 <Form labelCol={{span: 8}} wrapperCol={{span: 16}} form={form}>
                     <Form.Item label="Название сервера" name="srvName">

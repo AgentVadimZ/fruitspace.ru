@@ -1,6 +1,11 @@
-/** @type {import('next').NextConfig} */
+const withNextra = require('nextra')({
+  theme: 'nextra-theme-docs',
+  themeConfig: './theme.config.js'
+})
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
   reactStrictMode: true,
   swcMinify: true,
   webpack: (config)=>{
@@ -44,9 +49,4 @@ const nextConfig = {
   // ]
 }
 
-const sentryWebpackPluginOptions = {
-  silent: true
-};
-
-// module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions);
-module.exports = nextConfig
+module.exports = withNextra(nextConfig)

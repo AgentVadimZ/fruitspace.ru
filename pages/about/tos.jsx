@@ -1,14 +1,11 @@
-import GlobalHead from "../../components/GlobalHead";
-import GlobalNav from "../../components/GlobalNav";
-import styles from "../../components/Index.module.css";
-import Footer from "../../components/Global/Footer";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import styles from "@/components/Index.module.css";
+import Footer from "@/components/Global/Footer";
 import Link from "next/link";
-import {Chip} from "@mui/material";
-import EmailIcon from '@mui/icons-material/Email';
-import PhoneIcon from '@mui/icons-material/Phone';
-import ReceiptIcon from '@mui/icons-material/Receipt';
-import PersonIcon from '@mui/icons-material/Person';
-import {useGlobalLocale} from "../../locales/useLocale";
+import {useGlobalLocale} from "@/locales/useLocale";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEnvelope, faPhone, faReceipt, faUser} from "@fortawesome/free-solid-svg-icons";
 
 export default function Tos(props) {
 
@@ -16,13 +13,12 @@ export default function Tos(props) {
 
     return <>
         <GlobalHead title={localeGlobal.get('navName')}/>
-        {/*<Script src="//code.jivo.ru/widget/QDbblcMLJ0" strategy="lazyOnload"/>*/}
-        <GlobalNav />
+        <GlobalNav router={props.router} mainpage />
         <div className={styles.main}>
-            <div className={styles.innerMain}>
-                <h2>Пользовательское соглашение</h2>
-                <h3>1. Терминология</h3>
-                <ol className={styles.utable}>
+            <div className="flex flex-col gap-4 glassb bg-active rounded-2xl p-4 mb-8">
+                <h2 className="text-3xl text-center">Пользовательское соглашение</h2>
+                <h3 className="text-xl mt-4">1. Терминология</h3>
+                <ol className="list-decimal ml-8">
                     <li><strong>Хостинг</strong> - сервис FruitSpace.</li>
                     <li><strong>Клиент</strong> - физическое лицо, заключившее с
                         провайдером договор.
@@ -31,8 +27,8 @@ export default function Tos(props) {
                     </li>
                     <li><strong>Пользователь</strong> - игрок или клиент.</li>
                 </ol>
-                <h3>2. Условия и порядок предоставления услуг</h3>
-                <ol className={styles.utable}>
+                <h3 className="text-xl mt-4">2. Условия и порядок предоставления услуг</h3>
+                <ol className="list-decimal ml-8">
                     <li>Пользуясь услугами хостинга пользователь подтверждает факт
                         владения лицензионной копией игры для выбранного приватного сервера.
                     </li>
@@ -62,13 +58,16 @@ export default function Tos(props) {
                         запрещенной законодательством РФ, законом об авторских и смежных правах.
                     </li>
                 </ol>
-                <h3>3. Политика оплаты и возврата</h3>
-                <ol className={styles.utable}>
+                <h3 className="text-xl mt-4">3. Политика оплаты и возврата</h3>
+                <ol className="list-decimal ml-8">
                     <li>Исполнитель не платит НДС, так как применяет упрощённую систему
                         налогообложения.
                     </li>
-                    <li>Стоимость услуг указана на <Link href="/" passHref style={{color: "#0d6efd", textDecoration: "none"}}>Главной странице</Link>, а также на
-                    страницах услуг.</li>
+                    <li>Стоимость услуг указана на <Link href="/" passHref
+                                                         style={{color: "#0d6efd", textDecoration: "none"}}>Главной
+                        странице</Link>, а также на
+                        страницах услуг.
+                    </li>
                     <li>Клиенты оплачивают услуги по безналичному расчёту через
                         сторонние мерчант-сервисы «Qiwi» и «Ю.Касса».
                     </li>
@@ -82,8 +81,8 @@ export default function Tos(props) {
                         поддержку с темой «Возврат средств» по адресу support@fruitspace.one
                     </li>
                 </ol>
-                <h3>4. Ответственность сторон</h3>
-                <ol className={styles.utable}>
+                <h3 className="text-xl mt-4">4. Ответственность сторон</h3>
+                <ol className="list-decimal ml-8">
                     <li>Мы не несем ответственности за утерю данных, взлом или нарушение
                         работы приватного сервера в результате халатности пользователя.
                     </li>
@@ -94,18 +93,21 @@ export default function Tos(props) {
                     </li>
                     <li>Подсудность неурегулированных споров — суд Воронежской области.</li>
                 </ol>
-            </div>
 
-            <div className={styles.innerMain} >
-                <h3>Контакты</h3>
-                <div className={`${styles.contactBox} ${styles.MrWhite}`}>
-                    <Chip icon={<EmailIcon />} label="support@fruitspace.one" variant="outlined" />
-                    <span style={{padding:"0 .5rem"}} />
-                    <Chip icon={<PhoneIcon />} label="+2 597 064 (факс)" variant="outlined" />
-                    <span style={{padding:"0 .5rem"}} />
-                    <Chip icon={<ReceiptIcon />} label="ИНН: 366416455929" variant="outlined" />
-                    <span style={{padding:"0 .5rem"}} />
-                    <Chip icon={<PersonIcon />} label="ФИО: Фоминых Александр Михайлович" variant="outlined" />
+                <h3 className="text-xl text-center">Контакты</h3>
+                <div className="flex gap-4 justify-center text-sm">
+                    <p className="px-2 rounded-full glassb flex items-center gap-2">
+                        <FontAwesomeIcon icon={faEnvelope}/> support@fruitspace.one
+                    </p>
+                    <p className="px-2 rounded-full glassb flex items-center gap-2">
+                        <FontAwesomeIcon icon={faPhone}/> +2 597 064 (факс)
+                    </p>
+                    <p className="px-2 rounded-full glassb flex items-center gap-2">
+                        <FontAwesomeIcon icon={faReceipt}/> ИНН: 366416455929
+                    </p>
+                    <p className="px-2 rounded-full glassb flex items-center gap-2">
+                        <FontAwesomeIcon icon={faUser}/> ФИО: Фоминых Александр Михайлович
+                    </p>
                 </div>
             </div>
         </div>

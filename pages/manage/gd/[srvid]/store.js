@@ -1,9 +1,9 @@
 // noinspection ES6UnusedImports
 
-import GlobalHead from "../../../../components/GlobalHead";
-import GlobalNav from "../../../../components/GlobalNav";
-import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
-import PanelContent from "../../../../components/Global/PanelContent";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import GDNavBar from "@/components/Manage/NavBars/GDNavBar";
+import PanelContent from "@/components/Global/PanelContent";
 import {Router, useRouter} from "next/router";
 
 

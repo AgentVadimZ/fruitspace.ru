@@ -1,13 +1,13 @@
-import GlobalHead from "../../../../components/GlobalHead";
-import GlobalNav from "../../../../components/GlobalNav";
-import GDNavBar from "../../../../components/Manage/NavBars/GDNavBar";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import GDNavBar from "@/components/Manage/NavBars/GDNavBar";
 import {Toaster} from "react-hot-toast";
-import useLocale from "../../../../locales/useLocale";
-import PanelContent from "../../../../components/Global/PanelContent";
+import useLocale from "@/locales/useLocale";
+import PanelContent from "@/components/Global/PanelContent";
 import {Button, Alert, Input} from "antd";
 import {useRecoilState} from "recoil";
-import {userAtom} from "../../../../fiber/fiber.model";
-import PanelSideNav from "../../../../components/PanelSideNav";
+import {userAtom} from "@/fiber/fiber.model";
+import PanelSideNav from "@/components/PanelSideNav";
 
 
 export default function ManageMC(props) {

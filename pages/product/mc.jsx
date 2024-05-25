@@ -1,40 +1,44 @@
-import GlobalHead from "../../components/GlobalHead";
-import GlobalNav from "../../components/GlobalNav";
-import styles from "../../components/Index.module.css";
-import Footer from "../../components/Global/Footer";
-import BannerMC from "../../assets/BannerMC.png";
-import ProductHeader from "../../components/Global/ProductHeader";
+import GlobalHead from "@/components/GlobalHead";
+import GlobalNav from "@/components/GlobalNav";
+import styles from "@/components/Index.module.css";
+import Footer from "@/components/Global/Footer";
+import BannerMC from "@/assets/BannerMC.png";
+import ProductHeader from "@/components/Global/ProductHeader";
 import {
     ListItem,
     ListItemIcon,
     ListItemText,Accordion, AccordionSummary, AccordionDetails
 } from "@mui/material";
 
-import {TabsList, TabPanel, Tab} from "../../components/Global/Tab";
+import {TabsList, TabPanel, Tab} from "@/components/Global/Tab";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
 import {useState} from "react";
 
-import useLocale from "../../locales/useLocale";
+import useLocale from "@/locales/useLocale";
 
 import MemoryIcon from '@mui/icons-material/Memory';
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 import StorageIcon from '@mui/icons-material/Storage';
-import ProductCardMC from "../../components/Cards/ProductCardMC";
+import ProductCardMC from "@/components/Cards/ProductCardMC";
 import discordLogo from "@/assets/social/discord.png";
 import vkLogo from "@/assets/social/vkontakte.png";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import CoreVanilla from "../../assets/logos/minecraft.png"
-import CorePaper from "../../assets/logos/mccore/paper.png"
-import CoreSpigot from "../../assets/logos/mccore/spigot.png"
-import CoreFabric from "../../assets/logos/mccore/fabric.png"
-import CoreQuilt from "../../assets/logos/mccore/quilt.png"
-import CoreForge from "../../assets/logos/mccore/forge.png"
-import CoreSponge from "../../assets/logos/mccore/sponge.png"
-import CoreFolia from "../../assets/logos/mccore/folia.png"
-import CorePurpur from "../../assets/logos/mccore/purpur.png"
+import CoreVanilla from "@/assets/logos/minecraft.png"
+import CorePaper from "@/assets/logos/mccore/paper.png"
+import CoreSpigot from "@/assets/logos/mccore/spigot.png"
+import CoreFabric from "@/assets/logos/mccore/fabric.png"
+import CoreQuilt from "@/assets/logos/mccore/quilt.png"
+import CoreForge from "@/assets/logos/mccore/forge.png"
+import CoreSponge from "@/assets/logos/mccore/sponge.png"
+import CoreFolia from "@/assets/logos/mccore/folia.png"
+import CorePurpur from "@/assets/logos/mccore/purpur.png"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faDatabase, faFloppyDisk, faPuzzlePiece, faServer} from "@fortawesome/free-solid-svg-icons";
+import {faDatabase, faFloppyDisk, faPuzzlePiece, faServer, faZap} from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
+import BannerGD from "@/assets/BannerGD.png";
+import {Button} from "antd";
+import Script from "next/script";
 
 export default function MC(props) {
     const locale = useLocale(props.router)
@@ -44,18 +48,38 @@ export default function MC(props) {
         <>
             <GlobalHead title="Игровой хостинг"/>
             <GlobalNav mainpage />
+            <Script src="//code.jivo.ru/widget/QDbblcMLJ0" async></Script>
             <div className={styles.main}>
-            <ProductHeader img={BannerMC} title={locale.get('prodmc.title')} text={locale.get('prodmc.titletext')}
-                primaryText={locale.get('prodmc.titlecloud')} primaryLink="#cloud"/>
+
+                <div className="rounded-t-2xl h-112 relative select-none">
+                    <Image className="rounded-t-2xl" src={BannerMC} fill="object-fit" objectFit="cover" layout="fill"
+                           quality={100}/>
+                    <div
+                        className="absolute bottom-0 w-full p-8 bg-gradient-to-t from-dark from-15% to-transparent flex flex-col gap-2">
+                        <p className="text-3xl">Хостинг Minecraft</p>
+                        <p>
+                            Вам нужен стабильный сервер для игры с друзьями, или вы хотите создать крупную сеть серверов
+                            на несколько сотен человек? С FruitSpace это проще, чем вы думаете.
+                        </p>
+                        <div className="flex flex-col lg:flex-row gap-4">
+                            <Button className="uppercase font-semibold" type="primary" size="large"
+                                    icon={<FontAwesomeIcon icon={faZap}/>}
+                                    onClick={() => orderRef.current.scrollIntoView({behavior: 'smooth'})}>
+                                заказать на fruitspace
+                            </Button>
+                        </div>
+                    </div>
+                </div>
                 <h2 className="text-center mt-12 mb-8 text-white text-3xl">{locale.get('prodmc.tariffs')}</h2>
                 <p className="text-center text-lg">Ресурсы</p>
-                <TabsUnstyled value={tab} onChange={(e,val)=>setTab(val)} >
+                <TabsUnstyled value={tab} onChange={(e, val) => setTab(val)}>
                     <TabsList className="mx-auto text-center">
                         <Tab value="dynamic" className="!w-fit">Динамические</Tab>
                         <Tab value="static" className="!w-fit">Статические</Tab>
                     </TabsList>
                     <TabPanel value="dynamic" className="border-none !p-0">
-                        <div className="bg-[var(--active-color)] glassb rounded-xl flex mx-auto justify-around gap-4 lg:gap-2 flex-col w-5/6 lg:w-2/3 md:w-[61rem] md:flex-row p-2">
+                        <div
+                            className="bg-[var(--active-color)] glassb rounded-xl flex mx-auto justify-around gap-4 lg:gap-2 flex-col w-5/6 lg:w-2/3 md:w-[61rem] md:flex-row p-2">
                             <div className="flex flex-col flex-1 gap-2">
                                 <p className="text-lg text-center my-0 gap-2">🤔 Что это такое?</p>
                                 <span className="ml-2">
@@ -85,8 +109,9 @@ export default function MC(props) {
                             </div>
                         </div>
                         <div className={`${styles.productCardGrid} ${styles.productCardGridMC}`} id="cloud">
-                            {tariffs.dynamic.map((tariff, i)=>{
-                                return <ProductCardMC key={i} title={tariff.title} id={tariff.id} btnText={`${tariff.price}₽/мес`} link={`order/mc?t=d${i+1}`}>
+                            {tariffs.dynamic.map((tariff, i) => {
+                                return <ProductCardMC key={i} title={tariff.title} id={tariff.id}
+                                                      btnText={`${tariff.price}₽/мес`} link={`order/mc?t=d${i + 1}`}>
                                     <ListItem>
                                         <ListItemIcon><MemoryIcon/></ListItemIcon>
                                         <ListItemText primary={`${tariff.cpus} ${corePrint(tariff.cpus)}`}/>
@@ -101,14 +126,17 @@ export default function MC(props) {
                                     </ListItem>
                                 </ProductCardMC>
                             })}
-                            <img src="https://purepng.com/public/uploads/large/purepng.com-donutdonutdoughnutsweetsnack-1411527416158xueuy.png"
-                            className="saturate-0 opacity-10 w-80 hidden lg:block" aria-description="Не задавайте вопросы. Это пончик" />
+                            <img
+                                src="https://purepng.com/public/uploads/large/purepng.com-donutdonutdoughnutsweetsnack-1411527416158xueuy.png"
+                                className="saturate-0 opacity-10 w-80 hidden lg:block"
+                                aria-description="Не задавайте вопросы. Это пончик"/>
                         </div>
                     </TabPanel>
                     <TabPanel value="static" className="border-none !p-0">
                         <div className={`${styles.productCardGrid} ${styles.productCardGridMC}`} id="cloud">
-                            {tariffs.static.map((tariff, i)=>{
-                                return <ProductCardMC key={i} title={tariff.title} id={tariff.id} btnText={`${tariff.price}₽/мес`} link={`order/mc?t=s${i+1}`}>
+                            {tariffs.static.map((tariff, i) => {
+                                return <ProductCardMC key={i} title={tariff.title} id={tariff.id}
+                                                      btnText={`${tariff.price}₽/мес`} link={`order/mc?t=s${i + 1}`}>
                                     <ListItem>
                                         <ListItemIcon><MemoryIcon/></ListItemIcon>
                                         <ListItemText primary={`${tariff.cpus} ${corePrint(tariff.cpus)}`}/>
@@ -132,24 +160,26 @@ export default function MC(props) {
 
             <div className="flex flex-col lg:flex-row w-fit gap-4 mx-auto justify-around">
                 <div className="bg-[var(--active-color)] glassb rounded-xl mx-auto xl:m-0 w-80 relative">
-                    <div className="absolute top-0 left-0 w-full h-full rounded-xl flex justify-center items-center" style={{
-                        background: `repeating-linear-gradient(45deg, #00000088, #00000088 10px, var(--error-color) 10px, var(--error-color) 20px)`
-                    }}>
+                    <div className="absolute top-0 left-0 w-full h-full rounded-xl flex justify-center items-center"
+                         style={{
+                             background: `repeating-linear-gradient(45deg, #00000088, #00000088 10px, var(--error-color) 10px, var(--error-color) 20px)`
+                         }}>
                         <span className="text-lg">Временно недоступно</span>
                     </div>
                     <div className="flex flex-col m-2">
                         <div className="flex items-center">
-                            <FontAwesomeIcon icon={faServer} className="!w-12 !h-12" />
+                            <FontAwesomeIcon icon={faServer} className="!w-12 !h-12"/>
                             <p className="m-2">Выделенный IP + Порт 25565</p>
                         </div>
                         <div className="flex items-center justify-between">
                             <span className="text-xs text-gray-300">При заказе сервера</span>
-                            <p className=" my-0 px-2 py-1 rounded-lg bg-[var(--primary-color)] w-fit select-none">100 ₽/мес</p>
+                            <p className=" my-0 px-2 py-1 rounded-lg bg-[var(--primary-color)] w-fit select-none">100
+                                ₽/мес</p>
                         </div>
                     </div>
                 </div>
                 <div className="bg-[var(--active-color)] glassb rounded-xl mx-auto xl:m-0 w-80">
-                    <div className="flex flex-col m-2">
+                <div className="flex flex-col m-2">
                         <div className="flex items-center">
                             <FontAwesomeIcon icon={faDatabase} className="!w-12 !h-12" />
                             <p className="m-2">База данных MySQL</p>
