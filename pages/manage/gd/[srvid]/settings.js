@@ -496,7 +496,7 @@ export default function SettingsGD(props) {
                     </div>
                     <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
                         Управление
-                        <p className="flex items-center gap-2">
+                        <p className="flex flex-col lg:flex-row items-center gap-2">
                             <Button danger type="primary" onClick={() => setBackdrop("delete")}>
                                 Удалить GDPS
                             </Button>
