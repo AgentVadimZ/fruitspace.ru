@@ -46,7 +46,7 @@ export function DownloadCard(props) {
     const {data, isLoading, error} = useSWR(props.srvid, api.gdps_manage.fetchBuildStatus, {refreshInterval:3000})
 
     return (
-        <div ref={props.sref} className="flex flex-col p-4 rounded-xl bg-active glassb">
+        <div ref={props.sref} className="flex flex-col p2 lg:p-4 rounded-xl bg-active glassb">
             <Dropdown.Button type="primary" icon={<FontAwesomeIcon icon={faLink} />} menu={{
                 items: [
                     {
