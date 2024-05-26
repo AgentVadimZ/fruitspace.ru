@@ -369,8 +369,14 @@ export default function SettingsGD(props) {
                         }/>
                     </div>
                     <div className="flex flex-col lg:flex-row gap-4 items-end lg:items-center justify-end mt-auto">
-                        <Button onClick={()=>setBackdrop("dbreset")} danger>Сбросить пароль</Button>
-                        <Button onClick={()=>redirectToDB()} type="primary">Перейти в БД</Button>
+                        <Button onClick={() => setBackdrop("dbreset")} danger>Сбросить пароль</Button>
+                        <form method="post" action="https://db.fruitspace.one" target="_blank" ref={dbRef}>
+                            <input type="hidden" name="auth[server]" value="FruitSpace GDPS Database"/>
+                            <input type="hidden" name="auth[username]" value={"halgd_" + srv.Srv.srvid || ''}/>
+                            <input type="hidden" name="auth[password]" value={srv.Srv.db_password || ''}/>
+                            <input type="hidden" name="auth[db]" value={"gdps_" + srv.Srv.srvid || ''}/>
+                            <Button onClick={() => redirectToDB()} type="primary">Перейти в БД</Button>
+                        </form>
                     </div>
                 </div>
 

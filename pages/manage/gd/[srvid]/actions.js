@@ -6,14 +6,10 @@ import {useRouter} from "next/router";
 import styles from "@/components/Manage/GDManage.module.css"
 import {
     Avatar,
-    Badge, Button, ClickAwayListener,
+    Badge,
     List,
     ListItem,
     ListItemText,
-    MenuItem,
-    MenuList,
-    Pagination,
-    Tooltip
 } from "@mui/material";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -30,8 +26,8 @@ import {
 import {faContao} from "@fortawesome/free-brands-svg-icons";
 import {useEffect, useState} from "react";
 import Skeleton from '@mui/material/Skeleton';
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import useFiberAPI from "@/fiber/fiber";
+import {Select, Pagination, Empty} from "antd";
 
 
 const SqBadge = (text) => <span className="rounded-md bg-[var(--btn-color)] group-hover:bg-[var(--active-color)] px-2 py-1 ml-2">{text}</span>
@@ -251,94 +247,55 @@ export default function ActionsGD(props) {
             <GlobalNav />
             <GDNavBar />
             <PanelContent>
-                <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4" style={{marginBottom:"2rem"}}>
-                    <div className="flex items-center flex-col lg:flex-row gap-2">
-                        <h3 className="!my-0 !mx-4">Лог действий</h3>
-                        <div className="flex items-center rounded-lg bg-[var(--btn-color)] px-4 py-2">
-                            <FontAwesomeIcon icon={faGhost} className="mr-2" /> — действие системы
-                        </div>
-                        <div className="flex items-center rounded-lg bg-[var(--btn-color)] px-4 py-2">
-                            <FontAwesomeIcon icon={faStar} className="mr-2" /> — действие модератора
-                        </div>
+                <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4 mb-4 w-full lg:w-2/3">
+                    <p className="px-1.5 py-0.5 rounded-lg glassb w-fit">Лог действий</p>
+                    <div className="flex items-center rounded-lg px-1.5 py-0.5 bg-btn">
+                        <FontAwesomeIcon icon={faGhost} className="mr-2"/> — действие системы
+                    </div>
+                    <div className="flex items-center rounded-lg px-1.5 py-0.5 bg-btn">
+                        <FontAwesomeIcon icon={faStar} className="mr-2"/> — действие модератора
                     </div>
                 </div>
-                <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4" style={{width:"100%"}}>
-                    <div className="flex items-center">
-                        <ClickAwayListener onClickAway={()=>setSortShow(false)}>
-                            <div>
-                                <Tooltip
-                                    open={sortShow}
-                                    disableFocusListener disableHoverListener disableTouchListener
-                                    title={
-                                        <MenuList>
-                                            <MenuItem selected={false} style={{borderRadius:"4px", backgroundColor: (logFilter.type===-1?"#0d6efd":"none")}}
-                                                      onClick={()=>setSortMode(-1)}>
-                                                <Button style={{color: "white"}} variant="text"
-                                                        startIcon={<FontAwesomeIcon icon={faAsterisk} style={{height:"1.5rem"}}/>}>
-                                                    Все действия
-                                                </Button>
-                                            </MenuItem>
-                                            <MenuItem selected={false} style={{borderRadius:"4px", backgroundColor: (logFilter.type===0?"#0d6efd":"none")}}
-                                                      onClick={()=>setSortMode(0)}>
-                                                <Button style={{color: "white"}} variant="text"
-                                                        startIcon={<FontAwesomeIcon icon={faUserPlus} style={{height:"1.5rem"}}/>}>
-                                                    Регистрация
-                                                </Button>
-                                            </MenuItem>
-                                            <MenuItem selected={false} style={{borderRadius:"4px", backgroundColor: (logFilter.type===1?"#0d6efd":"none")}}
-                                                      onClick={()=>setSortMode(1)}>
-                                                <Button style={{color: "white"}} variant="text"
-                                                        startIcon={<FontAwesomeIcon icon={faUserCheck} style={{height:"1.5rem"}}/>}>
-                                                    Вход
-                                                </Button>
-                                            </MenuItem>
-                                            <MenuItem selected={false} style={{borderRadius:"4px", backgroundColor: (logFilter.type===2?"#0d6efd":"none")}}
-                                                      onClick={()=>setSortMode(2)}>
-                                                <Button style={{color: "white"}} variant="text"
-                                                        startIcon={<FontAwesomeIcon icon={faUserSlash} style={{height:"1.5rem"}}/>}>
-                                                    Удаление игрока
-                                                </Button>
-                                            </MenuItem>
-                                            <MenuItem selected={false} style={{borderRadius:"4px", backgroundColor: (logFilter.type===3?"#0d6efd":"none")}}
-                                                      onClick={()=>setSortMode(3)}>
-                                                <Button style={{color: "white"}} variant="text"
-                                                        startIcon={<FontAwesomeIcon icon={faBan} style={{height:"1.5rem"}}/>}>
-                                                    Баны
-                                                </Button>
-                                            </MenuItem>
-                                            <MenuItem selected={false} style={{borderRadius:"4px", backgroundColor: (logFilter.type===4?"#0d6efd":"none")}}
-                                                      onClick={()=>setSortMode(4)}>
-                                                <Button style={{color: "white"}} variant="text"
-                                                        startIcon={<FontAwesomeIcon icon={faGamepad} style={{height:"1.5rem"}}/>}>
-                                                    Действия с уровнями
-                                                </Button>
-                                            </MenuItem>
-                                        </MenuList>
-                                    }>
-                                    <Button onClick={()=>setSortShow(!sortShow)} className={styles.SlimButton}
-                                            style={{margin: "0 .5rem 0 0", color: "white"}}>
-                                        {logFilter.type===-1&&<FontAwesomeIcon icon={faAsterisk} style={{height:"1.5rem"}}/>}
-                                        {logFilter.type===0&&<FontAwesomeIcon icon={faUserPlus} style={{height:"1.5rem"}}/>}
-                                        {logFilter.type===1&&<FontAwesomeIcon icon={faUserCheck} style={{height:"1.5rem"}}/>}
-                                        {logFilter.type===2&&<FontAwesomeIcon icon={faUserSlash} style={{height:"1.5rem"}}/>}
-                                        {logFilter.type===3&&<FontAwesomeIcon icon={faBan} style={{height:"1.5rem"}}/>}
-                                        {logFilter.type===4&&<FontAwesomeIcon icon={faGamepad} style={{height:"1.5rem"}}/>}
-                                        <KeyboardArrowDownIcon style={{height:"1rem"}} />
-                                    </Button>
-                                </Tooltip>
-                            </div>
-                        </ClickAwayListener>
-                        <Pagination count={Logs.count} page={logFilter.page+1} onChange={(e,val)=>setLogFilter({...logFilter, page: val-1})} shape="rounded" sx={{"& *": {color:"white !important"}}} />
+                <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4 w-full lg:w-2/3">
+                    <div className="flex flex-col lg:flex-row items-center gap-2">
+                    <Select defaultValue={-1} options={[
+                            {
+                                value: -1,
+                                label: <span className="flex items-center gap-2">
+                                    <FontAwesomeIcon icon={faAsterisk} /> Все действия
+                                </span>,
+                            },
+                            {
+                                value: 0,
+                                label: <span className="flex items-center gap-2">
+                                    <FontAwesomeIcon icon={faUserPlus} /> Регистрация
+                                </span>,
+                            },
+                            {
+                                value: 1,
+                                label: <span className="flex items-center gap-2">
+                                    <FontAwesomeIcon icon={faUserCheck} /> Вход
+                                </span>,
+                            },
+                            {
+                                value: 3,
+                                label: <span className="flex items-center gap-2">
+                                    <FontAwesomeIcon icon={faUserSlash} /> Баны
+                                </span>,
+                            },
+                            {
+                                value: 4,
+                                label: <span className="flex items-center gap-2">
+                                    <FontAwesomeIcon icon={faGamepad} /> Действия с уровнями
+                                </span>,
+                            },
+                        ]} onChange={(val)=>setSortMode(val)} />
+                        <Pagination responsive pageSize={50} total={Logs.count*50} current={logFilter.page+1} showSizeChanger={false}
+                                    onChange={(val)=>setLogFilter({...logFilter, page: val-1})} />
                     </div>
-                    <List dense>
+                    <div className="flex flex-col gap-2">
                         {(Logs.results&&Logs.results.length>0)
-                            ?Logs.results.map((val,i)=>{
-                            //
-                            // console.log(val)
-                            // try {val.data = JSON.parse(val.data)}catch (e){}
-
-
-                            return (
+                            ?Logs.results.map((val,i)=>
                                 <ListItem key={i} className={`group ${styles.hoverable}`}>
                                     <ListItemAvatar>
                                         {GetActionBadge(val)}
@@ -346,18 +303,12 @@ export default function ActionsGD(props) {
                                     {GetActionText(val)}
                                 </ListItem>
                             )
-                        })
-                        :(
-                            <ListItem className={`group ${styles.hoverable}`}>
-                                <ListItemAvatar>
-                                    <Skeleton variant="circular" width={40} height={40} className="bg-[var(--btn-color)]"/>
-                                </ListItemAvatar>
-                                <ListItemText
-                                    primary={<Skeleton variant="text" className="bg-[var(--btn-color)] w-full"/>}
-                                    secondary={<Skeleton variant="text" className="bg-[var(--btn-color)] w-48"/>}/>
-                            </ListItem>
-                            )}
-                    </List>
+                            : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={<p>
+                                <p>Сейчас тут пусто</p>
+                                <span className="text-xs text-gray-300">Попробуйте зарегистрироваться на вашем GDPS</span>
+                            </p>} />
+                        }
+                    </div>
                 </div>
             </PanelContent>
         </>
