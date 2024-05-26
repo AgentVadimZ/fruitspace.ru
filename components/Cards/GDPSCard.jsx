@@ -24,7 +24,7 @@ export default function GDPSCard(props) {
     }
 
     return (
-        <div ref={props.sref} className="col-span-2 p-4 rounded-2xl flex gap-4 items-center bg-active glassb">
+        <div ref={props.sref} className="col-span-2 p-2 lg:p-4 rounded-2xl flex gap-4 items-center bg-active glassb">
             <img src={props.icon} className="rounded-lg h-20" />
             <div className="flex flex-col gap-1">
                 <p className="text-lg text-nowrap text-ellipsis overflow-hidden max-w-64">{props.name}</p>
@@ -73,7 +73,7 @@ export function DownloadCard(props) {
                 </p>
                 <div className="bg-active p-1 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
                                         relative z-10 flex items-center justify-between">
-                    {(data && data.message !== "") ? <span className="flex items-center justify-center h-8 gap-2">
+                    {(data && data.message !== "") ? <span className="flex items-center justify-center h-8 gap-2 text-sm">
                     <CircularProgress
                         variant="indeterminate"
                         disableShrink
@@ -85,7 +85,7 @@ export function DownloadCard(props) {
                                 strokeLinecap: 'round',
                             },
                         }}
-                        size={24}
+                        size={20}
                         thickness={6}
                     />
                         {data.message == "waiting" && "Ждем сборки"}

@@ -27,7 +27,7 @@ export default function ProgressCard(props) {
 
 
     return (
-        <div className="p-4 rounded-xl bg-active glassb h-36 flex flex-col">
+        <div className="p-2 lg:p-4 rounded-xl bg-active glassb h-36 flex flex-col">
             <div className="h-3 rounded-full" style={{backgroundColor: "var(--btn-color)"}}>
                 <div className="h-full rounded-full" style={{background: clr, width: width + "%"}}/>
             </div>
