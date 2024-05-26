@@ -233,6 +233,10 @@ span.swiper-pagination-bullet-active {
     }
 }
 
+.ultradanger div.ant-modal-content {
+    @apply !border-red-600 !border-2 !border-dashed;
+}
+
 
 /* ANIMATIONS */
 
