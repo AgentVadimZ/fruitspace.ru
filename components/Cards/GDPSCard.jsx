@@ -46,7 +46,7 @@ export function DownloadCard(props) {
     const {data, isLoading, error} = useSWR(props.srvid, api.gdps_manage.fetchBuildStatus, {refreshInterval:3000})
 
     return (
-        <div ref={props.sref} className="flex flex-col p2 lg:p-4 rounded-xl bg-active glassb">
+        <div ref={props.sref} className="flex flex-col p-2 lg:p-4 rounded-xl bg-active glassb">
             <Dropdown.Button type="primary" icon={<FontAwesomeIcon icon={faLink} />} menu={{
                 items: [
                     {
@@ -60,7 +60,7 @@ export function DownloadCard(props) {
             }} buttonsRender={(btns)=> {
                 btns[0] = <Button type="primary" className="w-full" onClick={()=>props.router.push(`https://gofruit.space/gdps/${props.srvid}`)}
                                   icon={<FontAwesomeIcon icon={faDownload} />}>
-                    <span className="!hidden lg:!inline">Скачать</span>
+                    <span className="!hidden xl:!inline">Скачать</span>
                 </Button>
                 return btns
             }}>

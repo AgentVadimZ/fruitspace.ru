@@ -208,7 +208,7 @@ const GetActionText = (data) => {
     }
 
     return (
-        <ListItemText
+        <ListItemText className="text-nowrap"
             primary={prim}
             secondary={<p style={{margin:"0 .5rem",fontSize:"10pt",color:"#cacad0"}}>{sec}</p>}/>
     )
@@ -293,7 +293,7 @@ export default function ActionsGD(props) {
                         <Pagination responsive pageSize={50} total={Logs.count*50} current={logFilter.page+1} showSizeChanger={false}
                                     onChange={(val)=>setLogFilter({...logFilter, page: val-1})} />
                     </div>
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2 overflow-y-auto">
                         {(Logs.results&&Logs.results.length>0)
                             ?Logs.results.map((val,i)=>
                                 <ListItem key={i} className={`group ${styles.hoverable}`}>
