@@ -249,7 +249,7 @@ export default function MusicGD(props) {
                                    setSearch(e.target.value)
                                    searchDebounced(e.target.value)
                                }}/>
-                        <Pagination rootClassName="ml-auto" total={pageCount} current={page + 1}
+                        <Pagination responsive rootClassName="lg:ml-auto" total={pageCount} current={page + 1}
                                     onChange={(val) => setPage(val - 1)} showSizeChanger={false}/>
                     </div>
                     <div className="flex flex-col gap-2">

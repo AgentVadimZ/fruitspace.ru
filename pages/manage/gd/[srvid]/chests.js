@@ -95,13 +95,13 @@ export default function ChestsGD(props) {
                                 Орбы
                             <span className="lg:flex-1 w-full"/>
                             от
-                            <InputNumber value={chestConfig.ChestSmallOrbsMin}
+                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestSmallOrbsMin}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestSmallOrbsMin: val
                                          })}/>
                             до
-                            <InputNumber value={chestConfig.ChestSmallOrbsMax}
+                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestSmallOrbsMax}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestSmallOrbsMax: val
@@ -112,13 +112,13 @@ export default function ChestsGD(props) {
                                 Алмазы
                             <span className="lg:flex-1 w-full"/>
                             от
-                            <InputNumber value={chestConfig.ChestSmallDiamondsMin}
+                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestSmallDiamondsMin}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestSmallDiamondsMin: val
                                          })}/>
                             до
-                            <InputNumber value={chestConfig.ChestSmallDiamondsMax}
+                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestSmallDiamondsMax}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestSmallDiamondsMax: val
@@ -129,13 +129,13 @@ export default function ChestsGD(props) {
                                 Ключи
                             <span className="lg:flex-1 w-full"/>
                             от
-                            <InputNumber value={chestConfig.ChestSmallKeysMin}
+                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestSmallKeysMin}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestSmallKeysMin: val
                                          })}/>
                             до
-                            <InputNumber value={chestConfig.ChestSmallKeysMax}
+                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestSmallKeysMax}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestSmallKeysMax: val
@@ -164,13 +164,13 @@ export default function ChestsGD(props) {
                                 Орбы
                             <span className="lg:flex-1 w-full"/>
                             от
-                            <InputNumber value={chestConfig.ChestBigOrbsMin}
+                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestBigOrbsMin}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestBigOrbsMin: val
                                          })}/>
                             до
-                            <InputNumber value={chestConfig.ChestBigOrbsMax}
+                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestBigOrbsMax}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestBigOrbsMax: val
@@ -181,13 +181,13 @@ export default function ChestsGD(props) {
                                 Алмазы
                             <span className="lg:flex-1 w-full"/>
                             от
-                            <InputNumber value={chestConfig.ChestBigDiamondsMin}
+                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestBigDiamondsMin}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestBigDiamondsMin: val
                                          })}/>
                             до
-                            <InputNumber value={chestConfig.ChestBigDiamondsMax}
+                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestBigDiamondsMax}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestBigDiamondsMax: val
@@ -198,13 +198,13 @@ export default function ChestsGD(props) {
                                 Ключи
                             <span className="lg:flex-1 w-full"/>
                             от
-                            <InputNumber value={chestConfig.ChestBigKeysMin}
+                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestBigKeysMin}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestBigKeysMin: val
                                          })}/>
                             до
-                            <InputNumber value={chestConfig.ChestBigKeysMax}
+                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestBigKeysMax}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestBigKeysMax: val

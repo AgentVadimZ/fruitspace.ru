@@ -7,30 +7,17 @@ import {useRouter} from "next/router";
 import styles from "@/components/Manage/GDManage.module.css"
 import {styled} from "@mui/system";
 import {
-    Backdrop,
     IconButton,
     InputAdornment,
     TextField,
 } from "@mui/material";
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemText from '@mui/material/ListItemText';
-import {AddPhotoAlternate, Restore} from "@mui/icons-material";
 import {useEffect, useRef, useState} from "react";
 import SaveIcon from '@mui/icons-material/Save';
 
-import discordLogo from '@/assets/social/discord.png'
-import vkLogo from '@/assets/social/vkontakte.png'
 import GDLablogo from '@/assets/logos/geometrydash.png'
 import GDLogo from '@/assets/logos/gd_icon.png'
 import toast, {Toaster} from "react-hot-toast";
-import {Alert} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import BackupBox from '@/assets/icons/backup_box.svg'
-import TabsUnstyled from "@mui/base/TabsUnstyled";
-import {Tab, TabsList} from "@/components/Global/TinyTab";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAndroid, faApple, faDiscord, faVk, faWindows} from "@fortawesome/free-brands-svg-icons";
 import useLocale, {useGlobalLocale} from "@/locales/useLocale";
@@ -38,11 +25,11 @@ import useFiberAPI from "@/fiber/fiber";
 import {
     faAlignCenter,
     faAlignLeft, faAlignRight, faCog,
-    faCopy,
+    faCopy, faImage,
     faMusic,
     faQuestion,
     faQuestionCircle,
-    faStar,
+    faStar, faTrash,
     faUpload,
     faUser
 } from "@fortawesome/free-solid-svg-icons";
@@ -122,14 +109,10 @@ export default function SettingsGD(props) {
 
     const dbRef = useRef()
 
-
-
     const locale = useLocale(props.router)
     const localeGlobal = useGlobalLocale(props.router)
 
     const ParseError = localeGlobal.get('funcParseErr')
-
-
 
     useEffect(()=>{
         if (srv.CoreConfig) {
@@ -154,7 +137,6 @@ export default function SettingsGD(props) {
         }
         srv.Srv&&setDiscordbot(srv.Srv.m_stat_history)
     },[srv])
-
 
     const redirectToDB = () => {
         dbRef.current?.requestSubmit()
@@ -347,7 +329,7 @@ export default function SettingsGD(props) {
             icon={<FontAwesomeIcon icon={faQuestion} />}
         />
         <PanelContent>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full xl:w-5/6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 w-full xl:w-5/6">
                 <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4 flex-1" ref={r => refs.current["db"] = r}>
                     <p className="rounded-md px-1.5 py-0.5 glassb w-fit">База данных</p>
                     <div className="flex gap-4 items-center">
@@ -391,7 +373,7 @@ export default function SettingsGD(props) {
                                 onChange={(val) => setSettings({...settings, topSize: val})}/>
                     </div>
                     {srv.Tariff && srv.Tariff.CustomMusic &&
-                        <div className="flex gap-4 items-center justify-between" ref={r => refs.current["topsize"] = r}>
+                        <div className="flex gap-4 items-center justify-between">
                             <p className="flex gap-2 items-center">
                                 <Popover arrow={false} overlayClassName="w-96 glassb rounded-lg"  title="Кастомная музыка" content={
                                     <p>Кастомная музыка из NewGrounds, YouTube, VK и др. добавляется через панель.<br/>
@@ -452,6 +434,9 @@ export default function SettingsGD(props) {
                                         description: {...settings.description, text: evt.target.value}
                                     })}} style={{textAlign: aligns[settings.description.align]}} />
                     <div className="flex flex-wrap gap-2 items-center justify-end mt-auto">
+                        <Popover overlayClassName="w-64" content="Используйте #players# и #levels# чтобы вставить текущее количество игроков и уровней">
+                            <FontAwesomeIcon icon={faQuestionCircle} />
+                        </Popover>
                         {srv.Tariff && srv.Tariff.GDLab.Enabled &&
                             <Button type="primary" className="bg-success hover:!bg-green-700"
                                     onClick={()=>setBackdrop("buildlab")}>🔨 BuildLab™</Button>}
@@ -496,13 +481,13 @@ export default function SettingsGD(props) {
                     </div>
                     <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
                         Управление
-                        <p className="flex flex-col lg:flex-row items-center gap-2">
+                        <p className="flex items-center gap-2">
                             <Button danger type="primary" onClick={() => setBackdrop("delete")}>
                                 Удалить GDPS
                             </Button>
                             {srv.Tariff && srv.Tariff.Backups &&
                                 <Button onClick={()=>setBackdrop("backups")}>
-                                Резервные копии
+                                Бэкапы
                             </Button>
                             }
                         </p>
@@ -589,171 +574,114 @@ export default function SettingsGD(props) {
             </div>
         </Modal>
 
-        <Modal title="BuildLab" open={backdrop === "buildlab"}
+        <Modal closeIcon={false} title={
+            <div className="flex items-center gap-4 justify-between">
+                <div className="flex items-center gap-2">
+                    <img className="w-16" src={GDLablogo.src}/>
+                    <div>
+                        <p className="text-xl rainbow font-semibold">FruitSpace</p>
+                        <p className="text-xs">GeometryLab™</p>
+                    </div>
+                </div>
+                <Select labelRender={item => `GD ${item.value}`} options={[
+                    {value: "1.9"},
+                    {value: "2.0"},
+                    {value: "2.1"},
+                    {value: "2.2"}
+                ]} value={buildlab.version} onChange={(val) => setBuildlab({...buildlab, version: val})}/>
+            </div>
+        } open={backdrop === "buildlab"}
                onCancel={() => setBackdrop("none")} onOk={goBuildLab}
                cancelText="Отмена" okText="Запустить сборку">
-            <div className={styles.BackdropBox}
-                                           style={{position:"relative",padding:"0 .5rem .5rem .5rem "}} onClick={(e)=>e.stopPropagation()}>
-                <TabsUnstyled value={buildlab.version} onChange={(e,val)=>setBuildlab({
-                    ...buildlab, version: val, ios: (val==="2.2"?false:buildlab.ios)
-                })} className={styles.floatSelector}>
-                    <TabsList>
-                        <Tab value="2.1">2.1</Tab>
-                        <Tab value="2.2">2.2</Tab>
-                    </TabsList>
-                </TabsUnstyled>
-
-                <h3 className={styles.buildlabBrand}>
-                    <img src={GDLablogo.src}/>
-                    <div><h5>FruitSpace</h5><h3>GeometryLab™</h3></div>
-                </h3>
-                <div className={styles.buildlabTop}>
-                    <img src={srvIcon} />
-                    <input type="file" accept=".png, .jpg, .jpeg" hidden ref={uploadRef} onChange={changeIcon}/>
-                    <div>
-                        {srv.Tariff && srv.Tariff.GDLab.Enabled
-                            && <FruitThinField fullWidth label={locale.get('buildLab')[0]} value={buildlab.srvname||srv.Srv.srv_name} onChange={(evt)=>setBuildlab({
-                                ...buildlab, srvname: evt.target.value
-                            })} style={{marginBottom: ".5rem"}} InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton edge="end" onClick={()=>{setBuildlab({...buildlab, srvname: ""})}}>
-                                            <Restore/>
-                                        </IconButton>
-                                    </InputAdornment>
-                                )
-                            }}/>}
-
-                        {srv.Tariff && srv.Tariff.GDLab.Icons && <div style={{width:"100%"}}>
-                            <IconButton className={`${styles.SquareIcon} ${styles.SquareIconGreen}`}
-                                        onClick={()=>uploadRef.current.click()}>
-                                <AddPhotoAlternate/></IconButton>
-                            <IconButton className={`${styles.SquareIcon} ${styles.SquareIconRed}`}
-                                        onClick={()=>setBuildlab({...buildlab, icon: "gd_default.png"})}>
-                                <DeleteIcon/></IconButton>
-
-                        </div>}
+            <div className="flex flex-col gap-4">
+                <div className="glassb p-2 rounded-xl flex gap-2 items-center">
+                    <img className="w-24 rounded-lg" src={srvIcon}/>
+                    <div className="flex flex-col gap-2 p-2">
+                        <Input value={buildlab.srvname || srv.Srv.srv_name} onChange={(evt) => setBuildlab({
+                            ...buildlab, srvname: evt.target.value
+                        })} placeholder="Название GDPS"/>
+                        <div className="flex items-center gap-2 text-xl">
+                            <Button type="primary" icon={<FontAwesomeIcon icon={faImage}/>}
+                                    onClick={() => uploadRef.current.click()}/>
+                            <Button icon={<FontAwesomeIcon icon={faTrash}/>}
+                                    onClick={() => setBuildlab({...buildlab, icon: "gd_default.png"})}/>
+                        </div>
+                        <input type="file" accept=".png, .jpg, .jpeg" hidden ref={uploadRef} onChange={changeIcon}/>
                     </div>
-
                 </div>
+                <div className="flex flex-col gap-4 rounded-xl glassb p-4 mt-4 relative">
+                    <p className="flex gap-4 items-center absolute left-2 -top-4 bg-active rounded-lg glassb px-1.5 py-0.5">
+                        Установщики
+                    </p>
 
-                <fieldset className={styles.SettingsFieldset}>
-                    <legend>{locale.get('buildLab')[7]}</legend>
-                    <div className={styles.SettingsPlato}>
-                        <p><FontAwesomeIcon icon={faWindows}/> Windows</p>
-                        <FruitSwitch checked={buildlab.windows} onChange={(e, val) => setBuildlab({
+                    <div className="flex gap-4 items-center justify-between">
+                        <p className="flex items-center gap-2">
+                            <FontAwesomeIcon icon={faWindows}/> Windows
+                        </p>
+                        <Switch checked={buildlab.windows} onChange={(val) => setBuildlab({
                             ...buildlab, windows: val,
                         })}/>
                     </div>
-                    <div className={styles.SettingsPlato}>
-                        <p>
-                            <FontAwesomeIcon icon={faAndroid}/> Android</p>
-                        <FruitSwitch checked={buildlab.android} onChange={(e, val)=>setBuildlab({
+                    <div className="flex gap-4 items-center justify-between">
+                        <p className="flex items-center gap-2">
+                            <FontAwesomeIcon icon={faAndroid}/> Android
+                        </p>
+                        <Switch checked={buildlab.android} onChange={(val) => setBuildlab({
                             ...buildlab, android: val,
                         })}/>
                     </div>
-                    {srv.Tariff && srv.Tariff.GDLab.IOS && <div className={styles.SettingsPlato}>
-                        <p><FontAwesomeIcon icon={faApple}/> iOS</p>
-                        <FruitSwitch checked={buildlab.ios} onChange={(e, val)=>setBuildlab({
+                    <div className="flex gap-4 items-center justify-between">
+                        <p className="flex items-center gap-2">
+                            <FontAwesomeIcon icon={faApple}/> iOS
+                        </p>
+                        <Switch checked={buildlab.ios} onChange={(val) => setBuildlab({
                             ...buildlab, ios: val,
                         })}/>
-                    </div>}
-                </fieldset>
-
-                {buildlab.textures!=="default"&& <Alert severity="warning" style={{backgroundColor:"#ed6c02",color:"#fff",marginTop:"1rem"}}>
-                    {locale.get('buildLab')[2]}</Alert>}
-
-                {srv.Tariff && srv.Tariff.GDLab.Textures
-                    &&<div className={styles.SettingsPlato} style={{margin:"0 .5rem .5rem .5rem"}}>
-                        <input type="file" accept=".fpack" hidden ref={uploadTexturesRef} onChange={changeTextures}/>
-
-                        <p>{locale.get('buildLab')[3]} (<span style={{color:"var(--primary-color)"}}>{buildlab.textures==="default"?locale.get('buildLab')[4]:buildlab.textures}</span>)</p>
-                        <div style={{display:"flex"}}>
-                            <IconButton className={`${styles.SquareIcon} ${styles.SquareIconGreen}`}
-                                        onClick={()=>uploadTexturesRef.current.click()}>
-                                <CloudUploadIcon/></IconButton>
-                            <IconButton className={`${styles.SquareIcon} ${styles.SquareIconRed}`}
-                                        onClick={()=>setBuildlab({...buildlab, textures: "default"})}>
-                                <Restore/></IconButton>
-                        </div>
-                    </div>}
-
+                    </div>
+                </div>
             </div>
+            {/*{srv.Tariff && srv.Tariff.GDLab.Textures*/}
+            {/*    &&<div className={styles.SettingsPlato} style={{margin:"0 .5rem .5rem .5rem"}}>*/}
+            {/*        <input type="file" accept=".fpack" hidden ref={uploadTexturesRef} onChange={changeTextures}/>*/}
+
+            {/*        <p>{locale.get('buildLab')[3]} (<span style={{color:"var(--primary-color)"}}>{buildlab.textures==="default"?locale.get('buildLab')[4]:buildlab.textures}</span>)</p>*/}
+            {/*        <div style={{display:"flex"}}>*/}
+            {/*            <IconButton className={`${styles.SquareIcon} ${styles.SquareIconGreen}`}*/}
+            {/*                        onClick={()=>uploadTexturesRef.current.click()}>*/}
+            {/*                <CloudUploadIcon/></IconButton>*/}
+            {/*            <IconButton className={`${styles.SquareIcon} ${styles.SquareIconRed}`}*/}
+            {/*                        onClick={()=>setBuildlab({...buildlab, textures: "default"})}>*/}
+            {/*                <Restore/></IconButton>*/}
+            {/*        </div>*/}
+            {/*    </div>}*/}
         </Modal>
 
         <Modal title="Рейт-бот" open={backdrop === "gdpsbot"}
                onCancel={() => setBackdrop("none")} onOk={() => setBackdrop("none")}
                cancelButtonProps={{className: "hidden"}} okText="Готово">
-            <div className={styles.BackdropBox} onClick={(e) => e.stopPropagation()}>
-                {locale.get('gdpsbot')[0]}
-                <FruitTextField fullWidth label={locale.get('gdpsbot')[2]} value={discordbot.rate || ''}
-                                onChange={(evt) => setDiscordbot({...discordbot, rate: evt.target.value})}
-                                placeholder={locale.get('gdpsbot')[1]}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start"><FontAwesomeIcon icon={faStar}
-                                                                                          className="text-white mr-2"/></InputAdornment>
-                                    ),
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton edge="end"
-                                                        onClick={() => setDiscordbot({...discordbot, rate: ""})}>
-                                                <DeleteIcon className={styles.redsvg}/>
-                                            </IconButton>
-                                        </InputAdornment>
-                                    )
-                                }}/>
-                <FruitTextField fullWidth label={locale.get('gdpsbot')[3]} value={discordbot.newlevel || ''}
-                                onChange={(evt) => setDiscordbot({...discordbot, newlevel: evt.target.value})}
-                                placeholder={locale.get('gdpsbot')[1]}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start"><FontAwesomeIcon icon={faUpload}
-                                                                                          className="text-white mr-2"/></InputAdornment>
-                                    ),
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton edge="end"
-                                                        onClick={() => setDiscordbot({...discordbot, newlevel: ""})}>
-                                                <DeleteIcon className={styles.redsvg}/>
-                                            </IconButton>
-                                        </InputAdornment>
-                                    )
-                                }}/>
-                <FruitTextField fullWidth label={locale.get('gdpsbot')[4]} value={discordbot.newuser || ''}
-                                onChange={(evt) => setDiscordbot({...discordbot, newuser: evt.target.value})}
-                                placeholder={locale.get('gdpsbot')[1]}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start"><FontAwesomeIcon icon={faUser}
-                                                                                          className="text-white mr-2"/></InputAdornment>
-                                    ),
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton edge="end"
-                                                        onClick={() => setDiscordbot({...discordbot, newuser: ""})}>
-                                                <DeleteIcon className={styles.redsvg}/>
-                                            </IconButton>
-                                        </InputAdornment>
-                                    )
-                                }}/>
-                <FruitTextField fullWidth label={locale.get('gdpsbot')[5]} value={discordbot.newmusic || ''}
-                                onChange={(evt) => setDiscordbot({...discordbot, newmusic: evt.target.value})}
-                                placeholder={locale.get('gdpsbot')[1]}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start"><FontAwesomeIcon icon={faMusic}
-                                                                                          className="text-white mr-2"/></InputAdornment>
-                                    ),
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton edge="end"
-                                                        onClick={() => setDiscordbot({...discordbot, newmusic: ""})}>
-                                                <DeleteIcon className={styles.redsvg}/>
-                                            </IconButton>
-                                        </InputAdornment>
-                                    )
-                                }}/>
+            <div className="flex flex-col gap-4">
+                <p>
+                    🎮 Рейт-бот для Discord
+                    Когда игроки будут регистрироваться, загружать и рейтить уровни - вы получите красивое сообщение на сервере<br/>
+
+                    ⚠️ Включите на канале с вебхуком разрешение &quot;использовать внешние эмодзи с других серверов&quot; для @everyone
+                </p>
+                <Input addonBefore={<>
+                    <FontAwesomeIcon icon={faStar}/> Рейты
+                </>} value={discordbot.rate || ''} onChange={(evt) => setDiscordbot({...discordbot, rate: evt.target.value})}
+                placeholder="https://discord.com/api/webhooks/..." />
+                <Input addonBefore={<>
+                    <FontAwesomeIcon icon={faUpload}/> Новые уровни
+                </>} value={discordbot.newlevel || ''} onChange={(evt) => setDiscordbot({...discordbot, newlevel: evt.target.value})}
+                       placeholder="https://discord.com/api/webhooks/..." />
+                <Input addonBefore={<>
+                    <FontAwesomeIcon icon={faStar}/> Новые игроки
+                </>} value={discordbot.newuser || ''} onChange={(evt) => setDiscordbot({...discordbot, newuser: evt.target.value})}
+                       placeholder="https://discord.com/api/webhooks/..." />
+                <Input addonBefore={<>
+                    <FontAwesomeIcon icon={faMusic}/> Загрузка музыки
+                </>} value={discordbot.newmusic || ''} onChange={(evt) => setDiscordbot({...discordbot, newmusic: evt.target.value})}
+                       placeholder="https://discord.com/api/webhooks/..." />
             </div>
         </Modal>
 

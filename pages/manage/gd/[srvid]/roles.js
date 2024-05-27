@@ -200,12 +200,12 @@ export default function RolesGD(props) {
                                                 {[
                                                     [faHashtag, v.id],
                                                     [faUser, v.users.length]
-                                                ].map((item, i)=><span className="rounded bg-active px-1.5 py-0.5" key={i}>
+                                                ].map((item, i)=><span className="rounded bg-active px-1.5 py-0.5 text-nowrap" key={i}>
                                         <FontAwesomeIcon icon={item[0]} /> {item[1]}</span>
                                                 )}
                                             </p>
                                         </div>
-                                        <Button className="ml-auto text-gray-300 hover:!text-white" size="large" icon={<FontAwesomeIcon icon={faEdit} />}
+                                        <Button className="ml-auto text-gray-300 hover:!text-white aspect-square" size="large" icon={<FontAwesomeIcon icon={faEdit} />}
                                                 onClick={() => {
                                                     setRoleid(i)
                                                     setCRole(roles[i])
@@ -250,7 +250,7 @@ export default function RolesGD(props) {
                                         </div>
                                     </div>
                                 ))}
-                                <Pagination current={uPage} total={users.length*500} onChange={(page)=>{
+                                <Pagination rootClassName="mx-auto" responsive current={uPage} total={users.length*500} onChange={(page)=>{
                                     setUPage(page)
                                     getUserList(page)
                                 }} showSizeChanger={false} />
