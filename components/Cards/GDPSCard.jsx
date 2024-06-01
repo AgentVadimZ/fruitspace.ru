@@ -17,6 +17,7 @@ export default function GDPSCard(props) {
             icon = faZap
             break
         case 3:
+        case 4:
             bg = "magenta"
             hover = "[#a400a4]"
             icon = faGem

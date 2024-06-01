@@ -234,7 +234,6 @@ export default function DownloadPage(props) {
                             <img className="h-40 rounded-xl" src={srv.icon}/>
                             <div className="text-center lg:text-left">
                                 <p className="text-2xl w-fit mx-auto lg:mx-0">{srv.srv_name}</p>
-                                {/*<p className="px-2 bg-blue-700 border-1 border-blue-900 rounded-md text-sm font-mono w-fit mx-auto lg:mx-0 mb-1">by {srv.owner_id}</p>*/}
                                 <span className="text-sm">{showPlayers(srv.user_count, srv.level_count)}</span>
                             </div>
                         </div>
