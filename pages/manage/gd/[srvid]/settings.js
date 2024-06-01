@@ -5,11 +5,8 @@ import PanelContent from "@/components/Global/PanelContent";
 import {useRouter} from "next/router";
 
 import styles from "@/components/Manage/GDManage.module.css"
-import {styled} from "@mui/system";
 import {
     IconButton,
-    InputAdornment,
-    TextField,
 } from "@mui/material";
 import {useEffect, useRef, useState} from "react";
 import SaveIcon from '@mui/icons-material/Save';
@@ -17,25 +14,36 @@ import SaveIcon from '@mui/icons-material/Save';
 import GDLablogo from '@/assets/logos/geometrydash.png'
 import GDLogo from '@/assets/logos/gd_icon.png'
 import toast, {Toaster} from "react-hot-toast";
-import DeleteIcon from '@mui/icons-material/Delete';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAndroid, faApple, faDiscord, faVk, faWindows} from "@fortawesome/free-brands-svg-icons";
 import useLocale, {useGlobalLocale} from "@/locales/useLocale";
 import useFiberAPI from "@/fiber/fiber";
 import {
     faAlignCenter,
-    faAlignLeft, faAlignRight, faCog,
-    faCopy, faImage,
-    faMusic,
+    faAlignLeft, faAlignRight, faBrush, faCog,
+    faCopy, faFloppyDisk, faImage,
+    faMusic, faPaintbrush,
     faQuestion,
     faQuestionCircle,
     faStar, faTrash,
     faUpload,
-    faUser
 } from "@fortawesome/free-solid-svg-icons";
 import {SettingsTour} from "@/locales/tours/manage/gd";
-import {FloatButton, Input, Tour, Button, Select, Popover, Switch, Segmented, Modal} from "antd";
+import {
+    FloatButton,
+    Input,
+    Tour,
+    Button,
+    Select,
+    Popover,
+    Switch,
+    Segmented,
+    Modal,
+    ConfigProvider,
+    ColorPicker
+} from "antd";
 import {deepEqual} from "@/components/Hooks";
+import Linkify from "linkify-react";
 
 
 
@@ -83,7 +91,8 @@ export default function SettingsGD(props) {
             autoActivate: false,
             levelLimit: true
         },
-        modules: {}
+        modules: {},
+        downloadpage_style: {}
     })
 
     const [oldSettings, setOldSettings] = useState({})
@@ -302,17 +311,15 @@ export default function SettingsGD(props) {
     useEffect(()=>{
         !deepEqual(settings, oldSettings)?toast((
             <div>
-                <span><IconButton><SaveIcon style={{fill:"white"}}/></IconButton>{locale.get('dontForget')}</span>
-                <Button variant="contained" className={`${styles.SlimButton} ${styles.btnSuccess}`}
-                        fullWidth onClick={()=>saveData()}>{locale.get('save')}</Button>
-            </div>),{
+                <p>
+                    <FontAwesomeIcon className="text-2xl" icon={faFloppyDisk} /> {locale.get('dontForget')}</p>
+                <Button variant="contained" className="bg-success w-full" onClick={()=>saveData()}>{locale.get('save')}</Button>
+            </div>), {
             duration: Infinity,
             id: "save",
             position: "top-center",
-            style: {
-                color: "white",
-                backgroundColor: "var(--btn-color)",
-            }}):toast.remove("save")
+            className: "glassb p-2 !bg-subtle",
+        }):toast.remove("save")
     },[settings, oldSettings, discordbot])
 
     return <>
@@ -437,9 +444,12 @@ export default function SettingsGD(props) {
                         <Popover overlayClassName="w-64" content="Используйте #players# и #levels# чтобы вставить текущее количество игроков и уровней">
                             <FontAwesomeIcon icon={faQuestionCircle} />
                         </Popover>
-                        {srv.Tariff && srv.Tariff.GDLab.Enabled &&
+                        {srv.Tariff?.GDLab.Enabled &&
                             <Button type="primary" className="bg-success hover:!bg-green-700"
                                     onClick={()=>setBackdrop("buildlab")}>🔨 BuildLab™</Button>}
+                        {srv.Tariff?.GDLab.Extended &&
+                            <Button className="hover:!text-primary" icon={<FontAwesomeIcon icon={faPaintbrush} />}
+                                    onClick={()=>setBackdrop("downloadpage")}></Button>}
                         <Button.Group>
                             <Button icon={<FontAwesomeIcon icon={faVk} className="text-white text-xl" />} style={{
                                 backgroundColor: settings.description.vk&&"var(--primary-color)"
@@ -548,17 +558,119 @@ export default function SettingsGD(props) {
             </div>
         </Modal>
 
-        <Modal wrapClassName="ultradanger" title="🧨 Удаление сервера 🧨" open={backdrop==="delete"}
-               onCancel={()=>setBackdrop("none")} onOk={() => {
+        <Modal title="Кастомизация страницы загрузки" open={backdrop === "downloadpage"}
+               onCancel={() => setBackdrop("none")} onOk={() => setBackdrop("none")}
+               cancelButtonProps={{className: "hidden"}} okText="Готово">
+            <ConfigProvider theme={{
+                components: {
+                    Button: {
+                        colorBorder: settings.downloadpage_style?.accent||"#0d63fd",
+                        colorPrimary: settings.downloadpage_style?.accent||"#0d63fd",
+                        colorPrimaryHover: `${settings.downloadpage_style?.accent||"#0d63fd"}88`
+                    }
+                }
+            }}>
+            <div className="flex flex-col gap-4">
+                <div className="rounded-xl glassb flex flex-col justify-center items-center gap-2 aspect-video w-full
+                bg-center bg-cover bg-dark" style={{backgroundImage: `url(${settings.downloadpage_style?.bg})`}}>
+                    <div
+                        className="w-2/3 bg-active backdrop-blur bg-opacity-75 border-white border-opacity-25 rounded-lg border-solid border-1 p-2 flex flex-col gap-2">
+                        <div className="flex gap-2 items-center flex-row">
+                            <img className="h-20 rounded" src={srvIcon}/>
+                            <div className="text-left">
+                                <p className="text-xs w-fit">{srv.Srv.srv_name}</p>
+                                <p className="text-[0.5rem]">{ParseDesc(srv.Srv.user_count, srv.Srv.level_count)}</p>
+                            </div>
+                        </div>
+                        <Linkify as="pre" className="p-1 text-[0.5rem] whitespace-pre-wrap"
+                                 options={{className: "text-primary"}}>
+                            {srv.Srv.description}
+                        </Linkify>
+
+                        <div className="flex items-center justify-between flex-row">
+                            <p className="my-0 mx-2 text-[0.5rem]">Скачать</p>
+                            {srv.Srv?.client_windows_url &&
+                                <span className="flex gap-2 ">
+                                    {srv.Srv.client_windows_url &&
+                                        <Button type={settings.downloadpage_style?.variant||"primary"} size="small"
+                                                className="text-[0.5rem] h-5 rounded"
+                                                icon={<FontAwesomeIcon icon={faWindows}/>}>Windows</Button>
+                                    }
+                                    {srv.Srv.client_android_url &&
+                                        <Button type={settings.downloadpage_style?.variant||"primary"} size="small"
+                                                className="text-[0.5rem] h-5 rounded"
+                                                icon={<FontAwesomeIcon icon={faAndroid}/>}>Android</Button>
+                                    }
+                                    {srv.Srv.client_ios_url &&
+                                        <Button type={settings.downloadpage_style?.variant||"primary"} size="small"
+                                                className="text-[0.5rem] h-5 rounded"
+                                                icon={<FontAwesomeIcon icon={faApple}/>}>iOS</Button>
+                                    }
+
+                        </span>}
+                        </div>
+                    </div>
+                    <div
+                        className="w-2/3 bg-active backdrop-blur bg-opacity-75 border-white border-opacity-25 rounded-lg border-solid border-1 p-1 flex
+                        items-center gap-1">
+                        <Button size="small" className=" rounded text-[0.5rem] flex-1 h-5"
+                                type={settings.downloadpage_style?.variant||"primary"}>Войти в панель</Button>
+                        {srv.Srv?.discord &&
+                            <Button type={settings.downloadpage_style?.variant||"primary"} className="h-5 rounded aspect-square w-5 p-0 flex items-center justify-center"
+                                    size="small">
+                                <FontAwesomeIcon
+                                    icon={faDiscord} className="!h-3"/>
+                            </Button>
+                        }
+                        {srv.Srv?.vk &&
+                            <Button type={settings.downloadpage_style?.variant||"primary"} className="h-5 rounded aspect-square w-5 p-0 flex items-center justify-center"
+                                    size="small">
+                                <FontAwesomeIcon
+                                    icon={faVk} className="!h-4"/>
+                            </Button>
+                        }
+                    </div>
+                </div>
+
+                <div className="flex flex-col gap-4 rounded-xl glassb p-4 mt-4 relative">
+                    <p className="flex gap-4 items-center absolute left-2 -top-4 bg-active rounded-lg glassb px-1.5 py-0.5">
+                        Вид страницы
+                    </p>
+                    <div className="flex items-center gap-4">
+                        Стиль кнопок
+                        <ColorPicker disabledAlpha showText format="hex" value={settings.downloadpage_style?.accent||"#0d63fd"}
+                                     onChange={(color) => setSettings({...settings, downloadpage_style: {
+                                             ...settings.downloadpage_style, accent: `#${color.toHex()}`
+                                         }})} rootClassName="bg-subtle" />
+                        <Select options={[
+                            {label: "Заполненный", value: "primary"},
+                            {label: "Обводка", value: "default"},
+                        ]} value={settings.downloadpage_style?.variant||"primary"} onChange={(val)=>setSettings({...settings, downloadpage_style: {
+                                ...settings.downloadpage_style, variant: val
+                            }})} />
+                    </div>
+                    <div className="flex items-center gap-4">
+                        Фоновое изображение
+                        <Input placeholder="https://.../image.jpg" value={settings.downloadpage_style?.bg} onChange={
+                            (evt)=>setSettings({...settings, downloadpage_style: {
+                                    ...settings.downloadpage_style, bg: evt.target.value
+                                }})}  />
+                    </div>
+                </div>
+            </div>
+            </ConfigProvider>
+        </Modal>
+        <Modal wrapClassName="ultradanger" title="🧨 Удаление сервера 🧨" open={backdrop === "delete"}
+               onCancel={() => setBackdrop("none")} onOk={() => {
             userDelCode === srv.Srv.srvid ? deleteServer()
-            : toast.error("ID неверный. Повторите попытку.", {
+                : toast.error("ID неверный. Повторите попытку.", {
                     style: {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }
                 })
-               }}
-               okButtonProps={{danger:true}} cancelText="Отмена" okText="Удалить">
+        }}
+               okButtonProps={{danger: true}} cancelText="Отмена" okText="Удалить">
             <div className="flex flex-col gap-4">
                 <p className="font-semibold">
                     Вы точно хотите удалить сервер?
@@ -721,93 +833,6 @@ export default function SettingsGD(props) {
 SettingsGD.RequireAuth = true
 
 
-const FruitTextField = styled(TextField)({
-    '& label.Mui-focused': {
-        color: '#0d6efd',
-    },
-    '& .MuiInput-underline:after': {
-        borderBottomColor: 'green',
-    },
-    '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-            borderColor: 'white !important',
-        },
-        '&:hover fieldset': {
-            borderColor: '#cacad0',
-        },
-        '&.Mui-focused fieldset': {
-            borderColor: '#0d6efd',
-        },
-        borderRadius: "8px",
-        color: "white",
-        // backgroundColor: "var(--btn-color)",
-        marginBottom: "1rem"
-    },
-});
-
-const FruitThinField = styled(TextField)({
-    '& label.Mui-focused': {
-        color: '#0d6efd',
-    },
-    '& .MuiInput-underline:after': {
-        borderBottomColor: 'green',
-    },
-    '& .MuiInputLabel-root[data-shrink="false"]:not(.Mui-focused)': {
-        transform: "translate(14px, 10px) scale(1)"
-    },
-    '& .MuiOutlinedInput-root': {
-        height: 40,
-        '& fieldset': {
-            borderColor: 'white !important',
-        },
-        '&:hover fieldset': {
-            borderColor: '#cacad0',
-        },
-        '&.Mui-focused fieldset': {
-            borderColor: '#0d6efd',
-        },
-        borderRadius: "8px",
-        color: "white",
-    },
-});
-
-const FruitSwitch = styled(Switch)({
-    height: 46,
-    width: 70,
-    padding: 8,
-    '& .MuiSwitch-switchBase': {
-        '&.Mui-checked': {
-            transform: 'translateX(24px)',
-            // color: 'var(--success-color)'
-        },
-    },
-    '& .MuiSwitch-track': {
-        borderRadius: 22,
-        '&:before, &:after': {
-            content: '""',
-            position: 'absolute',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            width: 16,
-            height: 16,
-        },
-        '&:before': {
-            backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="white" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>')`,
-            left: 12,
-        },
-        '&:after': {
-            backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="white" d="M19,13H5V11H19V13Z" /></svg>')`,
-            right: 12,
-        },
-    },
-    '& .MuiSwitch-thumb': {
-        boxShadow: 'none',
-        width: 24,
-        height: 24,
-        margin: 2,
-    },
-});
-
 const ParseDesc = (players, levels) => {
     let str = "" + players
     let cplayers = players % 10
@@ -823,7 +848,7 @@ const ParseDesc = (players, levels) => {
         default:
             str += " игроков"
     }
-    str += ", "+levels
+    str += " • "+levels
     let clevels=levels%10
     switch (clevels) {
         case 1:
