@@ -139,7 +139,8 @@ export default function SettingsGD(props) {
                     autoActivate: srv.CoreConfig.SecurityConfig.AutoActivate,
                     levelLimit: !srv.CoreConfig.SecurityConfig.NoLevelLimits
                 },
-                modules: srv.CoreConfig.ServerConfig.EnableModules
+                modules: srv.CoreConfig.ServerConfig.EnableModules,
+                downloadpage_style: srv.Srv.downloadpage_style
             }
             setSettings(d)
             setOldSettings(d)
