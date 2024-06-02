@@ -781,19 +781,19 @@ export default function SettingsGD(props) {
                 </p>
                 <Input addonBefore={<>
                     <FontAwesomeIcon icon={faStar}/> Рейты
-                </>} value={discordbot.rate || ''} onChange={(evt) => setDiscordbot({...discordbot, rate: evt.target.value})}
+                </>} value={discordbot?.rate || ''} onChange={(evt) => setDiscordbot({...discordbot, rate: evt.target.value})}
                 placeholder="https://discord.com/api/webhooks/..." />
                 <Input addonBefore={<>
                     <FontAwesomeIcon icon={faUpload}/> Новые уровни
-                </>} value={discordbot.newlevel || ''} onChange={(evt) => setDiscordbot({...discordbot, newlevel: evt.target.value})}
+                </>} value={discordbot?.newlevel || ''} onChange={(evt) => setDiscordbot({...discordbot, newlevel: evt.target.value})}
                        placeholder="https://discord.com/api/webhooks/..." />
                 <Input addonBefore={<>
                     <FontAwesomeIcon icon={faStar}/> Новые игроки
-                </>} value={discordbot.newuser || ''} onChange={(evt) => setDiscordbot({...discordbot, newuser: evt.target.value})}
+                </>} value={discordbot?.newuser || ''} onChange={(evt) => setDiscordbot({...discordbot, newuser: evt.target.value})}
                        placeholder="https://discord.com/api/webhooks/..." />
                 <Input addonBefore={<>
                     <FontAwesomeIcon icon={faMusic}/> Загрузка музыки
-                </>} value={discordbot.newmusic || ''} onChange={(evt) => setDiscordbot({...discordbot, newmusic: evt.target.value})}
+                </>} value={discordbot?.newmusic || ''} onChange={(evt) => setDiscordbot({...discordbot, newmusic: evt.target.value})}
                        placeholder="https://discord.com/api/webhooks/..." />
             </div>
         </Modal>
