@@ -211,7 +211,7 @@ export default function Order(props) {
                     </div>
                     <Button type="primary" size="large"
                             className="w-full mt-auto flex items-center justify-center gap-2"
-                            onClick={() => createServer(4)}>
+                            onClick={() => createServer(3)}>
                         {prc[duration](tariffs['3'])}{suffix}
                         {discount > 0 && <span
                             className="border-success border-2 bg-subtle text-white rounded-md px-1.5">-{discount}%</span>}
