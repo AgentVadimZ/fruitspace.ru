@@ -141,6 +141,17 @@ body {
     background-color: var(--bkg-color);
 }
 
+article img {
+    @apply rounded-xl;
+}
+article img[alt="inline"], article img[alt="inline"] {
+    @apply inline h-12 w-auto;
+}
+
+blockquote.nx-italic {
+    @apply !not-italic;
+}
+
 .frc-banner {
     display: none !important;
 }

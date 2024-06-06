@@ -743,14 +743,16 @@ export default function SettingsGD(props) {
                             ...buildlab, android: val,
                         })}/>
                     </div>
-                    <div className="flex gap-4 items-center justify-between">
-                        <p className="flex items-center gap-2">
-                            <FontAwesomeIcon icon={faApple}/> iOS
-                        </p>
-                        <Switch checked={buildlab.ios} onChange={(val) => setBuildlab({
-                            ...buildlab, ios: val,
-                        })}/>
-                    </div>
+                    {srv.Tariff?.GDLab.IOS &&
+                        <div className="flex gap-4 items-center justify-between">
+                            <p className="flex items-center gap-2">
+                                <FontAwesomeIcon icon={faApple}/> iOS
+                            </p>
+                            <Switch checked={buildlab.ios} onChange={(val) => setBuildlab({
+                                ...buildlab, ios: val,
+                            })}/>
+                        </div>
+                    }
                 </div>
             </div>
             {/*{srv.Tariff && srv.Tariff.GDLab.Textures*/}

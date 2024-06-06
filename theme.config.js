@@ -6,7 +6,7 @@ import Footer from "@/components/Global/Footer";
 export default {
     logo: <span>Fruitspace</span>,
     useNextSeoProps: ()=>({
-        titleTemplate: '%s | FruitSpace Docs',
+        titleTemplate: '%s | Документация FruitSpace',
     }),
     primaryHue: {
         dark: 210,
