@@ -8,6 +8,11 @@ export default {
     useNextSeoProps: ()=>({
         titleTemplate: '%s | Документация FruitSpace',
     }),
+    // darkMode: true,
+    nextThemes: {
+        defaultTheme: "dark",
+        forcedTheme: "dark"
+    },
     primaryHue: {
         dark: 210,
     },
