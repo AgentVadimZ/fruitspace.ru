@@ -61,7 +61,7 @@ export default function Order(props) {
                         color: "white",
                         backgroundColor: "var(--btn-color)"
                     }})
-                props.router.push(`/manage/gd/${resp.message}?tour=true`)
+                props.router.push(`/manage/gd/${resp.message}${srvData.Srv?"":"?tour=true"}`)
             }else{
                 toast.error(locale.get('createFailed')+ParseError(resp.code, resp.message),{style: {
                         color: "white",
@@ -85,7 +85,7 @@ export default function Order(props) {
                     let payDur = "yr"
                     if (new Date(resp.Srv.expire_date).getFullYear()>2040) {
                         payDur = "all"
-                        if(resp.Srv.plan!=1)
+                        if(resp.Srv.plan>1)
                             setPayDurLock(true)
                     }
                     setSrv({...srv, name: resp.Srv.srv_name, payDuration: payDur})
@@ -129,9 +129,36 @@ export default function Order(props) {
             yr: getLocalPriceYear,
             all: getLocalPriceForever
         }
-        let discount = (duration==="yr"?15:0)
-        let barrier = 0
-        if(srvData.Srv) barrier = srvData.Srv.plan
+        let discount = 0
+        let barrier = srvData.Srv?.plan || 0
+        if (srvData.Srv) {
+            // Has server
+            prc = {
+                mo: prc.mo,
+                // yr: (tariff) => {
+                //     let orig = getLocalPriceYear(tariff)
+                //     let monthsLeft = Math.floor(
+                //         (new Date(srvData.Srv.expire_date) - new Date()) / 1000 / 60 / 60 / 24 / 30
+                //     )
+                //     monthsLeft = Math.min(10, monthsLeft)
+                //     let old = getLocalPrice(tariffs[`${srvData.Srv.plan}`])+1
+                //     return tariff.PriceRUB===old ? orig : Math.max(0, orig - old * monthsLeft)
+                // },
+                yr: prc.yr,
+                all: (tariff) => {
+                    let orig = getLocalPriceForever(tariff)
+                    let old = getLocalPriceForever(tariffs[`${srvData.Srv.plan}`])
+                    return new Date(srvData.Srv.expire_date).getFullYear()==2050
+                        ? <span>
+                        <span className="mx-1.5 px-1.5 py-0.5 rounded bg-subtle text-sm">{orig}-{old}{suffix}</span>
+                        {orig-old}
+                    </span>
+                        : getLocalPriceForever(tariff)
+                }
+            }
+        } else {
+            discount = duration==="yr"?15:0
+        }
 
         return (
             <div className="flex flex-col xl:flex-row gap-8">
@@ -257,6 +284,12 @@ export default function Order(props) {
     //---------------------------------------------------------------------------
     //---------------------------------------------------------------------------
 
+    const payOptions = []
+    !(srv.payDuration !== "mo" && payDurLock) && payOptions.push({value: "mo", label: "Месяц"})
+    !(srv.payDuration !== "yr" && payDurLock) && payOptions.push(
+        {value: "yr", label: <span>Год <span className="bg-primary rounded px-1">-15%</span></span>}
+    )
+    payOptions.push({value: "all", label: "Навсегда"})
 
     return <>
         <GlobalHead title={localeGlobal.get('navName')}/>
@@ -287,14 +320,11 @@ export default function Order(props) {
             </div>
 
             <div className="flex flex-col gap-4 mx-auto items-center">
-                <Segmented rootClassName="bg-subtle select-none w-fit" options={[
-                    {value: "mo", label: "Месяц"},
-                    {value: "yr", label: <span>Год <span className="bg-primary rounded px-1">-15%</span></span>},
-                    {value: "all", label: "Навсегда"}
-                ]} value={srv.payDuration} onChange={(val) => setSrv({...srv, payDuration: val})}/>
+                <Segmented rootClassName="bg-subtle select-none w-fit" options={payOptions}
+                           value={srv.payDuration} onChange={(val) => setSrv({...srv, payDuration: val})}/>
 
 
-                {createCards(srv.payDuration)}
+                {srvData.Srv&&createCards(srv.payDuration)}
             </div>
         </div>
         <p className="mx-auto w-fit my-4 text-gray-300">
