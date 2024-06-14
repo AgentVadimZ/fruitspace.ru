@@ -161,19 +161,19 @@ export default function Home(props) {
                                 </div>
                                 <div className="flex flex-col gap-4 mt-4">
                                     {u.pros && <div>
-                                        <p className="bg-active text-lg rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
+                                        <p className="bg-active text-base rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
                                         relative z-20 -mb-[1px]">Что понравилось?</p>
                                         <pre className="bg-active p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
                                         relative z-10">{u.pros}</pre>
                                     </div>}
                                     {u.cons && <div>
-                                        <p className="bg-active text-lg rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
+                                        <p className="bg-active text-base rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
                                         relative z-20 -mb-[1px]">Что не понравилось, чего не хватает?</p>
                                         <pre className="bg-active p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
                                         relative z-10">{u.cons}</pre>
                                     </div>}
                                     {u.verdict && <div>
-                                        <p className="bg-active text-lg rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
+                                        <p className="bg-active text-base rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
                                         relative z-20 -mb-[1px]">Останетесь ли на FruitSpace?</p>
                                         <pre className="bg-active p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
                                         relative z-10">{u.verdict}</pre>
@@ -205,7 +205,7 @@ const ProdCard = (props) => (
                 <div>
                     <p className="m-0 tracking-wide lg:text-lg">{props.name}</p>
                     <p className="opacity-85 leading-tight text-xs md:text-sm lg:leading-normal m-0">{props.description}</p>
-                    <p className="text-xs text-nowrap md:text-sm m-0 mt-2 text-[#cacad0] lg:font-mono">{props.stats}</p>
+                    <p className="text-xs text-nowrap m-0 mt-2 text-[#cacad0] lg:font-mono">{props.stats}</p>
                 </div>
                 <RightIcon className="flex-shrink-0 w-8 ml-auto"/>
             </div>

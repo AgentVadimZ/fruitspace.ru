@@ -10,8 +10,6 @@ import {
     ListItemText,Accordion, AccordionSummary, AccordionDetails
 } from "@mui/material";
 
-import {TabsList, TabPanel, Tab} from "@/components/Global/Tab";
-import TabsUnstyled from "@mui/base/TabsUnstyled";
 import {useState} from "react";
 
 import useLocale from "@/locales/useLocale";
@@ -36,8 +34,7 @@ import CorePurpur from "@/assets/logos/mccore/purpur.png"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDatabase, faFloppyDisk, faPuzzlePiece, faServer, faZap} from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
-import BannerGD from "@/assets/BannerGD.png";
-import {Button} from "antd";
+import {Button, Segmented} from "antd";
 import Script from "next/script";
 
 export default function MC(props) {
@@ -72,94 +69,92 @@ export default function MC(props) {
                 </div>
                 <h2 className="text-center mt-12 mb-8 text-white text-3xl">{locale.get('prodmc.tariffs')}</h2>
                 <p className="text-center text-lg">Ресурсы</p>
-                <TabsUnstyled value={tab} onChange={(e, val) => setTab(val)}>
-                    <TabsList className="mx-auto text-center">
-                        <Tab value="dynamic" className="!w-fit">Динамические</Tab>
-                        <Tab value="static" className="!w-fit">Статические</Tab>
-                    </TabsList>
-                    <TabPanel value="dynamic" className="border-none !p-0">
+
+                <div className="flex justify-center">
+                    <Segmented rootClassName="bg-btn select-none glassb" options={[
+                        {value: "dynamic", label: "Динамические"},
+                        {value: "static", label: "Статические"}
+                    ]} defaultValue={tab} onChange={setTab}/>
+                </div>
+
+                {tab === "dynamic" &&
+                    <div className={`${styles.productCardGrid} ${styles.productCardGridMC}`} id="cloud">
                         <div
-                            className="bg-[var(--active-color)] glassb rounded-xl flex mx-auto justify-around gap-4 lg:gap-2 flex-col w-5/6 lg:w-2/3 md:w-[61rem] md:flex-row p-2">
-                            <div className="flex flex-col flex-1 gap-2">
+                            className="bg-active glassb rounded-xl flex mx-auto justify-around gap-4 w-fit md:w-[62rem] lg:gap-2 flex-col md:flex-row p-2 col-span-1 md:col-span-3">
+                            <div className="flex flex-col flex-1 gap-4">
                                 <p className="text-lg text-center my-0 gap-2">🤔 Что это такое?</p>
-                                <span className="ml-2">
+                                <span className="ml-2 text-sm">
                                     Мы заставляем Minecraft-сервера отдавать неиспользуемую память, что позволяет серверам без
                                     игроков потреблять меньше ресурсов и отдавать их тем, кому они действительно нужны.
                                 </span>
-                                <span className="ml-2">
+                                <span className="ml-2 text-sm">
                                     Например при выборе тарифа <b>Reforged</b>:<br/>
                                     вы получите 2 выделенных ядра под ваш сервер и 4➝8 ГБ ОЗУ (4 ГБ гарантированно и 8 ГБ
                                     максимум)
                                 </span>
                             </div>
-                            <div className="flex flex-col flex-1 gap-2">
+                            <div className="flex flex-col flex-1 gap-4">
                                 <p className="text-lg text-center my-0">🤨 Подойдет ли мне это?</p>
-                                <span className="ml-2">
+                                <span className="ml-2 text-sm">
                                     ✅ Вам данные тарифы подойдут в большинстве случаев, позволяя сэкономить деньги за ресурсы,
                                     которыми вы не пользуетесь.
                                 </span>
-                                <span className="ml-2">
+                                <span className="ml-2 text-sm">
                                     ❌ Если вы хотите создать технический сервер и использовать субтиковую механику Minecraft,
                                     асинхронные линии или lazy-чанки, то вам лучше подойдут тарифы со статическими ресурсами.
                                 </span>
                             </div>
-                            <div className="flex flex-col flex-1 gap-2">
-                                <p className="text-lg text-center my-0">🤒 Какие есть минусы?</p>
-                                <span className="ml-2">🐢 Новые чанки могут загружаться медленнее (не влияет на чанки, где вы были хоть раз)</span>
-                            </div>
                         </div>
-                        <div className={`${styles.productCardGrid} ${styles.productCardGridMC}`} id="cloud">
-                            {tariffs.dynamic.map((tariff, i) => {
-                                return <ProductCardMC key={i} title={tariff.title} id={tariff.id}
-                                                      btnText={`${tariff.price}₽/мес`} link={`order/mc?t=d${i + 1}`}>
-                                    <ListItem>
-                                        <ListItemIcon><MemoryIcon/></ListItemIcon>
-                                        <ListItemText primary={`${tariff.cpus} ${corePrint(tariff.cpus)}`}/>
-                                    </ListItem>
-                                    <ListItem>
-                                        <ListItemIcon><ElectricBoltIcon/></ListItemIcon>
-                                        <ListItemText primary={`${tariff.minRam} ➝ ${tariff.maxRam} ГБ RAM`}/>
-                                    </ListItem>
-                                    <ListItem>
-                                        <ListItemIcon><StorageIcon/></ListItemIcon>
-                                        <ListItemText primary={`NVMe SSD на ${tariff.ssd} ГБ`}/>
-                                    </ListItem>
-                                </ProductCardMC>
-                            })}
-                            <img
-                                src="https://purepng.com/public/uploads/large/purepng.com-donutdonutdoughnutsweetsnack-1411527416158xueuy.png"
-                                className="saturate-0 opacity-10 w-80 hidden lg:block"
-                                aria-description="Не задавайте вопросы. Это пончик"/>
-                        </div>
-                    </TabPanel>
-                    <TabPanel value="static" className="border-none !p-0">
-                        <div className={`${styles.productCardGrid} ${styles.productCardGridMC}`} id="cloud">
-                            {tariffs.static.map((tariff, i) => {
-                                return <ProductCardMC key={i} title={tariff.title} id={tariff.id}
-                                                      btnText={`${tariff.price}₽/мес`} link={`order/mc?t=s${i + 1}`}>
-                                    <ListItem>
-                                        <ListItemIcon><MemoryIcon/></ListItemIcon>
-                                        <ListItemText primary={`${tariff.cpus} ${corePrint(tariff.cpus)}`}/>
-                                    </ListItem>
-                                    <ListItem>
-                                        <ListItemIcon><ElectricBoltIcon/></ListItemIcon>
-                                        <ListItemText primary={`${tariff.maxRam} ГБ RAM`}/>
-                                    </ListItem>
-                                    <ListItem>
-                                        <ListItemIcon><StorageIcon/></ListItemIcon>
-                                        <ListItemText primary={`NVMe SSD на ${tariff.ssd} ГБ`}/>
-                                    </ListItem>
-                                </ProductCardMC>
-                            })}
-                        </div>
-                    </TabPanel>
-                </TabsUnstyled>
+                        {tariffs.dynamic.map((tariff, i) => {
+                            return <ProductCardMC key={i} title={tariff.title} id={tariff.id}
+                                                  btnText={`${tariff.price}₽/мес`} link={`order/mc?t=d${i + 1}`}>
+                                <ListItem>
+                                    <ListItemIcon><MemoryIcon/></ListItemIcon>
+                                    <ListItemText primary={`${tariff.cpus} ${corePrint(tariff.cpus)}`}/>
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemIcon><ElectricBoltIcon/></ListItemIcon>
+                                    <ListItemText primary={`${tariff.minRam} ➝ ${tariff.maxRam} ГБ RAM`}/>
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemIcon><StorageIcon/></ListItemIcon>
+                                    <ListItemText primary={`NVMe SSD на ${tariff.ssd} ГБ`}/>
+                                </ListItem>
+                            </ProductCardMC>
+                        })}
+                        <img
+                            src="https://purepng.com/public/uploads/large/purepng.com-donutdonutdoughnutsweetsnack-1411527416158xueuy.png"
+                            className="saturate-0 opacity-10 w-80 hidden lg:block"
+                            aria-description="Не задавайте вопросы. Это пончик"/>
+                    </div>
+                }
+                {tab === "static" &&
+                    <div className={`${styles.productCardGrid} ${styles.productCardGridMC}`} id="cloud">
+                        {tariffs.static.map((tariff, i) => {
+                            return <ProductCardMC key={i} title={tariff.title} id={tariff.id}
+                                                  btnText={`${tariff.price}₽/мес`} link={`order/mc?t=s${i + 1}`}>
+                                <ListItem>
+                                    <ListItemIcon><MemoryIcon/></ListItemIcon>
+                                    <ListItemText primary={`${tariff.cpus} ${corePrint(tariff.cpus)}`}/>
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemIcon><ElectricBoltIcon/></ListItemIcon>
+                                    <ListItemText primary={`${tariff.maxRam} ГБ RAM`}/>
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemIcon><StorageIcon/></ListItemIcon>
+                                    <ListItemText primary={`NVMe SSD на ${tariff.ssd} ГБ`}/>
+                                </ListItem>
+                            </ProductCardMC>
+                        })}
+                    </div>
+                }
             </div>
 
             <p className="text-center mt-8 text-lg">Дополнительные услуги:</p>
 
             <div className="flex flex-col lg:flex-row w-fit gap-4 mx-auto justify-around">
-                <div className="bg-[var(--active-color)] glassb rounded-xl mx-auto xl:m-0 w-80 relative">
+                <div className="bg-active glassb rounded-xl mx-auto xl:m-0 w-80 relative">
                     <div className="absolute top-0 left-0 w-full h-full rounded-xl flex justify-center items-center"
                          style={{
                              background: `repeating-linear-gradient(45deg, #00000088, #00000088 10px, var(--error-color) 10px, var(--error-color) 20px)`
@@ -179,9 +174,9 @@ export default function MC(props) {
                     </div>
                 </div>
                 <div className="bg-[var(--active-color)] glassb rounded-xl mx-auto xl:m-0 w-80">
-                <div className="flex flex-col m-2">
+                    <div className="flex flex-col m-2">
                         <div className="flex items-center">
-                            <FontAwesomeIcon icon={faDatabase} className="!w-12 !h-12" />
+                            <FontAwesomeIcon icon={faDatabase} className="!w-12 !h-12"/>
                             <p className="m-2">База данных MySQL</p>
                         </div>
                         <div className="flex items-center justify-between">
