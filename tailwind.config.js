@@ -12,8 +12,8 @@ module.exports = {
     extend: {
       colors: {
         "primary": "#0d6efd",
-        "success": "#43b581",
-        "error": "#f04747",
+        "success": "#32a852",
+        "error": "#ff453a",
 
         "btn": "#484a4d",
         "btn-hover": "#525357",

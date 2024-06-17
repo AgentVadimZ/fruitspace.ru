@@ -18,7 +18,6 @@ import {Button} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faArrowDown,
-    faArrowUpRightFromSquare,
     faBarsProgress,
     faChartSimple, faChevronRight,
     faCloudArrowDown,
@@ -33,7 +32,6 @@ import {
     faPaintbrush,
     faPlay,
     faPlus,
-    faServer,
     faShop,
     faStar,
     faStopwatch20,
@@ -217,7 +215,7 @@ export default function GD(props) {
                         </div>
 
                         <div
-                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 lg:w-96">
+                            className="flex items-center flex-col gap-4 bg-active glassb rounded-2xl p-4 lg:w-96">
                             <TariffSG className="w-32 border-white border-2"/>
                             <p className="text-2xl font-semibold font-avant uppercase -mt-3 tracking-wide">
                                 Singularity
