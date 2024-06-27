@@ -107,7 +107,7 @@ export default function GD(props) {
 
                 <div className="flex flex-col-reverse lg:flex-row select-none">
                     <div className="flex flex-col p-8 flex-1">
-                        <p className="font-mono">простая и фунцкиональная</p>
+                        <p className="font-mono">простая и функциональная</p>
                         <p className="text-5xl uppercase font-semibold">панель</p>
                         <div className="h-96 py-4 text-lg max-w-3xl flex flex-col gap-4">
                             <p>

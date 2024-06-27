@@ -102,7 +102,7 @@ export default function GlobalNav(props) {
                 </HideOn>
             }
 
-            <div className="hidden lg:flex items-center gap-2 rounded-xl backdrop-blur bg-active bg-opacity-50 glassb">
+            <div className={`hidden lg:flex items-center gap-2 rounded-xl backdrop-blur bg-active bg-opacity-50 ${props.mainpage?"glassb":""}`}>
                 {
                     links.map((item, i) => NavLink({...item, key: i}))
                 }
@@ -188,7 +188,7 @@ export default function GlobalNav(props) {
                         Войти
                     </Link>}
                 <div className="relative lg:hidden">
-                    <p className="flex justify-center items-center h-12 w-12 rounded-xl backdrop-blur bg-subtle bg-opacity-50 -mr-2"
+                    <p className="flex justify-center items-center h-11 w-11 rounded-xl backdrop-blur bg-subtle bg-opacity-50 -mr-2"
                     onClick={()=>setDrawer(true)}>
                         <FontAwesomeIcon className="text-lg" icon={faBars}/>
                     </p>
@@ -211,12 +211,12 @@ const NavLink = (props) => {
         {
             props.link
                 ? <Link href={props.link} className="flex gap-2 items-center font-now text-sm leading-none rounded-lg cursor-pointer
-                bg-subtle bg-opacity-0 backdrop-blur px-4 py-3 text-gray-300 hover:text-white hover:bg-opacity-75 text-nowrap transition-all duration-300">
+                bg-subtle bg-opacity-0 backdrop-blur px-4 py-3 text-gray-300 hover:text-white hover:bg-opacity-75 text-nowrap transition-all duration-150">
                     {props.icon&&<FontAwesomeIcon icon={props.icon} />} {props.text}
                 </Link>
                 : <>
                     <p className="flex gap-2 items-center font-now text-sm leading-none rounded-lg cursor-pointer
-                bg-subtle bg-opacity-0 backdrop-blur px-4 py-3 text-gray-300 group-hover:text-white group-hover:bg-opacity-75 transition-all duration-300">
+                bg-subtle bg-opacity-0 backdrop-blur px-4 py-3 text-gray-300 group-hover:text-white group-hover:bg-opacity-75 transition-all duration-150">
                         {props.text}
                         <FontAwesomeIcon className="text-xs" icon={faChevronDown}/>
                     </p>

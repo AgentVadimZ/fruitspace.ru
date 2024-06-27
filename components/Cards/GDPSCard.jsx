@@ -107,6 +107,13 @@ export function DownloadCard(props) {
                         {props.srv.client_macos_url && <img src="/macbook-48.png"
                                                             className="rounded-lg h-[1.75em] p-0.5 hover:bg-[var(--primary-color)] cursor-pointer aspect-square"
                                                             onClick={() => window.location.href = props.srv.client_macos_url}/>}
+
+                        {
+                            !props.srv.client_windows_url && !props.srv.client_android_url && !props.srv.client_ios_url &&
+                            <Button type="primary" onClick={()=>{
+                                api.gdps_manage.upgrade22(props.srvid)
+                            }}>Создать установщики</Button>
+                        }
                     </>)}
                 </div>
             </div>

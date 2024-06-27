@@ -11,7 +11,7 @@ export default function SideBar(props) {
 
     return (
         <div ref={props.sref} className={`flex flex-col items-start h-[calc(100%-var(--nav-height))] fixed top-[var(--nav-height)]
-        transition-all duration-300 left-0 z-50 bg-[var(--active-color)] ${isOpen?"w-48":"w-[var(--nav-height)]"}`}>
+        transition-all duration-300 left-0 z-50 bg-active ${isOpen?"w-48":"w-[var(--nav-height)]"}`}>
             <SideBarContext.Provider value={isOpen}>
                 {props.children}
             </SideBarContext.Provider>
