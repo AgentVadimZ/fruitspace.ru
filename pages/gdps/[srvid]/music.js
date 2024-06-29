@@ -28,7 +28,7 @@ import useLocale from "@/locales/useLocale";
 import GlobalGDPSNav from "@/components/UserZone/GlobalGDPSNav";
 import GDPSNavBar from "@/components/UserZone/GDPSSIdeBar";
 import {useRouter} from "next/router";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import {Input, Pagination, Select, Slider} from "antd";
 import {debounce} from "lodash";
 

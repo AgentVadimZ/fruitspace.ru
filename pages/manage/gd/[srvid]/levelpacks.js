@@ -6,7 +6,7 @@ import {useRouter} from "next/router";
 import * as Gauntlets from "@/assets/gauntlets"
 
 import {Button, Form, Input, Modal, Popconfirm, Select, Table, Slider, InputNumber, ColorPicker} from "antd";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faBrush,

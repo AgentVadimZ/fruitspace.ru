@@ -3,7 +3,7 @@ import GlobalGDPSNav from "@/components/UserZone/GlobalGDPSNav";
 import GDPSNavBar from "@/components/UserZone/GDPSSIdeBar";
 import toast, {Toaster} from "react-hot-toast";
 import {useEffect, useState} from "react";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import PanelContent from "@/components/Global/PanelContent";
 import {useCookies} from "react-cookie";
 import {sha1} from "js-sha1";

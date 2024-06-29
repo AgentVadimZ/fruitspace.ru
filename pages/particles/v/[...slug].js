@@ -4,7 +4,7 @@ import PanelSideNav from "@/components/PanelSideNav";
 import toast, {Toaster} from "react-hot-toast";
 import PanelContent from "@/components/Global/PanelContent";
 import useLocale, {useGlobalLocale} from "@/locales/useLocale";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import useSWR from "swr";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

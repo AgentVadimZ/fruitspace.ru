@@ -13,7 +13,7 @@ import timeIcon from "@/assets/shards/time.png"
 import dayjs from "dayjs";
 import toast, {Toaster} from "react-hot-toast";
 import useLocale from "@/locales/useLocale";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import {InputNumber, TimePicker, Button} from "antd";
 
 

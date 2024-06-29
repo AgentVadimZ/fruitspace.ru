@@ -32,7 +32,7 @@ import {styled} from "@mui/system";
 import ReactPlayer from "react-player";
 import {LoadingButton} from "@mui/lab";
 import useLocale from "@/locales/useLocale";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import {MusicTour} from "@/locales/tours/manage/gd";
 import {FloatButton, Input, Select, Tour, Slider, Pagination} from "antd";
 import {debounce} from "lodash";

@@ -10,20 +10,27 @@ const DISCORD_AUTH = "https://discord.com/oauth2/authorize?client_id=11192403136
 
 
 class api {
-    base_url = "https://api.fruitspace.one/v2/"
-    authorization = ""
+    base_url: string = "https://api.fruitspace.one/v2/"
+    authorization: string = ""
 
-    constructor() {
-        this.qid = Math.random()
-    }
+    auth: auth
+    user: user
+    payments: payments
+    fetch: ufetch
+    servers: servers
+    gdps_manage: gdps_manage
+    gdps_users: gdps_users
+    particles: particles
 
-    doForm = async (endpoint, method = "GET", body = null) => {
+    constructor() {}
+
+    doForm = async (endpoint: string, method: string = "GET", body = null): Promise<Response|any> => {
         return fetch(this.base_url + endpoint,
             {method: method, body: body, headers: {"Authorization": this.authorization}}
         ).then(r => r.json()).catch(e => ({status: "error", message: e.message, code: "conn"}))
     }
 
-    do = async (endpoint, method = "GET", body = null) => {
+    do = async (endpoint: string, method = "GET", body: Object = null): Promise<Response|any> => {
         return fetch(this.base_url + endpoint,
             {
                 method: method,
@@ -57,7 +64,7 @@ const useFiberAPI = (cookie = "token") => {
 
     let xauth = new auth(sapi);
     xauth.logout = () => delCookie(cookie, {path: '/'})
-    xauth.setCookieToken = (token) => setCookie(cookie, token,
+    xauth.setCookieToken = (token: string) => setCookie(cookie, token,
         {path: "/", expires: new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * 30)), secure: true})
 
     sapi.auth = xauth
@@ -71,7 +78,7 @@ const useFiberAPI = (cookie = "token") => {
     return sapi
 }
 
-const serverFiberAPI = (ctx, cookie = "token") => {
+const serverFiberAPI = (ctx: any, cookie = "token") => {
     const cookies = ctx ? parseCookies(ctx.req) : {}
     let sapi = new api()
     sapi.authorization = cookies[cookie] || ""
@@ -90,7 +97,10 @@ const serverFiberAPI = (ctx, cookie = "token") => {
 
 // region  Auth API
 class auth {
-    constructor(apix) {
+    _api: api
+    setCookieToken: (token: string) => void
+
+    constructor(apix: api) {
         this._api = apix
     }
 
@@ -133,7 +143,9 @@ class auth {
 
 // region User API
 class user {
-    constructor(apix) {
+    _api: api
+
+    constructor(apix: api) {
         this._api = apix
     }
 
@@ -182,7 +194,9 @@ class user {
 
 // region Payments API
 class payments {
-    constructor(apix) {
+    _api: api
+
+    constructor(apix: api) {
         this._api = apix
     }
 
@@ -198,7 +212,9 @@ class payments {
 
 // region Fetch API
 class ufetch {
-    constructor(apix) {
+    _api: api
+
+    constructor(apix: api) {
         this._api = apix
     }
 
@@ -224,7 +240,7 @@ class ufetch {
         let v = await fetch('https://launchermeta.mojang.com/mc/game/version_manifest.json').then(r=>r.json())
         let vers=[]
         v.versions.forEach(e=>{
-            e.id.match(/^\d\.[\d]+[\.]*\d$/g)&&vers.push(e.id)
+            e.id.match(/^\d\.\d+[.]*\d$/g)&&vers.push(e.id)
         })
         return vers
     }
@@ -235,7 +251,9 @@ class ufetch {
 
 // region Servers API
 class servers {
-    constructor(apix) {
+    _api: api
+
+    constructor(apix: api) {
         this._api = apix
     }
 
@@ -262,9 +280,12 @@ class servers {
 
 // region GDPS Manage API
 class gdps_manage {
-    constructor(apix) {
+    _api: api
+
+    constructor(apix: api) {
         this._api = apix
     }
+
     delete = async (srvid) => {
         return await this._api.do(`servers/gd/${srvid}`, "DELETE")
     }
@@ -345,9 +366,12 @@ class gdps_manage {
 
 // region GDPS Users API
 class gdps_users {
-    constructor(apix) {
+    _api: api
+
+    constructor(apix: api) {
         this._api = apix
     }
+
     login = async (srvid, uname, password, fcaptcha) => {
         return await this._api.do(`servers/gd/${srvid}/u/login`, "POST", {
             uname: uname,
@@ -357,7 +381,6 @@ class gdps_users {
         })
     }
     get = async (srvid) => {
-        console.log(this._api.qid)
         return await this._api.do(`servers/gd/${srvid}/u`, "GET")
     }
     forgotPassword = async (srvid, email, fcaptcha) => {
@@ -386,7 +409,9 @@ class gdps_users {
 
 // region Particle API
 class particles {
-    constructor(apix) {
+    _api: api
+
+    constructor(apix: api) {
         this._api = apix
     }
 

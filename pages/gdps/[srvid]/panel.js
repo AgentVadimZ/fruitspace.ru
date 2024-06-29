@@ -12,7 +12,7 @@ import diamondsImg from "@/assets/gd/diamond.png"
 import orbsImg from "@/assets/gd/orbs.png"
 import demonImg from "@/assets/gd/demon.png"
 import playImg from "@/assets/gd/play.png"
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import {getBrowserLocale} from "@/components/Hooks";
 import useLocale from "@/locales/useLocale";
 import {Backdrop, TextField} from "@mui/material";

@@ -17,7 +17,7 @@ import PayBox from "@/components/Panel/PayBox";
 import Link from "next/link";
 import useEffectOnce from "@/components/Hooks";
 import useLocale from "@/locales/useLocale";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 
 
 export default function Billing(props) {

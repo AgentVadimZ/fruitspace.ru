@@ -10,7 +10,7 @@ import toast, {Toaster} from "react-hot-toast";
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import SettingsIcon from "@/assets/icons/panel_settings.svg"
 import Link from "next/link";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import {useEffect, useState} from "react";
 import useSWR, {mutate} from "swr";
 

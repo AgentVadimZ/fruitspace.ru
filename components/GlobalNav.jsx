@@ -9,7 +9,7 @@ import MinecraftLogo from "@/assets/logos/minecraft.png"
 import GDLogo from "@/assets/logos/geometrydash.png"
 import {useRouter} from "next/router";
 import {useGlobalLocale} from "@/locales/useLocale";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import {useRecoilState} from "recoil";
 import {userAtom} from "@/fiber/fiber.model";
 import {useState} from "react";

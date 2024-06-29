@@ -5,7 +5,7 @@ import useEffectOnce from "@/components/Hooks";
 import toast, {Toaster} from "react-hot-toast";
 import PanelContent from "@/components/Global/PanelContent";
 import useLocale, {useGlobalLocale} from "@/locales/useLocale";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBell, faChevronRight, faMessage, faRefresh} from "@fortawesome/free-solid-svg-icons";
 import dayjs from "dayjs";

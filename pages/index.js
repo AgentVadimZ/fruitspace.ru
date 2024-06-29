@@ -12,7 +12,7 @@ import Footer from "@/components/Global/Footer";
 import GlobalHead from "@/components/GlobalHead";
 import useLocale, {useGlobalLocale} from "@/locales/useLocale";
 import Link from "next/link";
-import {serverFiberAPI} from "@/fiber/fiber";
+import {serverFiberAPI} from "@/fiber/fiber.ts";
 import {useRef} from "react";
 import {BetaData} from '@/components/betadata';
 import {Rate, Carousel} from "antd";

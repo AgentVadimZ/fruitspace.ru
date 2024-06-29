@@ -11,7 +11,7 @@ import RightSvg from "@/assets/icons/right.svg";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import NavItem from "@/components/NavBar/NavItem";
 import {useEffect, useState} from "react";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import {PlusOne} from "@mui/icons-material";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";

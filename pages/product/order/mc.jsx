@@ -7,7 +7,7 @@ import {Button, Backdrop, MenuItem, Switch, TextField} from "@mui/material";
 import {useEffect, useState} from "react";
 import {TabsList, TabPanel, Tab} from "@/components/Global/Tab";
 import {Form, Input, Select} from "antd";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import semver from "semver";
 import BackgroundMC from "@/assets/MCOrderBG.png"
 import toast, {Toaster} from "react-hot-toast";

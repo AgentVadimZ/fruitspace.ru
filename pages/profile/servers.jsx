@@ -10,7 +10,7 @@ import ServerItem from "@/components/Cards/ServerItem";
 import useEffectOnce from "@/components/Hooks";
 import toast from "react-hot-toast";
 import useLocale, {useGlobalLocale} from "@/locales/useLocale";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHardDrive, faMemory, faMicrochip} from "@fortawesome/free-solid-svg-icons";
 

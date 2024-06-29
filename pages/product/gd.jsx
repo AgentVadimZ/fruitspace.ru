@@ -42,7 +42,7 @@ import {
     faZap
 } from "@fortawesome/free-solid-svg-icons";
 import {useRef} from "react";
-import {serverFiberAPI} from "@/fiber/fiber";
+import {serverFiberAPI} from "@/fiber/fiber.ts";
 
 import ScreenshotGaus from "@/assets/screenshots/gd_gaus2.png"
 import TariffPS from "@/assets/features/gd_pressstart.svg"

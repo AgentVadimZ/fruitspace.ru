@@ -7,7 +7,7 @@ import {useEffect, useState} from "react";
 import useEffectOnce from "@/components/Hooks";
 import toast, {Toaster} from "react-hot-toast";
 import useLocale, {useGlobalLocale} from "@/locales/useLocale";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import Link from 'next/link';
 import TariffPS from "@/assets/features/gd_pressstart.svg";
 import {
