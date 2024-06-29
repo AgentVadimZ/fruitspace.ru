@@ -21,7 +21,7 @@ import {
 
 const doGJP2 = (text) => sha1(`${text}mI29fmAnxgTs`)
 
-const GOURL = (url)=>`https://api.fruitspace.one/v2/servers/xxxx/u/gdproxy/${url}`
+const GOURL = (url)=>`https://api.fruitspace.one/v2/servers/gd/xxxx/u/gdproxy/${url}`
 
 
 const parseGD = (text) => text.split("|").map(val => val.split(":"))
