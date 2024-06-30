@@ -43,8 +43,8 @@ class api {
 
 // region API
 
-
-const useLoader = (loader) => {
+// @Deprecated
+const useLoader = (loader: any) => {
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState({})
     useEffect(() => {
@@ -106,7 +106,7 @@ class auth {
 
     logout = () => {
     }
-    login = async (uname, password, hcaptcha, totp = "") => {
+    login = async (uname: string, password: string, hcaptcha: string, totp = "") => {
         return await this._api.do("auth/login", "POST", {
             uname: uname,
             password: password,
@@ -114,7 +114,7 @@ class auth {
             totp: totp
         })
     }
-    register = async (uname, name, surname, email, password, hcaptcha, lang) => {
+    register = async (uname: string, name: string, surname: string, email: string, password: string, hcaptcha: string, lang = "ru") => {
         return await this._api.do("auth/register", "POST", {
             uname: uname,
             name: name,
@@ -125,7 +125,7 @@ class auth {
             lang: lang
         })
     }
-    recover = async (email, hcaptcha, lang) => {
+    recover = async (email: string, hcaptcha: string, lang: string) => {
         return await this._api.do("auth/recover", "POST", {
             email: email,
             hCaptchaToken: hcaptcha,
@@ -155,19 +155,22 @@ class user {
     useUser = () => {
         return useRecoilState(userAtom)
     }
-    updateName = async (name, surname) => {
+    getNotifications = async () => {
+        return await this._api.do("user/notifications", "GET")
+    }
+    updateName = async (name: string, surname: string) => {
         return await this._api.do("user", "PATCH", {
             name: name,
             surname: surname
         })
     }
-    updatePassword = async (password, new_password) => {
+    updatePassword = async (password: string, new_password: string) => {
         return await this._api.do("user", "PATCH", {
             password: password,
             new_password: new_password
         })
     }
-    updateTOTP = async (totp) => {
+    updateTOTP = async (totp: string) => {
         return await this._api.do("user", "PATCH", {
             totp: totp
         })
@@ -177,7 +180,7 @@ class user {
         datax.append("reset", "reset")
         return await this._api.doForm("user/avatar", "POST", datax)
     }
-    updateAvatar = async (avatar_file) => {
+    updateAvatar = async (avatar_file: Blob|any) => {
         let datax = new FormData()
         datax.append("profile_pic", avatar_file)
         return await this._api.doForm("user/avatar", "POST", datax)
@@ -200,7 +203,7 @@ class payments {
         this._api = apix
     }
 
-    new = async (amount, merchant) => {
+    new = async (amount: number, merchant: string) => {
         return await this._api.do("payments", "POST", {amount: amount, merchant: merchant})
     }
     get = async () => {
@@ -228,7 +231,7 @@ class ufetch {
     gdpsTop = async (page = 0) => {
         return await this._api.do(`fetch/gd/top?offset=${page}`, "GET")
     }
-    gdpsGet = async (srvid) => {
+    gdpsGet = async (srvid: string) => {
         return await this._api.do(`fetch/gd/info/${srvid}`, "GET")
     }
 

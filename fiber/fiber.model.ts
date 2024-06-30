@@ -7,6 +7,7 @@ type Notification = {
     target_uid: number
     title: string
     text: string
+    img?: string
     send_date: string
     expire_date: string
     user_read: boolean
@@ -27,9 +28,8 @@ type UserModel = {
     is_partner: boolean
     is_admin: boolean
     is_2fa: boolean
-    notifications?: Notification[]
 
-    servers?: Object,
+    servers?: Object
     top_servers?: Object
 }
 
@@ -95,14 +95,14 @@ type ServerGDModel = {
     m_stat_history?: Object
     icon: string
     description: string
-    text_align: number,
-    visits: number,
-    discord: string,
-    vk: string,
-    is_space_music: boolean,
-    is_22: boolean,
-    is_custom_textures: boolean,
-    version: string,
+    text_align: number
+    visits: number
+    discord: string
+    vk: string
+    is_space_music: boolean
+    is_22: boolean
+    is_custom_textures: boolean
+    version: string
     recipe: string
 }
 
