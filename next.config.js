@@ -26,22 +26,6 @@ const nextConfig = {
       ],
     },
   ],
-  i18n: {
-    locales: ['en', 'ru'],
-    defaultLocale: 'ru',
-    localeDetection: false,
-
-    domains: [
-      {
-        domain: 'fruitspace.ru',
-        defaultLocale: 'ru',
-      },
-      {
-        domain: 'fruitspace.one',
-        defaultLocale: 'en'
-      }
-    ]
-  },
   output: "standalone",
   // transpilePackages: [
   //     '@ant-design',

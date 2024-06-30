@@ -34,7 +34,7 @@ export default function useLocale(router) {
     let ts = translationList[router.pathname]
 
     return {
-        locale: router.locale,
+        locale: "ru",
         path: router.pathname,
         translations: ts===undefined?{}:ts,
 
@@ -44,7 +44,7 @@ export default function useLocale(router) {
 
 export function useGlobalLocale(router) {
     return {
-        locale: router.locale,
+        locale: "ru",
         path: router.pathname,
         translations: globalLocale,
 
