@@ -7,7 +7,7 @@ type Notification = {
     target_uid: number
     title: string
     text: string
-    img?: string
+    image?: string
     send_date: string
     expire_date: string
     user_read: boolean

@@ -13,9 +13,9 @@ export default function SetGDPSToken(props) {
 
     if (router.query.token) {
         if (tokens[srvid]) {
-            tokens[srvid][defaultId] = resp.token
+            tokens[srvid][defaultId] = router.query.token
         } else {
-            tokens[srvid] = [resp.token]
+            tokens[srvid] = [router.query.token]
         }
         if (tokens.default) {
             tokens.default[srvid] = defaultId

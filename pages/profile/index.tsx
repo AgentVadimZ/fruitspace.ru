@@ -10,8 +10,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBell, faChevronRight, faMessage, faRefresh, faShop, faWallet} from "@fortawesome/free-solid-svg-icons";
 import dayjs from "dayjs";
 import {useEffect, useState} from "react";
-import {Modal} from "antd";
+import {Modal, Image} from "antd";
 import {Notification} from "@/fiber/fiber.model";
+import Linkify from "linkify-react";
 
 
 export default function Index(props: any){
@@ -28,8 +29,8 @@ export default function Index(props: any){
 
     const [viewPost, setViewPost] = useState<Notification|boolean|any>(false)
 
-    const prettyPrint = (num: number) => new Intl.NumberFormat(user.usd ? 'en-US' : 'ru-RU',
-        {style: 'currency', currency: user.usd ? "USD" : "RUB"}).format(num).replace(/[.|,]00/g, '')
+    const prettyPrint = (num: number) => new Intl.NumberFormat('ru-RU',
+        {style: 'currency', currency:  "RUB"}).format(num).replace(/[.|,]00/g, '')
 
 
     const getNotifications = ()=>{
@@ -83,7 +84,7 @@ export default function Index(props: any){
                     </div>
                     <div className="flex flex-col">
                         {notifications && notifications.length > 0
-                            ? notifications.map((post, i) => (
+                            ? notifications.toReversed().map((post, i) => (
                                 <div key={i} className="select-none border-1 border-transparent hover:border-white hover:border-opacity-25
                              hover:cursor-pointer relative flex gap-4 items-center p-4 rounded-lg overflow-x-hidden"
                             onClick={()=>setViewPost(post)}>
@@ -106,7 +107,7 @@ export default function Index(props: any){
         <Modal open={viewPost} title={viewPost?.title} onCancel={()=>setViewPost(false)}
         footer={null}>
             <div className="flex flex-col gap-4">
-                {viewPost.img && <img src={viewPost.img} className="w-full rounded-lg"/>}
+                {viewPost.image && <Image preview={{toolbarRender:()=>null}} src={viewPost.image} className="w-full rounded-lg"/>}
                 <div className="flex justify-between items-center">
                     <p className="text-gray-300 text-xs px-2 py-1 rounded-full glassb">
                         {viewPost.send_date && dayjs(viewPost.send_date).format("DD.MM.YYYY HH:mm")}
@@ -116,7 +117,9 @@ export default function Index(props: any){
                     </p>
                 </div>
                 <p className="w-3/4 h-[1px] bg-white bg-opacity-25 mx-auto" />
-                <p className="whitespace-pre text-wrap text-sm text-gray-300">{viewPost.text}</p>
+                <p className="whitespace-pre text-wrap text-sm text-gray-300 linkified">
+                    <Linkify>{viewPost.text}</Linkify>
+                </p>
             </div>
         </Modal>
     </>;
