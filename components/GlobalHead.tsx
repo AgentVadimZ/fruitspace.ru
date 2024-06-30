@@ -2,7 +2,18 @@ import Head from 'next/head'
 
 import banner from "@/assets/banner.png"
 
-export default function GlobalHead(props) {
+type HeadProps = {
+    og?: {
+        title?: string
+        description?: string
+        type?: string
+        url?: string
+        image?: string
+    }
+    description?: string
+}
+
+export default function GlobalHead(props: HeadProps) {
     const domain = "https://openbeta.fruitspace.ru"
     let og = {
         title: "FruitSpace",
