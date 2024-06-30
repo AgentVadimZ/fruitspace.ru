@@ -10,7 +10,7 @@ import useEffectOnce from "@/components/Hooks";
 import useLocale from "@/locales/useLocale";
 import ProgressCard from "@/components/Cards/ProgressCard";
 import GDPSCard, {DownloadCard} from "@/components/Cards/GDPSCard";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import {mutate} from "swr";
 import {IndexTour} from "@/locales/tours/manage/gd";
 import {FloatButton, Tour} from "antd";
@@ -34,6 +34,7 @@ export default function ManageGD(props) {
     useEffectOnce(()=>{
         toast.dismiss()
     })
+
 
     const locale = useLocale(props.router)
 

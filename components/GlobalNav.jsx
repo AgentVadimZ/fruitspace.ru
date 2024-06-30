@@ -9,7 +9,7 @@ import MinecraftLogo from "@/assets/logos/minecraft.png"
 import GDLogo from "@/assets/logos/geometrydash.png"
 import {useRouter} from "next/router";
 import {useGlobalLocale} from "@/locales/useLocale";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import {useRecoilState} from "recoil";
 import {userAtom} from "@/fiber/fiber.model";
 import {useState} from "react";
@@ -49,8 +49,7 @@ const links = [
         items: [
             {
                 text: "Документация",
-                // link: "/docs",
-                link: "https://fruitspace.gitbook.io/gdps_docs",
+                link: "/docs",
                 icon: faLayerGroup
             },
             {
@@ -103,7 +102,7 @@ export default function GlobalNav(props) {
                 </HideOn>
             }
 
-            <div className="hidden lg:flex items-center gap-2 rounded-xl backdrop-blur bg-active bg-opacity-50">
+            <div className={`hidden lg:flex items-center gap-2 rounded-xl backdrop-blur bg-active bg-opacity-50 ${props.mainpage?"glassb":""}`}>
                 {
                     links.map((item, i) => NavLink({...item, key: i}))
                 }
@@ -189,7 +188,7 @@ export default function GlobalNav(props) {
                         Войти
                     </Link>}
                 <div className="relative lg:hidden">
-                    <p className="flex justify-center items-center h-12 w-12 rounded-xl backdrop-blur bg-subtle bg-opacity-50 -mr-2"
+                    <p className="flex justify-center items-center h-11 w-11 rounded-xl backdrop-blur bg-subtle bg-opacity-50 -mr-2"
                     onClick={()=>setDrawer(true)}>
                         <FontAwesomeIcon className="text-lg" icon={faBars}/>
                     </p>
@@ -212,12 +211,12 @@ const NavLink = (props) => {
         {
             props.link
                 ? <Link href={props.link} className="flex gap-2 items-center font-now text-sm leading-none rounded-lg cursor-pointer
-                bg-subtle bg-opacity-75 backdrop-blur p-2 text-gray-300 hover:text-white hover:bg-opacity-100 text-nowrap">
+                bg-subtle bg-opacity-0 backdrop-blur px-4 py-3 text-gray-300 hover:text-white hover:bg-opacity-75 text-nowrap transition-all duration-150">
                     {props.icon&&<FontAwesomeIcon icon={props.icon} />} {props.text}
                 </Link>
                 : <>
                     <p className="flex gap-2 items-center font-now text-sm leading-none rounded-lg cursor-pointer
-                bg-subtle bg-opacity-75 backdrop-blur p-2 text-gray-300 group-hover:text-white group-hover:bg-opacity-100">
+                bg-subtle bg-opacity-0 backdrop-blur px-4 py-3 text-gray-300 group-hover:text-white group-hover:bg-opacity-75 transition-all duration-150">
                         {props.text}
                         <FontAwesomeIcon className="text-xs" icon={faChevronDown}/>
                     </p>

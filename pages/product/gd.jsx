@@ -18,7 +18,6 @@ import {Button} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faArrowDown,
-    faArrowUpRightFromSquare,
     faBarsProgress,
     faChartSimple, faChevronRight,
     faCloudArrowDown,
@@ -33,7 +32,6 @@ import {
     faPaintbrush,
     faPlay,
     faPlus,
-    faServer,
     faShop,
     faStar,
     faStopwatch20,
@@ -44,7 +42,7 @@ import {
     faZap
 } from "@fortawesome/free-solid-svg-icons";
 import {useRef} from "react";
-import {serverFiberAPI} from "@/fiber/fiber";
+import {serverFiberAPI} from "@/fiber/fiber.ts";
 
 import ScreenshotGaus from "@/assets/screenshots/gd_gaus2.png"
 import TariffPS from "@/assets/features/gd_pressstart.svg"
@@ -109,7 +107,7 @@ export default function GD(props) {
 
                 <div className="flex flex-col-reverse lg:flex-row select-none">
                     <div className="flex flex-col p-8 flex-1">
-                        <p className="font-mono">простая и функиональная</p>
+                        <p className="font-mono">простая и функциональная</p>
                         <p className="text-5xl uppercase font-semibold">панель</p>
                         <div className="h-96 py-4 text-lg max-w-3xl flex flex-col gap-4">
                             <p>
@@ -142,7 +140,7 @@ export default function GD(props) {
                     </div>
                 </div>
 
-                <div className="mt-8 select-none">
+                <div className="mt-16 select-none">
                     <p className="text-center font-mono">полный</p>
                     <p className="text-5xl uppercase font-semibold text-center">кастом</p>
                     <p className="text-center ">хостинг построен с нуля специально для Geometry Dash</p>
@@ -187,7 +185,7 @@ export default function GD(props) {
                     </div>
                 </div>
 
-                <div className="mt-16 select-none">
+                <div className="mt-24 select-none">
                     <p className="text-5xl uppercase font-semibold text-center">тарифы</p>
                     <p className="text-center font-mono">на любой вкус</p>
                     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mt-8 w-fit mx-auto">
@@ -217,7 +215,7 @@ export default function GD(props) {
                         </div>
 
                         <div
-                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 lg:w-96">
+                            className="flex items-center flex-col gap-4 bg-active glassb rounded-2xl p-4 lg:w-96">
                             <TariffSG className="w-32 border-white border-2"/>
                             <p className="text-2xl font-semibold font-avant uppercase -mt-3 tracking-wide">
                                 Singularity
@@ -273,7 +271,7 @@ export default function GD(props) {
                     </p>
                 </div>
 
-                <div className="mt-16 select-none">
+                <div className="mt-24 select-none">
                     <p className="text-5xl uppercase font-semibold text-center">Остались вопросы?</p>
                     <p className="text-center font-mono">Напишите нам!</p>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 p-8">

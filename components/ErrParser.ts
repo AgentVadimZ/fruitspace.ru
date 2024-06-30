@@ -1,6 +1,6 @@
 
 
-const ParseError = (err, message="")=> {
+const ParseError = (err: string, message: string = ""): string => {
     switch (err){
         case "eml": return "Неверный формат email"
         case "uname_shrt": return "Слишком короткий логин (необходимо 5+ символов)"

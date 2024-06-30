@@ -15,7 +15,7 @@ import modElderBadge from "@/assets/gd/mod-elder.png"
 import modListBadge from "@/assets/gd/mod-leaderboard.png"
 import toast, {Toaster} from "react-hot-toast";
 import dynamic from "next/dynamic";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import {
     Button,
     FloatButton,

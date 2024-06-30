@@ -3,7 +3,7 @@ import GlobalGDPSNav from "@/components/UserZone/GlobalGDPSNav";
 import GDPSNavBar from "@/components/UserZone/GDPSSIdeBar";
 import toast, {Toaster} from "react-hot-toast";
 import {useEffect, useState} from "react";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import PanelContent from "@/components/Global/PanelContent";
 import {useCookies} from "react-cookie";
 import {sha1} from "js-sha1";
@@ -21,7 +21,7 @@ import {
 
 const doGJP2 = (text) => sha1(`${text}mI29fmAnxgTs`)
 
-const GOURL = (url)=>`https://api.fruitspace.one/v2/servers/xxxx/u/gdproxy/${url}`
+const GOURL = (url)=>`https://api.fruitspace.one/v2/servers/gd/xxxx/u/gdproxy/${url}`
 
 
 const parseGD = (text) => text.split("|").map(val => val.split(":"))

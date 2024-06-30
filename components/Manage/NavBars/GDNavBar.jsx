@@ -12,7 +12,7 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 import useEffectOnce from "@/components/Hooks";
 import {useGlobalLocale} from "@/locales/useLocale";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import SideItem from "@/components/NavBar/SideItem";
 
 

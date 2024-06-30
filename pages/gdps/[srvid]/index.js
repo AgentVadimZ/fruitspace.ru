@@ -9,7 +9,7 @@ import {Backdrop, TextField} from "@mui/material";
 import toast, {Toaster} from "react-hot-toast";
 import {getBrowserLocale} from "@/components/Hooks";
 import Linkify from "linkify-react";
-import useFiberAPI, {serverFiberAPI} from "@/fiber/fiber";
+import useFiberAPI, {serverFiberAPI} from "@/fiber/fiber.ts";
 import GlobalHead from "@/components/GlobalHead";
 import {useCaptchaHook} from "@aacn.eu/use-friendly-captcha";
 import {Button, ConfigProvider, Form, Input} from "antd";

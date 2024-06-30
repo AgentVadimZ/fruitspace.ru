@@ -14,7 +14,7 @@ import toast, {Toaster} from "react-hot-toast";
 import {useRouter} from "next/router";
 import useEffectOnce from "@/components/Hooks";
 import useLocale, {useGlobalLocale} from "@/locales/useLocale";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDiscord} from "@fortawesome/free-brands-svg-icons";
 import {Button, Form, Input, Popover} from "antd";

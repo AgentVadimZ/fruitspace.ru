@@ -32,7 +32,7 @@ import {styled} from "@mui/system";
 import ReactPlayer from "react-player";
 import {LoadingButton} from "@mui/lab";
 import useLocale from "@/locales/useLocale";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import {MusicTour} from "@/locales/tours/manage/gd";
 import {FloatButton, Input, Select, Tour, Slider, Pagination} from "antd";
 import {debounce} from "lodash";
@@ -168,7 +168,7 @@ export default function MusicGD(props) {
                         <p className="bg-active text-sm rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
                                         relative z-20 -mb-[1px]">Загрузить музыку</p>
                         <div
-                            className="bg-active flex gap-2 items-center p-2 rounded-xl rounded-tl-none border-1 border-white border-opacity-25 z-10 overflow-y-scroll">
+                            className="bg-active flex gap-2 items-center p-2 rounded-xl rounded-tl-none border-1 border-white border-opacity-25 z-10 overflow-x-scroll">
                             <img src={LogoNG.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
                                  onClick={() => setBackdrop("add-ng")}/>
                             {srv.Srv.plan > 1 && <img src={LogoYT.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"

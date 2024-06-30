@@ -17,7 +17,7 @@ import toast, {Toaster} from "react-hot-toast";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAndroid, faApple, faDiscord, faVk, faWindows} from "@fortawesome/free-brands-svg-icons";
 import useLocale, {useGlobalLocale} from "@/locales/useLocale";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import {
     faAlignCenter,
     faAlignLeft, faAlignRight, faBrush, faCog,
@@ -743,14 +743,16 @@ export default function SettingsGD(props) {
                             ...buildlab, android: val,
                         })}/>
                     </div>
-                    <div className="flex gap-4 items-center justify-between">
-                        <p className="flex items-center gap-2">
-                            <FontAwesomeIcon icon={faApple}/> iOS
-                        </p>
-                        <Switch checked={buildlab.ios} onChange={(val) => setBuildlab({
-                            ...buildlab, ios: val,
-                        })}/>
-                    </div>
+                    {srv.Tariff?.GDLab.IOS &&
+                        <div className="flex gap-4 items-center justify-between">
+                            <p className="flex items-center gap-2">
+                                <FontAwesomeIcon icon={faApple}/> iOS
+                            </p>
+                            <Switch checked={buildlab.ios} onChange={(val) => setBuildlab({
+                                ...buildlab, ios: val,
+                            })}/>
+                        </div>
+                    }
                 </div>
             </div>
             {/*{srv.Tariff && srv.Tariff.GDLab.Textures*/}

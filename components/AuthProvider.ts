@@ -2,9 +2,16 @@ import {useRecoilState} from "recoil";
 import useFiberAPI from "@/fiber/fiber";
 import {userAtom} from "@/fiber/fiber.model";
 import useSWR from "swr";
+import {NextRouter} from "next/router";
+import {ReactNode} from "react";
 
+type AuthProviderArgs = {
+    RequireAuth: boolean
+    children?: ReactNode
+    router: NextRouter
+}
 
-export default function AuthProvider({RequireAuth, children, router}) {
+export default function AuthProvider({RequireAuth, children, router}: AuthProviderArgs): ReactNode {
     const api = useFiberAPI()
     const [user, setUser] = useRecoilState(userAtom)
 

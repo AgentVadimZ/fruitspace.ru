@@ -26,7 +26,7 @@ import {
 import {faContao} from "@fortawesome/free-brands-svg-icons";
 import {useEffect, useState} from "react";
 import Skeleton from '@mui/material/Skeleton';
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import {Select, Pagination, Empty} from "antd";
 
 

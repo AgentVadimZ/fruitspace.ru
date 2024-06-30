@@ -1,0 +1,12 @@
+{
+  "docs" : {
+    "title": "Документация",
+    "type": "page"
+  },
+  "*": {
+    "display": "hidden",
+    "theme": {
+      "layout": "raw"
+    }
+  }
+}

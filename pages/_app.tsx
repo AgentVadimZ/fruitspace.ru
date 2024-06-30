@@ -36,7 +36,6 @@ export default function WebApp({Component, pageProps}) {
                             activeShadow: "0 0 0 1px #0d6efd",
                         },
                         Select: {
-                            activeShadow: "0 0 0 1px #0d6efd",
                             colorBgElevated: "var(--subtle-color)",
                             optionSelectedBg: "var(--btn-color)"
                         },
@@ -45,7 +44,7 @@ export default function WebApp({Component, pageProps}) {
                             colorPrimaryHover: "rgb(30 64 175)"
                         },
                         Menu: {
-                            itemHeight: "4rem"
+                            itemHeight: 64 // px
                         },
                         Modal: {
                             contentBg: "#1f1f1fdd",

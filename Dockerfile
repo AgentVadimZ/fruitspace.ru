@@ -28,8 +28,8 @@ ENV NEXT_TELEMETRY_DISABLED 1
 ENV NODE_ENV production
 ENV MSG_ENV=$MSG
 RUN export DATE=$(date +"%d.%m.%Y %H:%M") && \
-    sed -i "s/false/true/g" components/betadata.js && \
-    sed -i "s/DATE/$DATE/g" components/betadata.js
+    sed -i "s/false/true/g" components/betadata.ts && \
+    sed -i "s/DATE/$DATE/g" components/betadata.ts
 RUN yarn global add pnpm && pnpm build
 
 # If using npm comment out above and use below instead

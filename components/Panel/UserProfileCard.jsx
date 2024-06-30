@@ -10,7 +10,7 @@ import {Visibility, VisibilityOff} from "@mui/icons-material";
 import useLocale, {useGlobalLocale} from "@/locales/useLocale";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDiscord} from "@fortawesome/free-brands-svg-icons";
-import useFiberAPI from "@/fiber/fiber";
+import useFiberAPI from "@/fiber/fiber.ts";
 import {Button, Input, List} from "antd";
 import useSWR, {mutate} from "swr";
 import {faKey} from "@fortawesome/free-solid-svg-icons";
