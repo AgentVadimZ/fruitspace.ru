@@ -2,7 +2,7 @@
 
 import {useCookies} from "react-cookie";
 import {useRecoilState} from "recoil";
-import {serverGDAtom, userAtom} from "./fiber.model.js";
+import {serverGDAtom, userAtom} from "./fiber.model";
 import {parseCookies} from "./cockie_parser";
 import {useEffect, useState} from "react";
 

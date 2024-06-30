@@ -36,7 +36,7 @@ job "FruitSpace-Beta-Deployment" {
       min_healthy_time = "30s"
       healthy_deadline = "5m"
       auto_revert      = true
-      auto_promote     = false
+      auto_promote     = true
     }
 
     task "next-node" {

@@ -1,14 +1,28 @@
 import {useRouter} from "next/router";
 import {useCookies} from "react-cookie";
+import useFiberAPI from "@/fiber/fiber";
 
 
 export default function SetGDPSToken(props) {
     const router = useRouter()
     const srvid = router.query.srvid
-    const [cookies, setCookie, removeCookie] = useCookies([`acc${srvid}`])
+
+    const api = useFiberAPI(`gdps_token`)
+    let tokens = api.authorization||{}
+    const defaultId = tokens.default?.[srvid] || 0
+
     if (router.query.token) {
-        setCookie(`acc${srvid}`,router.query.token,
-            {path:"/",expires:new Date(new Date().getTime()+(1000*60*60*24*30)), secure:true})
+        if (tokens[srvid]) {
+            tokens[srvid][defaultId] = resp.token
+        } else {
+            tokens[srvid] = [resp.token]
+        }
+        if (tokens.default) {
+            tokens.default[srvid] = defaultId
+        } else {
+            tokens.default = {[srvid]: defaultId}
+        }
+        api.auth.setCookieToken(JSON.stringify(tokens))
         router.push(`/gdps/${srvid}/panel`)
     }
     return (
