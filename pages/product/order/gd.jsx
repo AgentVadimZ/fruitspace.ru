@@ -323,8 +323,7 @@ export default function Order(props) {
                 <Segmented rootClassName="bg-subtle select-none w-fit" options={payOptions}
                            value={srv.payDuration} onChange={(val) => setSrv({...srv, payDuration: val})}/>
 
-
-                {srvData.Srv&&createCards(srv.payDuration)}
+                {createCards(srv.payDuration)}
             </div>
         </div>
         <p className="mx-auto w-fit my-4 text-gray-300">
