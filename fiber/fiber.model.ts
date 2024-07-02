@@ -29,7 +29,11 @@ type UserModel = {
     is_admin: boolean
     is_2fa: boolean
 
-    servers?: Object
+    servers?: {
+        gd?: any
+        mc?: any
+        cs?: any
+    }
     top_servers?: Object
 }
 

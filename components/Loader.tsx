@@ -1,7 +1,7 @@
 import {CircularProgress, circularProgressClasses} from "@mui/material";
 
 
-export default function Loader(props) {
+export default function Loader({size=64, thickness=4}: {size?: number, thickness?: number}) {
     return <CircularProgress
         variant="indeterminate"
         disableShrink
@@ -12,7 +12,7 @@ export default function Loader(props) {
                 strokeLinecap: 'round',
             },
         }}
-        size={props.size||64}
-        thickness={props.thickness||4}
+        size={size}
+        thickness={thickness}
     />
 }

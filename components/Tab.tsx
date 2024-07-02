@@ -1,9 +1,21 @@
 import {Segmented} from "antd";
-import {useState} from "react";
-import {ConfigProvider, theme} from "antd";
+import {ReactNode, useState} from "react";
 
 
-const Tab = ({addbtn, defaultTab, onChange, tabs}) => {
+type TabProps = {
+    addbtn?: ReactNode
+    defaultTab?: string
+    onChange?: (value: string) => void
+    tabs?: {
+        key: string
+        label: string
+        icon?: ReactNode
+        children: ReactNode
+        disabled?: boolean
+    }[]
+}
+
+const Tab = ({addbtn, defaultTab, onChange, tabs}: TabProps) => {
 
     const tabItems = tabs?.map((tab)=>{
         return {
@@ -14,7 +26,7 @@ const Tab = ({addbtn, defaultTab, onChange, tabs}) => {
         }
     })||[]
 
-    const contentItems = tabs?.reduce((prev,cur)=>({...prev, [cur.key]: cur.children}), {})||{}
+    const contentItems = tabs?.reduce((prev, cur)=>({...prev, [cur.key]: cur.children}), {})||{}
 
     const [activeTab, setActiveTab] = useState(defaultTab||tabItems[0].value)
 

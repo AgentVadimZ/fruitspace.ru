@@ -9,7 +9,7 @@ import MinecraftLogo from "@/assets/logos/minecraft.png"
 import GDLogo from "@/assets/logos/geometrydash.png"
 import {useRouter} from "next/router";
 import {useGlobalLocale} from "@/locales/useLocale";
-import useFiberAPI from "@/fiber/fiber.ts";
+import useFiberAPI from "@/fiber/fiber";
 import {useRecoilState} from "recoil";
 import {userAtom} from "@/fiber/fiber.model";
 import {useState} from "react";
@@ -17,7 +17,6 @@ import {HideOn} from "react-hide-on-scroll";
 import {Button, Drawer} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-    faBurger,
     faChevronDown,
     faChevronRight,
     faCircleDollarToSlot, faCube, faLayerGroup, faNewspaper,
@@ -26,6 +25,7 @@ import {
     faWallet
 } from "@fortawesome/free-solid-svg-icons";
 import {faBars} from "@fortawesome/free-solid-svg-icons/faBars";
+import {IconProp} from "@fortawesome/fontawesome-svg-core";
 
 
 const links = [
@@ -63,14 +63,14 @@ const links = [
         text: "О FruitSpace",
         link: "/about"
     }
-]
+] as NavLinkProps[]
 
 
-export default function GlobalNav(props) {
+export default function GlobalNav({mainpage}: {mainpage?: boolean}) {
 
     const api = useFiberAPI()
 
-    const [user, setUser] = useRecoilState(userAtom)
+    const [user] = useRecoilState(userAtom)
     // const user = userModel
     const router = useRouter()
 
@@ -82,27 +82,27 @@ export default function GlobalNav(props) {
 
     const getRegionalPostfix = localeGlobal.get('funcShowServers')
 
-    const prettyPrint = (num) => new Intl.NumberFormat(user.usd ? 'en-US' : 'ru-RU',
-        {style: 'currency', currency: user.usd ? "USD" : "RUB"}).format(num).replace(/[.|,]00/g, '')
+    const prettyPrint = (num) => new Intl.NumberFormat('ru-RU',
+        {style: 'currency', currency: "RUB"}).format(num).replace(/[.|,]00/g, '')
 
     const [open, setOpen] = useState(false)
 
     const [drawer, setDrawer] = useState(false)
 
     return (
-        <NavBar mainpage={props.mainpage}>
+        <NavBar mainpage={mainpage}>
             <Link href={"/"} legacyBehavior>
-                {props.mainpage ? <img src={logo_sm.src} alt="logo" className={styles.logo}/>
+                {mainpage ? <img src={logo_sm.src} alt="logo" className={styles.logo}/>
                     : <img src={logo.src} alt="logo" className="h-8 ml-1 cursor-pointer"/>}
             </Link>
-            {(props.mainpage && !['/', ''].includes(router.pathname)) &&
+            {(mainpage && !['/', ''].includes(router.pathname)) &&
                 <HideOn atHeight height={120}>
                     <Link href="/"
                           className="fixed top-4 xl:top-3 left-16 hidden md:block md:text-2xl xl:text-3xl font-[Coolvetica] tracking-wider font-normal fruitText m-0 select-none">FruitSpace</Link>
                 </HideOn>
             }
 
-            <div className={`hidden lg:flex items-center gap-2 rounded-xl backdrop-blur bg-active bg-opacity-50 ${props.mainpage?"glassb":""}`}>
+            <div className={`hidden lg:flex items-center gap-2 rounded-xl backdrop-blur bg-active bg-opacity-50 ${mainpage?"glassb":""}`}>
                 {
                     links.map((item, i) => NavLink({...item, key: i}))
                 }
@@ -206,23 +206,32 @@ export default function GlobalNav(props) {
     );
 }
 
-const NavLink = (props) => {
-    return <div className={`relative group ${props.inner?"p-0":"p-2"}`} key={props.key}>
+type NavLinkProps = {
+    key: number
+    inner?: boolean
+    icon?: IconProp
+    link?: string
+    text: string
+    items?: NavLinkProps[]
+}
+
+const NavLink = ({key, inner, icon, link, text, items}: NavLinkProps) => {
+    return <div className={`relative group ${inner?"p-0":"p-2"}`} key={key}>
         {
-            props.link
-                ? <Link href={props.link} className="flex gap-2 items-center font-now text-sm leading-none rounded-lg cursor-pointer
+            link
+                ? <Link href={link} className="flex gap-2 items-center font-now text-sm leading-none rounded-lg cursor-pointer
                 bg-subtle bg-opacity-0 backdrop-blur px-4 py-3 text-gray-300 hover:text-white hover:bg-opacity-75 text-nowrap transition-all duration-150">
-                    {props.icon&&<FontAwesomeIcon icon={props.icon} />} {props.text}
+                    {icon&&<FontAwesomeIcon icon={icon} />} {text}
                 </Link>
                 : <>
                     <p className="flex gap-2 items-center font-now text-sm leading-none rounded-lg cursor-pointer
                 bg-subtle bg-opacity-0 backdrop-blur px-4 py-3 text-gray-300 group-hover:text-white group-hover:bg-opacity-75 transition-all duration-150">
-                        {props.text}
+                        {text}
                         <FontAwesomeIcon className="text-xs" icon={faChevronDown}/>
                     </p>
                     <div className="hidden group-hover:flex flex-col bg-[#1a1a20] glassb rounded-xl
                     absolute top-full left-2 z-[9999] p-2 gap-2 min-w-40">
-                        {props.items?.map((item, i)=>NavLink({...item, key: i, inner: true}))}
+                        {items?.map((item, i)=>NavLink({...item, key: i, inner: true}))}
                     </div>
 
                 </>
@@ -230,20 +239,20 @@ const NavLink = (props) => {
     </div>
 }
 
-const DrawerLink = (props) => {
-    return props.link
-        ? <Link key={props.key} href={props.link} className={`flex gap-2 items-center font-now leading-none rounded-lg cursor-pointer
+const DrawerLink = ({key, icon, link, text, items}: NavLinkProps) => {
+    return link
+        ? <Link key={key} href={link} className={`flex gap-2 items-center font-now leading-none rounded-lg cursor-pointer
     bg-subtle bg-opacity-50 backdrop-blur p-4 text-gray-300 hover:text-white hover:bg-opacity-100 text-nowrap`}>
-            {props.icon&&<FontAwesomeIcon icon={props.icon} />} {props.text}
+            {icon&&<FontAwesomeIcon icon={icon} />} {text}
             </Link>
-            : <div key={props.key} className="bg-subtle bg-opacity-50 backdrop-blur rounded-lg">
+            : <div key={key} className="bg-subtle bg-opacity-50 backdrop-blur rounded-lg">
                 <p className="flex gap-2 items-center justify-between font-now leading-none cursor-pointer
                 p-4 text-gray-300 hover:text-white text-nowrap border-b-1 border-white border-opacity-25">
-                    {props.text}
+                    {text}
                     <FontAwesomeIcon className="text-xs" icon={faChevronDown}/>
                 </p>
             {
-                props.items?.map((val, i) => (
+                items?.map((val, i) => (
                     <Link key={i} href={val.link} className={`flex gap-2 items-center font-now leading-none rounded-lg cursor-pointer
                     p-4 text-gray-300 hover:text-white hover:bg-opacity-100 text-nowrap`}>
                         {val.icon&&<FontAwesomeIcon icon={val.icon} />} {val.text}

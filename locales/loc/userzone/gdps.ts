@@ -1,4 +1,4 @@
-import {userzoneGDPSIndexLocale} from "./gdps/index";
+import {userzoneGDPSIndexLocale} from "./gdps";
 import {userzoneGDPSPanelLocale} from "./gdps/panel";
 
 

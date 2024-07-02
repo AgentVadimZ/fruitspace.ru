@@ -106,18 +106,18 @@ const gdSettingsLocale = {
     },
     tips: {
         ru: [
-            <span style={{fontSize:"11pt"}}>Кастомная музыка из NewGrounds, YouTube, VK и др. добавляется через панель.<br/>
+            <span key={0} style={{fontSize:"11pt"}}>Кастомная музыка из NewGrounds, YouTube, VK и др. добавляется через панель.<br/>
                                     В отключенном состоянии используется музыка с NewGrounds напрямую (с обходом вайтлиста)<br/>
                                     ⚠️ Можно включить один раз, так как треки будут преобразованы</span>,
-            <span style={{fontSize:"11pt"}}>Кулдаун сообщений, комментариев, защита от накрутки и спама уровнями<br/><br/>
+            <span key={0} style={{fontSize:"11pt"}}>Кулдаун сообщений, комментариев, защита от накрутки и спама уровнями<br/><br/>
                                 • Защита от спама уровнями работает на основе частоты выкладывания уровней, поэтому иногда может по ошибке банить игроков
                                     (например после рекламы игроки начинают строить очень много уровней за сутки). <b>Отключите, если это является проблемой</b></span>
         ],
         en: [
-            <span style={{fontSize:"11pt"}}>Custom music from NewGrounds, YouTube, VK, etc. is added via panel.<br/>
+            <span key={0} style={{fontSize:"11pt"}}>Custom music from NewGrounds, YouTube, VK, etc. is added via panel.<br/>
                                     When disabled, music from NewGrounds is used directly (bypassing the whitelist)<br/>
                                     ⚠️ You can turn it on once, as the tracks will be converted</span>,
-            <span style={{fontSize:"11pt"}}>Messages and comments cooldown, protection from stat cheating and level spamming<br/><br/>
+            <span key={0} style={{fontSize:"11pt"}}>Messages and comments cooldown, protection from stat cheating and level spamming<br/><br/>
                                 Level antispam works based on level frequency of posting, so sometimes it can ban players by mistake
                                     (for example, after ad campaign, players begin to build a lot of levels per day). <b>Disable if this becomes a problem</b></span>
         ]
@@ -235,7 +235,7 @@ const gdSettingsLocale = {
             "☁️ Резервные копии",
             "Сделаем вид, что копия ",
             " восстановлена",
-             <p>Здесь хранятся последние резервные копии (делаются раз в 3 дня).<br/>
+             <p key={0}>Здесь хранятся последние резервные копии (делаются раз в 3 дня).<br/>
                     Нажмите на значок облака, чтобы восстановить</p>,
             "Выйти",
 
@@ -244,7 +244,7 @@ const gdSettingsLocale = {
             "☁️ Backups",
             "Let's pretend the backup ",
             " has been restored",
-            <p>The latest backups are stored here (made every 3 days).<br/>
+            <p key={0}>The latest backups are stored here (made every 3 days).<br/>
                     Click on the cloud icon to restore</p>,
             "Cancel"
         ]
