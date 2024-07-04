@@ -6,11 +6,19 @@ import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCrown, faDownload} from "@fortawesome/free-solid-svg-icons";
 
+type ServerTopItemProps = {
+    place: number
+    name: string
+    desc: string
+    type: "gd" | "mc" | "gta"
+    uuid: string
+    icon?: string
+}
 
-export default function ServerTopItem(props) {
+export default function ServerTopItem(props: ServerTopItemProps) {
 
     const Types = {
-        "gdps": GDLogo.src,
+        "gd": GDLogo.src,
         "mc": MCLogo.src,
         "gta": GTALogo.src
     }
@@ -24,8 +32,8 @@ export default function ServerTopItem(props) {
     const color = props.place<5?colors[props.place]:"#0d63fd"
 
     return (
-        <div className="bg-[var(--active-color)] rounded-xl p-2 flex items-center cursor-pointer hover:bg-[var(--btn-color)] mb-2">
-            <img className="mr-4 w-16 h-16 rounded-lg bg-[var(--btn-color)]" src={props.icon?props.icon:(Types[props.type]||QuestionMark.src)} />
+        <div className="bg-active rounded-xl p-2 flex items-center cursor-pointer hover:bg-btn mb-2">
+            <img className="mr-4 w-16 h-16 rounded-lg bg-btn" src={props.icon?props.icon:(Types[props.type]||QuestionMark.src)} />
             <div className="flex flex-1 flex-col justify-center">
                 <h3 className="m-1">
                         <span className={`inline-flex justify-center items-center rounded-full h-6 min-w-[1rem] px-1`} style={{backgroundColor:color}}

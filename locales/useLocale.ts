@@ -8,8 +8,8 @@ import {productMCLocale} from "./loc/product/mc";
 import {indexLocale} from "./loc";
 import {orderGDPSLocale} from "./loc/order/gd";
 import {storeLocale} from "./loc/manage/store";
-import {gdManageLocale} from "./loc/manage/gd.js";
-import {gdpsUserManageLocale} from "./loc/userzone/gdps.js";
+import {gdManageLocale} from "./loc/manage/gd";
+import {gdpsUserManageLocale} from "./loc/userzone/gdps";
 import {topLocale} from "./loc/top";
 import {NextRouter} from "next/router";
 

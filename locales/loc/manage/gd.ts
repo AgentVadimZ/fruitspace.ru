@@ -1,4 +1,4 @@
-import {gdAnalyticsLocale} from "./gd";
+import {gdAnalyticsLocale} from "./gd/index";
 import {gdMusicLocale} from "./gd/music";
 import {gdRolesLocale} from "./gd/roles";
 import {gdSettingsLocale} from "./gd/settings";

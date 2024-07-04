@@ -1,8 +1,20 @@
 import Link from "next/link";
 import {Button} from "antd"
+import {ReactNode} from "react";
 
+type ProductCardMCProps = {
+    id: string|number
+    logo: string
+    title: string
+    about: string
+    children?: ReactNode
+    link?: string
+    disabled?: boolean
+    btnText: string
+    btnTopText?: string
+}
 
-export default function ProductCardMC(props) {
+export default function ProductCardMC(props: ProductCardMCProps) {
     return (
         <div
             className="p-4 bg-active glassb rounded-2xl flex items-center flex-col mx-auto gap-4 min-h-80 xl:m-0 w-80 relative">

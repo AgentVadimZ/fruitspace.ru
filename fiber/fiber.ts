@@ -434,3 +434,5 @@ class particles {
 
 export default useFiberAPI
 export {serverFiberAPI, useLoader}
+
+export type {api}

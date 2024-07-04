@@ -4,9 +4,22 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import useSWR from "swr";
 import {CircularProgress, circularProgressClasses} from "@mui/material";
 import {Button, Dropdown} from "antd";
+import {Ref} from "react";
+import {api} from "@/fiber/fiber";
+import {NextRouter} from "next/router";
 
+type GDPSCardProps = {
+    id: string
+    name: string
+    plan: string
+    planid: number
+    icon: string
+    onClick: () => void
+    sref: Ref<any>
+    tref: Ref<any>
+}
 
-export default function GDPSCard(props) {
+export default function GDPSCard(props: GDPSCardProps) {
     let bg = "var(--primary-color)"
     let hover = "blue-800"
     let icon = faArrowUpFromBracket
@@ -42,20 +55,31 @@ export default function GDPSCard(props) {
     )
 }
 
-export function DownloadCard(props) {
+type DownloadCardProps = {
+    srvid: string
+    srv: any //?
+    api: api
+    router: NextRouter
+    sref: Ref<any>
+    copyR: () => void
+}
+
+export function DownloadCard(props: DownloadCardProps) {
     const api = props.api
-    const {data, isLoading, error} = useSWR(props.srvid, api.gdps_manage.fetchBuildStatus, {refreshInterval:3000})
+    const {data} = useSWR(props.srvid, api.gdps_manage.fetchBuildStatus, {refreshInterval:3000})
 
     return (
         <div ref={props.sref} className="flex flex-col p-2 lg:p-4 rounded-xl bg-active glassb">
             <Dropdown.Button type="primary" icon={<FontAwesomeIcon icon={faLink} />} menu={{
                 items: [
                     {
-                        label: "Скопировать ссылку"
+                        key: "0",
+                        label: "Скопировать ссылку",
+                        type: "item"
                     }
                 ],
-                onClick: (key) => {
-                    navigator.clipboard.writeText(`https://gofruit.space/gdps/${props.srvid}`)
+                onClick: async () => {
+                    await navigator.clipboard.writeText(`https://gofruit.space/gdps/${props.srvid}`)
                     props.copyR()
                 },
             }} buttonsRender={(btns)=> {
@@ -110,8 +134,8 @@ export function DownloadCard(props) {
 
                         {
                             !props.srv.client_windows_url && !props.srv.client_android_url && !props.srv.client_ios_url &&
-                            <Button type="primary" onClick={()=>{
-                                api.gdps_manage.upgrade22(props.srvid)
+                            <Button type="primary" onClick={async()=>{
+                                await api.gdps_manage.upgrade22(props.srvid)
                             }}>Создать установщики</Button>
                         }
                     </>)}
