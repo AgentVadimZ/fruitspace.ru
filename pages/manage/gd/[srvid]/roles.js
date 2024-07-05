@@ -68,6 +68,7 @@ export default function RolesGD(props) {
     const [searchingRN, setSearchingRN] = useState(false)
     const [uPage, setUPage] = useState(0)
     const [users, setUsers] = useState([])
+    const [userCount, setUserCount] = useState(0)
 
     const api = useFiberAPI()
 
@@ -111,11 +112,12 @@ export default function RolesGD(props) {
     const getUserList = async (page=uPage) => {
         let r = await api.gdps_manage.getUserList(srv.Srv.srvid, page)
         r.users&&setUsers(r.users)
+        r.count&&setUserCount(r.count)
     }
 
     useEffect(()=>{
-        srv.Srv.srvid&&getRoles()
-        srv.Srv.srvid&&getUserList()
+        srv.Srv?.srvid&&getRoles()
+        srv.Srv?.srvid&&getUserList()
     },[srv])
     let el_icon = (lvl)=>{
         switch(lvl) {
@@ -184,7 +186,7 @@ export default function RolesGD(props) {
                         {
                             label: "Роли",
                             key: "roles",
-                            children: <div className="lg:p-4 flex flex-col overflow-y-scroll">
+                            children: <div className="lg:p-4 flex flex-col overflow-x-scroll lg:overflow-x-auto">
                                 {roles.map((v, i) => (
                                     <div className="flex items-center p-4 gap-4
                                     border-b-1 last:border-b-0 border-white border-opacity-25" key={i}>
@@ -217,7 +219,7 @@ export default function RolesGD(props) {
                         {
                             label: "Игроки",
                             key: "players",
-                            children: <div className="p-4 flex flex-col overflow-y-scroll">
+                            children: <div className="p-4 flex flex-col overflow-x-scroll lg:overflow-x-auto">
                                 {users.map((user, i)=>(
                                     <div className="flex items-center p-2 lg:p-4 gap-4
                                     border-b-1 last:border-b-0 border-white border-opacity-25" key={i}>
@@ -250,9 +252,9 @@ export default function RolesGD(props) {
                                         </div>
                                     </div>
                                 ))}
-                                <Pagination rootClassName="mx-auto" responsive current={uPage} total={users.length*500} onChange={(page)=>{
+                                <Pagination rootClassName="mx-auto" responsive current={uPage} total={userCount} onChange={(page)=>{
                                     setUPage(page)
-                                    getUserList(page)
+                                    getUserList(page-1)
                                 }} showSizeChanger={false} />
                             </div>
                         }

@@ -6,9 +6,10 @@ import UserProfileCard from "@/components/Panel/UserProfileCard";
 import toast, {Toaster} from "react-hot-toast";
 import useEffectOnce from "@/components/Hooks";
 import useLocale from "@/locales/useLocale";
+import {NextRouter} from "next/router";
 
 
-export default function User(props) {
+export default function User(props: {router: NextRouter}) {
     useEffectOnce(()=>{
         toast.dismiss()
     })
