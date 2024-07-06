@@ -46,7 +46,7 @@ jobs:
         uses: nobrayner/discord-webhook@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          discord-webhook: https://discord.com/api/webhooks/1036916324875653180/0OUAkSz-BTm61CfHKFJMntD5NmRWIR-Ao8YUOOF-jhi8M3kDlQMOjy53R5Vb6oIUhigE
+          discord-webhook: https://discord.com/api/webhooks/1259261738541518878/mpxWF3-zl1OfJScPpSTlnCz5fTJEhIaBEXDMy66wOvRvUhWvtH1mMvRnjQOZ1PX6Xvyj
           username: 'Github Pipelines'
           avatar-url: 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png'
           description: '⚠️ Deployment requires manual promotion'
