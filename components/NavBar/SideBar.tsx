@@ -6,7 +6,7 @@ const SideBarContext = createContext(null)
 
 type SideBarProps = {
     children: ReactNode
-    sref: Ref<any>
+    sref?: Ref<any>
 }
 
 export default function SideBar(props: SideBarProps) {

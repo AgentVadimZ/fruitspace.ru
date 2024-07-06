@@ -84,7 +84,7 @@ export default function Index(props: any){
                     </div>
                     <div className="flex flex-col">
                         {notifications && notifications.length > 0
-                            ? notifications.toReversed().map((post, i) => (
+                            ? notifications.map((post, i) => (
                                 <div key={i} className="select-none border-1 border-transparent hover:border-white hover:border-opacity-25
                              hover:cursor-pointer relative flex gap-4 items-center p-4 rounded-lg overflow-x-hidden"
                             onClick={()=>setViewPost(post)}>
