@@ -4,12 +4,7 @@ import GDNavBar from "@/components/Manage/NavBars/GDNavBar";
 import PanelContent from "@/components/Global/PanelContent";
 import {useRouter} from "next/router";
 
-import styles from "@/components/Manage/GDManage.module.css"
-import {
-    IconButton,
-} from "@mui/material";
 import {useEffect, useRef, useState} from "react";
-import SaveIcon from '@mui/icons-material/Save';
 
 import GDLablogo from '@/assets/logos/geometrydash.png'
 import GDLogo from '@/assets/logos/gd_icon.png'
@@ -67,7 +62,6 @@ export default function SettingsGD(props) {
     const [tourOpen, setTourOpen] = useState(!!props.router.query.tour)
 
     const router = useRouter()
-    const [showPass, setShowPass] = useState(false)
     const [backdrop, setBackdrop] = useState("none")
     const [userDelCode, setUserDelCode] = useState("")
     const uploadRef = useRef()
@@ -306,7 +300,7 @@ export default function SettingsGD(props) {
     const srvIcon = (()=>{
         if(buildlab.icon==="custom") return buildlab.iconData
         if(srv.icon==="gd_default.png") return GDLogo.src
-        return "https://cdn.fruitspace.one/server_icons/"+srv.Srv.icon
+        return "https://cdn.fruitspace.one/server_icons/"+srv.Srv?.icon
     })()
 
     useEffect(()=>{
@@ -336,6 +330,8 @@ export default function SettingsGD(props) {
             onClick={() => setTourOpen(true)}
             icon={<FontAwesomeIcon icon={faQuestion} />}
         />
+
+        {srv.Srv && <>
         <PanelContent>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 w-full xl:w-5/6">
                 <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4 flex-1" ref={r => refs.current["db"] = r}>
@@ -830,6 +826,7 @@ export default function SettingsGD(props) {
         {/*        </div>*/}
         {/*    </div>}*/}
         {/*</Backdrop>*/}
+            </> }
     </>;
 }
 

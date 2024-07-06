@@ -1,11 +1,15 @@
-import styles from "./NavBar.module.css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars} from "@fortawesome/free-solid-svg-icons/faBars";
-import {createContext, useState} from "react";
+import {createContext, ReactNode, Ref, useState} from "react";
 
 const SideBarContext = createContext(null)
 
-export default function SideBar(props) {
+type SideBarProps = {
+    children: ReactNode
+    sref: Ref<any>
+}
+
+export default function SideBar(props: SideBarProps) {
 
     const [isOpen, setOpen] = useState(false)
 
