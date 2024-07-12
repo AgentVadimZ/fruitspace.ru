@@ -11,7 +11,7 @@ import {useGlobalLocale} from "@/locales/useLocale";
 import SideItem from "@/components/NavBar/SideItem";
 
 
-export default function PanelSideNav(props) {
+export default function PanelSideNav() {
 
     const router = useRouter();
     const localeGlobal = useGlobalLocale(router)

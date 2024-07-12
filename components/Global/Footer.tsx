@@ -1,17 +1,10 @@
-import styles from './Footer.module.css'
-import discordLogo from '@/assets/social/discord.png'
-import vkLogo from '@/assets/social/vkontakte.png'
-import tgLogo from '@/assets/social/telegram.png'
 import Link from "next/link";
-import {useGlobalLocale} from "@/locales/useLocale";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDiscord, faTelegram, faVk, faYoutube} from "@fortawesome/free-brands-svg-icons";
 
 
-export default function Footer(props) {
+export default function Footer() {
     const year = new Date().getFullYear()
-    
-    
 
     return (
         <div className="bg-black flex flex-col">
@@ -50,7 +43,7 @@ export default function Footer(props) {
                     <p className="text-sm">FruitSpace &copy; 2022-{year}</p>
                 </div>
             </div>
-            <div className={styles.footerLine}></div>
+            <div className="footerLine"></div>
             <p className="text-center mt-2">Наши сообщества</p>
             <div className="m-2 mt-0 flex flex-row items-center justify-center gap-2">
                 {[

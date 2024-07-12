@@ -3,6 +3,11 @@ const withNextra = require('nextra')({
   themeConfig: './theme.config.js'
 })
 
+const withPWA = require("next-pwa")({
+  dest: "public",
+  disable: process.env.NODE_ENV === "development",
+})
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
@@ -33,4 +38,6 @@ const nextConfig = {
   // ]
 }
 
-module.exports = withNextra(nextConfig)
+module.exports = withPWA(
+    withNextra(nextConfig)
+)

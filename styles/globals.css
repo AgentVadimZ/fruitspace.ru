@@ -61,6 +61,12 @@
     text-decoration: underline !important;
 }
 
+.footerLine {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(135deg, #8e388e,#5a00ff 70%, #0d6efd);
+}
+
 .nx-rounded {
     border-radius: 8px !important;
 }

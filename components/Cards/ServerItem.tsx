@@ -6,9 +6,21 @@ import RightSvg from "@/assets/icons/right.svg";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Link from "next/link";
 import {useGlobalLocale} from "@/locales/useLocale";
+import {NextRouter} from "next/router";
 
 
-export default function ServerItem(props) {
+type ServerItemProps = {
+    router: NextRouter
+    add?: boolean
+    type: "gd" | "mc" | "cs"
+    name: string
+    desc: string
+    plan: string
+    icon?: string
+    uuid: string
+}
+
+export default function ServerItem(props: ServerItemProps) {
 
     const localeGlobal = useGlobalLocale(props.router)
 

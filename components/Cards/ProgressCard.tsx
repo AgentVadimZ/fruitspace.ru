@@ -1,6 +1,16 @@
+import {ReactNode} from "react";
 
 
-export default function ProgressCard(props) {
+type ProgressCardProps = {
+    now: number
+    max: number
+    color?: boolean
+    date?: boolean
+    text?: ReactNode
+    bottom?: ReactNode
+}
+
+export default function ProgressCard(props: ProgressCardProps) {
     let width = Math.max(Math.floor(props.now/props.max*100),0)
     let clr = "#0d6efd"
     if(props.date) {

@@ -2,9 +2,9 @@ import {useEffect, useRef, useState} from "react";
 import {isObject} from "lodash";
 
 
-export default function useEffectOnce(effect) {
+export default function useEffectOnce(effect: ()=>any) {
     const effectFn = useRef(effect)
-    const destroyFn = useRef()
+    const destroyFn = useRef<() => any>()
     const effectCalled = useRef(false)
     const rendered = useRef(false)
     const [, refresh] = useState(0)
@@ -31,13 +31,13 @@ export default function useEffectOnce(effect) {
 
 export const getBrowserLocale = () => {
     if (typeof window !== 'undefined' && window.navigator) {
-        const lang = window.navigator.language || window.navigator.browserLanguage;
+        const lang = window.navigator.language /* @@ Deprecated @@ */ //|| window.navigator.browserLanguage;
         return lang.split('-')[0];
     }
     return null;
 };
 
-export const useTraceUpdate = (props)=>{
+export const useTraceUpdate = (props: any)=>{
     const prev = useRef(props);
     useEffect(() => {
         const changedProps = Object.entries(props).reduce((ps, [k, v]) => {
@@ -53,7 +53,7 @@ export const useTraceUpdate = (props)=>{
     });
 }
 
-export function deepEqual(object1, object2) {
+export function deepEqual(object1: any, object2: any) {
     const keys1 = Object.keys(object1);
     const keys2 = Object.keys(object2);
 

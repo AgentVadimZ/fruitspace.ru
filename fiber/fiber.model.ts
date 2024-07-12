@@ -29,8 +29,12 @@ type UserModel = {
     is_admin: boolean
     is_2fa: boolean
 
-    servers?: Object
-    top_servers?: Object
+    servers?: {
+        gd?: any
+        mc?: any
+        cs?: any
+    }
+    top_servers?: any
 }
 
 const userAtom = atom<UserModel>({
@@ -91,8 +95,8 @@ type ServerGDModel = {
     client_windows_url?: string
     client_macos_url?: string
     auto_pay: boolean
-    backups?: Object
-    m_stat_history?: Object
+    backups?: any
+    m_stat_history?: any
     icon: string
     description: string
     text_align: number
@@ -108,8 +112,8 @@ type ServerGDModel = {
 
 type ServerConfig = {
     Srv: ServerGDModel
-    Tariff: Object
-    CoreConfig: Object
+    Tariff: any
+    CoreConfig: any
 }
 
 const serverGDAtom = atom<ServerConfig>({

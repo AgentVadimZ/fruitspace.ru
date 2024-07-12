@@ -8,9 +8,10 @@ import {productMCLocale} from "./loc/product/mc";
 import {indexLocale} from "./loc";
 import {orderGDPSLocale} from "./loc/order/gd";
 import {storeLocale} from "./loc/manage/store";
-import {gdManageLocale} from "./loc/manage/gd.js";
-import {gdpsUserManageLocale} from "./loc/userzone/gdps.js";
+import {gdManageLocale} from "./loc/manage/gd";
+import {gdpsUserManageLocale} from "./loc/userzone/gdps";
 import {topLocale} from "./loc/top";
+import {NextRouter} from "next/router";
 
 const translationList = {
     ...aboutLocale,
@@ -30,7 +31,7 @@ const translationList = {
     ...topLocale
 }
 
-export default function useLocale(router) {
+export default function useLocale(router: NextRouter) {
     let ts = translationList[router.pathname]
 
     return {
@@ -42,7 +43,7 @@ export default function useLocale(router) {
     }
 }
 
-export function useGlobalLocale(router) {
+export function useGlobalLocale(router: NextRouter) {
     return {
         locale: "ru",
         path: router.pathname,
@@ -52,7 +53,7 @@ export function useGlobalLocale(router) {
     }
 }
 
-function listGet(val) {
+function listGet(val: string|number) {
     let ts = this.translations[val]
     if (ts===undefined) return "???"
     ts = ts[this.locale]

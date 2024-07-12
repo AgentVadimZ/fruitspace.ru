@@ -1,9 +1,15 @@
-import {useContext} from "react";
+import {ReactNode, useContext} from "react";
 import {SideBarContext} from "./SideBar";
 import React from "react"
 
+type SideItemProps = {
+    icon: ReactNode,
+    text: string,
+    active?: boolean,
+    onClick?: () => void
+}
 
-const SideItem = React.forwardRef((props,ref)=> {
+const SideItem = React.forwardRef((props: SideItemProps,ref)=> {
 
     const isOpen = useContext(SideBarContext)
 

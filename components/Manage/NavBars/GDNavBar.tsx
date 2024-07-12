@@ -12,16 +12,20 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 import useEffectOnce from "@/components/Hooks";
 import {useGlobalLocale} from "@/locales/useLocale";
-import useFiberAPI from "@/fiber/fiber.ts";
+import useFiberAPI from "@/fiber/fiber";
 import SideItem from "@/components/NavBar/SideItem";
+import {Ref} from "react";
 
 
-export default function GDNavBar(props) {
+type GDNavBarProps = {
+    sref?: Ref<any>
+}
+
+export default function GDNavBar(props: GDNavBarProps) {
 
     const router = useRouter();
     const srvid = router.query.srvid
-    let action = router.pathname.split("/")
-    action = action[action.length-1]
+    let action = router.pathname.split("/").slice(-1)[0]
 
     const api = useFiberAPI()
     const [srv, setSrv] = api.servers.useGDPS()
