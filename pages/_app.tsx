@@ -6,6 +6,7 @@ import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import LoadingAnim from "@/components/ProgressBar";
 import {ConfigProvider, theme} from "antd";
+import Head from "next/head";
 
 export default function WebApp({Component, pageProps}) {
     const [isL, setL] = useState(false)
@@ -18,6 +19,16 @@ export default function WebApp({Component, pageProps}) {
 
     return (
         <RecoilRoot>
+            <Head>
+                <meta name="application-name" content="FruitSpace"/>
+                <meta name="apple-mobile-web-app-capable" content="yes"/>
+                <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+                <meta name="apple-mobile-web-app-title" content="FruitSpace"/>
+                <meta name="description" content="Упарвляйте вашим сервером с помощью FruitSpace"/>
+                <meta name="format-detection" content="telephone=no"/>
+                <meta name="mobile-web-app-capable" content="yes"/>
+                <meta name="theme-color" content="#191925"/>
+            </Head>
             <StyledEngineProvider injectFirst>
                 {isL && <LoadingAnim/>}
                 <ConfigProvider theme={{
