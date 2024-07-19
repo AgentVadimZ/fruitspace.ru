@@ -13,6 +13,7 @@ import {useEffect, useState} from "react";
 import {Modal, Image} from "antd";
 import {Notification} from "@/fiber/fiber.model";
 import Linkify from "linkify-react";
+import {ProfileMobileNav} from "@/components/PanelMobileNav";
 
 
 export default function Index(props: any){
@@ -51,9 +52,10 @@ export default function Index(props: any){
         <GlobalHead title={locale.get('nav')}/>
         <GlobalNav />
         <PanelSideNav />
+        <ProfileMobileNav />
         <Toaster/>
         <PanelContent>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full lg:w-3/4 mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 desktop:gap-8 w-full lg:w-3/4 mx-auto">
                 <div className="glassb bg-active rounded-2xl p-4 flex flex-col gap-4">
                     <div className="flex justify-between gap-4 items-center">
                         <p className="glassb rounded-lg w-fit px-1.5 py-0.5">Это я 😺</p>
@@ -86,15 +88,15 @@ export default function Index(props: any){
                         {notifications && notifications.length > 0
                             ? notifications.map((post, i) => (
                                 <div key={i} className="select-none border-1 border-transparent hover:border-white hover:border-opacity-25
-                             hover:cursor-pointer relative flex gap-4 items-center p-4 rounded-lg overflow-x-hidden"
+                             hover:cursor-pointer relative flex gap-4 items-center px-2 py-4 tablet:p-4 rounded-lg overflow-x-hidden"
                             onClick={()=>setViewPost(post)}>
                                 <span className="absolute top-0 left-1/2 -translate-x-1/2 text-xs gray-300">
                                     {dayjs(post.send_date).format("DD.MM.YYYY HH:mm")}
                                 </span>
-                                <FontAwesomeIcon className={post.user_read?"text-gray-5 00":"text-white"} icon={post.target_uid===0?faBell:faMessage} />
-                                <div>
-                                    <p className="text-sm text-ellipsis overflow-hidden text-nowrap w-72">{post.title}</p>
-                                    <p className="text-xs text-gray-300 mt-1.5 line-clamp-2">{post.text}</p>
+                                <FontAwesomeIcon className={post.user_read?"text-gray-500":"text-white"} icon={post.target_uid===0?faBell:faMessage} />
+                                <div className="flex-1">
+                                    <p className="text-sm text-ellipsis overflow-hidden text-nowrap tablet:w-72">{post.title}</p>
+                                    <p className="text-xs text-gray-300 mt-1.5 line-clamp-2 text-ellipsis overflow-hidden">{post.text}</p>
                                 </div>
                                 <FontAwesomeIcon className="ml-auto" icon={faChevronRight} />
                             </div>

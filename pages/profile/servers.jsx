@@ -13,6 +13,7 @@ import useLocale, {useGlobalLocale} from "@/locales/useLocale";
 import useFiberAPI from "@/fiber/fiber.ts";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHardDrive, faMemory, faMicrochip} from "@fortawesome/free-solid-svg-icons";
+import {ProfileMobileNav} from "@/components/PanelMobileNav";
 
 
 export default function Servers(props) {
@@ -52,6 +53,7 @@ export default function Servers(props) {
             <GlobalHead title={locale.get('nav')}/>
             <GlobalNav />
             <PanelSideNav />
+            <ProfileMobileNav />
             <PanelContent>
                 <TabsUnstyled value={tab} onChange={(e,val)=>setTab(val)}
                               className={"serversWindow"}>

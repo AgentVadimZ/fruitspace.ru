@@ -18,6 +18,7 @@ import Link from "next/link";
 import useEffectOnce from "@/components/Hooks";
 import useLocale from "@/locales/useLocale";
 import useFiberAPI from "@/fiber/fiber.ts";
+import {ProfileMobileNav} from "@/components/PanelMobileNav";
 
 
 export default function Billing(props) {
@@ -49,6 +50,7 @@ export default function Billing(props) {
         <GlobalHead title={locale.get('nav')}/>
         <GlobalNav />
         <PanelSideNav />
+        <ProfileMobileNav />
         <Toaster/>
         <PanelContent>
             <TabsUnstyled value={tab} onChange={(e,val)=>setTab(val)}

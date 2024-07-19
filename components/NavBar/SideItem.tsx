@@ -9,7 +9,7 @@ type SideItemProps = {
     onClick?: () => void
 }
 
-const SideItem = React.forwardRef((props: SideItemProps,ref)=> {
+const SideItem = React.forwardRef((props: SideItemProps, ref)=> {
 
     const isOpen = useContext(SideBarContext)
 

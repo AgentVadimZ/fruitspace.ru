@@ -9,6 +9,13 @@ module.exports = {
     preflight: true
   },
   theme: {
+    screens: {
+      "tablet": "640px",
+      "ipad": "768px",
+      "laptop": "1024px",
+      "desktop": "1280px",
+      "4k": "1536px",
+    },
     extend: {
       colors: {
         "primary": "#0d6efd",

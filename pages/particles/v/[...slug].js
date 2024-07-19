@@ -12,6 +12,7 @@ import {faCircleCheck, faClock, faCopy, faDownload} from "@fortawesome/free-soli
 import {Input, Menu} from "antd";
 import SettingsIcon from "@/assets/icons/panel_settings.svg";
 import Markdown from "react-markdown";
+import {ProfileMobileNav} from "@/components/PanelMobileNav";
 
 const formatArch = (arch) => {
     switch (arch) {
@@ -80,6 +81,7 @@ export default function ParticleView(props) {
         <GlobalHead title={locale.get('nav')}/>
         <GlobalNav/>
         <PanelSideNav/>
+        <ProfileMobileNav />
         <Toaster/>
         <PanelContent>
             <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-4 w-full">
