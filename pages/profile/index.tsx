@@ -25,7 +25,6 @@ export default function Index(props: any){
     const [notifications, setNotifications] = useState<Notification[]>([])
 
     const locale = useLocale(props.router)
-    const localeGlobal = useGlobalLocale(props.router)
 
 
     const [viewPost, setViewPost] = useState<Notification|boolean|any>(false)

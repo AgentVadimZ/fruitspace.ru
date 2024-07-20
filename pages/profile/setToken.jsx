@@ -1,13 +1,14 @@
 import {useRouter} from "next/router";
-import {useCookies} from "react-cookie";
+import useFiberAPI from "@/fiber/fiber";
+import {useContext} from "react";
+import {ApiContext} from "@/components/AuthProvider";
 
 
 export default function SetToken(props) {
     const router = useRouter()
-    const [cookies, setCookie, removeCookie] = useCookies(['token'])
+    const api = useContext(ApiContext)
     if (router.query.token) {
-        setCookie("token",router.query.token,
-            {path:"/",expires:new Date(new Date().getTime()+(1000*60*60*24*30)), secure:true})
+        api.auth.setCookieToken(router.query.token)
         router.push("/profile/")
     }
     return (
