@@ -205,12 +205,7 @@ export default function DownloadPage(props) {
         ...srv.downloadpage_style || {}
     }
 
-    // const config = {
-    //         bg: "https://cdn.discordapp.com/attachments/971151059106029568/1243588306680152165/peakpx.jpg?ex=6652055d&is=6650b3dd&hm=6011717ded2db7d012f333fc865a0cc8175f3d721e9ed2d0a20866f059d0967a&",
-    //         accent: "#a83434",
-    //         variant: "primary", // primary/default
-    //         // ...srv.downloadpage_style || {}
-    //     }
+    const align = ["text-left","text-center","text-right"][props.srv.text_align || 0]
 
     return (<>
             <GlobalHead title={srv.srv_name} description={srv.description} image={srv.icon}/>
@@ -237,7 +232,7 @@ export default function DownloadPage(props) {
                                 <span className="text-sm">{showPlayers(srv.user_count, srv.level_count)}</span>
                             </div>
                         </div>
-                        <Linkify as="pre" className="p-2 rounded-xl mt-2 text-sm whitespace-pre-wrap"
+                        <Linkify as="pre" className={`p-2 rounded-xl mt-2 text-sm whitespace-pre-wrap ${align}`}
                                  options={{className: "text-primary"}}>
                             {srv.description}
                         </Linkify>
