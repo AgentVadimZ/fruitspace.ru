@@ -54,7 +54,7 @@ const payments = {
         name: "LavaPay",
         desc: "Оплата через российские карты",
         icons: [
-            <FontAwesomeIcon icon={faCreditCard} className="w-4 text-success" />
+            <FontAwesomeIcon icon={faCreditCard} className="w-4 text-success" key="cc" />
         ]
     }
 }
