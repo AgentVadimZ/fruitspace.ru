@@ -108,9 +108,9 @@ export default function Home(props) {
 
                     <Link href="/top/gd" legacyBehavior>
                         <div
-                            className="w-full ipad;w-fit mt-4 desktop:mt-8 p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e88] via-[#5a00ff88] to-[#0d6efd88] flex flex-col">
+                            className="w-full ipad:w-fit mt-4 desktop:mt-8 p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e88] via-[#5a00ff88] to-[#0d6efd88] flex flex-col">
                             <div
-                                className="flex-1 bg-[#333338cc] glass rounded-2xl p-2 font-[Helvetica] cursor-pointer flex items-center justify-between hover:bg-[#33333888] transition-all duration-300 ipad;max-w-md">
+                                className="flex-1 bg-[#333338cc] glass rounded-2xl p-2 font-[Helvetica] cursor-pointer flex items-center justify-between hover:bg-[#33333888] transition-all duration-300 ipad:max-w-md">
                                 <img alt="prod.logo" className="h-16 laptop:mr-2"
                                      src="https://img.icons8.com/nolan/96/1A6DFF/C822FF/prize.png"/>
                                 <h2 className="m-0 w-fit">Топ серверов</h2>
@@ -204,7 +204,7 @@ const ProdCard = (props) => (
                 <img alt="prod.logo" className="h-24" src={props.logo}/>
                 <div>
                     <p className="m-0 tracking-wide laptop:text-lg">{props.name}</p>
-                    <p className="opacity-85 leading-tight text-xs ipad;text-sm laptop:leading-normal m-0">{props.description}</p>
+                    <p className="opacity-85 leading-tight text-xs ipad:text-sm laptop:leading-normal m-0">{props.description}</p>
                     <p className="text-xs text-nowrap m-0 mt-2 text-[#cacad0] laptop:font-mono">{props.stats}</p>
                 </div>
                 <RightIcon className="flex-shrink-0 w-8 ml-auto"/>

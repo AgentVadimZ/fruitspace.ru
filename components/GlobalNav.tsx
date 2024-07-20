@@ -98,7 +98,7 @@ export default function GlobalNav({mainpage}: {mainpage?: boolean}) {
             {(mainpage && !['/', ''].includes(router.pathname)) &&
                 <HideOn atHeight height={120}>
                     <Link href="/"
-                          className="fixed top-4 desktop:top-3 left-16 hidden ipad;block ipad;text-2xl desktop:text-3xl font-[Coolvetica] tracking-wider font-normal fruitText m-0 select-none">FruitSpace</Link>
+                          className="fixed top-4 desktop:top-3 left-16 hidden ipad:block ipad:text-2xl desktop:text-3xl font-[Coolvetica] tracking-wider font-normal fruitText m-0 select-none">FruitSpace</Link>
                 </HideOn>
             }
 

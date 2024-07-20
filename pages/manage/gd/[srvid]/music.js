@@ -195,7 +195,7 @@ export default function MusicGD(props) {
                         <div className="flex-1">
                             <p className="flex items-center gap-2">
                                 <span
-                                    className="text-sm laptop:text-base text-ellipsis overflow-hidden text-nowrap max-w-24 ipad;max-w-40 desktop:max-w-lg">{playerData.title}</span>
+                                    className="text-sm laptop:text-base text-ellipsis overflow-hidden text-nowrap max-w-24 ipad:max-w-40 desktop:max-w-lg">{playerData.title}</span>
                                 <span className="bg-btn rounded text-xs laptop:text-sm px-1.5">ID {playerData.id}</span>
                             </p>
                             <p className="text-xs text-gray-300">{playerData.artist}</p>
@@ -274,7 +274,7 @@ export default function MusicGD(props) {
                                  }}>
                                 <FontAwesomeIcon icon={faCompactDisc} className="text-4xl"/>
                                 <div>
-                                    <p className="text-sm laptop:text-base text-ellipsis overflow-hidden text-nowrap max-w-24 ipad;max-w-40 desktop:max-w-[64rem]">{val.name}</p>
+                                    <p className="text-sm laptop:text-base text-ellipsis overflow-hidden text-nowrap max-w-24 ipad:max-w-40 desktop:max-w-[64rem]">{val.name}</p>
                                     <p className="text-xs laptop:text-sm text-gray-300 flex flex-col desktop:flex-row desktop:items-center gap-2">
                                         {val.artist}
                                         <p className="flex items-center gap-2">

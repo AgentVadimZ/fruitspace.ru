@@ -71,7 +71,7 @@ export default function ManageGD(props) {
                 icon={<FontAwesomeIcon icon={faQuestion} />}
             />
             {srv.Srv&&<PanelContent>
-                <div className="grid grid-cols-1 ipad;grid-cols-2 laptop:grid-cols-3 gap-4 w-full ipad;w-auto">
+                <div className="grid grid-cols-1 ipad:grid-cols-2 laptop:grid-cols-3 gap-4 w-full ipad:w-auto">
                     <div className="grid grid-cols-2 gap-4">
                         <GDPSCard sref={r=>refs.current["servcard"] = r} tref={r=>refs.current["servtariff"] = r} name={srv.Srv.srv_name} planid={srv.Srv.plan} plan={GetGDPlan(srv.Srv.plan)} id={<span style={{color:"white"}} className={styles.CodeBlock}>{srv.Srv.srvid}</span>}
                                   icon={"https://cdn.fruitspace.one/server_icons/"+srv.Srv.icon} onClick={()=>props.router.push("/product/order/gd?id="+srv.Srv.srvid)}/>

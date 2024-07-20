@@ -89,7 +89,7 @@ export default function MC(props) {
                 {tab === "dynamic" &&
                     <div className={`${styles.productCardGrid} ${styles.productCardGridMC}`} id="cloud">
                         <div
-                            className="p-4 bg-active glassb rounded-2xl flex mx-auto justify-around gap-4 w-fit ipad;w-[62rem] flex-col ipad;flex-row col-span-1 ipad;col-span-3">
+                            className="p-4 bg-active glassb rounded-2xl flex mx-auto justify-around gap-4 w-fit ipad:w-[62rem] flex-col ipad:flex-row col-span-1 ipad:col-span-3">
                             <div className="flex flex-col flex-1 gap-4">
                                 <p className="text-lg text-center my-0 gap-2">🤔 Что это такое?</p>
                                 <span className="ml-2 text-sm">

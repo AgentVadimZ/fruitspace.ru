@@ -84,7 +84,7 @@ export default function ParticleView(props) {
         <ProfileMobileNav />
         <Toaster/>
         <PanelContent>
-            <div className="grid grid-cols-1 ipad;grid-cols-3 desktop:grid-cols-4 gap-4 w-full">
+            <div className="grid grid-cols-1 ipad:grid-cols-3 desktop:grid-cols-4 gap-4 w-full">
                 <div className="flex flex-col gap-4">
                     <div className="bg-[var(--subtle-color)] rounded-xl p-4 relative flex flex-col gap-2 relative">
                         <span className="text-xs absolute top-2 left-2 bg-[var(--bkg-color)] rounded-lg px-2 py-0.5">Версии</span>
@@ -106,7 +106,7 @@ export default function ParticleView(props) {
                             }))} />
                     </div>
                 </div>
-                <div className="bg-[var(--subtle-color)] rounded-xl p-4 col-span-1 ipad;col-span-2 desktop:col-span-3">
+                <div className="bg-[var(--subtle-color)] rounded-xl p-4 col-span-1 ipad:col-span-2 desktop:col-span-3">
                     <div className="flex items-center gap-4">
                         <AutoAwesomeIcon className="h-12 w-12 fill-amber-300"/>
                         <div className="flex flex-col gap-2">
