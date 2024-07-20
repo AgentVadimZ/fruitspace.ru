@@ -30,9 +30,7 @@ export default function UserProfileCard(props) {
     const [backdrop, setBackdrop] = useState("none")
 
 
-    // const {data:discord} = useSWR(`https://discordlookup.mesavirep.xyz/v1/user/${user.discord_id}`, async r=>fetch(r).then(r=>r.json()))
-
-    const discord = null
+    const {data: discord} = useSWR(`https://fruce-discord-lookup.vercel.app/v1/user/${user.discord_id}`, async r=>fetch(r).then(r=>r.json()))
 
     const [pwdResetData, setPwdResetData] = useState({
         current: "",
@@ -225,9 +223,9 @@ export default function UserProfileCard(props) {
     // Code is highly unoptimized
 
     return <>
-        <div className="grid grid-cols-1 gap-4 laptop:grid-cols-3 w-fit">
-            <div className="flex bg-active glassb rounded-2xl relative w-fit">
-                <img className="rounded-xl w-auto h-64" src={user.profile_pic} />
+        <div className="grid grid-cols-1 gap-4 ipad:grid-cols-2 laptop:grid-cols-3 w-full ipad:w-fit">
+            <div className="flex bg-active glassb rounded-2xl relative w-fit mx-auto ipad:mx-[unset]">
+                <img className="rounded-xl h-auto w-full laptop:w-64" src={user.profile_pic} />
                 <Tooltip title={locale.get('picChange')} placement="right" arrow open={showEditPicHint}
                 className="absolute rounded-xl bg-[var(--btn-color)] p-2 bottom-2 right-2 h-10 w-10 fill-white
                 transition-all duration-300 border-solid border-2 border-[var(--btn-color)] cursor-pointer

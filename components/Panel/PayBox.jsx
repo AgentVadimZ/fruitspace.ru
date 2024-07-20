@@ -1,22 +1,70 @@
-import styles from "./PayBox.module.css"
 import {useRecoilState} from "recoil";
 import {userAtom} from "@/fiber/fiber.model";
 
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import {useState} from "react";
-import {Backdrop, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField} from "@mui/material";
-import YooMoneyLogo from "@/assets/logos/yoomoney_logo.svg"
-import EnotLogo from "@/assets/logos/enot_logo.svg"
-import {styled} from "@mui/system";
 import toast from "react-hot-toast";
 import useLocale, {useGlobalLocale} from "@/locales/useLocale";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlusCircle, faCreditCard} from "@fortawesome/free-solid-svg-icons";
+import {Input, Modal} from "antd";
+
+
+import YookassaLogo from "@/assets/logos/yookassa_logo.jpg"
+import EnotLogo from "@/assets/logos/enot_logo.jpg"
+import Paypalych from "@/assets/logos/paypalych.png"
+import LavaPay from "@/assets/logos/lava-logo-compact-gradient.png"
+
+import SberPay from "@/assets/logos/sberlogo.svg"
+import TbankPay from "@/assets/logos/tbank.png"
+import Yoomoney from "@/assets/logos/yoomoney.png"
+import {faBitcoin, faCcMastercard} from "@fortawesome/free-brands-svg-icons";
+import SBPPay from "@/assets/logos/sbp.svg"
+import MasterCard from "@/assets/logos/mc_symbol_opt_63_3x.png"
+
+const payments = {
+    "yookassa": {
+        logo: YookassaLogo,
+        name: "Юkassa",
+        desc: "Оплата российскими платежными системами",
+        icons: [
+            <SberPay className="w-4" key="sber" />,
+            <img src={TbankPay.src} key="tbank" className="w-4"/>,
+            <img src={Yoomoney.src} key="tbank" className="w-4"/>,
+        ]
+    },
+    "enot": {
+        logo: EnotLogo,
+        name: "EnotPay",
+        desc: "Оплата криптовалютами: BTC, USDT, TRX",
+        icons: [
+            <FontAwesomeIcon icon={faBitcoin} key="btc" className="w-4 text-orange-400" />
+        ]
+    },
+    "paypalych": {
+        logo: Paypalych,
+        name: "PAYPALYCH",
+        desc: "Оплата через СБП и международные карты",
+        icons: [
+            <SBPPay className="w-4" key="sbp" />,
+            <img src={MasterCard.src} key="mc" className="w-4"/>
+        ]
+    },
+    "lava": {
+        logo: LavaPay,
+        name: "LavaPay",
+        desc: "Оплата через российские карты",
+        icons: [
+            <FontAwesomeIcon icon={faCreditCard} className="w-4 text-success" />
+        ]
+    }
+}
 
 export default function PayBox(props) {
 
     const [user,setUser] = useRecoilState(userAtom)
     const [backdrop, openBackdrop] = useState(false)
     const [paymentParam, setPaymentParam] = useState({
-        amount: 0,
+        amount: 100,
         merchant: "yookassa"
     })
 
@@ -64,75 +112,50 @@ export default function PayBox(props) {
     const prettyPrint = (num)=>new Intl.NumberFormat(user.usd?'en-US':'ru-RU',
         {style: 'currency',currency: user.usd?"USD":"RUB"}).format(num).replace(/[.|,]00/g, '')
 
+
     return (
-        <div className={styles.paybox}>
-            <h3>{prettyPrint(user.balance)}</h3>
-            <span />
-            <div className={styles.innerbox} onClick={()=>openBackdrop(true)}>
-                <AddCircleIcon/>
-                <p>{locale.get('payment')[0]}</p>
+        <div className="flex rounded-xl glassb bg-active">
+            <p className="text-lg font-semibold p-4 border-r-1 border-white border-opacity-25">{prettyPrint(user.balance)}</p>
+            <div className="p-4 flex items-center gap-2" onClick={()=>openBackdrop(true)}>
+                <FontAwesomeIcon className="text-2xl" icon={faPlusCircle} />
+                <span className="text-sm">Пополнить</span>
             </div>
-            <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                open={backdrop} onClick={()=>openBackdrop(false)}>
-                <div className={styles.choosePaymentBox} onClick={(e)=>e.stopPropagation()}>
-                    <h2 style={{textAlign:"center"}}>{locale.get('payment')[1]}</h2>
-
-                    <FormControl>
-                        <FormLabel>{locale.get('payment')[2]}</FormLabel>
-                        <RadioGroup
-                            aria-labelledby="demo-controlled-radio-buttons-group"
-                            name="controlled-radio-buttons-group"
-                            value={paymentParam.merchant}
-                            onChange={(e,m)=>setPaymentParam({...paymentParam, merchant: m})}>
-                            {/*<FormControlLabel value="qiwi" control={<Radio />} label={<span className={styles.payOption}>*/}
-                            {/*    <img src={QiwiLogo.src}/>{locale.get('paymentSystem')[0]}*/}
-                            {/*</span>} />*/}
-                            <FormControlLabel value="yookassa" control={<Radio />} label={<span className={styles.payOption}>
-                                <YooMoneyLogo/>{locale.get('paymentSystem')[1]}
-                            </span>}/>
-                            <FormControlLabel value="enot" control={<Radio />} label={<span className={styles.payOption}>
-                                <EnotLogo/> {locale.get('paymentSystem')[2]}
-                            </span>}/>
-                        </RadioGroup>
-                    </FormControl>
-
-                    <p>{locale.get('paymentFail')}</p>
-                    <p style={{color:"var(--error-color)"}}>{locale.get('minMax')[0]}</p>
-
-                    <FruitTextField fullWidth label={locale.get('sum')+` ${user.usd?"$":"₽"}`} type="text" variant="outlined" style={{margin:".5rem"}}
-                                    value={paymentParam.amount||''} onChange={(evt)=>{setPaymentParam({
-                        ...paymentParam,
-                        amount: evt.target.value.replaceAll(/[^0-9.]/g,'')
-                    })}}/>
-                    <Button variant="contained" className={styles.cardButton} onClick={createPayment}>{locale.get('goToPayment')}</Button>
+            <Modal open={backdrop} title="Пополнить баланс" onCancel={()=>openBackdrop(false)}
+                   cancelText="Отмена" okText="Пополнить" onOk={createPayment}>
+                <div className="flex flex-col gap-2">
+                    <p className="text-lg">Сумма</p>
+                    <Input value={paymentParam.amount || 0} onChange={(e) => setPaymentParam({
+                        ...paymentParam, amount: e.target.value.replaceAll(/[^0-9]/g, '')
+                    })} addonAfter="₽"/>
+                    <p className="text-lg mt-2">Система оплаты</p>
+                    <div className="grid gap-4 grid-cols-2 ipad:grid-cols-3">
+                        {Object.keys(payments).map(k=>{
+                            const system = payments[k]
+                            return <PaymentProviderCard onClick={() => setPaymentParam({...paymentParam, merchant: k})}
+                                key={k} logo={system.logo} name={system.name} desc={system.desc} icons={system.icons}
+                                                        active={paymentParam.merchant===k} />
+                        })}
+                    </div>
                 </div>
-            </Backdrop>
+            </Modal>
         </div>
     );
 }
 
-
-
-const FruitTextField = styled(TextField)({
-    '& label.Mui-focused': {
-        color: '#0d6efd',
-    },
-    '& .MuiInput-underline:after': {
-        borderBottomColor: 'green',
-    },
-    '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-            borderColor: 'white',
-        },
-        '&:hover fieldset': {
-            borderColor: '#cacad0',
-        },
-        '&.Mui-focused fieldset': {
-            borderColor: '#0d6efd',
-        },
-        borderRadius: "8px",
-        color: "white",
-        // backgroundColor: "var(--btn-color)",
-    },
-});
+const PaymentProviderCard = (props) => {
+            return <div onClick={props.onClick} className={`rounded-xl bg-active glassb p-2 flex flex-col 
+            ${props.active&&"!border-primary bg-gradient-to-br from-active to-[#0d6efd88]"}`}>
+                <div className="p-4">
+                    <img src={props.logo.src} className="rounded-full w-20 mx-auto" />
+                </div>
+                <div className="mx-2">
+                    <p className="text-lg">{props.name}</p>
+                    <p className="text-xs iphone:text-sm text-gray-300 mb-1">{props.desc}</p>
+                    <div className="flex items-center gap-2 mt-auto">
+                        {props.icons.map((icon, i) => {
+                            return icon
+                        })}
+                    </div>
+                </div>
+            </div>
+}

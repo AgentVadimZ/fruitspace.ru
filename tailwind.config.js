@@ -10,6 +10,7 @@ module.exports = {
   },
   theme: {
     screens: {
+      "iphone": "400px",
       "tablet": "640px",
       "ipad": "768px",
       "laptop": "1024px",

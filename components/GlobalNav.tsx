@@ -139,7 +139,7 @@ export default function GlobalNav({mainpage}: {mainpage?: boolean}) {
                                 <div className="flex flex-col flex-1 bg-subtle rounded-lg border-1 border-solid
                                     border-white border-opacity-25">
                                     <div className="flex items-center">
-                                        <span className="flex items-center gap-2 px-1.5 py-1 border-r-[1px]
+                                        <span className="flex items-center gap-2 px-1.5 py-1 border-r-1
                                     border-white border-opacity-25 flex-1">
                                             <FontAwesomeIcon icon={faWallet}/>
                                             <span className="text-sm">{prettyPrint(user.balance)}</span>

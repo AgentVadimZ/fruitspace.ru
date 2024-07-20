@@ -14,7 +14,7 @@ type PanelMobileNavProps = {
 
 export default function PanelMobileNav(props: PanelMobileNavProps) {
     return <div className="flex tablet:hidden fixed bottom-0 h-16 w-full z-50 p-2">
-        <div className="flex items-center gap-4 justify-between px-2
+        <div className="flex items-center gap-4 justify-between px-1
         bg-active bg-opacity-50 backdrop-blur glassb rounded-2xl flex-1">
             {props.children}
         </div>
@@ -36,8 +36,8 @@ export function MobileNavItem(props: MobileNavItemProps) {
     
     return <Tooltip title={props.title}>
         <Link passHref legacyBehavior href={props.link}>
-            <div className={`flex flex-col items-center gap-1 p-4 rounded-xl ${active&&"bg-primary bg-opacity-50 backdrop-blur"}`}>
-                {props.img||<FontAwesomeIcon icon={props.icon}/>}
+            <div className={`flex flex-col items-center gap-1 p-2 rounded-xl ${active&&"bg-primary bg-opacity-50 backdrop-blur"}`}>
+                {props.img||<FontAwesomeIcon className="p-1 aspect-square" icon={props.icon}/>}
             </div>
         </Link>
     </Tooltip>
@@ -50,6 +50,6 @@ export function ProfileMobileNav() {
         <MobileNavItem title="Главная" icon={faServer} link="/profile/servers" />
         <MobileNavItem title="Главная" icon={faUser} link="/profile/user" />
         <MobileNavItem title="Главная" icon={faWallet} link="/profile/billing" />
-        <MobileNavItem title="Главная" img={<AutoAwesomeIcon />} link="/particles" />
+        <MobileNavItem title="Главная" img={<AutoAwesomeIcon className="h-6" />} link="/particles" />
     </PanelMobileNav>
 }
