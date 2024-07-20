@@ -8,7 +8,7 @@ export default function Footer() {
 
     return (
         <div className="bg-black flex flex-col">
-            <div className="flex flex-col lg:flex-row gap-4 p-4">
+            <div className="flex flex-col laptop:flex-row gap-4 p-4">
                 <div className="flex flex-col gap-2 p-2 text-sm">
                     <h3 className="font-semibold text-base">FruitSpace</h3>
                     <Link href="/about" className="hover:text-white hover:underline">О нас</Link>
@@ -28,7 +28,7 @@ export default function Footer() {
                     <Link href="https://blog.fruitspace.one" className="hover:text-white hover:underline">Блог</Link>
                 </div>
                 <span className="flex-1"></span>
-                <div className="flex flex-col gap-2 lg:items-end">
+                <div className="flex flex-col gap-2 laptop:items-end">
                     <Link href="https://status.fruitspace.one/" target="_blank" className="flex items-center gap-2 group rounded-lg bg-active px-2 py-1 w-fit">
                         <span className="h-2 w-2 bg-success rounded-full animate-pulse"></span>
                         <span className="group-hover:text-white group-hover:underline">Статус серверов</span>

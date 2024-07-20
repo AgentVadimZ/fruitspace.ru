@@ -16,7 +16,7 @@ const DocsIndex = (props) => {
             <div className="mt-16 select-none">
                 <p className="text-5xl uppercase font-semibold text-center">Документация</p>
                 <p className="text-center font-mono">на все случаи жизни</p>
-                <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-16 p-8">
+                <div className="mt-8 grid grid-cols-1 laptop:grid-cols-3 gap-16 p-8">
                     {/*<div*/}
                     {/*    className="flex items-center gap-4 rounded-2xl bg-active hover:bg-subtle cursor-pointer glassb p-2 pr-4"*/}
                     {/*    onClick={() => {*/}

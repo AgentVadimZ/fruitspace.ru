@@ -37,15 +37,15 @@ export default function ProgressCard(props: ProgressCardProps) {
 
 
     return (
-        <div className="p-2 lg:p-4 rounded-xl bg-active glassb h-36 flex flex-col">
+        <div className="p-2 laptop:p-4 rounded-xl bg-active glassb h-36 flex flex-col">
             <div className="h-3 rounded-full" style={{backgroundColor: "var(--btn-color)"}}>
                 <div className="h-full rounded-full" style={{background: clr, width: width + "%"}}/>
             </div>
             {props.date
-                ? <p className="text-gray-300 m-2 text-xl lg:text-2xl">{props.text}</p>
+                ? <p className="text-gray-300 m-2 text-xl laptop:text-2xl">{props.text}</p>
                 : <p className="text-gray-300 m-2 text-3xl flex items-center">
                     {props.now}/{props.max === -1
-                    ? <span className="text-3xl lg:text-5xl">∞</span>
+                    ? <span className="text-3xl laptop:text-5xl">∞</span>
                     : props.max}
                 </p>}
             <span className="mt-auto text-sm">{props.bottom}</span>

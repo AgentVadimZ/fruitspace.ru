@@ -98,11 +98,11 @@ export default function GlobalNav({mainpage}: {mainpage?: boolean}) {
             {(mainpage && !['/', ''].includes(router.pathname)) &&
                 <HideOn atHeight height={120}>
                     <Link href="/"
-                          className="fixed top-4 xl:top-3 left-16 hidden md:block md:text-2xl xl:text-3xl font-[Coolvetica] tracking-wider font-normal fruitText m-0 select-none">FruitSpace</Link>
+                          className="fixed top-4 desktop:top-3 left-16 hidden ipad;block ipad;text-2xl desktop:text-3xl font-[Coolvetica] tracking-wider font-normal fruitText m-0 select-none">FruitSpace</Link>
                 </HideOn>
             }
 
-            <div className={`hidden lg:flex items-center gap-2 rounded-xl backdrop-blur bg-active bg-opacity-50 ${mainpage?"glassb":""}`}>
+            <div className={`hidden laptop:flex items-center gap-2 rounded-xl backdrop-blur bg-active bg-opacity-50 ${mainpage?"glassb":""}`}>
                 {
                     links.map((item, i) => NavLink({...item, key: i}))
                 }
@@ -187,7 +187,7 @@ export default function GlobalNav({mainpage}: {mainpage?: boolean}) {
                         <VpnKeyIcon/>
                         Войти
                     </Link>}
-                <div className="relative lg:hidden">
+                <div className="relative laptop:hidden">
                     <p className="flex justify-center items-center h-11 w-11 rounded-xl backdrop-blur bg-subtle bg-opacity-50 -mr-2"
                     onClick={()=>setDrawer(true)}>
                         <FontAwesomeIcon className="text-lg" icon={faBars}/>

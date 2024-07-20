@@ -38,7 +38,7 @@ export default function GDPSCard(props: GDPSCardProps) {
     }
 
     return (
-        <div ref={props.sref} className="col-span-2 p-2 lg:p-4 rounded-2xl flex gap-4 items-center bg-active glassb">
+        <div ref={props.sref} className="col-span-2 p-2 laptop:p-4 rounded-2xl flex gap-4 items-center bg-active glassb">
             <img src={props.icon} className="rounded-lg h-20" />
             <div className="flex flex-col gap-1">
                 <p className="text-lg text-nowrap text-ellipsis overflow-hidden max-w-64">{props.name}</p>
@@ -47,7 +47,7 @@ export default function GDPSCard(props: GDPSCardProps) {
                     <span ref={props.tref} className={`text-white rounded-lg cursor-pointer flex gap-2 items-center group border-solid box-border border-2 hover:!border-${hover}`}
                           style={{borderColor: bg}} onClick={props.onClick}>
                         <FontAwesomeIcon icon={icon} className={`rounded-l-md p-1.5 aspect-square group-hover:!bg-${hover}`} style={{backgroundColor: bg}} />
-                        <span className="inline pr-2 text-sm md:text-base">{props.plan}</span>
+                        <span className="inline pr-2 text-sm ipad:text-base">{props.plan}</span>
                     </span>
                 </p>
             </div>
@@ -69,7 +69,7 @@ export function DownloadCard(props: DownloadCardProps) {
     const {data} = useSWR(props.srvid, api.gdps_manage.fetchBuildStatus, {refreshInterval:3000})
 
     return (
-        <div ref={props.sref} className="flex flex-col p-2 lg:p-4 rounded-xl bg-active glassb">
+        <div ref={props.sref} className="flex flex-col p-2 laptop:p-4 rounded-xl bg-active glassb">
             <Dropdown.Button type="primary" icon={<FontAwesomeIcon icon={faLink} />} menu={{
                 items: [
                     {
@@ -85,7 +85,7 @@ export function DownloadCard(props: DownloadCardProps) {
             }} buttonsRender={(btns)=> {
                 btns[0] = <Button type="primary" className="w-full" onClick={()=>props.router.push(`https://gofruit.space/gdps/${props.srvid}`)}
                                   icon={<FontAwesomeIcon icon={faDownload} />}>
-                    <span className="!hidden xl:!inline">Скачать</span>
+                    <span className="!hidden desktop:!inline">Скачать</span>
                 </Button>
                 return btns
             }}>

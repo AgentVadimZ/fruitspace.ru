@@ -76,20 +76,20 @@ export default function OrderMC(props){
 
     return(
         <>
-            <div className={`flex flex-col bg-opacity-50 lg:h-screen w-screen bg-cover`} style={{
+            <div className={`flex flex-col bg-opacity-50 laptop:h-screen w-screen bg-cover`} style={{
                 backgroundImage: `url(${BackgroundMC.src})`,
             }}>
                 <GlobalHead title={localeGlobal.get('navName')}/>
                 <GlobalNav mainpage router={props.router}/>
                 <Toaster />
                 <p className="text-center color-white pt-2 text-xl mb-4">Создание нового Minecraft сервера</p>
-                <div className="grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mx-auto w-11/12 lg:w-3/4">
+                <div className="grid tablet:grid-cols-1 laptop:grid-cols-2 desktop:grid-cols-3 gap-4 mx-auto w-11/12 laptop:w-3/4">
                     <TariffCard tariffData={tariffData} main setBackdrop={setBackdrop} setTariff={setTariff} />
                     <ConfigCard config={config} setConfig={setConfig} cores={cores} versions={versions} />
                     <AdditionalCard config={config} setConfig={setConfig} />
                 </div>
                 <div
-                    className="mt-4 lg:mt-auto mb-6 glassb flex justify-between items-center relative bg-[var(--subtle-color)] rounded-xl w-11/12 lg:w-3/4 mx-auto">
+                    className="mt-4 laptop:mt-auto mb-6 glassb flex justify-between items-center relative bg-[var(--subtle-color)] rounded-xl w-11/12 laptop:w-3/4 mx-auto">
                     <p className="select-none text-lg text-right mx-4 my-0">Итого: {TotalPrice} ₽/мес</p>
                     <Button variant="contained" className="m-4 text-lg rounded-lg bg-[#0d6efd]" onClick={createServer}>Заказать</Button>
                 </div>
@@ -106,14 +106,14 @@ export default function OrderMC(props){
                             <Tab value="static" className="!w-fit">Статические</Tab>
                         </TabsList>
                         <TabPanel value="dynamic" className="border-none !p-0">
-                            <div className="grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mx-auto w-11/12 lg:w-3/4">
+                            <div className="grid tablet:grid-cols-1 laptop:grid-cols-2 desktop:grid-cols-3 gap-4 mx-auto w-11/12 laptop:w-3/4">
                                 {tariffs.dynamic.map((t, i)=>{
                                     return <TariffCard key={i} tariffData={t} setBackdrop={setBackdrop} setTariff={setTariff} />
                                 })}
                             </div>
                         </TabPanel>
                         <TabPanel value="static" className="border-none !p-0">
-                            <div className="grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mx-auto w-11/12 lg:w-3/4">
+                            <div className="grid tablet:grid-cols-1 laptop:grid-cols-2 desktop:grid-cols-3 gap-4 mx-auto w-11/12 laptop:w-3/4">
                                 {tariffs.static.map((t, i)=>{
                                     return <TariffCard key={i} tariffData={t} setBackdrop={setBackdrop} setTariff={setTariff} />
                                 })}

@@ -227,13 +227,13 @@ export default function DownloadPage(props) {
             <div className="h-screen flex justify-center items-center flex-col bg-center bg-cover" style={{
                 backgroundImage: `url(${config.bg})`
             }}>
-                <div className="w-fit max-w-full lg:max-w-xl flex flex-col gap-4">
+                <div className="w-fit max-w-full laptop:max-w-xl flex flex-col gap-4">
                     <div
                         className="bg-active backdrop-blur bg-opacity-75 border-white border-opacity-25 rounded-2xl border-solid border-1 p-4 flex flex-col gap-4">
-                        <div className="flex gap-4 items-center flex-col lg:flex-row">
+                        <div className="flex gap-4 items-center flex-col laptop:flex-row">
                             <img className="h-40 rounded-xl" src={srv.icon}/>
-                            <div className="text-center lg:text-left">
-                                <p className="text-2xl w-fit mx-auto lg:mx-0">{srv.srv_name}</p>
+                            <div className="text-center laptop:text-left">
+                                <p className="text-2xl w-fit mx-auto laptop:mx-0">{srv.srv_name}</p>
                                 <span className="text-sm">{showPlayers(srv.user_count, srv.level_count)}</span>
                             </div>
                         </div>
@@ -241,7 +241,7 @@ export default function DownloadPage(props) {
                                  options={{className: "text-primary"}}>
                             {srv.description}
                         </Linkify>
-                        <div className="flex items-center justify-between flex-col lg:flex-row">
+                        <div className="flex items-center justify-between flex-col laptop:flex-row">
                             <p className="my-0 mx-4 text-lg">{locale.get('download')}</p>
                             {srv.client_windows_url &&
                                 <span className="flex gap-2">
@@ -313,7 +313,7 @@ export default function DownloadPage(props) {
                         </div>
 
                         <div
-                            className="bg-active backdrop-blur bg-opacity-75 border-white border-opacity-25 border-1 p-2 w-[available] flex flex-col lg:flex-row rounded-xl">
+                            className="bg-active backdrop-blur bg-opacity-75 border-white border-opacity-25 border-1 p-2 w-[available] flex flex-col laptop:flex-row rounded-xl">
                             <Button type={config.variant} className="w-full"
                                     onClick={() => setBackdrop("forgot")}>
                                 {locale.get('forgot')}

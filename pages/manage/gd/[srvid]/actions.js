@@ -247,7 +247,7 @@ export default function ActionsGD(props) {
             <GlobalNav />
             <GDNavBar />
             <PanelContent>
-                <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4 mb-4 w-full lg:w-2/3">
+                <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4 mb-4 w-full laptop:w-2/3">
                     <p className="px-1.5 py-0.5 rounded-lg glassb w-fit">Лог действий</p>
                     <div className="flex items-center rounded-lg px-1.5 py-0.5 bg-btn">
                         <FontAwesomeIcon icon={faGhost} className="mr-2"/> — действие системы
@@ -256,8 +256,8 @@ export default function ActionsGD(props) {
                         <FontAwesomeIcon icon={faStar} className="mr-2"/> — действие модератора
                     </div>
                 </div>
-                <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4 w-full lg:w-2/3">
-                    <div className="flex flex-col lg:flex-row items-center gap-2">
+                <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4 w-full laptop:w-2/3">
+                    <div className="flex flex-col laptop:flex-row items-center gap-2">
                     <Select defaultValue={-1} options={[
                             {
                                 value: -1,

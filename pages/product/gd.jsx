@@ -89,7 +89,7 @@ export default function GD(props) {
                         className="absolute bottom-0 w-full p-8 bg-gradient-to-t from-dark from-15% to-transparent flex flex-col gap-2">
                         <p className="text-3xl">Хостинг GDPS</p>
                         <p>Уютное место для игры с друзьями или крупнейший сервер в РК. Мощности хватит на все.</p>
-                        <div className="flex flex-col lg:flex-row gap-4">
+                        <div className="flex flex-col laptop:flex-row gap-4">
                             <Button className="uppercase font-semibold" type="primary" size="large"
                                     icon={<FontAwesomeIcon icon={faZap}/>}
                                     onClick={() => orderRef.current.scrollIntoView({behavior: 'smooth'})}>
@@ -105,7 +105,7 @@ export default function GD(props) {
                     </div>
                 </div>
 
-                <div className="flex flex-col-reverse lg:flex-row select-none">
+                <div className="flex flex-col-reverse laptop:flex-row select-none">
                     <div className="flex flex-col p-8 flex-1">
                         <p className="font-mono">простая и функциональная</p>
                         <p className="text-5xl uppercase font-semibold">панель</p>
@@ -134,9 +134,9 @@ export default function GD(props) {
                     </div>
                     <div className="flex flex-col relative flex-1">
                         <img src={ScreenshotGaus.src}
-                             className="lg:object-none object-left-top object-cover h-64 lg:h-full"/>
+                             className="laptop:object-none object-left-top object-cover h-64 laptop:h-full"/>
                         {/*<div className="absolute h-full w-full z-10 bg-gradient-to-t from-dark from-15% to-50%"></div>*/}
-                        <div className="absolute 2xl:hidden h-full w-full z-10 bg-gradient-to-l from-dark to-25%"></div>
+                        <div className="absolute 2desktop:hidden h-full w-full z-10 bg-gradient-to-l from-dark to-25%"></div>
                     </div>
                 </div>
 
@@ -144,10 +144,10 @@ export default function GD(props) {
                     <p className="text-center font-mono">полный</p>
                     <p className="text-5xl uppercase font-semibold text-center">кастом</p>
                     <p className="text-center ">хостинг построен с нуля специально для Geometry Dash</p>
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
+                    <div className="grid grid-cols-1 laptop:grid-cols-3 gap-8 mt-8">
                         <div
-                            className="flex flex-col 2xl:flex-row gap-4 bg-active border-subtle rounded-2xl border-solid border-1">
-                            <img src={FeatureCoreImg.src} className="2xl:w-[17rem] 2xl:h-[17rem]"/>
+                            className="flex flex-col 2desktop:flex-row gap-4 bg-active border-subtle rounded-2xl border-solid border-1">
+                            <img src={FeatureCoreImg.src} className="2desktop:w-[17rem] 2desktop:h-[17rem]"/>
                             <div className="flex flex-col gap-2 p-4 text-sm">
                                 <p className="text-2xl font-semibold rainbow mb-2">Ядро GhostCore</p>
                                 <p className="text-base">Написано с нуля на Go и быстрее Cvolton в 8-15 раз</p>
@@ -157,8 +157,8 @@ export default function GD(props) {
                         </div>
 
                         <div
-                            className="flex flex-col 2xl:flex-row gap-4 bg-active border-subtle rounded-2xl border-solid border-1">
-                            <img src={FeatureShieldImg.src} className="2xl:w-[17rem] 2xl:h-[17rem]"/>
+                            className="flex flex-col 2desktop:flex-row gap-4 bg-active border-subtle rounded-2xl border-solid border-1">
+                            <img src={FeatureShieldImg.src} className="2desktop:w-[17rem] 2desktop:h-[17rem]"/>
                             <div className="flex flex-col gap-2 p-4 text-sm">
                                 <p className="text-2xl font-semibold rainbow mb-2">Защита от DDoS</p>
                                 <p className="text-base">Выращен в антиутопии и закален огнем</p>
@@ -169,8 +169,8 @@ export default function GD(props) {
                         </div>
 
                         <div
-                            className="flex flex-col 2xl:flex-row gap-4 bg-active border-subtle rounded-2xl border-solid border-1">
-                            <img src={FeatureMusicImg.src} className="2xl:w-[17rem] 2xl:h-[17rem]"/>
+                            className="flex flex-col 2desktop:flex-row gap-4 bg-active border-subtle rounded-2xl border-solid border-1">
+                            <img src={FeatureMusicImg.src} className="2desktop:w-[17rem] 2desktop:h-[17rem]"/>
                             <div className="flex flex-col gap-2 p-4 text-sm">
                                 <p className="text-2xl font-semibold rainbow mb-2">Библиотека музыки</p>
                                 <p className="text-base">Ваш сервер - ваша музыка</p>
@@ -188,9 +188,9 @@ export default function GD(props) {
                 <div className="mt-24 select-none">
                     <p className="text-5xl uppercase font-semibold text-center">тарифы</p>
                     <p className="text-center font-mono">на любой вкус</p>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mt-8 w-fit mx-auto">
+                    <div className="grid grid-cols-1 laptop:grid-cols-2 desktop:grid-cols-3 gap-8 mt-8 w-fit mx-auto">
                         <div
-                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 lg:w-96">
+                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 laptop:w-96">
                             <TariffPS className="w-32 mt-2"/>
                             <p className="text-2xl font-semibold font-avant uppercase -mt-6 tracking-wide">
                                 Press Start
@@ -215,7 +215,7 @@ export default function GD(props) {
                         </div>
 
                         <div
-                            className="flex items-center flex-col gap-4 bg-active glassb rounded-2xl p-4 lg:w-96">
+                            className="flex items-center flex-col gap-4 bg-active glassb rounded-2xl p-4 laptop:w-96">
                             <TariffSG className="w-32 border-white border-2"/>
                             <p className="text-2xl font-semibold font-avant uppercase -mt-3 tracking-wide">
                                 Singularity
@@ -240,7 +240,7 @@ export default function GD(props) {
                         </div>
 
                         <div
-                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 lg:w-96">
+                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 laptop:w-96">
                             <TariffFD className="w-32"/>
                             <p className="text-2xl font-semibold font-avant uppercase -mt-3 tracking-wide">
                                 Foundation
@@ -274,17 +274,17 @@ export default function GD(props) {
                 <div className="mt-24 select-none">
                     <p className="text-5xl uppercase font-semibold text-center">Остались вопросы?</p>
                     <p className="text-center font-mono">Напишите нам!</p>
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 p-8">
+                    <div className="grid grid-cols-1 laptop:grid-cols-3 gap-16 p-8">
                         <div className="flex flex-col gap-2 items-center">
                             <FontAwesomeIcon icon={faComment} className="!h-20 mb-8"/>
-                            <span className="lg:text-lg text-center">
+                            <span className="laptop:text-lg text-center">
                                 Нужен срочный ответ, пока не ушла мысль? Напишите нам в чат
                             </span>
                             <span className="text-sm mt-auto">💬 Синий пузырек справа в углу</span>
                         </div>
                         <div className="flex flex-col gap-2 items-center">
                             <FontAwesomeIcon icon={faDiscord} className="!h-20 mb-8"/>
-                            <span className="lg:text-lg text-center">
+                            <span className="laptop:text-lg text-center">
                                 Присоединяйтесь к нашему сообществу в Discord!
                                 Тикеты, мнение реальных клиентов, ивенты и многое другое
                             </span>
@@ -295,7 +295,7 @@ export default function GD(props) {
                         </div>
                         <div className="flex flex-col gap-2 items-center">
                             <FontAwesomeIcon icon={faNewspaper} className="!h-20 mb-8"/>
-                            <span className="lg:text-lg text-center">
+                            <span className="laptop:text-lg text-center">
                                 Будьте в курсе всех новостей — присоединяйтесь к нашим сообществам ВК, Telegram, Discord и Youtube
                             </span>
                             <FontAwesomeIcon icon={faArrowDown} className="mt-auto" />

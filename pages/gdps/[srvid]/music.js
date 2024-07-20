@@ -164,7 +164,7 @@ export default function MusicGD(props) {
             <GDPSNavBar plan={srv.plan} />
             <PanelContent>
 
-                <div className="flex flex-col gap-4 justify-center items-center xl:items-end w-full xl:w-2/3 xl:flex-row">
+                <div className="flex flex-col gap-4 justify-center items-center desktop:items-end w-full desktop:w-2/3 desktop:flex-row">
                     <ReactPlayer style={{display: "none"}} url={playerData.src || ''} playing={playerData.playing}
                                  volume={playerData.volume / 100} progressInterval={250} onProgress={updateMusic}
                                  onEnded={() => setPlayerData({...playerData, playing: false})} ref={playerRef}
@@ -173,20 +173,20 @@ export default function MusicGD(props) {
                         <p className="bg-active text-sm rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
                                         relative z-20 -mb-[1px]">Загрузить музыку</p>
                             <div className="bg-active flex gap-2 items-center p-2 rounded-xl rounded-tl-none border-1 border-white border-opacity-25 z-10">
-                                <img src={LogoNG.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
+                                <img src={LogoNG.src} className="w-12 desktop:w-16 rounded-lg cursor-pointer"
                                      onClick={() => setBackdrop("add-ng")}/>
-                                {srv.plan > 1 && <img src={LogoYT.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
+                                {srv.plan > 1 && <img src={LogoYT.src} className="w-12 desktop:w-16 rounded-lg cursor-pointer"
                                                       onClick={() => setBackdrop("add-yt")}/>}
-                                {srv.plan > 2 && <img src={LogoDZ.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
+                                {srv.plan > 2 && <img src={LogoDZ.src} className="w-12 desktop:w-16 rounded-lg cursor-pointer"
                                                       onClick={() => setBackdrop("add-dz")}/>}
-                                {srv.plan > 2 && <img src={LogoVK.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
+                                {srv.plan > 2 && <img src={LogoVK.src} className="w-12 desktop:w-16 rounded-lg cursor-pointer"
                                                       onClick={() => setBackdrop("add-vk")}/>}
-                                {srv.plan > 1 && <img src={LogoDBox.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
+                                {srv.plan > 1 && <img src={LogoDBox.src} className="w-12 desktop:w-16 rounded-lg cursor-pointer"
                                                       onClick={() => setBackdrop("add-db")}/>}
                             </div>
                     </div>
 
-                    <div className="flex-1 w-full xl:w-auto bg-active flex items-center gap-4 nextborder h-20 rounded-xl px-4 py-2">
+                    <div className="flex-1 w-full desktop:w-auto bg-active flex items-center gap-4 nextborder h-20 rounded-xl px-4 py-2">
                         <p className="w-10 h-10 rounded-full bg-white hover:bg-gray-300 cursor-pointer flex items-center justify-center"
                            onClick={() => setPlayerData({
                                ...playerData,
@@ -196,7 +196,7 @@ export default function MusicGD(props) {
                         </p>
                         <div className="flex-1">
                             <p className="flex items-center gap-2">
-                                <span className="text-ellipsis overflow-hidden text-nowrap max-w-40 xl:max-w-lg">{playerData.title}</span>
+                                <span className="text-ellipsis overflow-hidden text-nowrap max-w-40 desktop:max-w-lg">{playerData.title}</span>
                                 <span className="bg-btn rounded text-sm px-1.5">ID {playerData.id}</span>
                             </p>
                             <p className="text-xs text-gray-300">{playerData.artist}</p>
@@ -220,8 +220,8 @@ export default function MusicGD(props) {
                 </div>
 
 
-                <div className="mt-4 flex flex-col gap-4 rounded-xl bg-active nextborder p-4 w-full xl:w-2/3">
-                    <div className="flex flex-col xl:flex-row items-center gap-2">
+                <div className="mt-4 flex flex-col gap-4 rounded-xl bg-active nextborder p-4 w-full desktop:w-2/3">
+                    <div className="flex flex-col desktop:flex-row items-center gap-2">
                         <Select value={sortMode} options={[
                             {label: <span className="flex items-center gap-2">
                                     <FontAwesomeIcon icon={faArrowDownAZ}/>
@@ -237,7 +237,7 @@ export default function MusicGD(props) {
                                 </span>, value: "downloads"}
                         ]} onChange={(val)=>setSortMode(val)} />
                         <Input placeholder="Поиск" value={search} prefix={<FontAwesomeIcon icon={faSearch} />}
-                               rootClassName="xl:w-64 "
+                               rootClassName="desktop:w-64 "
                                onChange={(e)=>{
                                    setSearch(e.target.value)
                                    searchDebounced(e.target.value)
@@ -265,8 +265,8 @@ export default function MusicGD(props) {
                                  }}>
                                 <FontAwesomeIcon icon={faCompactDisc} className="text-4xl" />
                                 <div>
-                                    <p className="text-ellipsis overflow-hidden text-nowrap max-w-40 xl:max-w-[64rem]">{val.name}</p>
-                                    <p className="text-sm text-gray-300 flex flex-col xl:flex-row xl:items-center gap-2">
+                                    <p className="text-ellipsis overflow-hidden text-nowrap max-w-40 desktop:max-w-[64rem]">{val.name}</p>
+                                    <p className="text-sm text-gray-300 flex flex-col desktop:flex-row desktop:items-center gap-2">
                                         {val.artist}
                                         <p className="flex items-center gap-2">
                                             <span className="rounded px-1.5 text-xs bg-btn text-white">ID {val.id}</span>

@@ -87,21 +87,21 @@ export default function ChestsGD(props) {
             <GDNavBar />
             <Toaster/>
             <PanelContent>
-                <div className="flex flex-col lg:flex-row gap-8 w-full xl:w-5/6">
+                <div className="flex flex-col laptop:flex-row gap-8 w-full desktop:w-5/6">
                     <div className="p-4 rounded-xl bg-active glassb flex flex-col gap-4 flex-1">
                         <p className="rounded-md px-1.5 py-0.5 glassb w-fit">Малый сундук</p>
                         <div className="flex flex-wrap gap-2 items-center">
                             <div className="w-12"><img src={orbsIcon.src} className="h-6 "/></div>
                                 Орбы
-                            <span className="lg:flex-1 w-full"/>
+                            <span className="laptop:flex-1 w-full"/>
                             от
-                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestSmallOrbsMin}
+                            <InputNumber className="w-16 laptop:w-auto" value={chestConfig.ChestSmallOrbsMin}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestSmallOrbsMin: val
                                          })}/>
                             до
-                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestSmallOrbsMax}
+                            <InputNumber className="w-16 laptop:w-auto" value={chestConfig.ChestSmallOrbsMax}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestSmallOrbsMax: val
@@ -110,15 +110,15 @@ export default function ChestsGD(props) {
                         <div className="flex flex-wrap gap-2 items-center">
                             <div className="w-12"><img src={diamondsIcon.src} className="h-6"/></div>
                                 Алмазы
-                            <span className="lg:flex-1 w-full"/>
+                            <span className="laptop:flex-1 w-full"/>
                             от
-                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestSmallDiamondsMin}
+                            <InputNumber className="w-16 laptop:w-auto" value={chestConfig.ChestSmallDiamondsMin}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestSmallDiamondsMin: val
                                          })}/>
                             до
-                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestSmallDiamondsMax}
+                            <InputNumber className="w-16 laptop:w-auto" value={chestConfig.ChestSmallDiamondsMax}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestSmallDiamondsMax: val
@@ -127,15 +127,15 @@ export default function ChestsGD(props) {
                         <div className="flex flex-wrap gap-2 items-center">
                             <div className="w-12"><img src={keysIcon.src} className="h-6"/></div>
                                 Ключи
-                            <span className="lg:flex-1 w-full"/>
+                            <span className="laptop:flex-1 w-full"/>
                             от
-                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestSmallKeysMin}
+                            <InputNumber className="w-16 laptop:w-auto" value={chestConfig.ChestSmallKeysMin}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestSmallKeysMin: val
                                          })}/>
                             до
-                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestSmallKeysMax}
+                            <InputNumber className="w-16 laptop:w-auto" value={chestConfig.ChestSmallKeysMax}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestSmallKeysMax: val
@@ -144,13 +144,13 @@ export default function ChestsGD(props) {
                         <div className="flex flex-wrap gap-2 items-center">
                             <div className="w-12"><img src={shardIce.src} className="h-6"/></div>
                                 Шарды
-                            <span className="lg:flex-1 w-full"/>
+                            <span className="laptop:flex-1 w-full"/>
                             Факт дня: их больше нельзя настраивать в 2.2
                         </div>
                         <div className="flex flex-wrap gap-2 items-center">
                             <div className="w-12"><img src={timeIcon.src} className="h-6"/></div>
                                 Таймаут
-                            <span className="lg:flex-1 w-full"/>
+                            <span className="laptop:flex-1 w-full"/>
                             <TimePicker onChange={(val) => {
                                 setChestConfig({...chestConfig, ChestSmallWait: toSeconds(val)})
                             }} value={s} allowClear={false} showNow={false}/>
@@ -162,15 +162,15 @@ export default function ChestsGD(props) {
                         <div className="flex flex-wrap gap-2 items-center">
                             <div className="w-12"><img src={orbsIcon.src} className="h-6 "/></div>
                                 Орбы
-                            <span className="lg:flex-1 w-full"/>
+                            <span className="laptop:flex-1 w-full"/>
                             от
-                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestBigOrbsMin}
+                            <InputNumber className="w-16 laptop:w-auto" value={chestConfig.ChestBigOrbsMin}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestBigOrbsMin: val
                                          })}/>
                             до
-                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestBigOrbsMax}
+                            <InputNumber className="w-16 laptop:w-auto" value={chestConfig.ChestBigOrbsMax}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestBigOrbsMax: val
@@ -179,15 +179,15 @@ export default function ChestsGD(props) {
                         <div className="flex flex-wrap gap-2 items-center">
                             <div className="w-12"><img src={diamondsIcon.src} className="h-6"/></div>
                                 Алмазы
-                            <span className="lg:flex-1 w-full"/>
+                            <span className="laptop:flex-1 w-full"/>
                             от
-                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestBigDiamondsMin}
+                            <InputNumber className="w-16 laptop:w-auto" value={chestConfig.ChestBigDiamondsMin}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestBigDiamondsMin: val
                                          })}/>
                             до
-                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestBigDiamondsMax}
+                            <InputNumber className="w-16 laptop:w-auto" value={chestConfig.ChestBigDiamondsMax}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestBigDiamondsMax: val
@@ -196,15 +196,15 @@ export default function ChestsGD(props) {
                         <div className="flex flex-wrap gap-2 items-center">
                             <div className="w-12"><img src={keysIcon.src} className="h-6"/></div>
                                 Ключи
-                            <span className="lg:flex-1 w-full"/>
+                            <span className="laptop:flex-1 w-full"/>
                             от
-                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestBigKeysMin}
+                            <InputNumber className="w-16 laptop:w-auto" value={chestConfig.ChestBigKeysMin}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestBigKeysMin: val
                                          })}/>
                             до
-                            <InputNumber className="w-16 lg:w-auto" value={chestConfig.ChestBigKeysMax}
+                            <InputNumber className="w-16 laptop:w-auto" value={chestConfig.ChestBigKeysMax}
                                          onChange={(val) => setChestConfig({
                                              ...chestConfig,
                                              ChestBigKeysMax: val
@@ -213,13 +213,13 @@ export default function ChestsGD(props) {
                         <div className="flex flex-wrap gap-2 items-center">
                             <div className="w-12"><img src={shardIce.src} className="h-6"/></div>
                                 Шарды
-                            <span className="lg:flex-1 w-full"/>
+                            <span className="laptop:flex-1 w-full"/>
                             Факт дня: их больше нельзя настраивать в 2.2
                         </div>
                         <div className="flex flex-wrap gap-2 items-center">
                             <div className="w-12"><img src={timeIcon.src} className="h-6"/></div>
                             Таймаут
-                            <span className="lg:flex-1 w-full"/>
+                            <span className="laptop:flex-1 w-full"/>
                             <TimePicker onChange={(val) => {
                                 setChestConfig({...chestConfig, ChestBigWait: toSeconds(val)})
                             }} value={sb} allowClear={false} showNow={false}/>

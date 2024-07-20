@@ -44,7 +44,7 @@ export default function MusicGD(props) {
         ...v, target: ()=>refs.current[v.target],
         nextButtonProps: {children: <span>Далее</span>},
         prevButtonProps: {children: <span>Назад</span>},
-        className: "w-fit lg:w-[520px]"
+        className: "w-fit laptop:w-[520px]"
     }))
     const [tourOpen, setTourOpen] = useState(!!props.router.query.tour)
 
@@ -159,7 +159,7 @@ export default function MusicGD(props) {
             <PanelContent>
 
                 <div
-                    className="flex flex-col gap-4 justify-center items-center xl:items-end w-full xl:w-2/3 xl:flex-row">
+                    className="flex flex-col gap-4 justify-center items-center desktop:items-end w-full desktop:w-2/3 desktop:flex-row">
                     <ReactPlayer style={{display: "none"}} url={playerData.src || ''} playing={playerData.playing}
                                  volume={playerData.volume / 100} progressInterval={250} onProgress={updateMusic}
                                  onEnded={() => setPlayerData({...playerData, playing: false})} ref={playerRef}
@@ -169,21 +169,21 @@ export default function MusicGD(props) {
                                         relative z-20 -mb-[1px]">Загрузить музыку</p>
                         <div
                             className="bg-active flex gap-2 items-center p-2 rounded-xl rounded-tl-none border-1 border-white border-opacity-25 z-10 overflow-x-scroll">
-                            <img src={LogoNG.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
+                            <img src={LogoNG.src} className="w-12 desktop:w-16 rounded-lg cursor-pointer"
                                  onClick={() => setBackdrop("add-ng")}/>
-                            {srv.Srv.plan > 1 && <img src={LogoYT.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
+                            {srv.Srv.plan > 1 && <img src={LogoYT.src} className="w-12 desktop:w-16 rounded-lg cursor-pointer"
                                                   onClick={() => setBackdrop("add-yt")}/>}
-                            {srv.Srv.plan > 2 && <img src={LogoDZ.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
+                            {srv.Srv.plan > 2 && <img src={LogoDZ.src} className="w-12 desktop:w-16 rounded-lg cursor-pointer"
                                                   onClick={() => setBackdrop("add-dz")}/>}
-                            {srv.Srv.plan > 2 && <img src={LogoVK.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
+                            {srv.Srv.plan > 2 && <img src={LogoVK.src} className="w-12 desktop:w-16 rounded-lg cursor-pointer"
                                                   onClick={() => setBackdrop("add-vk")}/>}
-                            {srv.Srv.plan > 1 && <img src={LogoDBox.src} className="w-12 xl:w-16 rounded-lg cursor-pointer"
+                            {srv.Srv.plan > 1 && <img src={LogoDBox.src} className="w-12 desktop:w-16 rounded-lg cursor-pointer"
                                                   onClick={() => setBackdrop("add-db")}/>}
                         </div>
                     </div>
 
                     <div
-                        className="flex-1 w-full xl:w-auto bg-active flex items-center gap-4 nextborder h-20 rounded-xl px-4 py-2">
+                        className="flex-1 w-full desktop:w-auto bg-active flex items-center gap-4 nextborder h-20 rounded-xl px-4 py-2">
                         <p className="!w-10 !h-10 rounded-full bg-white hover:bg-gray-300 cursor-pointer flex items-center justify-center"
                            onClick={() => setPlayerData({
                                ...playerData,
@@ -195,8 +195,8 @@ export default function MusicGD(props) {
                         <div className="flex-1">
                             <p className="flex items-center gap-2">
                                 <span
-                                    className="text-sm lg:text-base text-ellipsis overflow-hidden text-nowrap max-w-24 md:max-w-40 xl:max-w-lg">{playerData.title}</span>
-                                <span className="bg-btn rounded text-xs lg:text-sm px-1.5">ID {playerData.id}</span>
+                                    className="text-sm laptop:text-base text-ellipsis overflow-hidden text-nowrap max-w-24 ipad;max-w-40 desktop:max-w-lg">{playerData.title}</span>
+                                <span className="bg-btn rounded text-xs laptop:text-sm px-1.5">ID {playerData.id}</span>
                             </p>
                             <p className="text-xs text-gray-300">{playerData.artist}</p>
                             <div className="flex items-center gap-4 -mr-2">
@@ -221,8 +221,8 @@ export default function MusicGD(props) {
                 </div>
 
 
-                <div className="mt-4 flex flex-col gap-4 rounded-xl bg-active nextborder p-4 w-full xl:w-2/3">
-                    <div className="flex flex-col xl:flex-row items-center gap-2">
+                <div className="mt-4 flex flex-col gap-4 rounded-xl bg-active nextborder p-4 w-full desktop:w-2/3">
+                    <div className="flex flex-col desktop:flex-row items-center gap-2">
                         <Select value={sortMode} options={[
                             {
                                 label: <span className="flex items-center gap-2">
@@ -244,12 +244,12 @@ export default function MusicGD(props) {
                             }
                         ]} onChange={(val) => setSortMode(val)}/>
                         <Input placeholder="Поиск" value={search} prefix={<FontAwesomeIcon icon={faSearch}/>}
-                               rootClassName="xl:w-64 "
+                               rootClassName="desktop:w-64 "
                                onChange={(e) => {
                                    setSearch(e.target.value)
                                    searchDebounced(e.target.value)
                                }}/>
-                        <Pagination responsive rootClassName="lg:ml-auto" total={pageCount} current={page + 1}
+                        <Pagination responsive rootClassName="laptop:ml-auto" total={pageCount} current={page + 1}
                                     onChange={(val) => setPage(val - 1)} showSizeChanger={false}/>
                     </div>
                     <div className="flex flex-col gap-2">
@@ -274,8 +274,8 @@ export default function MusicGD(props) {
                                  }}>
                                 <FontAwesomeIcon icon={faCompactDisc} className="text-4xl"/>
                                 <div>
-                                    <p className="text-sm lg:text-base text-ellipsis overflow-hidden text-nowrap max-w-24 md:max-w-40 xl:max-w-[64rem]">{val.name}</p>
-                                    <p className="text-xs lg:text-sm text-gray-300 flex flex-col xl:flex-row xl:items-center gap-2">
+                                    <p className="text-sm laptop:text-base text-ellipsis overflow-hidden text-nowrap max-w-24 ipad;max-w-40 desktop:max-w-[64rem]">{val.name}</p>
+                                    <p className="text-xs laptop:text-sm text-gray-300 flex flex-col desktop:flex-row desktop:items-center gap-2">
                                         {val.artist}
                                         <p className="flex items-center gap-2">
                                             <span

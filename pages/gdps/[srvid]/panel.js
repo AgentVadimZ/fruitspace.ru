@@ -148,7 +148,7 @@ export default function FrontPage(props) {
                         {user.uname}
                         <span className="font-normal text-sm ml-2 px-2 py-0.5 rounded-md bg-[var(--btn-color)]">uid:{user.uid}</span>
                     </h3>
-                    <div className="flex justify-center items-center mx-auto flex-col lg:flex-row">
+                    <div className="flex justify-center items-center mx-auto flex-col laptop:flex-row">
 
                         <span className="flex mb-1">
                             <span className="flex items-center text-lg leading-none bg-[var(--bkg-color)] rounded-lg p-1 mx-1">
@@ -192,7 +192,7 @@ export default function FrontPage(props) {
                         </span>
                     </div>
 
-                    <div className="flex justify-center items-center bg-[var(--bkg-color)] rounded-lg mx-auto mt-4 flex-col lg:flex-row">
+                    <div className="flex justify-center items-center bg-[var(--bkg-color)] rounded-lg mx-auto mt-4 flex-col laptop:flex-row">
                         <span className="flex">
                             <img src={fastIconLink("cube",user.vessels.cube)} className={`w-12 p-2 rounded-lg aspect-square object-contain ${type==="cube"&&"bg-[var(--primary-color)]"}`} />
                         <img src={fastIconLink("ship",user.vessels.ship)} className={`w-12 p-2 rounded-lg aspect-square object-contain ${type==="ship"&&"bg-[var(--primary-color)]"}`} />

@@ -55,7 +55,7 @@ export default function Index(props: any){
         <ProfileMobileNav />
         <Toaster/>
         <PanelContent>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 desktop:gap-8 w-full lg:w-3/4 mx-auto">
+            <div className="grid grid-cols-1 laptop:grid-cols-2 gap-4 desktop:gap-8 w-full laptop:w-3/4 mx-auto">
                 <div className="glassb bg-active rounded-2xl p-4 flex flex-col gap-4">
                     <div className="flex justify-between gap-4 items-center">
                         <p className="glassb rounded-lg w-fit px-1.5 py-0.5">Это я 😺</p>

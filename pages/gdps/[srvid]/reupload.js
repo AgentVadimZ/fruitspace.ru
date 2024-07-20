@@ -99,7 +99,7 @@ export default function Reupload(props) {
         <Toaster/>
         <PanelContent>
             {gdaccount.uname &&
-                <div className="w-full xl:w-2/3 flex flex-col gap-4 glassb bg-active rounded-2xl p-4">
+                <div className="w-full desktop:w-2/3 flex flex-col gap-4 glassb bg-active rounded-2xl p-4">
                     <div className="flex items-center gap-2 justify-between">
                         <p>Уровни {gdaccount.uname}</p>
                         <Pagination total={levels[0]?.results||1} showSizeChanger={false} onChange={(val)=>searchLevels(val-1)} />
