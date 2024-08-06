@@ -391,7 +391,7 @@ export default function SettingsGD(props) {
                             </p>
                             <Switch checked={settings.spaceMusic} onChange={(val)=>setSettings({
                                 ...settings, spaceMusic: val,
-                            })} disabled={!!srv.Srv.is_space_music}  />
+                            })} disabled={settings.spaceMusic}  />
                         </div>
                     }
                     <div className="flex flex-col gap-4 rounded-xl glassb p-4 mt-4 relative"
