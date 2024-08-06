@@ -126,7 +126,7 @@ export default function SettingsGD(props) {
                     discord: srv.Srv.discord,
                     vk: srv.Srv.vk,
                 },
-                spaceMusic: srv.Srv.is_space_music,
+                spaceMusic: srv.Srv.is_space_music && srv.CoreConfig.ServerConfig.HalMusic,
                 topSize: srv.CoreConfig.ServerConfig.TopSize,
                 security: {
                     enabled: !srv.CoreConfig.SecurityConfig.DisableProtection,
