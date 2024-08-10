@@ -48,6 +48,7 @@ module.exports = {
     },
   },
   plugins: [
-      require('@tailwindcss/typography')
+      require('@tailwindcss/typography'),
+      require("@xpd/tailwind-3dtransforms")
   ],
 }

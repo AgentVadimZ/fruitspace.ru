@@ -102,7 +102,7 @@ export default function GlobalNav({mainpage}: {mainpage?: boolean}) {
                 </HideOn>
             }
 
-            <div className={`hidden laptop:flex items-center gap-2 rounded-xl backdrop-blur bg-active bg-opacity-50 ${mainpage?"glassb":""}`}>
+            <div className={`hidden laptop:flex fixed top-2 left-1/2 -translate-x-1/2 items-center gap-2 rounded-xl backdrop-blur bg-active bg-opacity-50 ${mainpage?"glassb":""}`}>
                 {
                     links.map((item, i) => NavLink({...item, key: i}))
                 }
