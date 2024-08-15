@@ -13,7 +13,7 @@ import GlobalHead from "@/components/GlobalHead";
 import useLocale, {useGlobalLocale} from "@/locales/useLocale";
 import Link from "next/link";
 import {serverFiberAPI} from "@/fiber/fiber.ts";
-import {useRef} from "react";
+import {useEffect, useRef} from "react";
 import {BetaData} from '@/components/betadata';
 import {Rate, Carousel} from "antd";
 import Script from "next/script";
@@ -52,13 +52,31 @@ export default function Home(props) {
     const scrollRef = useRef(null)
     const carouselRef = useRef(null)
 
+    const blobaref = useRef(null)
+    const cardref = useRef(null)
+
+    const moveBloba = (evt) => {
+        const {clientX, clientY} = evt
+        const rect = cardref.current?.getBoundingClientRect()
+        const left = clientX - rect.left
+        const top = clientY - rect.top
+        blobaref.current?.animate({
+            left: `${left}px`,
+            top: `${top}px`,
+        }, {
+            duration: 3000,
+            fill: "forwards"
+        })
+    }
+
     return <>
         <GlobalHead og={og}/>
         <Script src="//code.jivo.ru/widget/QDbblcMLJ0" async></Script>
         <div className="fixed top-0 left-0 w-screen h-screen -z-20 bg-[#191921]"></div>
         <div className="fixed top-0 left-0 w-screen h-screen -z-10 techBg"></div>
         <div>
-            {BetaData.beta &&
+            {
+                BetaData.beta &&
                 <div
                     className="bg-active backdrop-blur bg-opacity-20 h-12 flex items-center justify-between z-[9999] relative">
                     <p className="rounded-full bg-subtle  mx-2 flex items-baseline gap-2 h-fit">
@@ -84,14 +102,36 @@ export default function Home(props) {
                             })}
                         </div>
                     </p>
-                </div>}
+                </div>
+            }
             <GlobalNav router={props.router} mainpage/>
+
+            <div className="h-screen dotsBg overflow-hidden grid grid-cols-1 ipad:grid-cols-2">
+                <div className="flex flex-col items-center justify-center">
+                    <h1 className="text-6xl mt-48 laptop:mt-2 desktop:text-8xl font-[Coolvetica] tracking-wider font-normal fruitText m-2 select-none">FruitSpace</h1>
+                    <p className="text-md text-center desktop:text-xl m-0 font-[Helvetica] max-w-2xl">
+                        Удобный и надежный хостинг для ваших любимых игр. И ещё немножко магии ✨
+                    </p>
+                </div>
+                <div className="flex items-center justify-center">
+                    <div className="overflow-hidden aspect-[3/4] rounded-3xl glassb w-2/3 bg-[#171721] relative"
+                    onPointerMove={moveBloba} ref={cardref}>
+                        <div ref={blobaref} className="bloba z-[1]"></div>
+                        <div className="absolute top-0 left-0 w-full h-full backdrop-blur-3xl z-[2]"></div>
+                        <div className="z-10 absolute top-0 left-0 p-8">
+                            <p className="text-6xl font-avant font-bold">EBICHESKY</p>
+                            <p className="text-3xl font-avant font-bold">Analitichesky</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div className={styles.main}>
 
                 <div className="flex flex-col items-center justify-center laptop:h-[100vh] relative">
                     <h1 className="text-6xl mt-48 laptop:mt-2 desktop:text-8xl font-[Coolvetica] tracking-wider font-normal fruitText m-2 select-none">FruitSpace</h1>
-                    <p className="text-md text-center desktop:text-xl m-0 font-[Helvetica]">Удобный и надежный хостинг для
+                    <p className="text-md text-center desktop:text-xl m-0 font-[Helvetica]">Удобный и надежный хостинг
+                        для
                         ваших любимых игр. И ещё немножко магии ✨</p>
 
                     <div className="mt-24 grid grid-cols-1 desktop:grid-cols-3 gap-4 desktop:gap-16 select-none">

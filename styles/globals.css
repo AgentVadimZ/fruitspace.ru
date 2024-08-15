@@ -131,6 +131,14 @@ body {
     background-color: white !important;
 }
 
+.ant-popover-content {
+    @apply border-[1px] border-solid border-white border-opacity-25 bg-active rounded-lg !important;
+}
+
+.thin-popover .ant-popover-inner {
+    padding: 4px 8px !important;
+}
+
 ul {
     list-style: none;
     margin: 0;
@@ -328,10 +336,11 @@ span.swiper-pagination-bullet-active {
     top: 50%;
     translate: -50% -50%;
     border-radius: 50%;
-    background: linear-gradient(to right, aquamarine, mediumpurple);
+    background: linear-gradient(to right, #0d6efd, mediumpurple);
     animation: rotate 20s infinite;
     opacity: 0.8;
 }
+
 
 @keyframes techAnim {
     0% {
@@ -359,4 +368,9 @@ span.swiper-pagination-bullet-active {
 }
 .glassb {
     @apply border-1 border-white border-opacity-25;
+}
+
+.glassb-hover {
+    @apply border-1 border-solid border-transparent border-opacity-25;
+    @apply hover:border-white hover:border-opacity-25;
 }
