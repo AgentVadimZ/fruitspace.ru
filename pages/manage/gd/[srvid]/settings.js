@@ -328,8 +328,7 @@ export default function SettingsGD(props) {
         <Tour open={tourOpen} onClose={()=>setTourOpen(false)} steps={tourSteps}/>
         <FloatButton
             shape="square"
-            type="primary"
-            style={{right: 20, bottom: 20}}
+            type="primary" className="right-4 bottom-16 ipad:right-5 ipad:bottom-5"
             onClick={() => setTourOpen(true)}
             icon={<FontAwesomeIcon icon={faQuestion} />}
         />

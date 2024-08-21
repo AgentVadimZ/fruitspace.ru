@@ -98,7 +98,7 @@ export default function MusicGD(props) {
             api.gdps_manage.getMusic(srv.Srv.srvid, mode, query||search, page).then((resp)=>{
             if(resp.status==="ok") {
                 setMusic(resp.music)
-                setPageCount(Math.ceil(resp.count/10))
+                setPageCount(resp.count)
             }else{
                 console.error(resp)
             }
@@ -143,10 +143,6 @@ export default function MusicGD(props) {
 
     const searchDebounced = debounce(searchMusic, 500)
 
-    if (!srv.Srv?.srvid) {
-        return null
-    }
-
     return (
         <>
             <GlobalHead title="Игровой хостинг"/>
@@ -156,8 +152,7 @@ export default function MusicGD(props) {
             <Tour open={tourOpen} onClose={()=>setTourOpen(false)} steps={tourSteps}/>
             <FloatButton
                 shape="square"
-                type="primary"
-                style={{right: 20, bottom: 20}}
+                type="primary" className="right-4 bottom-16 ipad:right-5 ipad:bottom-5"
                 onClick={() => setTourOpen(true)}
                 icon={<FontAwesomeIcon icon={faQuestion} />}
             />
@@ -176,13 +171,13 @@ export default function MusicGD(props) {
                             className="bg-active flex gap-2 items-center p-2 rounded-xl rounded-tl-none border-1 border-white border-opacity-25 z-10 overflow-x-scroll">
                             <img src={LogoNG.src} className="w-12 desktop:w-16 rounded-lg cursor-pointer"
                                  onClick={() => setBackdrop("add-ng")}/>
-                            {srv.Srv.plan > 1 && <img src={LogoYT.src} className="w-12 desktop:w-16 rounded-lg cursor-pointer"
+                            {srv.Srv?.plan > 1 && <img src={LogoYT.src} className="w-12 desktop:w-16 rounded-lg cursor-pointer"
                                                   onClick={() => setBackdrop("add-yt")}/>}
-                            {srv.Srv.plan > 2 && <img src={LogoDZ.src} className="w-12 desktop:w-16 rounded-lg cursor-pointer"
+                            {srv.Srv?.plan > 2 && <img src={LogoDZ.src} className="w-12 desktop:w-16 rounded-lg cursor-pointer"
                                                   onClick={() => setBackdrop("add-dz")}/>}
-                            {srv.Srv.plan > 2 && <img src={LogoVK.src} className="w-12 desktop:w-16 rounded-lg cursor-pointer"
+                            {srv.Srv?.plan > 2 && <img src={LogoVK.src} className="w-12 desktop:w-16 rounded-lg cursor-pointer"
                                                   onClick={() => setBackdrop("add-vk")}/>}
-                            {srv.Srv.plan > 1 && <img src={LogoDBox.src} className="w-12 desktop:w-16 rounded-lg cursor-pointer"
+                            {srv.Srv?.plan > 1 && <img src={LogoDBox.src} className="w-12 desktop:w-16 rounded-lg cursor-pointer"
                                                   onClick={() => setBackdrop("add-db")}/>}
                         </div>
                     </div>
