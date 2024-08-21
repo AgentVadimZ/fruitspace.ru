@@ -10,8 +10,6 @@ import GDLogo from "@/assets/logos/geometrydash.png"
 import {useRouter} from "next/router";
 import {useGlobalLocale} from "@/locales/useLocale";
 import useFiberAPI from "@/fiber/fiber";
-import {useRecoilState} from "recoil";
-import {userAtom} from "@/fiber/fiber.model";
 import {useState} from "react";
 import {HideOn} from "react-hide-on-scroll";
 import {Button, Drawer} from "antd";
@@ -70,7 +68,7 @@ export default function GlobalNav({mainpage}: {mainpage?: boolean}) {
 
     const api = useFiberAPI()
 
-    const [user] = useRecoilState(userAtom)
+    const [user,] = api.user.useUser()
     // const user = userModel
     const router = useRouter()
 

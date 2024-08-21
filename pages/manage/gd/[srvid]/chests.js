@@ -15,6 +15,7 @@ import toast, {Toaster} from "react-hot-toast";
 import useLocale from "@/locales/useLocale";
 import useFiberAPI from "@/fiber/fiber.ts";
 import {InputNumber, TimePicker, Button} from "antd";
+import {GDPSAdminMobileNav} from "@/components/PanelMobileNav";
 
 
 const darkTheme = createTheme({
@@ -85,6 +86,7 @@ export default function ChestsGD(props) {
             <GlobalHead title={locale.get("nav")}/>
             <GlobalNav />
             <GDNavBar />
+            <GDPSAdminMobileNav srvid={srv?.Srv?.srvid} />
             <Toaster/>
             <PanelContent>
                 <div className="flex flex-col laptop:flex-row gap-8 w-full desktop:w-5/6">

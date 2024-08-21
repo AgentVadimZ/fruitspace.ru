@@ -39,6 +39,7 @@ import {
 } from "antd";
 import {deepEqual} from "@/components/Hooks";
 import Linkify from "linkify-react";
+import {GDPSAdminMobileNav} from "@/components/PanelMobileNav";
 
 
 
@@ -321,6 +322,8 @@ export default function SettingsGD(props) {
         <GlobalHead title={locale.get('nav')}/>
         <GlobalNav />
         <GDNavBar />
+
+        <GDPSAdminMobileNav srvid={srv?.Srv?.srvid} />
         <Toaster/>
         <Tour open={tourOpen} onClose={()=>setTourOpen(false)} steps={tourSteps}/>
         <FloatButton

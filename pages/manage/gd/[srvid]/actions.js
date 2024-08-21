@@ -28,6 +28,7 @@ import {useEffect, useState} from "react";
 import Skeleton from '@mui/material/Skeleton';
 import useFiberAPI from "@/fiber/fiber.ts";
 import {Select, Pagination, Empty} from "antd";
+import {GDPSAdminMobileNav} from "@/components/PanelMobileNav";
 
 
 const SqBadge = (text) => <span className="rounded-md bg-[var(--btn-color)] group-hover:bg-[var(--active-color)] px-2 py-1 ml-2">{text}</span>
@@ -246,6 +247,7 @@ export default function ActionsGD(props) {
             <GlobalHead title="Игровой хостинг"/>
             <GlobalNav />
             <GDNavBar />
+            <GDPSAdminMobileNav srvid={srv?.Srv?.srvid} />
             <PanelContent>
                 <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4 mb-4 w-full laptop:w-2/3">
                     <p className="px-1.5 py-0.5 rounded-lg glassb w-fit">Лог действий</p>

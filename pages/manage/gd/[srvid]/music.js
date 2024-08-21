@@ -36,6 +36,7 @@ import useFiberAPI from "@/fiber/fiber.ts";
 import {MusicTour} from "@/locales/tours/manage/gd";
 import {FloatButton, Input, Select, Tour, Slider, Pagination} from "antd";
 import {debounce} from "lodash";
+import {GDPSAdminMobileNav} from "@/components/PanelMobileNav";
 
 
 export default function MusicGD(props) {
@@ -137,17 +138,21 @@ export default function MusicGD(props) {
 
 
     useEffect(()=>{
-        srv.Srv.srvid&&searchMusic()
-    },[srv, page])
+        srv.Srv?.srvid&&searchMusic()
+    },[srv.Srv, page])
 
     const searchDebounced = debounce(searchMusic, 500)
 
+    if (!srv.Srv?.srvid) {
+        return null
+    }
 
     return (
         <>
             <GlobalHead title="Игровой хостинг"/>
             <GlobalNav />
             <GDNavBar />
+            <GDPSAdminMobileNav srvid={srv?.Srv?.srvid} />
             <Tour open={tourOpen} onClose={()=>setTourOpen(false)} steps={tourSteps}/>
             <FloatButton
                 shape="square"

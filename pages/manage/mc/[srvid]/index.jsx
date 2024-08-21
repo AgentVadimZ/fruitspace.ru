@@ -5,15 +5,15 @@ import {Toaster} from "react-hot-toast";
 import useLocale from "@/locales/useLocale";
 import PanelContent from "@/components/Global/PanelContent";
 import {Button, Alert, Input} from "antd";
-import {useRecoilState} from "recoil";
 import {userAtom} from "@/fiber/fiber.model";
 import PanelSideNav from "@/components/PanelSideNav";
+import {useAtom} from "jotai/esm";
 
 
 export default function ManageMC(props) {
     const locale = useLocale(props.router)
 
-    const [user,setUser] = useRecoilState(userAtom)
+    const [user,setUser] = useAtom(userAtom)
 
     return (<>
             <GlobalHead title={locale.get('nav')}/>

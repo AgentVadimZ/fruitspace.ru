@@ -32,6 +32,7 @@ import {
 import {RolesTour} from "@/locales/tours/manage/gd";
 import Tab from "@/components/Tab";
 import {debounce} from "lodash";
+import {GDPSAdminMobileNav} from "@/components/PanelMobileNav";
 
 const SketchPicker = dynamic(() => import("react-color").then((mod)=>mod.SketchPicker), { ssr: false });
 
@@ -140,6 +141,7 @@ export default function RolesGD(props) {
             <GlobalNav />
             <GDNavBar />
             <Toaster/>
+            <GDPSAdminMobileNav srvid={srv?.Srv?.srvid} />
             <Tour open={tourOpen} onClose={()=>setTourOpen(false)} steps={tourSteps}/>
             <FloatButton
                 shape="square"

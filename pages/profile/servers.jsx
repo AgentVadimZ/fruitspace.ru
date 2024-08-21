@@ -90,7 +90,7 @@ export default function Servers(props) {
                             <div className="rounded-xl p-4 bg-active">
                                 <div className="flex items-center justify-between pb-2 pl-2">
                                     <p className="text-lg">AterHaven</p>
-                                    <Button className="group" type="text" iconPosition="end"
+                                    <Button className="group" onClick={()=>router.push("/manage/mc/babca/network")} type="text" iconPosition="end"
                                             icon={<FontAwesomeIcon icon={faCog}/>}>
                                         <span
                                             className="text-sm w-0 group-hover:w-28 overflow-hidden transition-all duration-500">Настроить сеть</span>

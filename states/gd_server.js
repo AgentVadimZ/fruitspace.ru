@@ -1,9 +1,6 @@
-import {atom} from "recoil";
+import {atom} from "jotai";
 
 
-const GDServer = atom({
-    key: "gd",
-    default: {}
-})
+const GDServer = atom({})
 
 export default GDServer

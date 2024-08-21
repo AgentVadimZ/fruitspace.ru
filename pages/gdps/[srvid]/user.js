@@ -3,16 +3,16 @@ import {Toaster} from "react-hot-toast";
 import PanelContent from "@/components/Global/PanelContent";
 import GlobalGDPSNav from "@/components/UserZone/GlobalGDPSNav";
 import styles from "@/components/Manage/GDManage.module.css";
-import {useRecoilState} from "recoil";
 import GDServer from "@/states/gd_server";
 import {GDUserState} from "@/states/gd_user";
 import GDPSNavBar from "@/components/UserZone/GDPSSIdeBar";
+import {useAtom} from "jotai";
 
 
 export default function FrontPage(props) {
 
-    const [srv, setSrv] = useRecoilState(GDServer)
-    const [user, setUser] = useRecoilState(GDUserState)
+    const [srv, setSrv] = useAtom(GDServer)
+    const [user, setUser] = useAtom(GDUserState)
 
     const fastIconLink = (type, id) => "https://cdn.fruitspace.one/assets/icons/"+type+"/"+id+".png"
 

@@ -1,4 +1,3 @@
-import {useRecoilState} from "recoil";
 import {userAtom} from "@/fiber/fiber.model";
 
 import {useState} from "react";
@@ -20,6 +19,7 @@ import Yoomoney from "@/assets/logos/yoomoney.png"
 import {faBitcoin, faCcMastercard} from "@fortawesome/free-brands-svg-icons";
 import SBPPay from "@/assets/logos/sbp.svg"
 import MasterCard from "@/assets/logos/mc_symbol_opt_63_3x.png"
+import {useAtom} from "jotai";
 
 const payments = {
     "yookassa": {
@@ -61,7 +61,7 @@ const payments = {
 
 export default function PayBox(props) {
 
-    const [user,setUser] = useRecoilState(userAtom)
+    const [user,setUser] = useAtom(userAtom)
     const [backdrop, openBackdrop] = useState(false)
     const [paymentParam, setPaymentParam] = useState({
         amount: 100,

@@ -1,6 +1,14 @@
 import {ReactNode} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHome, faServer, faUser, faWallet} from "@fortawesome/free-solid-svg-icons";
+import {
+    faChartLine,
+    faCompactDisc,
+    faHome,
+    faMusic,
+    faServer,
+    faUser,
+    faWallet
+} from "@fortawesome/free-solid-svg-icons";
 import {Tooltip} from "antd";
 import {IconDefinition} from "@fortawesome/free-brands-svg-icons";
 import Link from "next/link";
@@ -32,7 +40,7 @@ type MobileNavItemProps = {
 export function MobileNavItem(props: MobileNavItemProps) {
     
     const router = useRouter()
-    const active = router.pathname === props.link
+    const active = router.asPath === props.link
     
     return <Tooltip title={props.title}>
         <Link passHref legacyBehavior href={props.link}>
@@ -47,7 +55,17 @@ export function MobileNavItem(props: MobileNavItemProps) {
 export function ProfileMobileNav() {
     return <PanelMobileNav>
         <MobileNavItem title="Главная" icon={faHome} link="/profile" />
-        <MobileNavItem title="Главная" icon={faServer} link="/profile/servers" />
+        <MobileNavItem title="Мои серверы" icon={faServer} link="/profile/servers" />
+        <MobileNavItem title="Аккаунт" icon={faUser} link="/profile/user" />
+        <MobileNavItem title="Биллинг" icon={faWallet} link="/profile/billing" />
+        <MobileNavItem title="Particle Hub" img={<AutoAwesomeIcon className="h-6" />} link="/particles" />
+    </PanelMobileNav>
+}
+
+export function GDPSAdminMobileNav({srvid}: {srvid: string}) {
+    return <PanelMobileNav>
+        <MobileNavItem title="Главная" icon={faChartLine} link={`/manage/gd/${srvid}`} />
+        <MobileNavItem title="Главная" icon={faMusic} link={`/manage/gd/${srvid}/music`} />
         <MobileNavItem title="Главная" icon={faUser} link="/profile/user" />
         <MobileNavItem title="Главная" icon={faWallet} link="/profile/billing" />
         <MobileNavItem title="Главная" img={<AutoAwesomeIcon className="h-6" />} link="/particles" />

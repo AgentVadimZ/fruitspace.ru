@@ -25,6 +25,7 @@ import toast, {Toaster} from "react-hot-toast";
 import {debounce} from "lodash";
 import Loader from "@/components/Loader";
 import {deepEqual} from "@/components/Hooks";
+import {GDPSAdminMobileNav} from "@/components/PanelMobileNav";
 
 
 const gauntletParams = {
@@ -119,6 +120,7 @@ export default function LevelpackGD(props) {
             <GlobalHead title="Игровой хостинг"/>
             <GlobalNav />
             <GDNavBar />
+            <GDPSAdminMobileNav srvid={srv?.Srv?.srvid} />
             <Toaster/>
             <PanelContent>
                 <div className="flex-col w-full laptop:p-2 box-border">

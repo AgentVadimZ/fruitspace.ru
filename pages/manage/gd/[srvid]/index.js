@@ -16,6 +16,7 @@ import {IndexTour} from "@/locales/tours/manage/gd";
 import {FloatButton, Tour} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClock, faHourglassHalf, faQuestion} from "@fortawesome/free-solid-svg-icons";
+import {GDPSAdminMobileNav} from "@/components/PanelMobileNav";
 
 export default function ManageGD(props) {
     const refs = useRef({})
@@ -61,12 +62,12 @@ export default function ManageGD(props) {
             <GlobalHead title={locale.get('nav')}/>
             <GlobalNav />
             <GDNavBar sref={r=>refs.current["nav"] = r} />
+            <GDPSAdminMobileNav srvid={srv?.Srv?.srvid} />
             <Toaster/>
             <Tour open={tourOpen} onClose={()=>setTourOpen(false)} steps={tourSteps}/>
             <FloatButton
                 shape="square"
-                type="primary"
-                style={{right: 20, bottom: 20}}
+                type="primary" className="right-4 bottom-16 ipad:right-5 ipad:bottom-5"
                 onClick={() => setTourOpen(true)}
                 icon={<FontAwesomeIcon icon={faQuestion} />}
             />

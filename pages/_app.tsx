@@ -1,6 +1,6 @@
 import '@/styles/globals.css'
 import {StyledEngineProvider} from "@mui/material";
-import {RecoilRoot} from "recoil";
+import {Provider} from "jotai";
 import AuthProvider from "@/components/AuthProvider";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
@@ -29,7 +29,7 @@ export default function WebApp({Component, pageProps}) {
     }, [typeof window, router.pathname]);
 
     return (
-        <RecoilRoot>
+        <Provider>
             <Head>
                 <meta name="application-name" content="FruitSpace"/>
                 <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -105,7 +105,7 @@ export default function WebApp({Component, pageProps}) {
                     </AuthProvider>
                 </ConfigProvider>
             </StyledEngineProvider>
-        </RecoilRoot>
+        </Provider>
     )
 }
 
