@@ -8,7 +8,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faChartSimple, faCirclePlus,
     faCloud, faCog,
-    faGlobe, faHardDrive, faMicrochip, faServer
+    faGlobe, faHardDrive, faMicrochip, faServer, faZap
 } from "@fortawesome/free-solid-svg-icons";
 import {ProfileMobileNav} from "@/components/PanelMobileNav";
 
@@ -66,10 +66,27 @@ export default function NetworkMC(props) {
                 </div>
                 <div className="flex justify-center mt-4 flex-col items-center">
                     <div
-                        className="text-lg bg-subtle glassb w-full desktop:w-1/3 p-2 aspect-[2/1] rounded-xl flex flex-col justify-between">
+                        className="text-lg bg-subtle glassb w-full desktop:w-1/3 p-2 rounded-xl flex flex-col justify-between">
                         <span className="text-xl">Прокси</span>
-                        <div>
-                            
+                        <div className="flex justify-start mt-2 mb-2 flex-col gap-2 w-full">
+                            <div className="glassb bg-subtle p-1.5 rounded-lg flex items-center gap-1">
+                                <FontAwesomeIcon icon={faGlobe} size={"sm"}/>
+                                <p>mc.aterhaven.org</p>
+                            </div>
+                            <div className="glassb bg-subtle p-1.5 rounded-lg flex items-center gap-1">
+                                <FontAwesomeIcon icon={faCloud} size={"sm"}/>
+                                <p>172.0.16.1/24</p>
+                                <Popover placement="bottom" rootClassName="thin-popover" content={
+                                    <span className="text-xs">
+                        Используется встроенный балансировщик для защиты сети
+                    </span>
+                                }>
+                                    <p className="flex cursor-pointer items-center gap-1 bg-gradient-to-br from-primary to-85% to-subtle rounded px-1.5 py-0.5">
+                                        <FontAwesomeIcon className="w-2" icon={faZap}/>
+                                        <span className="text-xs">CubeShield</span>
+                                    </p>
+                                </Popover>
+                            </div>
                         </div>
                         <div className="flex justify-end">
                             <Button className="bg-btn" type="text" iconPosition="start"
@@ -79,12 +96,10 @@ export default function NetworkMC(props) {
                         </div>
                     </div>
 
-
-                    <Octopus className="" />
-
-
+                    <Octopus/>
                     <div className="w-full rounded-xl flex flex-col justify-between relative">
-                        <span className="absolute left-1/2 transform -translate-x-1/2 -top-8 px-1.5 py-0.5 bg-subtle rounded-lg glassb">
+                        <span
+                            className="absolute left-1/2 transform -translate-x-1/2 -top-8 px-1.5 py-0.5 bg-subtle rounded-lg glassb">
                             Серверааааааааааааа блять
                         </span>
                         <div className="grid grid-cols-1 ipad:grid-cols-2 laptop:grid-cols-3 w-full gap-4 mt-4">
@@ -97,7 +112,7 @@ export default function NetworkMC(props) {
                                         <div
                                             className="absolute top-0 left-0 w-full h-full rounded-lg z-0 flex flex-col justify-end">
                                             <div
-                                                className="rounded-lg bg-amber-600 bg-opacity-50 w-full transition-all duration-300"
+                                                className="rounded-md bg-amber-600 bg-opacity-50 w-full transition-all duration-300"
                                                 style={{
                                                     height: `${Math.min((server.cpu / (plan.cpus * 100)) * 100, 100)}%`
                                                 }}/>
