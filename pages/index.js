@@ -71,7 +71,6 @@ export default function Home(props) {
 
     return <>
         <GlobalHead og={og}/>
-        <Script src="//code.jivo.ru/widget/QDbblcMLJ0" async></Script>
         <div className="fixed top-0 left-0 w-screen h-screen -z-20 bg-[#191921]"></div>
         <div className="fixed top-0 left-0 w-screen h-screen -z-10 techBg"></div>
         <div>
@@ -233,6 +232,8 @@ export default function Home(props) {
         <Footer router={props.router}/>
     </>;
 }
+
+Home.jivo = true
 
 
 const ProdCard = (props) => (

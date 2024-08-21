@@ -11,6 +11,7 @@
   "dependencies": {
     "@aacn.eu/use-friendly-captcha": "latest",
     "@ant-design/charts": "^2.1.2",
+    "@dnd-kit/core": "^6.1.0",
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
     "@fortawesome/fontawesome-svg-core": "latest",

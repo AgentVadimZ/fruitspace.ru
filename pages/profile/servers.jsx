@@ -29,7 +29,7 @@ import GDSimpleLogo from "@/assets/icons/geometrydash.svg"
 export default function Servers(props) {
     const router = useRouter()
     const {s} = router.query;
-    const route = "gd";
+    const route = "mc";
     const [tab, setTab] = useState(route)
 
     const api = useFiberAPI()
@@ -57,7 +57,7 @@ export default function Servers(props) {
         })
     })
 
-    useEffect(()=>{setTab(s?s:"gd")},[s])
+    useEffect(()=>{setTab(s?s:"mc")},[s])
     return (
         <>
             <GlobalHead title={locale.get('nav')}/>
@@ -418,7 +418,7 @@ Servers.RequireAuth = true
 
 
 const ServerView = (props) => {
-    return <div className="w-full mt-8 ipad:w-3/4 glassb rounded-2xl">
+    return <div className="w-full mt-4 ipad:mt-8 ipad:w-3/4 glassb rounded-2xl">
         <div
             className="bg-active flex justify-between items-center p-3 border-subtle border-solid border-1 rounded-t-2xl border-b-0">
             <p className="">{props.title}</p>
@@ -494,7 +494,7 @@ const MinecraftNetworkTree = (props) => {
                                         <span className="text-xs">{server.players}/{server.max_players}</span>
                                     </p>
                                 </div>
-                                <div className="flex items-center gap-4 p-3">
+                                <div className="flex items-center gap-4 p-3 pl-0 ipad:pl-3">
                                     <p className="flex items-center gap-2">
                                         <FontAwesomeIcon icon={faRecordVinyl}/>
                                         <span className="text-xs font-mono">{server.core} {server.version}</span>

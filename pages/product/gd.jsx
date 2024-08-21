@@ -80,7 +80,6 @@ export default function GD(props) {
         <>
             <GlobalHead title={localeGlobal.get('navName')}/>
             <GlobalNav mainpage router={props.router}/>
-            <Script src="//code.jivo.ru/widget/QDbblcMLJ0" async></Script>
             <div className={styles.main}>
                 <div className="rounded-t-2xl h-112 relative select-none">
                     <Image className="rounded-t-2xl" src={BannerGD} fill="object-fit" objectFit="cover" layout="fill"
@@ -307,3 +306,5 @@ export default function GD(props) {
         </>
     )
 }
+
+GD.jivo = true

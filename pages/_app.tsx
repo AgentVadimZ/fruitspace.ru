@@ -7,6 +7,7 @@ import {useEffect, useState} from "react";
 import LoadingAnim from "@/components/ProgressBar";
 import {ConfigProvider, theme} from "antd";
 import Head from "next/head";
+import Script from "next/script";
 
 export default function WebApp({Component, pageProps}) {
     const [isL, setL] = useState(false)
@@ -16,6 +17,16 @@ export default function WebApp({Component, pageProps}) {
         router.events.on('routeChangeComplete', () => setL(false));
         router.events.on('routeChangeError', () => setL(false));
     }, [router])
+
+    useEffect(() => {
+        if (Component.jivo) {
+            // @ts-ignore
+            window?.jivo_init?.()
+        } else {
+            // @ts-ignore
+            window?.jivo_destroy?.()
+        }
+    }, [typeof window, router.pathname]);
 
     return (
         <RecoilRoot>
@@ -90,6 +101,7 @@ export default function WebApp({Component, pageProps}) {
                 }}>
                     <AuthProvider RequireAuth={Component.RequireAuth} router={router}>
                         <Component {...pageProps} router={router} globalLoader={[isL, setL]}/>
+                        {Component.jivo && <Script src="//code.jivo.ru/widget/QDbblcMLJ0" async></Script>}
                     </AuthProvider>
                 </ConfigProvider>
             </StyledEngineProvider>

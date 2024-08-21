@@ -54,7 +54,6 @@ export default function MC(props) {
         <>
             <GlobalHead title="Игровой хостинг"/>
             <GlobalNav mainpage />
-            <Script src="//code.jivo.ru/widget/QDbblcMLJ0" async></Script>
             <div className={styles.main}>
 
                 <div className="rounded-t-2xl h-112 relative select-none">
@@ -397,6 +396,8 @@ export default function MC(props) {
         </>
     )
 }
+
+MC.jivo = true
 
 const PluginBadge = ()=>{
     return <span className="cursor-pointer laptop:hover:w-20 transition-all w-20 laptop:w-4 overflow-hidden rounded-md px-1 bg-yellow-600 h-6 flex items-center font-sans text-sm gap-2">
