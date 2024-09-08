@@ -374,3 +374,31 @@ span.swiper-pagination-bullet-active {
     @apply border-1 border-solid border-transparent border-opacity-25;
     @apply hover:border-white hover:border-opacity-25;
 }
+
+/* globals.css */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.overlay.show {
+    animation: fadeIn 0.3s forwards;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal.show {
+    animation: slideUp 0.3s forwards;
+}

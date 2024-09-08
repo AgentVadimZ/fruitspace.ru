@@ -32,7 +32,7 @@ import CoreFolia from "@/assets/logos/mccore/folia.png"
 import CorePurpur from "@/assets/logos/mccore/purpur.png"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-    faBarsProgress,
+    faBarsProgress, faBug,
     faCogs,
     faDatabase,
     faFloppyDisk, faForward, faHardDrive,
@@ -45,13 +45,22 @@ import Image from "next/image";
 import {Button, Segmented} from "antd";
 import Script from "next/script";
 import {faItunesNote} from "@fortawesome/free-brands-svg-icons";
+import useOrderModal from "@/components/Extra/ProductOrder";
+
+import
+{ Badge }
+    from
+        "antd"
+    ;
 
 export default function MC(props) {
     const locale = useLocale(props.router)
     const [tab, setTab] = useState("dynamic")
-
+    const { openModal, closeModal, Modal } = useOrderModal();
+    const [showModal, setShowModal] = useState(false);
     return (
         <>
+            {Modal}
             <GlobalHead title="Игровой хостинг"/>
             <GlobalNav mainpage />
             <div className={styles.main}>
@@ -67,9 +76,8 @@ export default function MC(props) {
                             на несколько сотен человек? С FruitSpace это проще, чем вы думаете.
                         </p>
                         <div className="flex flex-col laptop:flex-row gap-4">
-                            <Button className="uppercase font-semibold" type="primary" size="large"
-                                    icon={<FontAwesomeIcon icon={faZap}/>}
-                                    onClick={() => orderRef.current.scrollIntoView({behavior: 'smooth'})}>
+                            <Button className="uppercase font-semibold" type="dashed" size="large"
+                                    icon={<FontAwesomeIcon icon={faBug}/>} onClick={openModal}>
                                 заказать на fruitspace
                             </Button>
                         </div>

@@ -42,28 +42,28 @@ export default function ManageGD(props) {
 
 
     let data = [];
-    function generateRandomData() {
-        const data = [];
-        let totalPlayers = 0;
-
-        for (let day = 1; day <= 31; day++) {
-            const date = `${day.toString().padStart(2, '0')}.08`;
-
-            const newPlayers = Math.floor(Math.random() * 100) + 1; // от 1 до 100
-
-            totalPlayers += newPlayers;
-
-            data.push({
-                name: date,
-                New: newPlayers,
-                All: totalPlayers
-            });
-        }
-
-        return data;
-    }
-    const raw = generateRandomData();
-    data = raw
+    data = [
+        {
+            "name": "1.09",
+            "All": 10,
+            "New": 3
+        },
+        {
+            "name": "2.09",
+            "All": 10,
+            "New": 0
+        },
+        {
+            "name": "3.09",
+            "All": 10,
+            "New": 0
+        },
+        {
+            "name": "4.09",
+            "All": 60,
+            "New": 50
+        },
+    ]
 
     const locale = useLocale(props.router)
 
@@ -101,6 +101,7 @@ export default function ManageGD(props) {
         { stroke: '#9b9b9b', fill: '#cbcbcb' },  // Для 'New'
         { stroke: '#1a55aa', fill: '#0d6efd' }   // Для 'All'
     ];
+
 
     const TooltipLevels = {
         New: 'Новые уровни',
@@ -149,7 +150,7 @@ export default function ManageGD(props) {
                             <Tabs.TabPane tab="Игроки" key="1">
                                 <div style={{ width: "100%", height: "340px", display: "flex", justifyContent: "center" }}>
                                     <UniversalChart
-                                        data={generateRandomData()}
+                                        data={data}
                                         dataKeys={['New', 'All']}
                                         colors={colors}
                                         tooltipFormatter={TooltipPlayers}
@@ -159,7 +160,7 @@ export default function ManageGD(props) {
                             <Tabs.TabPane tab="Уровни" key="2">
                                 <div style={{ width: "100%", height: "340px", display: "flex", justifyContent: "center" }}>
                                     <UniversalChart
-                                        data={generateRandomData()}
+                                        data={data}
                                         dataKeys={['New', 'All']}
                                         colors={colors}
                                         tooltipFormatter={TooltipLevels}
