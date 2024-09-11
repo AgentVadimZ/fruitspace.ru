@@ -45,25 +45,21 @@ import Image from "next/image";
 import {Button, Segmented} from "antd";
 import Script from "next/script";
 import {faItunesNote} from "@fortawesome/free-brands-svg-icons";
-import useOrderModal from "@/components/Extra/ProductOrder";
+import MinecraftOrderModal from "@/components/Extra/ProductOrder";
 
-import
-{ Badge }
-    from
-        "antd"
-    ;
+import { Badge } from "antd";
 
 export default function MC(props) {
     const locale = useLocale(props.router)
     const [tab, setTab] = useState("dynamic")
-    const { openModal, closeModal, Modal } = useOrderModal();
     const [showModal, setShowModal] = useState(false);
     return (
         <>
-            {Modal}
+            <MinecraftOrderModal/>
             <GlobalHead title="Игровой хостинг"/>
             <GlobalNav mainpage />
             <div className={styles.main}>
+
 
                 <div className="rounded-t-2xl h-112 relative select-none">
                     <Image className="rounded-t-2xl" src={BannerMC} fill="object-fit" objectFit="cover" layout="fill"
@@ -77,7 +73,7 @@ export default function MC(props) {
                         </p>
                         <div className="flex flex-col laptop:flex-row gap-4">
                             <Button className="uppercase font-semibold" type="dashed" size="large"
-                                    icon={<FontAwesomeIcon icon={faBug}/>} onClick={openModal}>
+                                    icon={<FontAwesomeIcon icon={faBug}/>}>
                                 заказать на fruitspace
                             </Button>
                         </div>
