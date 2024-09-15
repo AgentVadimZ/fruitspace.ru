@@ -402,3 +402,20 @@ span.swiper-pagination-bullet-active {
 .modal.show {
     animation: slideUp 0.3s forwards;
 }
+.modal-preset{
+    grid-template-columns: 7fr 4fr 4fr 7fr 7fr 7fr;
+    grid-gap: 50px;
+    text-align: center;
+}
+.columns-preset{
+    grid-template-columns: 7fr 4fr 4fr 7fr 7fr 7fr;
+    grid-gap: 135px;
+}
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Для Firefox */
+.hide-scrollbar {
+    scrollbar-width: none; /* скрытие скроллбара */
+}
