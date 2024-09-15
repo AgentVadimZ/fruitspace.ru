@@ -239,6 +239,16 @@ class ufetch {
         return await this._api.do("fetch/mc/cores", "GET")
     }
 
+    minecraftGetRegions = async () => {
+        return await this._api.do("fetch/mc/regions", "GET")
+    }
+
+    minecraftGetPricing = async (region_id: number) => {
+        return await this._api.do(`fetch/mc/pricing/${region_id}`, "GET")
+    }
+
+
+
     minecraftFetchVersions = async () => {
         let v = await fetch('https://launchermeta.mojang.com/mc/game/version_manifest.json').then(r=>r.json())
         let vers=[]

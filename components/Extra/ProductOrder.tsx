@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faXmark,
@@ -8,50 +8,59 @@ import {
     faFlag,
     faMicrochip, faMemory, faHardDrive
 } from "@fortawesome/free-solid-svg-icons";
-import {Button, Segmented} from "antd";
+import {Button, Segmented, Select} from "antd";
 import ProductCardMC from "@/components/Cards/ProductCardMC";
+import useFiberAPI, {api} from "@/fiber/fiber";
 
 
 const MinecraftOrderModal = (props: any) => {
     const defaultControls = useState<boolean>(true)
     const [openModal, setOpenModal] = props.modalControls ?? defaultControls
     const [page, setPage] = useState(0)
+    const api = useFiberAPI()
+
+    const [config, setConfig] = useState<any>({})
+
+
     const maxPages = 4
+    const pageNames = ["Выбор тарифа", "2", "3", "4"]
 
     return openModal &&
         <div className="fixed z-[1000] h-screen w-screen bg-black bg-opacity-50 flex justify-center items-center"
              onClick={() => setOpenModal(false)}>
-            <div className="w-full ipad:w-4/5 flex flex-col ipad:flex-row gap-8 h-[75%]"
+            <div className="w-full ipad:w-5/6 flex flex-col ipad:flex-row gap-8 h-[75vh]"
                  onClick={(e) => e.stopPropagation()}>
                 <div className="bg-active glassb p-4 rounded-2xl flex-1 flex flex-col">
-                    {page == 0 && (
-                        <div>
-                            <h1 className="text-xl">Создание Minecraft сервера</h1>
-
-                        </div>
-                    )}
+                    <div className="flex items-center justify-between gap-1">
+                        <p className="text-2xl">Создание Minecraft сервера</p>
+                        <p>{pageNames[page]}</p>
+                    </div>
+                    {page === 0 && <PageServerConfigView api={api}/>}
                     <div className="mt-auto flex items-center justify-end gap-8">
                         <div className="flex justify-center items-center gap-2 flex-1">
                             <FontAwesomeIcon icon={faFlag}/>
-                            {Array.from({length: maxPages}, (_, i) => i).map((i,v)=>{
-                                return <div key={i} className={`rounded-full h-2 w-16 ${i<=page?"bg-success":"bg-btn"}`} />
+                            {Array.from({length: maxPages}, (_, i) => i).map((i, v) => {
+                                return <div key={i}
+                                            className={`rounded-full h-2 w-16 ${i <= page ? "bg-success" : "bg-btn"}`}/>
                             })}
                             <FontAwesomeIcon icon={faCheckCircle}/>
                         </div>
-                        <Button size="large" type="text" disabled={page === 0} onClick={() => setPage(page - 1)} icon={<FontAwesomeIcon icon={faArrowLeft}/>}>Назад</Button>
-                        <Button size="large" type="primary" iconPosition="end" disabled={page===maxPages-1} onClick={() => setPage(page + 1)} icon={<FontAwesomeIcon icon={faArrowRight}/>}>Вперед</Button>
+                        <Button size="large" type="text" disabled={page === 0} onClick={() => setPage(page - 1)}
+                                icon={<FontAwesomeIcon icon={faArrowLeft}/>}>Назад</Button>
+                        <Button size="large" type="primary" iconPosition="end" disabled={page === maxPages - 1}
+                                onClick={() => setPage(page + 1)}
+                                icon={<FontAwesomeIcon icon={faArrowRight}/>}>Вперед</Button>
                     </div>
                 </div>
                 <div className="bg-active glassb p-4 rounded-2xl w-72">
-                    <h1 className="text-2xl mb-4">Мы вас грабим</h1>
-                    <div>
-                        <h1>
-                            Horizon
-                        </h1>
-                        <p className="text-right">
-                            2599₽/мес
+                    <div className="flex items-center gap-4">
+                        <p className="text-2xl">Мы вас грабим</p>
+                        <p className="rounded px-1.5 py-0.5 flex items-center gap-2 bg-subtle text-sm w-fit">
+                            <span className="relative flex h-2 w-2">
+                                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
+                                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-600"></span>
+                            </span> Live
                         </p>
-                        <hr className="border-1 glassb mt-1 mb-1"/>
                     </div>
 
                 </div>
@@ -62,105 +71,79 @@ const MinecraftOrderModal = (props: any) => {
 export default MinecraftOrderModal
 
 
-// fifoid
+type APITariffData = {
+    name: string,
+    is_dynamic: boolean,
+    short: string,
+    description: string,
+    cpu: number,
+    min_ram_mb: number,
+    max_ram_mb: number,
+    disk_gb: number,
+}
 
-export function ProductOrder({closeModal}: { closeModal: () => void }) {
-    const [tab, setTab] = useState("dynamic")
-    return <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-24 z-10">
-        <div className="bg-active glassb p-8 rounded-2xl relative w-full h-full p-4">
-            <h1 className="text-2xl">Создание нового Minecraft сервера</h1>
-            <div className="flex justify-center mt-2">
-                <Segmented rootClassName="bg-btn select-none glassb" options={[
-                    {value: "dynamic", label: "Динамические"},
-                    {value: "static", label: "Статические"}
-                ]} defaultValue={tab} onChange={setTab}/>
+type APIPricingData = {
+    id: number
+    tariff: APITariffData
+    price: number
+}
 
-            </div>
-            {tab === "dynamic" &&
-                <div className="flex justify-center mt-2">
 
-                </div>
-            }
-            {tab === "static" &&
-                <div>
-
-                </div>
-            }
-            <button onClick={closeModal} className="absolute right-3 top-2">
-                <FontAwesomeIcon icon={faXmark}/>
-            </button>
-        </div>
+const TariffCard = (props: APIPricingData) => {
+    return <div className="w-full bg-subtle">
+        <h1 className="transtext bg-gradient-to-t from-red-300 to-blue-500 font-[Coolvetica] text-4xl text-transparent bg-clip-text text-white">{name}</h1>
     </div>
 }
 
-const corePrint = (n) => {
-    n%=10
-    if (n==1) return "ядро"
-    if (n<1 || 1<n && n<5) return "ядра"
-    return "ядер"
+// ----------
+
+type PageServerConfigViewProps = {
+    api: api
 }
 
+type APIRegionData = {
+    id: number
+    name: string
+    location: string
+    description: string
+}
 
-const tariffs = {}
-tariffs.dynamic = [
-    {
-        title: "Slingshot",
-        about: "Для Bungeecord и мини-лобби",
-        id: "Lite",
-        price: 149,
-        cpus: 0.25,
-        minRam: 0.5,
-        maxRam: 2,
-        ssd: 5
-    },
-    {
-        title: "Next ⋙",
-        about: "Мы знаем, что вы выберите его",
-        id: "D-1 S",
-        price: 349,
-        cpus: 1,
-        minRam: 2,
-        maxRam: 4,
-        ssd: 20
-    },
-    {
-        title: "Reforged",
-        about: "Выкован для новых версий",
-        id: "D-2 M",
-        price: 699,
-        cpus: 2,
-        minRam: 4,
-        maxRam: 8,
-        ssd: 30
-    },
-    {
-        title: "EverPeak",
-        about: "Для высоких амбиций — высокие требования",
-        id: "D-3 L",
-        price: 1299,
-        cpus: 3,
-        minRam: 8,
-        maxRam: 12,
-        ssd: 45
-    },
-    {
-        title: "Orbital",
-        about: "Для публичных серверов с непостоянной нагрузкой",
-        id: "D-4 XL",
-        price: 1699,
-        cpus: 4,
-        minRam: 8,
-        maxRam: 16,
-        ssd: 60
-    },
-    {
-        title: "Horizon",
-        about: "Превосходный выбор.",
-        id: "D-5 XXL",
-        price: 2599,
-        cpus: 5,
-        minRam: 16,
-        maxRam: 24,
-        ssd: 100
-    },
-]
+const PageServerConfigView = ({api}: PageServerConfigViewProps) => {
+    const [regions, setRegions] = useState([])
+    const [region, setRegion] = useState<{data: APIRegionData, value: string}>()
+    const [tariffs, setTariffs] = useState([])
+
+
+    useEffect(()=> {
+        api.fetch.minecraftGetRegions().then(r => {
+            setRegions(r?.regions||[])
+            setRegion({data: r.regions[0], value: r.regions[0].name})
+        })
+    }, [null])
+
+    useEffect(() => {
+        region.data&&api.fetch.minecraftGetPricing(region.data.id).then(r=>setTariffs(r.tariffs))
+    }, [region?.data]);
+
+    const regionRenderer = (props: any) => {
+        const data: APIRegionData = props.data?.data || region.data
+        const gen = data.name?.split("/").pop()
+        return <p className="flex items-center gap-2">
+            <img src={`https://flagcdn.com/w40/${data.name.split(".")[0]}.png`} className="h-3" />
+            <span>{data.location}</span>
+            <span className="bg-btn rounded px-1.5 py-0.5 text-xs">{gen[0].toUpperCase()+gen.slice(1)}</span>
+        </p>
+    }
+
+
+    return <div className="flex flex-col gap-4 mt-8">
+        <div className="flex flex-col gap-1">
+            <p className="ml-2 text-lg">Регион</p>
+            <Select value={region} onChange={(_, v) => setRegion(v)} className="w-64"
+                    options={regions.map(k => ({data: k, value: k.name}))}
+                    optionRender={regionRenderer} labelRender={regionRenderer}/>
+        </div>
+        <TariffCard name={"Slingshot"} cpu="0.25" fromRam={undefined} toRam={} disk={undefined} cost={undefined}/>
+    </div>
+}
+
