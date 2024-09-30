@@ -7,7 +7,7 @@ import PanelContent from "@/components/Global/PanelContent";
 import {Button, Alert, Input} from "antd";
 import {userAtom} from "@/fiber/fiber.model";
 import PanelSideNav from "@/components/PanelSideNav";
-import {useAtom} from "jotai/esm";
+import {useAtom} from "jotai";
 
 
 export default function ManageMC(props) {

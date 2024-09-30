@@ -152,7 +152,7 @@ export default function MC(props) {
                         <img
                             src="https://purepng.com/public/uploads/large/purepng.com-donutdonutdoughnutsweetsnack-1411527416158xueuy.png"
                             className="saturate-0 opacity-10 w-80 hidden laptop:block"
-                            aria-description="Не задавайте вопросы. Это пончик"/>
+                            alt="Не задавайте вопросы. Это пончик"/>
                     </div>
                 }
             </div>

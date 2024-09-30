@@ -91,16 +91,16 @@ type APIPricingData = {
 }
 
 
-const TariffCard = ({name, cpu, min_ram_mb, max_ram_mb, disk_gb, cost}: APITariffData) => {
+const TariffCard = ({data}: {data: APITariffData}) => {
     return (
         <div className="w-full bg-subtle p-3 rounded-xl grid grid-cols-5 items-center text-center gap-9 glassb-hover text-sm">
             <p className=" transtext bg-gradient-to-t from-red-300 to-blue-500 font-[Coolvetica] text-2xl text-transparent bg-clip-text text-white">
-                {name}
+                {data.name}
             </p>
-            <p>{cpu}</p>
-            <p>{formatMemorySize(min_ram_mb)} → {formatMemorySize(max_ram_mb)}</p>
-            <p>{disk_gb} GB</p>
-            <p>{cost}₽/мес</p>
+            <p>{data.cpu}</p>
+            <p>{formatMemorySize(data.min_ram_mb)} → {formatMemorySize(data.max_ram_mb)}</p>
+            <p>{data.disk_gb} GB</p>
+            <p>{data.cost}₽/мес</p>
         </div>
     );
 };
@@ -163,7 +163,7 @@ const PageServerConfigView = ({api}: PageServerConfigViewProps) => {
             <div className="flex flex-col glassb rounded-xl p-4 gap-3">
                 <Select
                     value={region}
-                    onChange={(_, v) => setRegion(v)}
+                    onChange={(_, v) => setRegion(v[0])}
                     className="w-64"
                     options={regions.map(k => ({data: k, value: k.name}))}
                     optionRender={regionRenderer}
@@ -198,15 +198,10 @@ const PageServerConfigView = ({api}: PageServerConfigViewProps) => {
                 <div className="flex flex-col gap-3 p-3 h-64 overflow-y-scroll hide-scrollbar">
                     {tariffs.map((tariffData, i) => {
                         const needDynamic = TariffType === "dynamic";
-                        return (needDynamic == tariffData.tariff.is_dynamic) &&
+                        return (needDynamic == tariffData.is_dynamic) &&
                         <TariffCard
                             key={i}
-                            name={tariffData.tariff.name}
-                            cpu={tariffData.tariff.cpu}
-                            min_ram_mb={tariffData.tariff.min_ram_mb}
-                            max_ram_mb={tariffData.tariff.max_ram_mb}
-                            disk_gb={tariffData.tariff.disk_gb}
-                            cost={tariffData.price}
+                            data={tariffData}
                         />
                     })}
                 </div>
