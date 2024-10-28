@@ -105,7 +105,7 @@ export default function Home(props) {
             }
             <GlobalNav router={props.router} mainpage/>
 
-            <div className="h-screen dotsBg overflow-hidden grid grid-cols-1 ipad:grid-cols-2">
+            {/*<div className="h-screen dotsBg overflow-hidden grid grid-cols-1 ipad:grid-cols-2">
                 <div className="flex flex-col items-center justify-center">
                     <h1 className="text-6xl mt-48 laptop:mt-2 desktop:text-8xl font-[Coolvetica] tracking-wider font-normal fruitText m-2 select-none">FruitSpace</h1>
                     <p className="text-md text-center desktop:text-xl m-0 font-[Helvetica] max-w-2xl">
@@ -123,7 +123,7 @@ export default function Home(props) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*/}
 
             <div className={styles.main}>
 
@@ -133,16 +133,12 @@ export default function Home(props) {
                         для
                         ваших любимых игр. И ещё немножко магии ✨</p>
 
-                    <div className="mt-24 grid grid-cols-1 desktop:grid-cols-3 gap-4 desktop:gap-16 select-none">
+                    <div className="mt-24 grid grid-cols-1 desktop:grid-cols-1 gap-4 desktop:gap-16 select-none">
                         <ProdCard link="/product/gd" name="Geometry Dash"
                                   description="Кастомная музыка, 2.2, моды и конфигуратор установщиков"
                                   logo={GDLogo.src}
                                   stats={`${formatStat(props.stats.gdps_count)} серверов • ${formatStat(props.stats.gdps_levels)} уровней`}/>
-                        <ProdCard link="/product/mc" name="Minecraft"
-                                  description="Мощные сервера, динамические ресурсы и удобная панель"
-                                  logo={MinecraftLogo.src} stats="Уже на FruitSpace!"/>
-                        <ProdCard link="#" name="Beat Saber" description="Третья игра с кубиками. Шутку думайте сами"
-                                  logo={BSLogo.src} stats="Не скоро"/>
+
                     </div>
 
                     <Link href="/top/gd" legacyBehavior>

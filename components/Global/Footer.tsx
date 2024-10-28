@@ -16,6 +16,7 @@ export default function Footer() {
                         Партнерская программа
                     </Link>
                     <Link href="/about/tos" className="hover:text-white hover:underline">Условия использования</Link>
+                    <Link href="/about/privacy" className="hover:text-white hover:underline">Политика конфиденциальности</Link>
                 </div>
                 <div className="flex flex-col gap-2 p-2 text-sm">
                     <h3 className="font-semibold text-base">Хостинг</h3>

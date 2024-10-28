@@ -86,7 +86,12 @@ export default function Servers(props) {
                     tab==="mc" && <ServerView addbtn={
                         <Button type="primary" icon={<FontAwesomeIcon icon={faPlusCircle}/>}> Создать</Button>
                     } title="Проекты Minecraft">
-                        <div className="flex flex-col gap-2">
+                    <div className="flex flex-col justify-center items-center p-8">
+                        <span className="text-lg">
+                            У вас нет серверов
+                        </span>
+                    </div>
+                        {/*<div className="flex flex-col gap-2">
                             <div className="rounded-xl p-4 bg-active">
                                 <div className="flex items-center justify-between pb-2 pl-2">
                                     <p className="text-lg">AterHaven</p>
@@ -393,7 +398,7 @@ export default function Servers(props) {
                                                           }
                                                       ]}/>
                             </div>
-                        </div>
+                        </div>*/}
                     </ServerView>
                 }
 

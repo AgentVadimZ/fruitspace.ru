@@ -39,7 +39,7 @@ export default function ServerItem(props: ServerItemProps) {
         </Link>
     ):(
         <Link href={"/manage/"+props.type+"/"+props.uuid} legacyBehavior>
-            <div className="bg-active rounded-lg p-2 flex items-center cursor-pointer hover:bg-btn mb-2">
+            <div className="bg-active rounded-lg p-2 flex items-center cursor-pointer hover:bg-btn mb-2 last:mb-0">
                 <img className="mr-4 w-16 h-16 rounded-lg bg-subtle glassb" src={props.icon?props.icon:(Types[props.type]||QuestionMark.src)} />
                 <div className="flex flex-1 flex-col justify-center">
                     <h3 className="m-1 text-lg text-white">{props.name}</h3>
