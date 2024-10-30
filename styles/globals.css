@@ -4,12 +4,12 @@
 
 @font-face {
     font-family: "ITC Avant Garde Std Md";
-    src: url("/ITCAvantGardeStd-Md.ttf");
+    src: url("/fonts/ITCAvantGardeStd-Md.ttf");
 }
 
 @font-face {
     font-family: "Coolvetica";
-    src: url("/coolvetica.otf");
+    src: url("/fonts/coolvetica.otf");
 }
 
 @font-face {
@@ -17,7 +17,7 @@
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url("/HelveticaNowText-Regular.ttf");
+    src: url("/fonts/HelveticaNowText-Regular.ttf");
 }
 
 @font-face {
@@ -25,7 +25,7 @@
     font-style: normal;
     font-weight: 500;
     font-display: swap;
-    src: url("/HelveticaNowText-Medium.ttf");
+    src: url("/fonts/HelveticaNowText-Medium.ttf");
 }
 
 @font-face {
@@ -33,7 +33,7 @@
     font-style: normal;
     font-weight: 700;
     font-display: swap;
-    src: url("/HelveticaNowText-Bold.ttf");
+    src: url("/fonts/HelveticaNowText-Bold.ttf");
 }
 :root {
     --bkg-color: #090912;
