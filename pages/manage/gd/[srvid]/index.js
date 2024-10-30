@@ -144,31 +144,31 @@ export default function ManageGD(props) {
                         <DownloadCard sref={r => refs.current["build"] = r} api={api} srvid={srv.Srv.srvid}
                                       locale={locale} srv={srv.Srv} router={props.router} copyR={copyValueR}/>
                     </div>
-                    <div className="laptop:col-span-2 rounded-2xl bg-active pl-4 pt-0 glassb flex flex-col ">
-                        <h1 className="text-2xl text-center mt-4">Аналитика</h1>
-                        <Tabs defaultActiveKey="1" rootClassName="">
-                            <Tabs.TabPane tab="Игроки" key="1">
-                                <div style={{ width: "100%", height: "340px", display: "flex", justifyContent: "center" }}>
-                                    <UniversalChart
-                                        data={data}
-                                        dataKeys={['New', 'All']}
-                                        colors={colors}
-                                        tooltipFormatter={TooltipPlayers}
-                                    />
-                                </div>
-                            </Tabs.TabPane>
-                            <Tabs.TabPane tab="Уровни" key="2">
-                                <div style={{ width: "100%", height: "340px", display: "flex", justifyContent: "center" }}>
-                                    <UniversalChart
-                                        data={data}
-                                        dataKeys={['New', 'All']}
-                                        colors={colors}
-                                        tooltipFormatter={TooltipLevels}
-                                    />
-                                </div>
-                            </Tabs.TabPane>
-                        </Tabs>
-                    </div>
+                    {/*<div className="laptop:col-span-2 rounded-2xl bg-active pl-4 pt-0 glassb flex flex-col ">*/}
+                    {/*    <h1 className="text-2xl text-center mt-4">Аналитика</h1>*/}
+                    {/*    <Tabs defaultActiveKey="1" rootClassName="">*/}
+                    {/*        <Tabs.TabPane tab="Игроки" key="1">*/}
+                    {/*            <div style={{ width: "100%", height: "340px", display: "flex", justifyContent: "center" }}>*/}
+                    {/*                <UniversalChart*/}
+                    {/*                    data={data}*/}
+                    {/*                    dataKeys={['New', 'All']}*/}
+                    {/*                    colors={colors}*/}
+                    {/*                    tooltipFormatter={TooltipPlayers}*/}
+                    {/*                />*/}
+                    {/*            </div>*/}
+                    {/*        </Tabs.TabPane>*/}
+                    {/*        <Tabs.TabPane tab="Уровни" key="2">*/}
+                    {/*            <div style={{ width: "100%", height: "340px", display: "flex", justifyContent: "center" }}>*/}
+                    {/*                <UniversalChart*/}
+                    {/*                    data={data}*/}
+                    {/*                    dataKeys={['New', 'All']}*/}
+                    {/*                    colors={colors}*/}
+                    {/*                    tooltipFormatter={TooltipLevels}*/}
+                    {/*                />*/}
+                    {/*            </div>*/}
+                    {/*        </Tabs.TabPane>*/}
+                    {/*    </Tabs>*/}
+                    {/*</div>*/}
                 </div>
 
                 <div className={styles.CardBox} ref={r => refs.current["cardbox"] = r}>
