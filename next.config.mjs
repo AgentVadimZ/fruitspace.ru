@@ -1,14 +1,15 @@
-const withNextra = require('nextra')({
+import nextra from 'nextra'
+
+const withNextra = nextra({
   theme: 'nextra-theme-docs',
   themeConfig: './theme.config.js'
 })
 
-const withPWA = require("next-pwa")({
-  dest: "public",
-  disable: process.env.NODE_ENV === "development",
-})
+// const withPWA = require("next-pwa")({
+//   dest: "public",
+//   disable: process.env.NODE_ENV === "development",
+// })
 
-/** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
   reactStrictMode: true,
@@ -31,13 +32,15 @@ const nextConfig = {
       ],
     },
   ],
-  output: "standalone",
+  // output: "standalone",
   // transpilePackages: [
   //     '@ant-design',
   //     'antd'
   // ]
 }
 
-module.exports = withPWA(
-    withNextra(nextConfig)
-)
+// module.exports = withPWA(
+//     withNextra(nextConfig)
+// )
+
+export default withNextra(nextConfig)

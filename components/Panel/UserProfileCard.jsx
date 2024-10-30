@@ -30,9 +30,7 @@ export default function UserProfileCard(props) {
     const [backdrop, setBackdrop] = useState("none")
 
 
-    // const {data:discord} = useSWR(`https://discordlookup.mesavirep.xyz/v1/user/${user.discord_id}`, async r=>fetch(r).then(r=>r.json()))
-
-    const discord = null
+    const {data: discord} = useSWR(`https://fruce-discord-lookup.vercel.app/v1/user/${user.discord_id}`, async r=>fetch(r).then(r=>r.json()))
 
     const [pwdResetData, setPwdResetData] = useState({
         current: "",
@@ -225,9 +223,9 @@ export default function UserProfileCard(props) {
     // Code is highly unoptimized
 
     return <>
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 w-fit">
-            <div className="flex bg-active glassb rounded-2xl relative w-fit">
-                <img className="rounded-xl w-auto h-64" src={user.profile_pic} />
+        <div className="grid grid-cols-1 gap-4 ipad:grid-cols-2 laptop:grid-cols-3 w-full ipad:w-fit">
+            <div className="flex bg-active glassb rounded-2xl relative w-fit mx-auto ipad:mx-[unset]">
+                <img className="rounded-xl h-auto w-full laptop:w-64" src={user.profile_pic} />
                 <Tooltip title={locale.get('picChange')} placement="right" arrow open={showEditPicHint}
                 className="absolute rounded-xl bg-[var(--btn-color)] p-2 bottom-2 right-2 h-10 w-10 fill-white
                 transition-all duration-300 border-solid border-2 border-[var(--btn-color)] cursor-pointer
@@ -237,8 +235,8 @@ export default function UserProfileCard(props) {
                 </Tooltip>
             </div>
 
-            <div className="col-span-1 lg:col-span-2 flex flex-col lg:w-[30rem] bg-active glassb p-4 rounded-2xl">
-                <div className="flex flex-col items-center gap-4 lg:flex-row">
+            <div className="col-span-1 laptop:col-span-2 flex flex-col laptop:w-[30rem] bg-active glassb p-4 rounded-2xl">
+                <div className="flex flex-col items-center gap-4 laptop:flex-row">
                     <p className="text-nowrap text-sm">Отображаемое имя</p>
                     <Input value={user.name} onChange={(evt)=>{
                         setUser({
@@ -261,7 +259,7 @@ export default function UserProfileCard(props) {
                     }
                 </div>
 
-                <div className="flex flex-col lg:flex-row justify-end mt-8 lg:mt-auto gap-4">
+                <div className="flex flex-col laptop:flex-row justify-end mt-8 laptop:mt-auto gap-4">
                     <Button className="!text-white !shadow-none" danger type="primary" onClick={(e) => updateProfilePic(e,true)}>{locale.get('reset')}</Button>
                     <Button type="primary" onClick={updateName}>{locale.get('save')}</Button>
                 </div>
@@ -273,7 +271,7 @@ export default function UserProfileCard(props) {
                 <SettingsItem text={locale.get('options')[user.discord_id!="0"?4:3]} onClick={()=>api.auth.discord()}><FontAwesomeIcon icon={faDiscord} className="!h-8 w-8" /></SettingsItem>
             </div>
 
-            <div className="col-span-1 lg:col-span-2 flex flex-col gap-4 lg:w-[30rem] bg-active glassb p-4 rounded-2xl">
+            <div className="col-span-1 laptop:col-span-2 flex flex-col gap-4 laptop:w-[30rem] bg-active glassb p-4 rounded-2xl">
                 <div>
                     <p className="text-sm rounded-t-lg px-2 w-fit border-1 border-b-active border-[#ffffff44]
                                 relative z-20 -mb-[1px]">Активные сессии</p>

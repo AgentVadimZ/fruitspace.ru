@@ -5,15 +5,15 @@ import {Toaster} from "react-hot-toast";
 import useLocale from "@/locales/useLocale";
 import PanelContent from "@/components/Global/PanelContent";
 import {Button, Alert, Input} from "antd";
-import {useRecoilState} from "recoil";
 import {userAtom} from "@/fiber/fiber.model";
 import PanelSideNav from "@/components/PanelSideNav";
+import {useAtom} from "jotai";
 
 
 export default function ManageMC(props) {
     const locale = useLocale(props.router)
 
-    const [user,setUser] = useRecoilState(userAtom)
+    const [user,setUser] = useAtom(userAtom)
 
     return (<>
             <GlobalHead title={locale.get('nav')}/>
@@ -25,7 +25,7 @@ export default function ManageMC(props) {
                     <Alert showIcon type="info" message="Если это ваш первый Minecraft-сервер на FruitSpace, то вам должно было прийти письмо на почту,
                     указанную при регистрации. Перейдите по ссылке в нем и завершите настройку аккаунта." />
 
-                    <div className="rounded-lg bg-[var(--btn-hover)] p-2 flex flex-col gap-2 w-full lg:w-96">
+                    <div className="rounded-lg bg-[var(--btn-hover)] p-2 flex flex-col gap-2 w-full laptop:w-96">
                         <span className="flex items-center justify-between gap-4">
                             Логин: <Input disabled className="!text-white" value={user.uname}/>
                         </span>

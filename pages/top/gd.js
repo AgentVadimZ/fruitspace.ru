@@ -47,7 +47,7 @@ export default function GD(props) {
                     </TabsList>
                     <TabPanel value="gdps">
                         {servers.map((val, i)=>(
-                            <ServerTopItem key={i} place={i} type="gd" name={val.srv_name} router={props.router}
+                            <ServerTopItem key={i} place={i} type="gdps" name={val.srv_name} router={props.router}
                                            desc={ParseDesc(val.user_count, val.level_count)} uuid={val.srvid} icon={val.icon} />
                         ))}
                         <div className="bg-[var(--active-color)] rounded-xl p-3 flex items-center cursor-pointer hover:bg-[var(--btn-color)]" onClick={()=>fetchMore()}>

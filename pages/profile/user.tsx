@@ -7,7 +7,7 @@ import toast, {Toaster} from "react-hot-toast";
 import useEffectOnce from "@/components/Hooks";
 import useLocale from "@/locales/useLocale";
 import {NextRouter} from "next/router";
-
+import {ProfileMobileNav} from "@/components/PanelMobileNav";
 
 export default function User(props: {router: NextRouter}) {
     useEffectOnce(()=>{
@@ -21,6 +21,7 @@ export default function User(props: {router: NextRouter}) {
             <GlobalHead title={locale.get('nav')}/>
             <GlobalNav />
             <PanelSideNav />
+            <ProfileMobileNav />
             <div><Toaster/></div>
             <PanelContent>
                 <UserProfileCard router={props.router}/>

@@ -1,4 +1,4 @@
-import {atom} from "recoil";
+import {atom} from "jotai";
 
 // USER ----
 
@@ -37,10 +37,7 @@ type UserModel = {
     top_servers?: any
 }
 
-const userAtom = atom<UserModel>({
-    key: 'user',
-    default: {} as UserModel
-})
+const userAtom = atom<UserModel>({} as UserModel)
 
 // TRANSACTION ----
 type TransactionModel = {
@@ -116,10 +113,7 @@ type ServerConfig = {
     CoreConfig: any
 }
 
-const serverGDAtom = atom<ServerConfig>({
-    key: 'server',
-    default: {} as ServerConfig
-})
+const serverGDAtom = atom<ServerConfig>({} as ServerConfig)
 
 
 // GD ACL ----

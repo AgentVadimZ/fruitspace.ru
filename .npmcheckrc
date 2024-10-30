@@ -1,0 +1,2 @@
+depcheck:
+    ignoreMatches: ["autoprefixer", "postcss", "tailwindcss", "csstype", "friendly-challenge", "sharp"]

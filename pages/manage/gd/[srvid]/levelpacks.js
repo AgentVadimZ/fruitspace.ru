@@ -25,6 +25,7 @@ import toast, {Toaster} from "react-hot-toast";
 import {debounce} from "lodash";
 import Loader from "@/components/Loader";
 import {deepEqual} from "@/components/Hooks";
+import {GDPSAdminMobileNav} from "@/components/PanelMobileNav";
 
 
 const gauntletParams = {
@@ -119,18 +120,19 @@ export default function LevelpackGD(props) {
             <GlobalHead title="Игровой хостинг"/>
             <GlobalNav />
             <GDNavBar />
+            <GDPSAdminMobileNav srvid={srv?.Srv?.srvid} />
             <Toaster/>
             <PanelContent>
-                <div className="flex-col w-full lg:p-2 box-border">
+                <div className="flex-col w-full laptop:p-2 box-border">
                     <Tab addbtn={<Button type="primary" className="flex gap-2 items-center" onClick={()=>setShowModal(true)}>
                         <FontAwesomeIcon icon={faPlusCircle}/>
-                        <span className="!hidden sm:!inline">Создать новый</span>
+                        <span className="!hidden tablet:!inline">Создать новый</span>
                     </Button>} tabs={[
                         {
                             label: "Гаунтлеты",
                             key: "gau",
                             children: gaunts?.packs
-                                ? <div className="grid sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 p-2 gap-2">
+                                ? <div className="grid tablet:grid-cols-2 laptop:grid-cols-4 desktop:grid-cols-5 p-2 gap-2">
                                     {gaunts?.packs?.map((gaunt, i) => {
                                         return <GauntletItem pack={gaunt} api={api} srvid={srv.Srv.srvid} key={i}/>
                                     })}
@@ -557,9 +559,9 @@ const GauntletItem = ({pack, api, srvid}) => {
     }
 
     return <div className={`rounded-xl p-2 bg-dark flex flex-col items-center box-border ${deepEqual(selectedLevels, levels)?"border-[#ffffff40]":"border-red-600"} border-1 border-solid`}>
-        <img src={pdata ? gauntletParams[pdata].icon : Gauntlets.Unknown.src} className="h-24 lg:h-48 select-none"/>
-        <span className="text-white lg:text-lg flex gap-2 items-center justify-center select-none">
-            {pdata || "Unknown"} {(!pdata || gauntletParams[pdata].is22) && <span className="text-xs lg:text-sm bg-primary rounded-md px-1.5">2.2+</span>}
+        <img src={pdata ? gauntletParams[pdata].icon : Gauntlets.Unknown.src} className="h-24 laptop:h-48 select-none"/>
+        <span className="text-white laptop:text-lg flex gap-2 items-center justify-center select-none">
+            {pdata || "Unknown"} {(!pdata || gauntletParams[pdata].is22) && <span className="text-xs laptop:text-sm bg-primary rounded-md px-1.5">2.2+</span>}
         </span>
         <Select options={undupe([...selectedLevels, ...availLevels])} defaultValue={levels} value={selectedLevels}
                 className="flex-1" mode="multiple" placeholder="Уровни" maxCount={5} filterOption={false}

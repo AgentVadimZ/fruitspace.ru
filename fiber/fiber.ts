@@ -1,10 +1,10 @@
 /* FruitSpace API v1.3 */
 
 import {useCookies} from "react-cookie";
-import {useRecoilState} from "recoil";
 import {serverGDAtom, userAtom} from "./fiber.model";
 import {parseCookies} from "./cockie_parser";
 import {useEffect, useState} from "react";
+import {useAtom} from "jotai";
 
 const DISCORD_AUTH = "https://discord.com/oauth2/authorize?client_id=1119240313605734410&response_type=code&scope=identify%20guilds%20guilds.join&state="
 
@@ -153,7 +153,7 @@ class user {
         return await this._api.do("user", "GET")
     }
     useUser = () => {
-        return useRecoilState(userAtom)
+        return useAtom(userAtom)
     }
     getNotifications = async () => {
         return await this._api.do("user/notifications", "GET")
@@ -239,6 +239,16 @@ class ufetch {
         return await this._api.do("fetch/mc/cores", "GET")
     }
 
+    minecraftGetRegions = async () => {
+        return await this._api.do("fetch/mc/regions", "GET")
+    }
+
+    minecraftGetPricing = async (region_id: number) => {
+        return await this._api.do(`fetch/mc/pricing/${region_id}`, "GET")
+    }
+
+
+
     minecraftFetchVersions = async () => {
         let v = await fetch('https://launchermeta.mojang.com/mc/game/version_manifest.json').then(r=>r.json())
         let vers=[]
@@ -276,7 +286,7 @@ class servers {
         })
     }
     useGDPS = () => {
-        return useRecoilState(serverGDAtom)
+        return useAtom(serverGDAtom)
     }
 }
 //endregion

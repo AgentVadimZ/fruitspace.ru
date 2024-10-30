@@ -14,7 +14,7 @@ import useEffectOnce from "@/components/Hooks";
 import {useGlobalLocale} from "@/locales/useLocale";
 import useFiberAPI from "@/fiber/fiber";
 import SideItem from "@/components/NavBar/SideItem";
-import {Ref} from "react";
+import {Ref, useEffect} from "react";
 
 
 type GDNavBarProps = {
@@ -33,12 +33,12 @@ export default function GDNavBar(props: GDNavBarProps) {
     const globalLocale = useGlobalLocale(router)
 
 
-    useEffectOnce(()=>{
+    useEffect(()=>{
         api.gdps_manage.get(srvid).then((resp)=>{
                 if(resp.Srv) setSrv(resp);
                 else router.push("/profile/servers");
         })
-    })
+    }, [action])
 
     return srv.Tariff?(
         <SideBar sref={props.sref}>

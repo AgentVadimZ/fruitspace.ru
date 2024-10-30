@@ -13,6 +13,7 @@ import Link from "next/link";
 import useFiberAPI from "@/fiber/fiber.ts";
 import {useEffect, useState} from "react";
 import useSWR, {mutate} from "swr";
+import {ProfileMobileNav} from "@/components/PanelMobileNav";
 
 const formatMB = (bytes)=>{
     return (bytes/1024/1024).toFixed(1)
@@ -113,9 +114,10 @@ export default function Particles(props) {
         <GlobalHead title={locale.get('nav')}/>
         <GlobalNav />
         <PanelSideNav />
+        <ProfileMobileNav />
         <Toaster />
         <PanelContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-4 w-full">
+            <div className="grid grid-cols-1 ipad:grid-cols-3 desktop:grid-cols-4 gap-4 w-full">
                 <div className="flex flex-col gap-4">
                     <div className="bg-[var(--subtle-color)] rounded-xl p-4 relative flex flex-col gap-2">
                         <span className="text-xs absolute top-2 left-2 bg-[var(--bkg-color)] rounded-lg px-2 py-0.5">Пользователь</span>
@@ -174,14 +176,14 @@ export default function Particles(props) {
                         </Form>
                     </div>
                 </div>
-                <div className="bg-[var(--subtle-color)] rounded-xl p-4 col-span-1 md:col-span-2 xl:col-span-3">
+                <div className="bg-[var(--subtle-color)] rounded-xl p-4 col-span-1 ipad:col-span-2 desktop:col-span-3">
                     {particles.particles.length?
                         <>
                         <List itemLayout="vertical" dataSource={particles.particles} renderItem={(item,i) => (
                         <Link href={`/particles/v/${item.author}/${item.name}`} legacyBehavior>
                             <List.Item key={i} className="mb-4 !p-4 cursor-pointer bg-[rgba(255,255,255,0.08)] hover:bg-[var(--btn-hover)] rounded-lg">
                                 <List.Item.Meta avatar={<AutoAwesomeIcon className="h-8 w-8 fill-amber-300" />}
-                                                title={<span className="font-normal font-mono flex flex-col lg:flex-row gap-2 lg:items-center">
+                                                title={<span className="font-normal font-mono flex flex-col laptop:flex-row gap-2 laptop:items-center">
                                                     {item.name}
                                                     <span className="flex items-center gap-2">
                                                         <span

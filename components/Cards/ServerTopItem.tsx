@@ -18,7 +18,7 @@ type ServerTopItemProps = {
 export default function ServerTopItem(props: ServerTopItemProps) {
 
     const Types = {
-        "gd": GDLogo.src,
+        "gdps": GDLogo.src,
         "mc": MCLogo.src,
         "gta": GTALogo.src
     }

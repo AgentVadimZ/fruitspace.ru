@@ -10,8 +10,6 @@ import GDLogo from "@/assets/logos/geometrydash.png"
 import {useRouter} from "next/router";
 import {useGlobalLocale} from "@/locales/useLocale";
 import useFiberAPI from "@/fiber/fiber";
-import {useRecoilState} from "recoil";
-import {userAtom} from "@/fiber/fiber.model";
 import {useState} from "react";
 import {HideOn} from "react-hide-on-scroll";
 import {Button, Drawer} from "antd";
@@ -70,7 +68,7 @@ export default function GlobalNav({mainpage}: {mainpage?: boolean}) {
 
     const api = useFiberAPI()
 
-    const [user] = useRecoilState(userAtom)
+    const [user,] = api.user.useUser()
     // const user = userModel
     const router = useRouter()
 
@@ -98,11 +96,11 @@ export default function GlobalNav({mainpage}: {mainpage?: boolean}) {
             {(mainpage && !['/', ''].includes(router.pathname)) &&
                 <HideOn atHeight height={120}>
                     <Link href="/"
-                          className="fixed top-4 xl:top-3 left-16 hidden md:block md:text-2xl xl:text-3xl font-[Coolvetica] tracking-wider font-normal fruitText m-0 select-none">FruitSpace</Link>
+                          className="fixed top-4 desktop:top-3 left-16 hidden ipad:block ipad:text-2xl desktop:text-3xl font-[Coolvetica] tracking-wider font-normal fruitText m-0 select-none">FruitSpace</Link>
                 </HideOn>
             }
 
-            <div className={`hidden lg:flex items-center gap-2 rounded-xl backdrop-blur bg-active bg-opacity-50 ${mainpage?"glassb":""}`}>
+            <div className={`hidden laptop:flex fixed top-2 left-1/2 -translate-x-1/2 items-center gap-2 rounded-xl backdrop-blur bg-active bg-opacity-50 ${mainpage?"glassb":""}`}>
                 {
                     links.map((item, i) => NavLink({...item, key: i}))
                 }
@@ -139,7 +137,7 @@ export default function GlobalNav({mainpage}: {mainpage?: boolean}) {
                                 <div className="flex flex-col flex-1 bg-subtle rounded-lg border-1 border-solid
                                     border-white border-opacity-25">
                                     <div className="flex items-center">
-                                        <span className="flex items-center gap-2 px-1.5 py-1 border-r-[1px]
+                                        <span className="flex items-center gap-2 px-1.5 py-1 border-r-1
                                     border-white border-opacity-25 flex-1">
                                             <FontAwesomeIcon icon={faWallet}/>
                                             <span className="text-sm">{prettyPrint(user.balance)}</span>
@@ -187,7 +185,7 @@ export default function GlobalNav({mainpage}: {mainpage?: boolean}) {
                         <VpnKeyIcon/>
                         Войти
                     </Link>}
-                <div className="relative lg:hidden">
+                <div className="relative laptop:hidden">
                     <p className="flex justify-center items-center h-11 w-11 rounded-xl backdrop-blur bg-subtle bg-opacity-50 -mr-2"
                     onClick={()=>setDrawer(true)}>
                         <FontAwesomeIcon className="text-lg" icon={faBars}/>

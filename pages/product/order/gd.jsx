@@ -161,7 +161,7 @@ export default function Order(props) {
         }
 
         return (
-            <div className="flex flex-col xl:flex-row gap-8">
+            <div className="flex flex-col desktop:flex-row gap-8">
                 {barrier <= 1 && <div
                     className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 w-96">
                     <TariffPS className="w-32 mt-2"/>

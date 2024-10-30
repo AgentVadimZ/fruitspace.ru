@@ -12,6 +12,7 @@ import {faCircleCheck, faClock, faCopy, faDownload} from "@fortawesome/free-soli
 import {Input, Menu} from "antd";
 import SettingsIcon from "@/assets/icons/panel_settings.svg";
 import Markdown from "react-markdown";
+import {ProfileMobileNav} from "@/components/PanelMobileNav";
 
 const formatArch = (arch) => {
     switch (arch) {
@@ -80,9 +81,10 @@ export default function ParticleView(props) {
         <GlobalHead title={locale.get('nav')}/>
         <GlobalNav/>
         <PanelSideNav/>
+        <ProfileMobileNav />
         <Toaster/>
         <PanelContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-4 w-full">
+            <div className="grid grid-cols-1 ipad:grid-cols-3 desktop:grid-cols-4 gap-4 w-full">
                 <div className="flex flex-col gap-4">
                     <div className="bg-[var(--subtle-color)] rounded-xl p-4 relative flex flex-col gap-2 relative">
                         <span className="text-xs absolute top-2 left-2 bg-[var(--bkg-color)] rounded-lg px-2 py-0.5">Версии</span>
@@ -104,7 +106,7 @@ export default function ParticleView(props) {
                             }))} />
                     </div>
                 </div>
-                <div className="bg-[var(--subtle-color)] rounded-xl p-4 col-span-1 md:col-span-2 xl:col-span-3">
+                <div className="bg-[var(--subtle-color)] rounded-xl p-4 col-span-1 ipad:col-span-2 desktop:col-span-3">
                     <div className="flex items-center gap-4">
                         <AutoAwesomeIcon className="h-12 w-12 fill-amber-300"/>
                         <div className="flex flex-col gap-2">
@@ -116,7 +118,7 @@ export default function ParticleView(props) {
                                         <span className="text-xs">Official</span>
                                     </span>}
                             </span>
-                            <span className="flex flex-col lg:flex-row gap-2 lg:gap-4 lg:items-center">
+                            <span className="flex flex-col laptop:flex-row gap-2 laptop:gap-4 laptop:items-center">
                                 <span
                                     className="w-fit text-sm font-normal px-2 py-1 rounded-md bg-[var(--active-color)]">by @{data.author}</span>
                                 <span className="flex items-center gap-2">

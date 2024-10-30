@@ -39,6 +39,7 @@ import {
 } from "antd";
 import {deepEqual} from "@/components/Hooks";
 import Linkify from "linkify-react";
+import {GDPSAdminMobileNav} from "@/components/PanelMobileNav";
 
 
 
@@ -57,7 +58,7 @@ export default function SettingsGD(props) {
         ...v, target: ()=>refs.current[v.target],
         nextButtonProps: {children: <span>Далее</span>},
         prevButtonProps: {children: <span>Назад</span>},
-        className: "w-fit lg:w-[520px]"
+        className: "w-fit laptop:w-[520px]"
     }))
     const [tourOpen, setTourOpen] = useState(!!props.router.query.tour)
 
@@ -126,7 +127,7 @@ export default function SettingsGD(props) {
                     discord: srv.Srv.discord,
                     vk: srv.Srv.vk,
                 },
-                spaceMusic: srv.Srv.is_space_music,
+                spaceMusic: srv.Srv.is_space_music && srv.CoreConfig.ServerConfig.HalMusic,
                 topSize: srv.CoreConfig.ServerConfig.TopSize,
                 security: {
                     enabled: !srv.CoreConfig.SecurityConfig.DisableProtection,
@@ -321,19 +322,20 @@ export default function SettingsGD(props) {
         <GlobalHead title={locale.get('nav')}/>
         <GlobalNav />
         <GDNavBar />
+
+        <GDPSAdminMobileNav srvid={srv?.Srv?.srvid} />
         <Toaster/>
         <Tour open={tourOpen} onClose={()=>setTourOpen(false)} steps={tourSteps}/>
         <FloatButton
             shape="square"
-            type="primary"
-            style={{right: 20, bottom: 20}}
+            type="primary" className="right-4 bottom-16 ipad:right-5 ipad:bottom-5"
             onClick={() => setTourOpen(true)}
             icon={<FontAwesomeIcon icon={faQuestion} />}
         />
 
         {srv.Srv && <>
         <PanelContent>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 w-full xl:w-5/6">
+            <div className="grid grid-cols-1 laptop:grid-cols-2 gap-4 laptop:gap-8 w-full desktop:w-5/6">
                 <div className="p-4 rounded-2xl bg-active glassb flex flex-col gap-4 flex-1" ref={r => refs.current["db"] = r}>
                     <p className="rounded-md px-1.5 py-0.5 glassb w-fit">База данных</p>
                     <div className="flex gap-4 items-center">
@@ -354,7 +356,7 @@ export default function SettingsGD(props) {
                             }}/>
                         }/>
                     </div>
-                    <div className="flex flex-col lg:flex-row gap-4 items-end lg:items-center justify-end mt-auto">
+                    <div className="flex flex-col laptop:flex-row gap-4 items-end laptop:items-center justify-end mt-auto">
                         <Button onClick={() => setBackdrop("dbreset")} danger>Сбросить пароль</Button>
                         <form method="post" action="https://db.fruitspace.one" target="_blank" ref={dbRef}>
                             <input type="hidden" name="auth[server]" value="FruitSpace GDPS Database"/>
@@ -391,7 +393,7 @@ export default function SettingsGD(props) {
                             </p>
                             <Switch checked={settings.spaceMusic} onChange={(val)=>setSettings({
                                 ...settings, spaceMusic: val,
-                            })} disabled={!!srv.Srv.is_space_music}  />
+                            })} disabled={settings.spaceMusic}  />
                         </div>
                     }
                     <div className="flex flex-col gap-4 rounded-xl glassb p-4 mt-4 relative"
@@ -486,7 +488,7 @@ export default function SettingsGD(props) {
                             <FontAwesomeIcon className="hover:bg-btn p-1.5 rounded-full" icon={faCog} onClick={()=>setBackdrop("gdpsbot")} />
                         </div>
                     </div>
-                    <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
+                    <div className="flex flex-col laptop:flex-row gap-4 items-center justify-between">
                         Управление
                         <p className="flex items-center gap-2">
                             <Button danger type="primary" onClick={() => setBackdrop("delete")}>

@@ -1,12 +1,13 @@
 import '@/styles/globals.css'
 import {StyledEngineProvider} from "@mui/material";
-import {RecoilRoot} from "recoil";
+import {Provider} from "jotai";
 import AuthProvider from "@/components/AuthProvider";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import LoadingAnim from "@/components/ProgressBar";
 import {ConfigProvider, theme} from "antd";
 import Head from "next/head";
+import Script from "next/script";
 
 export default function WebApp({Component, pageProps}) {
     const [isL, setL] = useState(false)
@@ -17,8 +18,18 @@ export default function WebApp({Component, pageProps}) {
         router.events.on('routeChangeError', () => setL(false));
     }, [router])
 
+    useEffect(() => {
+        if (Component.jivo) {
+            // @ts-ignore
+            window?.jivo_init?.()
+        } else {
+            // @ts-ignore
+            window?.jivo_destroy?.()
+        }
+    }, [typeof window, router.pathname]);
+
     return (
-        <RecoilRoot>
+        <Provider>
             <Head>
                 <meta name="application-name" content="FruitSpace"/>
                 <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -90,10 +101,11 @@ export default function WebApp({Component, pageProps}) {
                 }}>
                     <AuthProvider RequireAuth={Component.RequireAuth} router={router}>
                         <Component {...pageProps} router={router} globalLoader={[isL, setL]}/>
+                        {Component.jivo && <Script src="//code.jivo.ru/widget/QDbblcMLJ0" async></Script>}
                     </AuthProvider>
                 </ConfigProvider>
             </StyledEngineProvider>
-        </RecoilRoot>
+        </Provider>
     )
 }
 

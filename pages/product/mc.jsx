@@ -32,7 +32,7 @@ import CoreFolia from "@/assets/logos/mccore/folia.png"
 import CorePurpur from "@/assets/logos/mccore/purpur.png"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-    faBarsProgress,
+    faBarsProgress, faBug,
     faCogs,
     faDatabase,
     faFloppyDisk, faForward, faHardDrive,
@@ -45,17 +45,21 @@ import Image from "next/image";
 import {Button, Segmented} from "antd";
 import Script from "next/script";
 import {faItunesNote} from "@fortawesome/free-brands-svg-icons";
+import MinecraftOrderModal from "@/components/Extra/ProductOrder";
+
+import { Badge } from "antd";
 
 export default function MC(props) {
     const locale = useLocale(props.router)
     const [tab, setTab] = useState("dynamic")
-
+    const [showModal, setShowModal] = useState(false);
     return (
         <>
+            <MinecraftOrderModal/>
             <GlobalHead title="Игровой хостинг"/>
             <GlobalNav mainpage />
-            <Script src="//code.jivo.ru/widget/QDbblcMLJ0" async></Script>
             <div className={styles.main}>
+
 
                 <div className="rounded-t-2xl h-112 relative select-none">
                     <Image className="rounded-t-2xl" src={BannerMC} fill="object-fit" objectFit="cover" layout="fill"
@@ -67,10 +71,9 @@ export default function MC(props) {
                             Вам нужен стабильный сервер для игры с друзьями, или вы хотите создать крупную сеть серверов
                             на несколько сотен человек? С FruitSpace это проще, чем вы думаете.
                         </p>
-                        <div className="flex flex-col lg:flex-row gap-4">
-                            <Button className="uppercase font-semibold" type="primary" size="large"
-                                    icon={<FontAwesomeIcon icon={faZap}/>}
-                                    onClick={() => orderRef.current.scrollIntoView({behavior: 'smooth'})}>
+                        <div className="flex flex-col laptop:flex-row gap-4">
+                            <Button className="uppercase font-semibold" type="dashed" size="large"
+                                    icon={<FontAwesomeIcon icon={faBug}/>}>
                                 заказать на fruitspace
                             </Button>
                         </div>
@@ -89,7 +92,7 @@ export default function MC(props) {
                 {tab === "dynamic" &&
                     <div className={`${styles.productCardGrid} ${styles.productCardGridMC}`} id="cloud">
                         <div
-                            className="p-4 bg-active glassb rounded-2xl flex mx-auto justify-around gap-4 w-fit md:w-[62rem] flex-col md:flex-row col-span-1 md:col-span-3">
+                            className="p-4 bg-active glassb rounded-2xl flex mx-auto justify-around gap-4 w-fit ipad:w-[62rem] flex-col ipad:flex-row col-span-1 ipad:col-span-3">
                             <div className="flex flex-col flex-1 gap-4">
                                 <p className="text-lg text-center my-0 gap-2">🤔 Что это такое?</p>
                                 <span className="ml-2 text-sm">
@@ -148,16 +151,16 @@ export default function MC(props) {
                         })}
                         <img
                             src="https://purepng.com/public/uploads/large/purepng.com-donutdonutdoughnutsweetsnack-1411527416158xueuy.png"
-                            className="saturate-0 opacity-10 w-80 hidden lg:block"
-                            aria-description="Не задавайте вопросы. Это пончик"/>
+                            className="saturate-0 opacity-10 w-80 hidden laptop:block"
+                            alt="Не задавайте вопросы. Это пончик"/>
                     </div>
                 }
             </div>
 
             <p className="mt-16 text-center font-mono">Дополнительные услуги</p>
 
-            <div className="mt-4 flex flex-col lg:flex-row w-fit gap-4 mx-auto justify-around">
-                <div className="bg-active glassb rounded-2xl mx-auto xl:m-0 w-80 relative">
+            <div className="mt-4 flex flex-col laptop:flex-row w-fit gap-4 mx-auto justify-around">
+                <div className="bg-active glassb rounded-2xl mx-auto desktop:m-0 w-80 relative">
                     <div className="flex flex-col gap-2 m-4">
                         <div className="flex items-center gap-4">
                             <FontAwesomeIcon icon={faServer} className="!w-12 !h-12"/>
@@ -170,7 +173,7 @@ export default function MC(props) {
                         </div>
                     </div>
                 </div>
-                <div className="bg-active glassb rounded-2xl mx-auto xl:m-0 w-80">
+                <div className="bg-active glassb rounded-2xl mx-auto desktop:m-0 w-80">
                     <div className="flex flex-col gap-2 m-4">
                         <div className="flex items-center gap-4">
                             <FontAwesomeIcon icon={faDatabase} className="!w-12 !h-12"/>
@@ -182,7 +185,7 @@ export default function MC(props) {
                         </div>
                     </div>
                 </div>
-                <div className="bg-active glassb rounded-2xl mx-auto xl:m-0 w-80">
+                <div className="bg-active glassb rounded-2xl mx-auto desktop:m-0 w-80">
                     <div className="flex flex-col gap-2 m-4">
                         <div className="flex items-center">
                             <FontAwesomeIcon icon={faFloppyDisk} className="!w-12 !h-12" />
@@ -200,7 +203,7 @@ export default function MC(props) {
 
             <h3 className="mt-8 text-center mb-0">Не знаете какой тариф выбрать?</h3>
             <p className="text-center">Напишите нам в поддержку и мы поможем вам с выбором</p>
-            <div className="m-2 flex flex-col items-center justify-center lg:flex-row">
+            <div className="m-2 flex flex-col items-center justify-center laptop:flex-row">
                 <a className="flex gap-2 justify-center items-center box-border border-2 border-transparent hover:border-white transition-all duration-300 border-solid rounded-lg pr-2 m-2"
                    href="https://discord.gg/fruitspace">
                     <img className="invert h-10" src={discordLogo.src} alt="discord"/>
@@ -238,7 +241,7 @@ export default function MC(props) {
                         <div className="flex gap-4">
                             <img src={CoreSpigot.src} className="opacity-80 w-12 h-12 m-2" />
                             <div className="">
-                                <p className="text-3xl my-0 font-[Coolvetica] flex flex-col lg:flex-row items-baseline gap-2">Spigot <PluginBadge/></p>
+                                <p className="text-3xl my-0 font-[Coolvetica] flex flex-col laptop:flex-row items-baseline gap-2">Spigot <PluginBadge/></p>
                                 <span className="ml-2 my-0 text-gray-300">
                                     Универсальное решение для вашего сервера. Данное ядро поддерживает плагины, но при этом оставляет
                                     все баги и особенности ванильного Minecraft, которые можно использовать в своих целях: удаление портала
@@ -249,7 +252,7 @@ export default function MC(props) {
                         <div className="flex gap-4">
                             <img src={CorePaper.src} className="saturate-[50%] w-16 h-16" />
                             <div className="">
-                                <p className="text-3xl my-0 font-[Coolvetica] flex flex-col lg:flex-row items-baseline gap-2">Paper <PluginBadge/></p>
+                                <p className="text-3xl my-0 font-[Coolvetica] flex flex-col laptop:flex-row items-baseline gap-2">Paper <PluginBadge/></p>
                                 <span className="ml-2 my-0 text-gray-300">
                                     Золотой стандарт среди ядер. Ядро поддерживает все плагины для Spigot и Paper, а также применяет множество
                                     оптимизаций и фиксов для улучшения производительности. С этим ядром ваш сервер будет быстрее и безопаснее,
@@ -260,7 +263,7 @@ export default function MC(props) {
                         <div className="flex gap-4">
                             <img src={CorePurpur.src} className="saturate-[50%] w-16 h-16" />
                             <div className="">
-                                <p className="text-3xl my-0 font-[Coolvetica] flex flex-col lg:flex-row items-baseline gap-2">Purpur <PluginBadge/></p>
+                                <p className="text-3xl my-0 font-[Coolvetica] flex flex-col laptop:flex-row items-baseline gap-2">Purpur <PluginBadge/></p>
                                 <span className="ml-2 my-0 text-gray-300">
                                     Представьте Paper, но быстрее, с большей гибкостью и огромным количеством настроек. Представили? Это оно.
                                 </span>
@@ -269,7 +272,7 @@ export default function MC(props) {
                         <div className="flex gap-4">
                             <img src={CoreFolia.src} className="saturate-[75%] w-16 h-16" />
                             <div className="">
-                                <p className="text-3xl my-0 font-[Coolvetica] flex flex-col lg:flex-row items-baseline gap-2">Folia</p>
+                                <p className="text-3xl my-0 font-[Coolvetica] flex flex-col laptop:flex-row items-baseline gap-2">Folia</p>
                                 <span className="ml-2 my-0 text-gray-300">
                                     Разработчики Paper оптимизировали ядро насколько возможно, но уперлись в ограничения самой игры:
                                     Minecraft почти все действия выполняет на одном ядре процессора. Поэтому они переписали сервер с нуля,
@@ -283,7 +286,7 @@ export default function MC(props) {
                         <div className="flex gap-4">
                             <img src={CoreFabric.src} className="saturate-[75%] w-16 h-16" />
                             <div className="">
-                                <p className="text-3xl my-0 font-[Coolvetica] flex flex-col lg:flex-row items-baseline gap-2">Fabric <ForgeBadge/></p>
+                                <p className="text-3xl my-0 font-[Coolvetica] flex flex-col laptop:flex-row items-baseline gap-2">Fabric <ForgeBadge/></p>
                                 <span className="ml-2 my-0 text-gray-300">
                                     Современный движок модов для Minecraft. Ставьте все те моды, которые вы использовали у себя на ПК
                                     прямо на сервер (игрокам тоже нужно будет установить Fabric). Но есть и минусы: это ядро не
@@ -294,7 +297,7 @@ export default function MC(props) {
                         <div className="flex gap-4">
                             <img src={CoreForge.src} className="saturate-[50%] w-12 h-12 m-2" />
                             <div className="">
-                                <p className="text-3xl my-0 font-[Coolvetica] flex flex-col lg:flex-row items-baseline gap-2">Forge <ForgeBadge/></p>
+                                <p className="text-3xl my-0 font-[Coolvetica] flex flex-col laptop:flex-row items-baseline gap-2">Forge <ForgeBadge/></p>
                                 <span className="ml-2 my-0 text-gray-300">
                                     Этот движок для модов одним из первых позволил модифицировать Minecraft от версии 1.1 до последней.
                                     Хоть он и считается устаревшим, он используется до сих пор и имеет огромное количество поддерживаемых
@@ -305,7 +308,7 @@ export default function MC(props) {
                         <div className="flex gap-4">
                             <img src={CoreQuilt.src} className="saturate-[25%] w-16 h-16" />
                             <div className="">
-                                <p className="text-3xl my-0 font-[Coolvetica] flex flex-col lg:flex-row items-baseline gap-2">Quilt <ForgeBadge/></p>
+                                <p className="text-3xl my-0 font-[Coolvetica] flex flex-col laptop:flex-row items-baseline gap-2">Quilt <ForgeBadge/></p>
                                 <span className="ml-2 my-0 text-gray-300">
                                     Свежий движок для модов, созданный для высокой производительности и модульности. Однако он
                                     все еще в бете и может быть нестабилен, а количество модов пока небольшое, но растет.
@@ -316,7 +319,7 @@ export default function MC(props) {
                         <div className="flex gap-4">
                             <img src={CoreSponge.src} className="saturate-[50%] w-12 h-12 m-2" />
                             <div className="">
-                                <p className="text-3xl my-0 font-[Coolvetica] flex flex-col lg:flex-row items-baseline gap-2">Sponge Vanilla <PluginBadge/></p>
+                                <p className="text-3xl my-0 font-[Coolvetica] flex flex-col laptop:flex-row items-baseline gap-2">Sponge Vanilla <PluginBadge/></p>
                                 <span className="ml-2 my-0 text-gray-300">
                                     Еще одна команда решила создать ядро, использующее свою систему плагинов. Используйте его,
                                     если знаете что делаете.
@@ -326,7 +329,7 @@ export default function MC(props) {
                         <div className="flex gap-4">
                             <img src={CoreSponge.src} className="saturate-[50%] w-12 h-12 m-2" />
                             <div className="">
-                                <p className="text-3xl my-0 font-[Coolvetica] flex flex-col lg:flex-row items-baseline gap-2">Sponge Forge <PluginBadge/> <ForgeBadge/></p>
+                                <p className="text-3xl my-0 font-[Coolvetica] flex flex-col laptop:flex-row items-baseline gap-2">Sponge Forge <PluginBadge/> <ForgeBadge/></p>
                                 <span className="ml-2 my-0 text-gray-300">
                                     Почему нельзя установить и плагины, и моды? Разработчики данного ядра подумали тоже самое и сделали
                                     SpongeForge, основанный на Sponge и его экосистеме плагинов, но с поддержкой модов Forge.
@@ -398,14 +401,16 @@ export default function MC(props) {
     )
 }
 
+MC.jivo = true
+
 const PluginBadge = ()=>{
-    return <span className="cursor-pointer lg:hover:w-20 transition-all w-20 lg:w-4 overflow-hidden rounded-md px-1 bg-yellow-600 h-6 flex items-center font-sans text-sm gap-2">
+    return <span className="cursor-pointer laptop:hover:w-20 transition-all w-20 laptop:w-4 overflow-hidden rounded-md px-1 bg-yellow-600 h-6 flex items-center font-sans text-sm gap-2">
         <FontAwesomeIcon className="ml-0.5" icon={faPuzzlePiece} /> Плагины
     </span>
 }
 
 const ForgeBadge = ()=>{
-    return <span className="cursor-pointer lg:hover:w-16 transition-all w-16 lg:w-4 overflow-hidden rounded-md px-1 bg-green-700 h-6 flex items-center font-sans text-sm gap-2">
+    return <span className="cursor-pointer laptop:hover:w-16 transition-all w-16 laptop:w-4 overflow-hidden rounded-md px-1 bg-green-700 h-6 flex items-center font-sans text-sm gap-2">
         <svg className="!w-4 !h-4 inline min-w-[1rem] fill-white" viewBox="0 0 256 256">
             <path d="M248,91.3V67H80v8H9c0,0,10.7,40.6,67.3,40.6c30.3,0,34.4,12.7,34.4,19.1c0,8.4-5.1,21.9-36.7,32.8V191h38.7c6.8-5.2,15.3-8.2,24.5-8.2s17.7,3.1,24.5,8.2H201c0,0,0-15.1,0-22.9c-23.4-7.7-38.7-20.4-38.7-34.8C162.3,110.6,200.1,92.5,248,91.3z M80,87c-52,0-52-4-52-4h52C80,83,80,85.4,80,87z M88,79v-4h152v4H88z"/>
         </svg> Моды

@@ -13,7 +13,7 @@ import GlobalHead from "@/components/GlobalHead";
 import useLocale, {useGlobalLocale} from "@/locales/useLocale";
 import Link from "next/link";
 import {serverFiberAPI} from "@/fiber/fiber.ts";
-import {useRef} from "react";
+import {useEffect, useRef} from "react";
 import {BetaData} from '@/components/betadata';
 import {Rate, Carousel} from "antd";
 import Script from "next/script";
@@ -52,13 +52,30 @@ export default function Home(props) {
     const scrollRef = useRef(null)
     const carouselRef = useRef(null)
 
+    const blobaref = useRef(null)
+    const cardref = useRef(null)
+
+    const moveBloba = (evt) => {
+        const {clientX, clientY} = evt
+        const rect = cardref.current?.getBoundingClientRect()
+        const left = clientX - rect.left
+        const top = clientY - rect.top
+        blobaref.current?.animate({
+            left: `${left}px`,
+            top: `${top}px`,
+        }, {
+            duration: 3000,
+            fill: "forwards"
+        })
+    }
+
     return <>
         <GlobalHead og={og}/>
-        <Script src="//code.jivo.ru/widget/QDbblcMLJ0" async></Script>
         <div className="fixed top-0 left-0 w-screen h-screen -z-20 bg-[#191921]"></div>
         <div className="fixed top-0 left-0 w-screen h-screen -z-10 techBg"></div>
         <div>
-            {BetaData.beta &&
+            {
+                BetaData.beta &&
                 <div
                     className="bg-active backdrop-blur bg-opacity-20 h-12 flex items-center justify-between z-[9999] relative">
                     <p className="rounded-full bg-subtle  mx-2 flex items-baseline gap-2 h-fit">
@@ -84,37 +101,55 @@ export default function Home(props) {
                             })}
                         </div>
                     </p>
-                </div>}
+                </div>
+            }
             <GlobalNav router={props.router} mainpage/>
+
+            {/*<div className="h-screen dotsBg overflow-hidden grid grid-cols-1 ipad:grid-cols-2">
+                <div className="flex flex-col items-center justify-center">
+                    <h1 className="text-6xl mt-48 laptop:mt-2 desktop:text-8xl font-[Coolvetica] tracking-wider font-normal fruitText m-2 select-none">FruitSpace</h1>
+                    <p className="text-md text-center desktop:text-xl m-0 font-[Helvetica] max-w-2xl">
+                        Удобный и надежный хостинг для ваших любимых игр. И ещё немножко магии ✨
+                    </p>
+                </div>
+                <div className="flex items-center justify-center">
+                    <div className="overflow-hidden aspect-[3/4] rounded-3xl glassb w-2/3 bg-[#171721] relative"
+                    onPointerMove={moveBloba} ref={cardref}>
+                        <div ref={blobaref} className="bloba z-[1]"></div>
+                        <div className="absolute top-0 left-0 w-full h-full backdrop-blur-3xl z-[2]"></div>
+                        <div className="z-10 absolute top-0 left-0 p-8">
+                            <p className="text-6xl font-avant font-bold">EBICHESKY</p>
+                            <p className="text-3xl font-avant font-bold">Analitichesky</p>
+                        </div>
+                    </div>
+                </div>
+            </div>*/}
 
             <div className={styles.main}>
 
-                <div className="flex flex-col items-center justify-center lg:h-[100vh] relative">
-                    <h1 className="text-6xl mt-48 lg:mt-2 xl:text-8xl font-[Coolvetica] tracking-wider font-normal fruitText m-2 select-none">FruitSpace</h1>
-                    <p className="text-md text-center xl:text-xl m-0 font-[Helvetica]">Удобный и надежный хостинг для
+                <div className="flex flex-col items-center justify-center laptop:h-[100vh] relative">
+                    <h1 className="text-6xl mt-48 laptop:mt-2 desktop:text-8xl font-[Coolvetica] tracking-wider font-normal fruitText m-2 select-none">FruitSpace</h1>
+                    <p className="text-md text-center desktop:text-xl m-0 font-[Helvetica]">Удобный и надежный хостинг
+                        для
                         ваших любимых игр. И ещё немножко магии ✨</p>
 
-                    <div className="mt-24 grid grid-cols-1 xl:grid-cols-3 gap-4 xl:gap-16 select-none">
+                    <div className="mt-24 grid grid-cols-1 desktop:grid-cols-1 gap-4 desktop:gap-16 select-none">
                         <ProdCard link="/product/gd" name="Geometry Dash"
                                   description="Кастомная музыка, 2.2, моды и конфигуратор установщиков"
                                   logo={GDLogo.src}
                                   stats={`${formatStat(props.stats.gdps_count)} серверов • ${formatStat(props.stats.gdps_levels)} уровней`}/>
-                        <ProdCard link="/product/mc" name="Minecraft"
-                                  description="Мощные сервера, динамические ресурсы и удобная панель"
-                                  logo={MinecraftLogo.src} stats="Уже на FruitSpace!"/>
-                        <ProdCard link="#" name="Beat Saber" description="Третья игра с кубиками. Шутку думайте сами"
-                                  logo={BSLogo.src} stats="Не скоро"/>
+
                     </div>
 
                     <Link href="/top/gd" legacyBehavior>
                         <div
-                            className="w-full md:w-fit mt-4 xl:mt-8 p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e88] via-[#5a00ff88] to-[#0d6efd88] flex flex-col">
+                            className="w-full ipad:w-fit mt-4 desktop:mt-8 p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e88] via-[#5a00ff88] to-[#0d6efd88] flex flex-col">
                             <div
-                                className="flex-1 bg-[#333338cc] glass rounded-2xl p-2 font-[Helvetica] cursor-pointer flex items-center justify-between hover:bg-[#33333888] transition-all duration-300 md:max-w-md">
-                                <img alt="prod.logo" className="h-16 lg:mr-2"
+                                className="flex-1 bg-[#333338cc] glass rounded-2xl p-2 font-[Helvetica] cursor-pointer flex items-center justify-between hover:bg-[#33333888] transition-all duration-300 ipad:max-w-md">
+                                <img alt="prod.logo" className="h-16 laptop:mr-2"
                                      src="https://img.icons8.com/nolan/96/1A6DFF/C822FF/prize.png"/>
                                 <h2 className="m-0 w-fit">Топ серверов</h2>
-                                <RightIcon className="flex-shrink-0 w-8 lg:ml-auto"/>
+                                <RightIcon className="flex-shrink-0 w-8 laptop:ml-auto"/>
                             </div>
                         </div>
                     </Link>
@@ -145,15 +180,15 @@ export default function Home(props) {
                                 "свой укромный уголок. Не верите? Прочтите реальные отзывы или оставьте свой!"
                         }
                     ].map((el, i) => <div key={i}>
-                        <p className="text-2xl lg:text-4xl text-center mb-4 font-[Helvetica]">{el.h}</p>
-                        <p className="text-center text-gray-300 lg:text-base px-4 xl:px-24">{el.t}</p>
+                        <p className="text-2xl laptop:text-4xl text-center mb-4 font-[Helvetica]">{el.h}</p>
+                        <p className="text-center text-gray-300 laptop:text-base px-4 desktop:px-24">{el.t}</p>
                     </div>)}
 
                     <Carousel ref={carouselRef} dots={{className: "!bottom-2"}}>
                         {reviews.map((u, i) => {
-                            return <div key={i} className="p-4 my-4 overflow-y-scroll lg:overflow-y-hidden
-                             !w-5/6 lg:!w-2/3 h-96 mx-auto !flex flex-col bg-subtle bg-opacity-75 border-white border-opacity-25 rounded-2xl border-solid border-1">
-                                <div className="flex flex-col lg:flex-row items-center justify-between">
+                            return <div key={i} className="p-4 my-4 overflow-y-scroll laptop:overflow-y-hidden
+                             !w-5/6 laptop:!w-2/3 h-96 mx-auto !flex flex-col bg-subtle bg-opacity-75 border-white border-opacity-25 rounded-2xl border-solid border-1">
+                                <div className="flex flex-col laptop:flex-row items-center justify-between">
                                     <p className="text-lg w-40">{u.user}</p>
                                     <p>{u.date}</p>
                                     <Rate className="p-2 bg-active rounded-lg h-fit" allowHalf disabled
@@ -179,7 +214,7 @@ export default function Home(props) {
                                         relative z-10">{u.verdict}</pre>
                                     </div>}
                                 </div>
-                                <div className="flex flex-col lg:flex-row justify-between items-center mt-auto">
+                                <div className="flex flex-col laptop:flex-row justify-between items-center mt-auto">
                                     <span className="text-gray-300">Хостинг: {u.product}</span>
                                     <a href={u.url} className="text-primary">Отзыв в Discord →</a>
                                 </div>
@@ -194,18 +229,20 @@ export default function Home(props) {
     </>;
 }
 
+Home.jivo = true
+
 
 const ProdCard = (props) => (
     <Link href={props.link} legacyBehavior>
         <div className="p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e88] via-[#5a00ff88] to-[#0d6efd88] flex flex-col">
-            <div className="flex-1 bg-[#333338cc] glass rounded-2xl p-2 lg:p-4 pr-2 font-[Helvetica]
+            <div className="flex-1 bg-[#333338cc] glass rounded-2xl p-2 laptop:p-4 pr-2 font-[Helvetica]
                  cursor-pointer flex items-center hover:bg-[#33333888] transition-all duration-300 max-w-md
-                 gap-2 lg:gap-4">
+                 gap-2 laptop:gap-4">
                 <img alt="prod.logo" className="h-24" src={props.logo}/>
                 <div>
-                    <p className="m-0 tracking-wide lg:text-lg">{props.name}</p>
-                    <p className="opacity-85 leading-tight text-xs md:text-sm lg:leading-normal m-0">{props.description}</p>
-                    <p className="text-xs text-nowrap m-0 mt-2 text-[#cacad0] lg:font-mono">{props.stats}</p>
+                    <p className="m-0 tracking-wide laptop:text-lg">{props.name}</p>
+                    <p className="opacity-85 leading-tight text-xs ipad:text-sm laptop:leading-normal m-0">{props.description}</p>
+                    <p className="text-xs text-nowrap m-0 mt-2 text-[#cacad0] laptop:font-mono">{props.stats}</p>
                 </div>
                 <RightIcon className="flex-shrink-0 w-8 ml-auto"/>
             </div>

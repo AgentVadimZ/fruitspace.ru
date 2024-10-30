@@ -23,7 +23,7 @@ export default function TariffCard(props: TariffCardProps) {
 
 
     return (
-        <div className="w-full flex flex-col lg:w-80 rounded-xl bg-subtle border-solid border-2 border-dark hover:border-primary">
+        <div className="w-full flex flex-col laptop:w-80 rounded-xl bg-subtle border-solid border-2 border-dark hover:border-primary">
             <div className="rounded-lg h-36 bg-cover m-1.5" style={{backgroundImage:`url('${props.img}')`}}>
                 <div className="flex justify-end items-center flex-col h-full rounded-lg bg-gradient-to-b from-transparent to-gray-600">
                     <span className="text-4xl p-2 text-white flex items-center">{props.name}</span>

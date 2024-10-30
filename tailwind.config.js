@@ -9,6 +9,14 @@ module.exports = {
     preflight: true
   },
   theme: {
+    screens: {
+      "iphone": "400px",
+      "tablet": "640px",
+      "ipad": "768px",
+      "laptop": "1024px",
+      "desktop": "1280px",
+      "4k": "1536px",
+    },
     extend: {
       colors: {
         "primary": "#0d6efd",
@@ -40,6 +48,7 @@ module.exports = {
     },
   },
   plugins: [
-      require('@tailwindcss/typography')
+      require('@tailwindcss/typography'),
+      require("@xpd/tailwind-3dtransforms")
   ],
 }

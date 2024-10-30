@@ -32,6 +32,7 @@ import {
 import {RolesTour} from "@/locales/tours/manage/gd";
 import Tab from "@/components/Tab";
 import {debounce} from "lodash";
+import {GDPSAdminMobileNav} from "@/components/PanelMobileNav";
 
 const SketchPicker = dynamic(() => import("react-color").then((mod)=>mod.SketchPicker), { ssr: false });
 
@@ -53,7 +54,7 @@ export default function RolesGD(props) {
         ...v, target: ()=>refs.current[v.target],
         nextButtonProps: {children: <span>Далее</span>},
         prevButtonProps: {children: <span>Назад</span>},
-        className: "w-fit lg:w-[520px]"
+        className: "w-fit laptop:w-[520px]"
     }))
     const [tourOpen, setTourOpen] = useState(!!props.router.query.tour)
 
@@ -140,16 +141,16 @@ export default function RolesGD(props) {
             <GlobalNav />
             <GDNavBar />
             <Toaster/>
+            <GDPSAdminMobileNav srvid={srv?.Srv?.srvid} />
             <Tour open={tourOpen} onClose={()=>setTourOpen(false)} steps={tourSteps}/>
             <FloatButton
                 shape="square"
-                type="primary"
-                style={{right: 20, bottom: 20}}
+                type="primary" className="right-4 bottom-16 ipad:right-5 ipad:bottom-5"
                 onClick={() => setTourOpen(true)}
                 icon={<FontAwesomeIcon icon={faQuestion} />}
             />
             <PanelContent>
-                <div className="flex-col w-full xl:w-2/3 lg:p-2">
+                <div className="flex-col w-full desktop:w-2/3 laptop:p-2">
                     <Tab addbtn={<div className="flex gap-2">
                         {tab==="roles"&&<Button type="primary" className="flex gap-2 items-center" onClick={
                             ()=>{
@@ -167,7 +168,7 @@ export default function RolesGD(props) {
                             }
                         }>
                             <FontAwesomeIcon icon={faPlusCircle}/>
-                            <span className="!hidden sm:!inline">Создать</span>
+                            <span className="!hidden tablet:!inline">Создать</span>
                         </Button>}
                         <Button icon={<FontAwesomeIcon icon={faRefresh} />} onClick={()=>{
                             switch (tab) {
@@ -186,13 +187,13 @@ export default function RolesGD(props) {
                         {
                             label: "Роли",
                             key: "roles",
-                            children: <div className="lg:p-4 flex flex-col overflow-x-scroll lg:overflow-x-auto">
+                            children: <div className="laptop:p-4 flex flex-col overflow-x-scroll laptop:overflow-x-auto">
                                 {roles.map((v, i) => (
                                     <div className="flex items-center p-4 gap-4
                                     border-b-1 last:border-b-0 border-white border-opacity-25" key={i}>
                                         {el_icon(v.mod_level)}
                                         <div>
-                                            <p className="flex gap-2 items-center text-sm lg:text-base">
+                                            <p className="flex gap-2 items-center text-sm laptop:text-base">
                                                 <p className="w-3 h-3 rounded border-1 border-white border-opacity-75" style={{
                                                     backgroundColor: `rgb(${v.comment_color})`
                                                 }}></p>
@@ -219,9 +220,9 @@ export default function RolesGD(props) {
                         {
                             label: "Игроки",
                             key: "players",
-                            children: <div className="p-4 flex flex-col overflow-x-scroll lg:overflow-x-auto">
+                            children: <div className="p-4 flex flex-col overflow-x-scroll laptop:overflow-x-auto">
                                 {users.map((user, i)=>(
-                                    <div className="flex items-center p-2 lg:p-4 gap-4
+                                    <div className="flex items-center p-2 laptop:p-4 gap-4
                                     border-b-1 last:border-b-0 border-white border-opacity-25" key={i}>
                                         <img src={fastIconLink("cube", 1)} className="w-8"/>
                                         <div>
@@ -269,9 +270,9 @@ export default function RolesGD(props) {
                             <p className="w-20">Название</p>
                             <Input placeholder="Название роли" value={crole?.role_name} onChange={(e)=>setCRole({...crole, role_name: e.target.value})} />
                         </div>
-                        <div className="flex gap-2 lg:items-center">
+                        <div className="flex gap-2 laptop:items-center">
                             <p className="w-20">Значок</p>
-                            <div className="flex flex-col lg:flex-row gap-2 lg:items-center">
+                            <div className="flex flex-col laptop:flex-row gap-2 laptop:items-center">
                                 <Segmented rootClassName="bg-subtle select-none" options={[
                                     {
                                         value: 0,

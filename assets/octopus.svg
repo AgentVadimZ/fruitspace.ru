@@ -1,0 +1,37 @@
+<svg viewBox="0 0 360 80" fill="none" xmlns="http://www.w3.org/2000/svg" >
+    <g clip-path="url(#clip0_31_4)">
+        <path d="M180 -6V-6C180 13.0289 166.132 29.2186 147.328 32.1402L45.1138 48.0218C35.2645 49.5521 28 58.0325 28 68V68"
+              stroke="url(#paint0_linear_31_4)" stroke-width="3"/>
+        <path d="M180 -6V-6C180 13.0289 193.868 29.2186 212.672 32.1402L314.886 48.0218C324.736 49.5521 332 58.0325 332 68V68"
+              stroke="url(#paint1_linear_31_4)" stroke-width="3"/>
+        <path d="M180 -6V-0.122242C180 19.624 191.765 37.4711 209.913 45.2539L225.502 51.9392C236.724 56.7521 244 67.7889 244 80V80"
+              stroke="url(#paint2_linear_31_4)" stroke-width="3"/>
+        <path d="M180 -6V-0.122242C180 19.624 168.235 37.4711 150.087 45.2539L134.498 51.9392C123.276 56.7521 116 67.7889 116 80V80"
+              stroke="url(#paint3_linear_31_4)" stroke-width="3"/>
+    </g>
+    <defs>
+        <linearGradient id="paint0_linear_31_4" x1="104" y1="-6" x2="104" y2="68" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#66666A"/>
+            <stop offset="0.08" stop-color="#66666A" stop-opacity="0.74"/>
+            <stop offset="0.885" stop-color="#66666A" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="paint1_linear_31_4" x1="256" y1="-6" x2="256" y2="68" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#66666A"/>
+            <stop offset="0.08" stop-color="#66666A" stop-opacity="0.74"/>
+            <stop offset="0.885" stop-color="#66666A" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="paint2_linear_31_4" x1="212" y1="-6" x2="212" y2="80" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#66666A"/>
+            <stop offset="0.08" stop-color="#66666A" stop-opacity="0.74"/>
+            <stop offset="0.885" stop-color="#66666A" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="paint3_linear_31_4" x1="148" y1="-6" x2="148" y2="80" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#66666A"/>
+            <stop offset="0.08" stop-color="#66666A" stop-opacity="0.74"/>
+            <stop offset="0.885" stop-color="#66666A" stop-opacity="0"/>
+        </linearGradient>
+        <clipPath id="clip0_31_4">
+            <rect width="360" height="80" fill="white"/>
+        </clipPath>
+    </defs>
+</svg>

@@ -13,17 +13,22 @@ import GDPSCard, {DownloadCard} from "@/components/Cards/GDPSCard";
 import useFiberAPI from "@/fiber/fiber.ts";
 import {mutate} from "swr";
 import {IndexTour} from "@/locales/tours/manage/gd";
-import {FloatButton, Tour} from "antd";
+import {FloatButton, Tabs, Tour} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClock, faHourglassHalf, faQuestion} from "@fortawesome/free-solid-svg-icons";
+import {GDPSAdminMobileNav} from "@/components/PanelMobileNav";
+import AreaChartCreator from "@/components/Charter";
+import UniversalChart from "@/components/Charter";
 
 export default function ManageGD(props) {
+
+
     const refs = useRef({})
     const tourSteps = IndexTour.map((v,i)=>({
         ...v, target: ()=>refs.current[v.target],
         nextButtonProps: {children: <span>Далее</span>},
         prevButtonProps: {children: <span>Назад</span>},
-        className: "w-fit lg:w-[520px]"
+        className: "w-fit laptop:w-[520px]"
     }))
     const [tourOpen, setTourOpen] = useState(!!props.router.query.tour)
 
@@ -36,8 +41,31 @@ export default function ManageGD(props) {
     })
 
 
-    const locale = useLocale(props.router)
+    let data = [];
+    data = [
+        {
+            "name": "1.09",
+            "All": 10,
+            "New": 3
+        },
+        {
+            "name": "2.09",
+            "All": 10,
+            "New": 0
+        },
+        {
+            "name": "3.09",
+            "All": 10,
+            "New": 0
+        },
+        {
+            "name": "4.09",
+            "All": 60,
+            "New": 50
+        },
+    ]
 
+    const locale = useLocale(props.router)
 
     let expire = new Date(srv?.Srv?.expire_date)
     let expireDate = (expire.getTime() - new Date().getTime()) /1000/60/60/24
@@ -55,38 +83,96 @@ export default function ManageGD(props) {
         })
     }
 
+    const ChartTip = ({ payload, label }) => {
+        if (payload && payload.length) {
+            const data = payload[0].payload; // Данные для отображения
+            return (
+                <div className="glassb bg-active p-2 rounded-xl bg-opacity-50 backdrop-blur-xl">
+                    <p className="text-xl">{label}</p>
+                    <p>Новых игроков: {data.New}</p>
+                    <p>Всего: {data.All}</p>
+                </div>
+            );
+        }
+        return null;
+    };
 
+    const colors = [
+        { stroke: '#9b9b9b', fill: '#cbcbcb' },  // Для 'New'
+        { stroke: '#1a55aa', fill: '#0d6efd' }   // Для 'All'
+    ];
+
+
+    const TooltipLevels = {
+        New: 'Новые уровни',
+        All: 'Всего уровней'
+    };
+    const TooltipPlayers = {
+        New: 'Новые игроки',
+        All: 'Всего игроков'
+    };
     return (
         <>
             <GlobalHead title={locale.get('nav')}/>
             <GlobalNav />
             <GDNavBar sref={r=>refs.current["nav"] = r} />
+            <GDPSAdminMobileNav srvid={srv?.Srv?.srvid} />
             <Toaster/>
             <Tour open={tourOpen} onClose={()=>setTourOpen(false)} steps={tourSteps}/>
             <FloatButton
                 shape="square"
-                type="primary"
-                style={{right: 20, bottom: 20}}
+                type="primary" className="right-4 bottom-16 ipad:right-5 ipad:bottom-5"
                 onClick={() => setTourOpen(true)}
                 icon={<FontAwesomeIcon icon={faQuestion} />}
             />
             {srv.Srv&&<PanelContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full md:w-auto">
+                <div className="grid grid-cols-1 ipad:grid-cols-2 laptop:grid-cols-3 gap-4 w-full ipad:w-auto">
                     <div className="grid grid-cols-2 gap-4">
-                        <GDPSCard sref={r=>refs.current["servcard"] = r} tref={r=>refs.current["servtariff"] = r} name={srv.Srv.srv_name} planid={srv.Srv.plan} plan={GetGDPlan(srv.Srv.plan)} id={<span style={{color:"white"}} className={styles.CodeBlock}>{srv.Srv.srvid}</span>}
-                                  icon={"https://cdn.fruitspace.one/server_icons/"+srv.Srv.icon} onClick={()=>props.router.push("/product/order/gd?id="+srv.Srv.srvid)}/>
-                        <ProgressCard color max={srv.CoreConfig&&srv.CoreConfig.ServerConfig.MaxUsers} now={srv.Srv.user_count} bottom="Игроки" />
-                        <ProgressCard color max={srv.CoreConfig&&srv.CoreConfig.ServerConfig.MaxLevels} now={srv.Srv.level_count} bottom="Уровни" />
-                        <ProgressCard color date max={preMax>30?365:30} now={expireDate} text={expireText.endsWith("2050")?"Навсегда":expireText} bottom="Действует до" />
-                        <DownloadCard sref={r=>refs.current["build"] = r} api={api} srvid={srv.Srv.srvid} locale={locale} srv={srv.Srv} router={props.router} copyR={copyValueR} />
+                        <GDPSCard sref={r => refs.current["servcard"] = r} tref={r => refs.current["servtariff"] = r}
+                                  name={srv.Srv.srv_name} planid={srv.Srv.plan} plan={GetGDPlan(srv.Srv.plan)}
+                                  id={<span style={{color: "white"}}
+                                            className={styles.CodeBlock}>{srv.Srv.srvid}</span>}
+                                  icon={"https://cdn.fruitspace.one/server_icons/" + srv.Srv.icon}
+                                  onClick={() => props.router.push("/product/order/gd?id=" + srv.Srv.srvid)}/>
+                        <ProgressCard color max={srv.CoreConfig && srv.CoreConfig.ServerConfig.MaxUsers}
+                                      now={srv.Srv.user_count} bottom="Игроки"/>
+                        <ProgressCard color max={srv.CoreConfig && srv.CoreConfig.ServerConfig.MaxLevels}
+                                      now={srv.Srv.level_count} bottom="Уровни"/>
+                        <ProgressCard color date max={preMax > 30 ? 365 : 30} now={expireDate}
+                                      text={expireText.endsWith("2050") ? "Навсегда" : expireText}
+                                      bottom="Действует до"/>
+                        <DownloadCard sref={r => refs.current["build"] = r} api={api} srvid={srv.Srv.srvid}
+                                      locale={locale} srv={srv.Srv} router={props.router} copyR={copyValueR}/>
                     </div>
-                    <div className="crossx lg:col-span-2 rounded-2xl bg-active glassb p-4 flex flex-col gap-4 items-center justify-center">
-                        <FontAwesomeIcon icon={faHourglassHalf} className="text-3xl" />
-                        <span className="text-lg">Полная аналитика скоро</span>
-                    </div>
+                    {/*<div className="laptop:col-span-2 rounded-2xl bg-active pl-4 pt-0 glassb flex flex-col ">*/}
+                    {/*    <h1 className="text-2xl text-center mt-4">Аналитика</h1>*/}
+                    {/*    <Tabs defaultActiveKey="1" rootClassName="">*/}
+                    {/*        <Tabs.TabPane tab="Игроки" key="1">*/}
+                    {/*            <div style={{ width: "100%", height: "340px", display: "flex", justifyContent: "center" }}>*/}
+                    {/*                <UniversalChart*/}
+                    {/*                    data={data}*/}
+                    {/*                    dataKeys={['New', 'All']}*/}
+                    {/*                    colors={colors}*/}
+                    {/*                    tooltipFormatter={TooltipPlayers}*/}
+                    {/*                />*/}
+                    {/*            </div>*/}
+                    {/*        </Tabs.TabPane>*/}
+                    {/*        <Tabs.TabPane tab="Уровни" key="2">*/}
+                    {/*            <div style={{ width: "100%", height: "340px", display: "flex", justifyContent: "center" }}>*/}
+                    {/*                <UniversalChart*/}
+                    {/*                    data={data}*/}
+                    {/*                    dataKeys={['New', 'All']}*/}
+                    {/*                    colors={colors}*/}
+                    {/*                    tooltipFormatter={TooltipLevels}*/}
+                    {/*                />*/}
+                    {/*            </div>*/}
+                    {/*        </Tabs.TabPane>*/}
+                    {/*    </Tabs>*/}
+                    {/*</div>*/}
                 </div>
 
-                <div className={styles.CardBox} ref={r=>refs.current["cardbox"]=r}>
+                <div className={styles.CardBox} ref={r => refs.current["cardbox"] = r}>
+
                 </div>
 
 

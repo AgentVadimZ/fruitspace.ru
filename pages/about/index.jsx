@@ -36,7 +36,7 @@ export default function About(props) {
                     Что мы предлагаем?
                 </h2>
 
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 m-8">
+                <div className="grid grid-cols-1 laptop:grid-cols-4 gap-8 m-8">
 
                     <div className="glassb bg-active p-3 rounded-2xl flex flex-col gap-2">
                         <h3 className="text-white text-xl font-bold">
