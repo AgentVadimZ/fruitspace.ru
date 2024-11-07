@@ -34,6 +34,11 @@ const links = [
                 text: "Geometry Dash",
                 link: "/product/gd",
                 icon: faSquare
+            },
+            {
+                text: "Minecraft",
+                link: "/product/mc",
+                icon: faCube
             }
         ]
     },

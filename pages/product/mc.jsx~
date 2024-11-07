@@ -395,10 +395,10 @@ export default function MC(props) {
                 </Accordion>
             </div>*/}
             <div className="flex flex-col h-screen justify-center items-center">
-                <img src={fif.src} className="ipad:w-96 w-full rounded-xl"/>
+                <img src={fif.src} className="ipad:w-96 w-full"/>
             </div>
 
-
+s
             <Footer router={props.router}/>
         </>
     )

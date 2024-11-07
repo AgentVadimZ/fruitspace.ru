@@ -20,7 +20,7 @@ export default function Footer() {
                 </div>
                 <div className="flex flex-col gap-2 p-2 text-sm">
                     <h3 className="font-semibold text-base">Хостинг</h3>
-
+                    <Link href="/product/mc" className=" hover:cursor-not-allowed text-neutral-400">Minecraft</Link>
                     <Link href="/product/gd" className="hover:text-white hover:underline">Geometry Dash</Link>
                 </div>
                 <div className="flex flex-col gap-2 p-2 text-sm">

@@ -68,7 +68,7 @@ body::-webkit-scrollbar-track {
     background: #212125;
 }
 body::-webkit-scrollbar-thumb {
-    background-color: #0d6efd;    /* цвет плашки */
+    background: linear-gradient(#8e388e,#5a00ff);    /* цвет плашки */
 }
 
 
