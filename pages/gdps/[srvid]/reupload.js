@@ -21,7 +21,7 @@ import {
 
 const doGJP2 = (text) => sha1(`${text}mI29fmAnxgTs`)
 
-const GOURL = (url)=>`https://api.fruitspace.one/v2/servers/gd/xxxx/u/gdproxy/${url}`
+const GOURL = (url)=>`https://api.fruitspace.ru/v2/servers/gd/xxxx/u/gdproxy/${url}`
 
 
 const parseGD = (text) => text.split("|").map(val => val.split(":"))
@@ -107,7 +107,7 @@ export default function Reupload(props) {
                     <div className="rounded-xl flex flex-col gap-2 bg-dark">
                         {levels.map((level, i) =>
                             <div key={i} className="p-4 flex items-center gap-4  border-b-1 last:border-b-0 border-white border-opacity-25">
-                                <img src={`https://cdn.fruitspace.one/assets/bot_icons/lvl/${level.difficultyFace}.png`} className="w-16 h-16"/>
+                                <img src={`https://cdn.fruitspace.ru/assets/bot_icons/lvl/${level.difficultyFace}.png`} className="w-16 h-16"/>
                                 <div>
                                     <p className="text-lg flex items-center gap-2">
                                         {level.name}

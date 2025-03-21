@@ -368,6 +368,6 @@ export default function Home(props) {
 Home.jivo = true;
 
 const og = {
-    title: "FruitSpace - хостинг GDPS",
+    title: "FruitSpace - хостинг Minecraft, CS, GDPS",
     description: "Удобный и надежный хостинг для ваших любимых игр. И ещё немножко магии ✨"
 };

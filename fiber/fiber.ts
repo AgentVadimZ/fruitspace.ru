@@ -10,7 +10,7 @@ const DISCORD_AUTH = "https://discord.com/oauth2/authorize?client_id=11192403136
 
 
 class api {
-    base_url: string = "https://api.fruitspace.one/v2/"
+    base_url: string = "https://api.fruitspace.ru/v2/"
     authorization: string = ""
 
     auth: auth

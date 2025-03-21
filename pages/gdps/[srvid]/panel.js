@@ -50,7 +50,7 @@ export default function FrontPage(props) {
 
     const fastIconLink = (type, id) => {
         id = Math.max(1, id)
-        return "https://cdn.fruitspace.one/assets/icons/" + type + "/" + id + ".png"
+        return "https://cdn.fruitspace.ru/assets/icons/" + type + "/" + id + ".png"
     }
 
     useEffect(()=>{

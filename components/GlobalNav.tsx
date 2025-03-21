@@ -44,11 +44,6 @@ const links = [
                 text: "Документация",
                 link: "/docs",
                 icon: faLayerGroup
-            },
-            {
-                text: "Блог",
-                link: "https://blog.fruitspace.one",
-                icon: faNewspaper
             }
         ]
     },

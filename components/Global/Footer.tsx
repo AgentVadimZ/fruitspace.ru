@@ -26,7 +26,6 @@ export default function Footer() {
                 <div className="flex flex-col gap-2 p-2 text-sm">
                     <h3 className="font-semibold text-base">Сообщество</h3>
                     <Link href="/docs" className="hover:text-white hover:underline">Документация</Link>
-                    <Link href="https://blog.fruitspace.one" className="hover:text-white hover:underline">Блог</Link>
                 </div>
                 <span className="flex-1"></span>
                 <div className="flex flex-col gap-2 laptop:items-end">

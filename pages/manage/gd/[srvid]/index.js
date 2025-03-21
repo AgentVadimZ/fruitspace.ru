@@ -132,7 +132,7 @@ export default function ManageGD(props) {
                                   name={srv.Srv.srv_name} planid={srv.Srv.plan} plan={GetGDPlan(srv.Srv.plan)}
                                   id={<span style={{color: "white"}}
                                             className={styles.CodeBlock}>{srv.Srv.srvid}</span>}
-                                  icon={"https://cdn.fruitspace.one/server_icons/" + srv.Srv.icon}
+                                  icon={"https://cdn.fruitspace.ru/server_icons/" + srv.Srv.icon}
                                   onClick={() => props.router.push("/product/order/gd?id=" + srv.Srv.srvid)}/>
                         <ProgressCard color max={srv.CoreConfig && srv.CoreConfig.ServerConfig.MaxUsers}
                                       now={srv.Srv.user_count} bottom="Игроки"/>

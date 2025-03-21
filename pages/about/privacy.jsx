@@ -24,7 +24,7 @@ export default function Privacy(props){
                     <li>Данная Политика применяется ко всей информации, которую Оператор может получить о посетителях
                         веб-сайтов <a href="https://fruitspace.ru"
                                       className="text-blue-600">https://fruitspace.ru</a> и <a
-                            href="https://fruitspace.one" className="text-blue-600">https://fruitspace.one</a>.
+                            href="https://fruitspace.ru" className="text-blue-600">https://fruitspace.ru</a>.
                     </li>
                 </ol>
 
@@ -42,7 +42,7 @@ export default function Privacy(props){
                     </li>
                     <li><strong>Пользователь</strong> — посетитель веб-сайтов <a href="https://fruitspace.ru"
                                                                                  className="text-blue-600">https://fruitspace.ru</a> и <a
-                        href="https://fruitspace.one" className="text-blue-600">https://fruitspace.one</a>.
+                        href="https://fruitspace.ru" className="text-blue-600">https://fruitspace.ru</a>.
                     </li>
                 </ol>
 
@@ -134,7 +134,7 @@ export default function Privacy(props){
                     8.2. Передача персональных данных третьим лицам осуществляется только в случаях, предусмотренных законодательством.
                 </span>
                 <span>
-                    8.3. Пользователь может актуализировать свои персональные данные, отправив уведомление на электронную почту Оператора: based@fruitspace.one.
+                    8.3. Пользователь может актуализировать свои персональные данные, отправив уведомление на электронную почту Оператора: based@fruitspace.ru.
                 </span>
                 <span>
                     8.4. Срок обработки персональных данных определяется достижением целей обработки или иными требованиями законодательства.
@@ -156,8 +156,8 @@ export default function Privacy(props){
                 <h3 className="text-xl mt-4">11. Заключительные положения</h3>
                 <ol className="list-decimal ml-8">
                     <li>Пользователь может обратиться к Оператору по вопросам обработки персональных данных по
-                        электронной почте: <a href="mailto:based@fruitspace.one"
-                                              className="text-blue-600">based@fruitspace.one</a>.
+                        электронной почте: <a href="mailto:based@fruitspace.ru"
+                                              className="text-blue-600">based@fruitspace.ru</a>.
                     </li>
                     <li>Политика может быть изменена, актуальная версия всегда доступна по адресу: <a
                         href="https://fruitspace.ru/about/privacy"

@@ -77,7 +77,7 @@ export default function Tos(props) {
                         счет, с которого производилась оплата.
                     </li>
                     <li>Для возврата средств необходимо написать письмо запрос в
-                        поддержку с темой «Возврат средств» по адресу support@fruitspace.one
+                        поддержку с темой «Возврат средств» по адресу support@fruitspace.ru
                     </li>
                 </ol>
                 <h3 className="text-xl mt-4">4. Ответственность сторон</h3>
@@ -96,7 +96,7 @@ export default function Tos(props) {
                 <h3 className="text-xl text-center">Контакты</h3>
                 <div className="flex gap-4 justify-center text-sm">
                     <p className="px-2 rounded-full glassb flex items-center gap-2">
-                        <FontAwesomeIcon icon={faEnvelope}/> support@fruitspace.one
+                        <FontAwesomeIcon icon={faEnvelope}/> support@fruitspace.ru
                     </p>
                     <p className="px-2 rounded-full glassb flex items-center gap-2">
                         <FontAwesomeIcon icon={faPhone}/> +2 597 064 (факс)
