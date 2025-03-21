@@ -33,7 +33,7 @@ export default function Order(props) {
     const [srv, setSrv] = useState({
         srvid: props.router?.query.id||"",
         name: "",
-        payDuration: "yr",
+        payDuration: "mo",
         promocode: ""
     })
     const [payDurLock, setPayDurLock] = useState(false)
@@ -103,18 +103,6 @@ export default function Order(props) {
         else
             return (tariff.PriceUSD===0?0:tariff.PriceUSD-0.01)
     }
-    const getLocalPriceYear = (tariff) => {
-        if (locale.locale==="ru")
-            return (tariff.PriceRUB===0?0:tariff.PriceRUB*10-1)
-        else
-            return (tariff.PriceUSD===0?0:tariff.PriceUSD*10-0.01)
-    }
-    const getLocalPriceForever = (tariff) => {
-        if (locale.locale==="ru")
-            return (tariff.PriceRUB===0?0:tariff.PriceRUB*30-1)
-        else
-            return (tariff.PriceUSD===0?0:tariff.PriceUSD*30-0.01)
-    }
 
 
 
@@ -125,68 +113,13 @@ export default function Order(props) {
 
         let suffix = (locale.locale==="ru"?"₽":"$")+locale.get('period')[duration]
         let prc = {
-            mo: getLocalPrice,
-            yr: getLocalPriceYear,
-            all: getLocalPriceForever
+            mo: getLocalPrice
         }
-        let discount = 0
         let barrier = srvData.Srv?.plan || 0
-        if (srvData.Srv) {
-            // Has server
-            prc = {
-                mo: prc.mo,
-                // yr: (tariff) => {
-                //     let orig = getLocalPriceYear(tariff)
-                //     let monthsLeft = Math.floor(
-                //         (new Date(srvData.Srv.expire_date) - new Date()) / 1000 / 60 / 60 / 24 / 30
-                //     )
-                //     monthsLeft = Math.min(10, monthsLeft)
-                //     let old = getLocalPrice(tariffs[`${srvData.Srv.plan}`])+1
-                //     return tariff.PriceRUB===old ? orig : Math.max(0, orig - old * monthsLeft)
-                // },
-                yr: prc.yr,
-                all: (tariff) => {
-                    let orig = getLocalPriceForever(tariff)
-                    let old = getLocalPriceForever(tariffs[`${srvData.Srv.plan}`])
-                    return new Date(srvData.Srv.expire_date).getFullYear()==2050
-                        ? <span>
-                        <span className="mx-1.5 px-1.5 py-0.5 rounded bg-subtle text-sm">{orig}-{old}{suffix}</span>
-                        {orig-old}
-                    </span>
-                        : getLocalPriceForever(tariff)
-                }
-            }
-        } else {
-            discount = duration==="yr"?15:0
-        }
 
         return (
-            <div className="flex flex-col desktop:flex-row gap-8">
-                {barrier <= 1 && <div
-                    className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 w-96">
-                    <TariffPS className="w-32 mt-2"/>
-                    <p className="text-2xl font-semibold font-avant uppercase -mt-6 tracking-wide">
-                        Press Start
-                    </p>
-                    <p>Отличный вариант для начинающих</p>
-                    <div className="flex flex-col gap-4 p-4">
-                        {[
-                            [faUser, "100 игроков • 500 уровней"],
-                            [faItunesNote, "Доступна музыка из NewGrounds"],
-                            [faXmark, "Панель с ограниченными возможностями"],
-                            [faPlay, "Поддержка только 2.2"],
-                            [faBarsProgress, "Базовая статистика сервера"],
-                            [faStopwatch20, "Временное хранение установщиков"]
-                        ].map((e, i) => <span className="flex gap-4 items-center" key={i}>
-                            <div className="flex justify-center !w-8">
-                                        <FontAwesomeIcon className="text-2xl" icon={e[0]}/>
-                                    </div> <span className="flex-1">{e[1]}</span>
-                        </span>)}
-                    </div>
-                    <Button type="primary" size="large" className="w-full mt-auto"
-                            onClick={() => createServer(1)}>Бесплатно</Button>
-                </div>
-                }
+            <div className="flex flex-col laptop:flex-row gap-8">
+
                 {barrier <= 2 && <div
                     className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 w-96">
                     <TariffSG className="w-32 border-white border-2"/>
@@ -212,7 +145,6 @@ export default function Order(props) {
                             className="w-full mt-auto flex items-center justify-center gap-2"
                             onClick={() => createServer(2)}>
                     {prc[duration](tariffs['2'])}{suffix}
-                        {discount>0&&<span className="border-success border-2 bg-subtle text-white rounded-md px-1.5">-{discount}%</span>}
                     </Button>
                 </div>
                 }
@@ -240,8 +172,6 @@ export default function Order(props) {
                             className="w-full mt-auto flex items-center justify-center gap-2"
                             onClick={() => createServer(3)}>
                         {prc[duration](tariffs['3'])}{suffix}
-                        {discount > 0 && <span
-                            className="border-success border-2 bg-subtle text-white rounded-md px-1.5">-{discount}%</span>}
                     </Button>
                 </div>}
                 {barrier <= 4 && <div
@@ -271,8 +201,6 @@ export default function Order(props) {
                             className="w-full mt-auto flex items-center justify-center gap-2"
                             onClick={() => createServer(4)}>
                         {prc[duration](tariffs['4'])}{suffix}
-                        {discount > 0 && <span
-                            className="border-success border-2 bg-subtle text-white rounded-md px-1.5">-{discount}%</span>}
                     </Button>
                 </div>
                 }
@@ -284,12 +212,7 @@ export default function Order(props) {
     //---------------------------------------------------------------------------
     //---------------------------------------------------------------------------
 
-    const payOptions = []
-    !(srv.payDuration !== "mo" && payDurLock) && payOptions.push({value: "mo", label: "Месяц"})
-    !(srv.payDuration !== "yr" && payDurLock) && payOptions.push(
-        {value: "yr", label: <span>Год <span className="bg-primary rounded px-1">-15%</span></span>}
-    )
-    payOptions.push({value: "all", label: "Навсегда"})
+    const payOptions = [{value: "mo", label: "Месяц"}]
 
     return <>
         <GlobalHead title={localeGlobal.get('navName')}/>
@@ -320,10 +243,7 @@ export default function Order(props) {
             </div>
 
             <div className="flex flex-col gap-4 mx-auto items-center">
-                <Segmented rootClassName="bg-subtle select-none w-fit" options={payOptions}
-                           value={srv.payDuration} onChange={(val) => setSrv({...srv, payDuration: val})}/>
-
-                {createCards(srv.payDuration)}
+                {createCards("mo")}
             </div>
         </div>
         <p className="mx-auto w-fit my-4 text-gray-300">

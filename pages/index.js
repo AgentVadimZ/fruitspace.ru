@@ -6,7 +6,15 @@ import GDLogo from "@/assets/logos/geometrydash.png"
 import CSLogo from "@/assets/logos/counterstrike.png"
 import BSLogo from "@/assets/logos/beatsaber.png"
 import RightIcon from '@/assets/icons/right.svg'
+import BannerGD from "@/assets/BannerGD.png"
 
+import FeatureCoreImg from "@/assets/features/core_3d-sm.png"
+import FeatureShieldImg from "@/assets/features/shield_3d-sm.png"
+import FeatureMusicImg from "@/assets/features/music_3d-sm.png"
+import ScreenshotGaus from "@/assets/screenshots/gd_gaus2.png"
+import TariffPS from "@/assets/features/gd_pressstart.svg"
+import TariffSG from "@/assets/features/gd_singularity.svg"
+import TariffFD from "@/assets/features/gd_foundation.svg"
 
 import Footer from "@/components/Global/Footer";
 import GlobalHead from "@/components/GlobalHead";
@@ -15,8 +23,39 @@ import Link from "next/link";
 import {serverFiberAPI} from "@/fiber/fiber.ts";
 import {useEffect, useRef} from "react";
 import {BetaData} from '@/components/betadata';
-import {Rate, Carousel} from "antd";
+import {Rate, Carousel, Button} from "antd";
 import Script from "next/script";
+import Image from "next/image";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+    faArrowDown,
+    faBarsProgress,
+    faChartSimple, faChevronRight,
+    faCloudArrowDown,
+    faCog,
+    faCogs, faComment,
+    faDownload,
+    faEllipsis,
+    faForward,
+    faGem,
+    faHeadset,
+    faInfoCircle,
+    faInfinity,
+    faMap, faNewspaper,
+    faPaintbrush,
+    faPlay,
+    faPlus,
+    faShield,
+    faShop,
+    faStar,
+    faStopwatch20,
+    faTheaterMasks,
+    faUser,
+    faUserGroup,
+    faXmark,
+    faZap
+} from "@fortawesome/free-solid-svg-icons";
+import {faDiscord, faItunesNote} from "@fortawesome/free-brands-svg-icons";
 
 export async function getStaticProps(ctx) {
     const api = serverFiberAPI(null)
@@ -42,6 +81,7 @@ const formatStat = (num) => {
 }
 
 export default function Home(props) {
+    const router = props.router
     useLocale(props.router);
     const localeGlobal = useGlobalLocale(props.router)
 
@@ -71,38 +111,7 @@ export default function Home(props) {
 
     return <>
         <GlobalHead og={og}/>
-        <div className="fixed top-0 left-0 w-screen h-screen -z-20 bg-[#191921]"></div>
-        <div className="fixed top-0 left-0 w-screen h-screen -z-10 techBg"></div>
         <div>
-            {
-                BetaData.beta &&
-                <div
-                    className="bg-active backdrop-blur bg-opacity-20 h-12 flex items-center justify-between z-[9999] relative">
-                    <p className="rounded-full bg-subtle  mx-2 flex items-baseline gap-2 h-fit">
-                        <span className="bg-blue-600 rounded-full px-4 py-1">Бета</span>
-                        <span className="mr-4 text-sm">Сборка от {BetaData.date}</span>
-                    </p>
-                    <p className="rounded-full bg-subtle border-1 border-solid border-white border-opacity-25
-                 mx-2 flex flex-col items-center h-fit z-[9999] group cursor-pointer">
-                        <span className="rounded-full px-4 py-1 group-hover:bg-opacity-50">Что нового? ›</span>
-                        <div className="flex-col gap-4 hidden group-hover:flex absolute top-full text-md right-2 rounded-xl p-2 z-[9999]
-                    bg-active border-1 border-solid border-white border-opacity-25">
-                            {BetaData.description.map((changes, i) => {
-                                return <div key={i}>
-                                    <p className="text-sm rounded-t-lg px-2 w-fit border-1 border-b-active
-                                relative z-20 -mb-[1px]">Сборка от {changes.date}</p>
-                                    <ul className="text-sm p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25
-                                relative z-10">
-                                        {changes.deltas.map((change, j) => {
-                                            return <li key={j}>• {change}</li>
-                                        })}
-                                    </ul>
-                                </div>
-                            })}
-                        </div>
-                    </p>
-                </div>
-            }
             <GlobalNav router={props.router} mainpage/>
 
             {/*<div className="h-screen dotsBg overflow-hidden grid grid-cols-1 ipad:grid-cols-2">
@@ -127,100 +136,227 @@ export default function Home(props) {
 
             <div className={styles.main}>
 
-                <div className="flex flex-col items-center justify-center laptop:h-[100vh] relative">
-                    <h1 className="text-6xl mt-48 laptop:mt-2 desktop:text-8xl font-[Coolvetica] tracking-wider font-normal fruitText m-2 select-none">FruitSpace</h1>
-                    <p className="text-md text-center desktop:text-xl m-0 font-[Helvetica]">Удобный и надежный хостинг
-                        для
-                        ваших любимых игр. И ещё немножко магии ✨</p>
-
-                    <div className="mt-24 grid grid-cols-1 desktop:grid-cols-1 gap-4 desktop:gap-16 select-none">
-                        <ProdCard link="/product/gd" name="Geometry Dash"
-                                  description="Кастомная музыка, 2.2, моды и конфигуратор установщиков"
-                                  logo={GDLogo.src}
-                                  stats={`${formatStat(props.stats.gdps_count)} серверов • ${formatStat(props.stats.gdps_levels)} уровней`}/>
-
+                <div className="relative select-none mb-16 p-8 laptop:p-16">
+                    <div className="max-w-4xl mx-auto">
+                        <h1 className="text-5xl laptop:text-7xl desktop:text-8xl font-[Coolvetica] tracking-wider font-normal fruitText mb-4 select-none">FruitSpace</h1>
+                        <p className="text-lg laptop:text-xl m-0 font-[Helvetica] max-w-2xl text-[#cacad0]">Удобный и надежный хостинг для ваших любимых игр. И ещё немножко магии ✨</p>
+                        
+                        <div className="flex flex-wrap gap-4 mt-8">
+                            <Button className="uppercase font-semibold" type="primary" size="large"
+                                icon={<FontAwesomeIcon icon={faZap}/>}
+                                onClick={() => router.push('/product/order/gd')}>
+                                Создать сервер
+                            </Button>
+                            <Button className="uppercase font-semibold" size="large"
+                                onClick={() => scrollRef.current?.scrollIntoView({ behavior: 'smooth' })}>
+                                Узнать больше
+                            </Button>
+                        </div>
                     </div>
+                </div>
 
-                    <Link href="/top/gd" legacyBehavior>
-                        <div
-                            className="w-full ipad:w-fit mt-4 desktop:mt-8 p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e88] via-[#5a00ff88] to-[#0d6efd88] flex flex-col">
-                            <div
-                                className="flex-1 bg-[#333338cc] glass rounded-2xl p-2 font-[Helvetica] cursor-pointer flex items-center justify-between hover:bg-[#33333888] transition-all duration-300 ipad:max-w-md">
-                                <img alt="prod.logo" className="h-16 laptop:mr-2"
-                                     src="https://img.icons8.com/nolan/96/1A6DFF/C822FF/prize.png"/>
-                                <h2 className="m-0 w-fit">Топ серверов</h2>
-                                <RightIcon className="flex-shrink-0 w-8 laptop:ml-auto"/>
+                <div className="rounded-t-2xl relative select-none h-112" ref={scrollRef}>
+                    <Image className="rounded-t-2xl" src={BannerGD} fill="object-fit" objectFit="cover" layout="fill"
+                           quality={100}/>
+                    <div
+                        className="absolute bottom-0 w-full p-8 bg-gradient-to-t from-dark from-15% to-transparent flex flex-col gap-2">
+                        <p className="text-3xl">Хостинг GDPS</p>
+                        <p>Уютное место для игры с друзьями или крупнейший сервер в РК. Мощности хватит на все.</p>
+                        <div className="flex flex-col laptop:flex-row gap-4">
+                            <div className="flex gap-4">
+                                <Button className="uppercase font-semibold" type="primary" size="large"
+                                        icon={<FontAwesomeIcon icon={faZap}/>}
+                                        onClick={() => router.push('/product/order/gd')}>
+                                    заказать на fruitspace
+                                </Button>
+                                <Button className="uppercase font-semibold" size="large"
+                                        icon={<FontAwesomeIcon icon={faStar}/>}
+                                        onClick={() => router.push('/top/gd')}>
+                                    топ серверов
+                                </Button>
                             </div>
                         </div>
-                    </Link>
+                    </div>
+                </div>
+
+                <div className="flex flex-col-reverse laptop:flex-row select-none">
+                    <div className="flex flex-col p-8 flex-1">
+                        <p className="font-mono">простая и функциональная</p>
+                        <p className="text-5xl uppercase font-semibold">панель</p>
+                        <div className="h-96 py-4 text-lg max-w-3xl flex flex-col gap-4">
+                            <p>
+                                Забудьте про головную боль с настройкой через PHP файлы и БД. Сосредоточьтесь на своем
+                                сообществе,
+                                а мы позаботимся обо всем остальном
+                            </p>
+                            <div>
+                                Что можно настроить?
+                                <div className="text-base">
+                                    {[
+                                        [faGem, "Лут сундуков"],
+                                        [faMap, "Маппаки и гаунтлеты"],
+                                        [faTheaterMasks, "Роли модераторов и косметические роли"],
+                                        [faDownload, "Страницу загрузки"],
+                                        [faCog, "Моды и текстуры (прямо в панели!)"],
+                                        [faPaintbrush, "Дейли и задания"],
+                                        [faEllipsis, "...и много чего еще"]
+                                    ].map((e, i) => <p className="flex gap-2 items-center" key={i}><FontAwesomeIcon
+                                        className="w-4" icon={e[0]}/> {e[1]}</p>)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex flex-col relative flex-1">
+                        <img src={ScreenshotGaus.src}
+                             className="laptop:object-none object-left-top object-cover h-64 laptop:h-full"/>
+                        <div className="absolute 2desktop:hidden h-full w-full z-10 bg-gradient-to-l from-dark to-25%"></div>
+                    </div>
+                </div>
+
+                <div className="mt-16 select-none">
+                    <p className="text-center font-mono">полный</p>
+                    <p className="text-5xl uppercase font-semibold text-center">кастом</p>
+                    <p className="text-center ">хостинг построен с нуля специально для Geometry Dash</p>
+                    <div className="grid grid-cols-1 laptop:grid-cols-3 gap-8 mt-8">
+                        <div
+                            className="flex flex-col 2desktop:flex-row gap-4 bg-active border-subtle rounded-2xl border-solid border-1">
+                            <img src={FeatureCoreImg.src} className="2desktop:w-[17rem] 2desktop:h-[17rem]"/>
+                            <div className="flex flex-col gap-2 p-4 text-sm">
+                                <p className="text-2xl font-semibold rainbow mb-2">Ядро GhostCore</p>
+                                <p className="text-base">Написано с нуля на Go и быстрее Cvolton в 8-15 раз</p>
+                                <p>Встроенный рейт-бот, антиспам, антинакрутка и антибот</p>
+                                <p>А еще изменяемый размер топа, гибкая система ролей и поддержка версий 1.9-2.2</p>
+                            </div>
+                        </div>
+
+                        <div
+                            className="flex flex-col 2desktop:flex-row gap-4 bg-active border-subtle rounded-2xl border-solid border-1">
+                            <img src={FeatureShieldImg.src} className="2desktop:w-[17rem] 2desktop:h-[17rem]"/>
+                            <div className="flex flex-col gap-2 p-4 text-sm">
+                                <p className="text-2xl font-semibold rainbow mb-2">Защита от DDoS</p>
+                                <p className="text-base">Выращен в антиутопии и закален огнем</p>
+                                <p>Весной 2024 наша система выдержала атаку в 150K+ RPS, летом 2023 атаку в 10Гбит/с</p>
+                                <p>Ежедневно на нас совершаются DDoS атаки мощностью 10K+ RPS. Короче надежно, с нами не
+                                    пропадете</p>
+                            </div>
+                        </div>
+
+                        <div
+                            className="flex flex-col 2desktop:flex-row gap-4 bg-active border-subtle rounded-2xl border-solid border-1">
+                            <img src={FeatureMusicImg.src} className="2desktop:w-[17rem] 2desktop:h-[17rem]"/>
+                            <div className="flex flex-col gap-2 p-4 text-sm">
+                                <p className="text-2xl font-semibold rainbow mb-2">Библиотека музыки</p>
+                                <p className="text-base">Ваш сервер - ваша музыка</p>
+                                <p>Загружайте музыку из <span className="text-amber-600 font-semibold">NewGrounds</span>,
+                                    <span className="text-red-600 font-semibold">YouTube</span>, <span
+                                        className="text-blue-600 font-semibold">ВКонтакте</span> и <span
+                                        className="text-green-600 font-semibold">Deezer</span> прямо в панели
+                                </p>
+                                <p>Вдохновение приходит и уходит, а наша библиотека музыки остается с вами навсегда</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="mt-24 select-none">
+                    <p className="text-5xl uppercase font-semibold text-center">тарифы</p>
+                    <p className="text-center font-mono">на любой вкус</p>
+                    <div className="grid grid-cols-1 laptop:grid-cols-2 desktop:grid-cols-3 gap-8 mt-8 w-fit mx-auto">
+
+
+                        <div
+                            className="flex items-center flex-col gap-4 bg-active glassb rounded-2xl p-4 laptop:w-96">
+                            <TariffSG className="w-32 border-white border-2"/>
+                            <p className="text-2xl font-semibold font-avant uppercase -mt-3 tracking-wide">
+                                Singularity
+                            </p>
+                            <p>Для тех, кто знает что делает</p>
+                            <div className="flex flex-col gap-4 p-4">
+                                {[
+                                    [faInfinity, "Неограниченное количество игроков и уровней"],
+                                    [faItunesNote, "Музыка из NewGrounds и YouTube"],
+                                    [faCogs, "Полноценная панель для владельцев и игроков"],
+                                    [faForward, "Версии от 1.9 до 2.2"],
+                                    [faBarsProgress, "Базовая статистика сервера"],
+                                    [faZap, "Конфигуратор установщиков: кастомный логотип и вечное хранение"]
+                                ].map((e, i) => <span className="flex gap-4 items-center" key={i}>
+                                    <div className="flex justify-center !w-8">
+                                        <FontAwesomeIcon className="text-2xl" icon={e[0]}/>
+                                    </div> <span className="flex-1">{e[1]}</span>
+                                </span>)}
+                            </div>
+                            <Button type="primary" size="large" className="w-full mt-auto"
+                                    onClick={() => router.push('/product/order/gd?t=2')}>49₽/мес</Button>
+                        </div>
+
+                        <div
+                            className="flex items-center flex-col gap-4 bg-active border-subtle rounded-2xl border-solid border-1 p-4 laptop:w-96">
+                            <TariffFD className="w-32"/>
+                            <p className="text-2xl font-semibold font-avant uppercase -mt-3 tracking-wide">
+                                Foundation
+                            </p>
+                            <p>Надежное основание для мощных проектов</p>
+                            <div className="flex flex-col gap-4 p-4">
+                                {[
+                                    [faPlus, "Все, что есть в Singularity"],
+                                    [faItunesNote, "Музыка из NewGrounds, YouTube, Deezer, VK и mp3 файлов"],
+                                    [faChartSimple, "Полная статистика сервера"],
+                                    [faZap, "BuildLab: логотип, текстуры, моды и поддержка iOS"],
+                                    [faUserGroup, "Доступ для совладельцев и админов к панели"],
+                                    [faShop, "Встроенный магазин для игроков"],
+                                    [faCloudArrowDown, "Автоматические резервные копии"],
+                                    [faStar, "Рейт-бот для Discord"]
+                                ].map((e, i) => <span className="flex gap-4 items-center" key={i}>
+                                    <div className="flex justify-center !w-8">
+                                        <FontAwesomeIcon className="text-2xl" icon={e[0]}/>
+                                    </div> <span className="flex-1">{e[1]}</span>
+                                </span>)}
+                            </div>
+                            <Button type="primary" size="large" className="w-full mt-auto"
+                                    onClick={() => router.push('/product/order/gd?t=4')}>149₽/мес</Button>
+                        </div>
+                    </div>
 
                 </div>
 
-                <div className="bg-black bg-opacity-25 rounded-t-2xl glassb !border-b-0 mt-16 py-8 flex flex-col gap-8"
-                     ref={scrollRef}>
-                    {[
-                        {
-                            h: "На грани возможного",
-                            t: "Неважно, любите ли вы добавлять массу модов и плагинов или предпочитаете ванильные версии игр" +
-                                " — FruitSpace позволит вам насладиться всеми возможностями игры по максимуму. Музыка из любых" +
-                                " источников и быстрые обновления текстур/модов для Geometry Dash. Поддержка многопоточных ядер" +
-                                " и объединения нескольких серверов для Minecraft. Если для чего-то не нужно переписывать игру" +
-                                " с нуля, у нас скорее всего это есть."
-                        },
-                        {
-                            h: "Для новичков и профи",
-                            t: "Мы стремимся делать управление серверами простым и удобным, не забирая возможности тонко " +
-                                "кастомизировать каждый аспект ваших любимых игр. Для каждой игры мы предоставляем отдельную" +
-                                " удобную панель, в которой могут разобраться даже те, кто до этого не имеел свой собственный сервер."
-                        },
-                        {
-                            h: <>Нам доверяют <span className="text-blue-600">{props.stats.clients}</span> клиентов</>,
-                            t: "Не решаетесь, стоит ли вам входить в нишу игровых серверов? Наш хостинг помогает достичь своих целей " +
-                                "абсолютно каждому - мододелам, новичкам, профессионалам, и просто игрокам которые хотят создать " +
-                                "свой укромный уголок. Не верите? Прочтите реальные отзывы или оставьте свой!"
-                        }
-                    ].map((el, i) => <div key={i}>
-                        <p className="text-2xl laptop:text-4xl text-center mb-4 font-[Helvetica]">{el.h}</p>
-                        <p className="text-center text-gray-300 laptop:text-base px-4 desktop:px-24">{el.t}</p>
-                    </div>)}
-
-                    <Carousel ref={carouselRef} dots={{className: "!bottom-2"}}>
-                        {reviews.map((u, i) => {
-                            return <div key={i} className="p-4 my-4 overflow-y-scroll laptop:overflow-y-hidden
-                             !w-5/6 laptop:!w-2/3 h-96 mx-auto !flex flex-col bg-subtle bg-opacity-75 border-white border-opacity-25 rounded-2xl border-solid border-1">
-                                <div className="flex flex-col laptop:flex-row items-center justify-between">
-                                    <p className="text-lg w-40">{u.user}</p>
-                                    <p>{u.date}</p>
-                                    <Rate className="p-2 bg-active rounded-lg h-fit" allowHalf disabled
-                                          defaultValue={u.rating}/>
-                                </div>
-                                <div className="flex flex-col gap-4 mt-4">
-                                    {u.pros && <div>
-                                        <p className="bg-active text-base rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
-                                        relative z-20 -mb-[1px]">Что понравилось?</p>
-                                        <pre className="bg-active p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
-                                        relative z-10">{u.pros}</pre>
-                                    </div>}
-                                    {u.cons && <div>
-                                        <p className="bg-active text-base rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
-                                        relative z-20 -mb-[1px]">Что не понравилось, чего не хватает?</p>
-                                        <pre className="bg-active p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
-                                        relative z-10">{u.cons}</pre>
-                                    </div>}
-                                    {u.verdict && <div>
-                                        <p className="bg-active text-base rounded-t-lg px-2 w-fit border-1 border-b-active border-solid border-white border-opacity-25
-                                        relative z-20 -mb-[1px]">Останетесь ли на FruitSpace?</p>
-                                        <pre className="bg-active p-2 rounded-lg rounded-tl-none border-1 border-solid border-white border-opacity-25 text-md whitespace-normal leading-tight mt-0
-                                        relative z-10">{u.verdict}</pre>
-                                    </div>}
-                                </div>
-                                <div className="flex flex-col laptop:flex-row justify-between items-center mt-auto">
-                                    <span className="text-gray-300">Хостинг: {u.product}</span>
-                                    <a href={u.url} className="text-primary">Отзыв в Discord →</a>
-                                </div>
+                <div className="mt-24 select-none p-8 laptop:p-12">
+                    <p className="text-4xl laptop:text-5xl font-semibold text-center mb-2">Почему выбирают <span className="fruitText">FruitSpace</span>?</p>
+                    <p className="text-center text-lg mb-12">Наши преимущества, которые делают нас лучшими в своем деле</p>
+                    
+                    <div className="grid grid-cols-1 laptop:grid-cols-3 gap-8">
+                        <div className="bg-[#222230] p-6 rounded-xl flex flex-col items-center text-center hover:bg-[#27273a] transition-all duration-300">
+                            <div className="w-16 h-16 bg-gradient-to-br from-[#8e388e] to-[#5a00ff] rounded-full flex items-center justify-center mb-4">
+                                <FontAwesomeIcon icon={faZap} className="text-2xl" />
                             </div>
-                        })}
-                    </Carousel>
+                            <h3 className="text-xl font-semibold mb-2">Быстродействие</h3>
+                            <p className="text-[#cacad0]">Мгновенное развертывание серверов и быстрый доступ к вашим играм. Начните играть уже через несколько минут после регистрации.</p>
+                        </div>
+                        
+                        <div className="bg-[#222230] p-6 rounded-xl flex flex-col items-center text-center hover:bg-[#27273a] transition-all duration-300">
+                            <div className="w-16 h-16 bg-gradient-to-br from-[#0d6efd] to-[#5a00ff] rounded-full flex items-center justify-center mb-4">
+                                <FontAwesomeIcon icon={faShield} className="text-2xl" />
+                            </div>
+                            <h3 className="text-xl font-semibold mb-2">Надежная защита</h3>
+                            <p className="text-[#cacad0]">Все серверы защищены от DDoS-атак и других угроз. Мы гарантируем безопасность и стабильность ваших данных.</p>
+                        </div>
+                        
+                        <div className="bg-[#222230] p-6 rounded-xl flex flex-col items-center text-center hover:bg-[#27273a] transition-all duration-300">
+                            <div className="w-16 h-16 bg-gradient-to-br from-[#5a00ff] to-[#0d6efd] rounded-full flex items-center justify-center mb-4">
+                                <FontAwesomeIcon icon={faHeadset} className="text-2xl" />
+                            </div>
+                            <h3 className="text-xl font-semibold mb-2">Поддержка 24/7</h3>
+                            <p className="text-[#cacad0]">Наша команда поддержки всегда готова помочь вам с любыми вопросами. Мы решаем проблемы быстро и эффективно.</p>
+                        </div>
+                    </div>
+                    
+                    <div className="mt-12 text-center">
+                        <Button type="primary" size="large" className="text-base uppercase font-semibold px-8"
+                                icon={<FontAwesomeIcon icon={faZap} />}
+                                onClick={() => router.push('/product/order/gd')}>
+                            Создать сервер
+                        </Button>
+                        <p className="mt-4 text-sm text-[#cacad0]">Присоединяйтесь к тысячам довольных клиентов FruitSpace</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -229,131 +365,9 @@ export default function Home(props) {
     </>;
 }
 
-Home.jivo = true
-
-
-const ProdCard = (props) => (
-    <Link href={props.link} legacyBehavior>
-        <div className="p-0.5 rounded-2xl bg-gradient-to-br from-[#8e388e88] via-[#5a00ff88] to-[#0d6efd88] flex flex-col">
-            <div className="flex-1 bg-[#333338cc] glass rounded-2xl p-2 laptop:p-4 pr-2 font-[Helvetica]
-                 cursor-pointer flex items-center hover:bg-[#33333888] transition-all duration-300 max-w-md
-                 gap-2 laptop:gap-4">
-                <img alt="prod.logo" className="h-24" src={props.logo}/>
-                <div>
-                    <p className="m-0 tracking-wide laptop:text-lg">{props.name}</p>
-                    <p className="opacity-85 leading-tight text-xs ipad:text-sm laptop:leading-normal m-0">{props.description}</p>
-                    <p className="text-xs text-nowrap m-0 mt-2 text-[#cacad0] laptop:font-mono">{props.stats}</p>
-                </div>
-                <RightIcon className="flex-shrink-0 w-8 ml-auto"/>
-            </div>
-        </div>
-    </Link>
-)
-
-const reviews = [
-    {
-        user: "Kenny",
-        rating: 4.5,
-        date: "18/07/2023",
-        pros: "9/10 Все шикарно, интерфейс, лёгкая настройка, личное ядро, скоро ещё другие игры!!! 2.2 хоть и баганый, дешёвый, не пересчитать плюсов. Почему не 10? Потому что модов нит((((",
-        cons: "Хочу моды",
-        verdict: "Мой сервер 3 место среди всех, не собираюсь никуда уходить, фрукт навсегда!",
-        url: "https://discord.com/channels/1025382676875726898/1130816253284585512/1130817182868197526",
-        product: "Geometry Dash"
-    },
-    {
-        user: "cryata",
-        rating: 5,
-        date: "18/07/2023",
-        pros: "Очень удобный интерфейс, сервер создать может даже дурак",
-        cons: "Не хватает серверов по майнкрафту",
-        verdict: "Я перейду на другой хостинг только если фрутспейс сдохнет",
-        url: "https://discord.com/channels/1025382676875726898/1130816253284585512/1130816668864622612",
-        product: "Geometry Dash"
-    },
-    {
-        user: "system11x",
-        rating: 4.5,
-        date: "18/07/2023",
-        pros: "Меня всё устраивало",
-        cons: "",
-        verdict: "Онлайн упал, было нецелесообразно держать мёртвый гдпс поэтому я снёс его нахрен. Сервис хороший, порекомендую друзьям но сам на нём не буду задерживаться",
-        url: "https://discord.com/channels/1025382676875726898/1130816253284585512/1130817711988035717",
-        product: "Geometry Dash"
-    },
-    {
-        user: "Norowoll",
-        rating: 4.5,
-        date: "18/07/2023",
-        pros: "Хороший хостинг с красивым названием, сайт достаточно удобный! Полезных функций тоже достаточно, особенно возможность добавления кастомной музыки и поддержка IOS (без этого я бы просто жить не смог)",
-        cons: "Из минусов: Нередкие баги, порою ложатся сервера. Ещё с апреля жду возможность установления модов в сам установщик, два раза разговаривал об этом с Модерацией. Что что, но функционал сейчас относительно ограниченный, особенно хочется официальные уровни обновлять)",
-        verdict: "Пользуюсь хостингом ещё с января, пока весомых причин переходить нету!",
-        url: "https://discord.com/channels/1025382676875726898/1130816253284585512/1130818223374340146",
-        product: "Geometry Dash"
-    },
-    {
-        user: "propogando4kaa",
-        rating: 5,
-        date: "18/07/2023",
-        pros: "Всё работает идеально! Отличный сервис!",
-        cons: "Ожидаю больше всего встроенный модменю на пк и телефоны!",
-        verdict: "У меня есть свой GDPS на вашем хостинге и уходить от вас я не собираюсь т.к думаю что ваш сервис самый лучший из всех возможных!",
-        url: "https://discord.com/channels/1025382676875726898/1130816253284585512/1130840075043876965",
-        product: "Geometry Dash"
-    },
-    {
-        user: "riantgd",
-        rating: 4.5,
-        date: "18/07/2023",
-        pros: "",
-        cons: "",
-        verdict: "Отличный хостинг, другие просто в пролёте. Единственное, сделайте BuildLab в бесплатном тарифе, а так же дополните документацию, она слишком сужена. Например, многие не знают, что уровни короче медиума нельзя оценивать больше, чем на изи. Ведь из-за этого вам могут поставить 1 звезду. За бесплатно могу создать ГДПС - имба!!!",
-        url: "https://discord.com/channels/1025382676875726898/1130816253284585512/1130876052609187910",
-        product: "Geometry Dash"
-    },
-    {
-        user: "Gow GG",
-        rating: 4,
-        date: "18/07/2023",
-        pros: "Сам фрут спейс хороший хостинг, есть хорошая защита от дудосов, но есть 1 минус: нету общего доступа к бд (хз как это назвать, типа вебхуков связанных с бд)",
-        cons: "Я очень жду гибкую настройку встраиваний рейт-бота",
-        verdict: "Я владелец самого крупного на данный момент сервера фс, но планирую съехать для удобства",
-        url: "https://discord.com/channels/1025382676875726898/1130816253284585512/1130913227228848281",
-        product: "Geometry Dash"
-    },
-    {
-        user: "bledyt",
-        rating: 5,
-        date: "19/07/2023",
-        pros: "",
-        cons: "Очень жду хостинг по майнкрафту",
-        verdict: "Был на TakeOff, был очень доволен❤️ ( ушел тк больше не заинтересован сферой геометри даш)",
-        url: "https://discord.com/channels/1025382676875726898/1130816253284585512/1131114760218353684",
-        product: "Geometry Dash"
-    },
-    {
-        user: "aquiline_",
-        rating: 4,
-        date: "19/07/2023",
-        pros: "Приятный и удобный интерфейс, удобная система музыки, хорошие сервера за свою цену.",
-        cons: "Довольно часто случаются перебои: музыка может резко перестать работать, лвла не всегда грузит. Хотелось бы видеть больше возможностей BuildLab, как пример, замена официальных уровней, моды и прочее",
-        verdict: "У меня есть свой гдпс, со своими фишками, сник пиками, текстурпаком, сезонами и ещё кучей классных плюшек и я не планирую менять хостинг. Fruitspace - пожалуй лучший хост за последнее время. \n",
-        url: "https://discord.com/channels/1025382676875726898/1130816253284585512/1131879896298291310",
-        product: "Geometry Dash"
-    },
-    {
-        user: "aonatis",
-        rating: 5,
-        date: "30/11/2023",
-        pros: "Хороший хост, удобная панель управления,  красивое оформление сайта и дс сервера.",
-        cons: "Не хватает меня в составе : D",
-        verdict: "У меня есть GDPS на этом хостинге и я никуда не уйду с этого хорошего хоста потому-что он самый лучший из всех каких я знаю \n",
-        url: "https://discord.com/channels/1025382676875726898/1130816253284585512/1179753501480452220",
-        product: "Geometry Dash"
-    },
-]
+Home.jivo = true;
 
 const og = {
     title: "FruitSpace - хостинг Minecraft, CS, GDPS",
     description: "Удобный и надежный хостинг для ваших любимых игр. И ещё немножко магии ✨"
-}
+};

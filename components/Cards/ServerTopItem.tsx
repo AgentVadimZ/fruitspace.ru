@@ -41,9 +41,9 @@ export default function ServerTopItem(props: ServerTopItemProps) {
                 </h3>
                 <p className="mx-4 my-1">{props.desc}</p>
             </div>
-            {(props.place<5&&<Link href={`https://gofruit.space/${props.type}/${props.uuid}`} legacyBehavior>
+            <Link href={`https://gofruit.space/${props.type}/${props.uuid}`} legacyBehavior>
                 <FontAwesomeIcon icon={faDownload} className="!w-6 !h-6 p-2 rounded-lg bg-[#0d6efd] hover:bg-blue-700"/>
-            </Link>)}
+            </Link>
         </div>
     );
 }
