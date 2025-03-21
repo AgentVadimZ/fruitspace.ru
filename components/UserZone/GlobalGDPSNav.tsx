@@ -69,8 +69,8 @@ const getUserlist = (users: any, setUserList: Dispatch<any> | (()=>any), api: ap
                 if (!accinfo.uname) return
                 userlist.push(<Link href={`/gdps/${srvid}/panel?acc=${acc}`} prefetch={false} legacyBehavior>
                     <DropdownItem key={`${i}${srvid}`} leftIcon={
-                        <img onError={(img)=>{img.currentTarget.src=`https://cdn.fruitspace.ru/server_icons/gd_default.png`}}
-                             src={`https://cdn.fruitspace.ru/server_icons/gd_${srvid}.png`}/>
+                        <img onError={(img)=>{img.currentTarget.src=`https://cdn.fruitspace.one/server_icons/gd_default.png`}}
+                             src={`https://cdn.fruitspace.one/server_icons/gd_${srvid}.png`}/>
                     } rightIcon={<RightSvg />}>
                         {accinfo.uname}<span className="text-sm px-1 py-0 bg-[var(--btn-color)] rounded ml-1">{srvid}</span>
                     </DropdownItem>

@@ -345,7 +345,7 @@ function MapPackModal({isnew, open, onCancel, api, srvid}) {
             <div className="flex items-center gap-4">
                 {(() => {
                     const vtype = diffs[demonize(selected.pack_difficulty)] || "unrated"
-                    return <img src={`https://cdn.fruitspace.ru/assets/bot_icons/lvl/${vtype}.png`}
+                    return <img src={`https://cdn.fruitspace.one/assets/bot_icons/lvl/${vtype}.png`}
                                 className="w-24"/>
                 })()}
                 <div className="rounded-xl bg-subtle bg-opacity-50 backdrop-blur p-2 flex-1">
@@ -359,27 +359,27 @@ function MapPackModal({isnew, open, onCancel, api, srvid}) {
                     </Form.Item>
 
                     <div className="flex gap-3 items-center">
-                        <img src="https://cdn.fruitspace.ru/assets/bot_icons/lvl/unrated.png"
+                        <img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/unrated.png"
                              className="w-4"/>
                         <Form.Item name="pack_difficulty" className="mb-0 flex-1">
                             <Slider min={0} max={10} defaultValue={selected.pack_difficulty}
                                     onChange={(v) => setSelected({...selected, pack_difficulty: v})}
                                     className="flex-1"/>
                         </Form.Item>
-                        <img src="https://cdn.fruitspace.ru/assets/bot_icons/lvl/demon-extreme.png"
+                        <img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/demon-extreme.png"
                              className="w-4"/>
                     </div>
                 </div>
             </div>
 
             <div className="rounded-xl bg-subtle bg-opacity-50 backdrop-blur p-2 flex items-center justify-between">
-                <Form.Item label={<img src="https://cdn.fruitspace.ru/assets/bot_icons/lvl/star.png"
+                <Form.Item label={<img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/star.png"
                                        className="w-4"/>} name="pack_stars"
                            className="mb-0">
                     <InputNumber min={0} contols defaultValue={selected.pack_stars}
                                  onChange={(e, v) => setSelected({...selected, pack_stars: v})}/>
                 </Form.Item>
-                <Form.Item label={<img src="https://cdn.fruitspace.ru/assets/bot_icons/lvl/silvercoin.png"
+                <Form.Item label={<img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/silvercoin.png"
                                        className="w-4"/>} name="pack_coins"
                            className="mb-0">
                     <InputNumber min={0} contols defaultValue={selected.pack_coins} onChange={(e,v)=>setSelected({...selected, pack_coins: v})}/>
@@ -437,7 +437,7 @@ const MappackView = ({api, srvid, packs}) => {
             key: "pack_difficulty",
             render: (val)=> {
                 const vtype = diffs[demonize(val)]||"unrated"
-                return <img src={`https://cdn.fruitspace.ru/assets/bot_icons/lvl/${vtype}.png`} className="w-12" />
+                return <img src={`https://cdn.fruitspace.one/assets/bot_icons/lvl/${vtype}.png`} className="w-12" />
             }
         },
         {
@@ -449,7 +449,7 @@ const MappackView = ({api, srvid, packs}) => {
             title: "Звезды",
             dataIndex: "pack_stars",
             render: (val) => <span className="flex items-center gap-1 font-semibold">
-                <img src="https://cdn.fruitspace.ru/assets/bot_icons/lvl/star.png" className="w-4"/>
+                <img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/star.png" className="w-4"/>
                 {val}
             </span>
         },
@@ -457,7 +457,7 @@ const MappackView = ({api, srvid, packs}) => {
             title: "Монеты",
             dataIndex: "pack_coins",
             render: (val) => <span className="flex items-center gap-1 font-semibold">
-                <img src="https://cdn.fruitspace.ru/assets/bot_icons/lvl/silvercoin.png" className="w-4"/>
+                <img src="https://cdn.fruitspace.one/assets/bot_icons/lvl/silvercoin.png" className="w-4"/>
                 {val}
             </span>
         },

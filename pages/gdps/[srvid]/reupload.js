@@ -107,7 +107,7 @@ export default function Reupload(props) {
                     <div className="rounded-xl flex flex-col gap-2 bg-dark">
                         {levels.map((level, i) =>
                             <div key={i} className="p-4 flex items-center gap-4  border-b-1 last:border-b-0 border-white border-opacity-25">
-                                <img src={`https://cdn.fruitspace.ru/assets/bot_icons/lvl/${level.difficultyFace}.png`} className="w-16 h-16"/>
+                                <img src={`https://cdn.fruitspace.one/assets/bot_icons/lvl/${level.difficultyFace}.png`} className="w-16 h-16"/>
                                 <div>
                                     <p className="text-lg flex items-center gap-2">
                                         {level.name}

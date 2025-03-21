@@ -66,10 +66,9 @@ export default function ServerTopItem(props: ServerTopItemProps) {
             
             <Link 
                 href={`https://gofruit.space/${props.type}/${props.uuid}`} 
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200 flex items-center"
+                className="p-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200 flex items-center"
             >
-                <FontAwesomeIcon icon={faDownload} className="mr-2" />
-                <span>Download</span>
+                <FontAwesomeIcon icon={faDownload} />
             </Link>
         </div>
     );
