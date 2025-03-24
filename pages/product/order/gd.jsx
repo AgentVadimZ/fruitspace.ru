@@ -82,7 +82,7 @@ export default function Order(props) {
             api.gdps_manage.get(srv.srvid).then((resp)=>{
                 if(resp.Srv) {
                     setSrvData(resp);
-                    let payDur = "yr"
+                    let payDur = "mo"
                     if (new Date(resp.Srv.expire_date).getFullYear()>2040) {
                         payDur = "all"
                         if(resp.Srv.plan>1)

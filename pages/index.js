@@ -163,7 +163,7 @@ export default function Home(props) {
                         <p className="text-3xl">Хостинг GDPS</p>
                         <p>Уютное место для игры с друзьями или крупнейший сервер в РК. Мощности хватит на все.</p>
                         <div className="flex flex-col laptop:flex-row gap-4">
-                            <div className="flex gap-4">
+                            <div className="flex flex-wrap gap-4">
                                 <Button className="uppercase font-semibold" type="primary" size="large"
                                         icon={<FontAwesomeIcon icon={faZap}/>}
                                         onClick={() => router.push('/product/order/gd')}>

@@ -19,11 +19,6 @@ export default function Footer() {
                     <Link href="/about/privacy" className="hover:text-white hover:underline">Политика конфиденциальности</Link>
                 </div>
                 <div className="flex flex-col gap-2 p-2 text-sm">
-                    <h3 className="font-semibold text-base">Хостинг</h3>
-
-                    <Link href="/product/gd" className="hover:text-white hover:underline">Geometry Dash</Link>
-                </div>
-                <div className="flex flex-col gap-2 p-2 text-sm">
                     <h3 className="font-semibold text-base">Сообщество</h3>
                     <Link href="/docs" className="hover:text-white hover:underline">Документация</Link>
                 </div>
