@@ -24,14 +24,14 @@ export default function Footer() {
                 </div>
                 <span className="flex-1"></span>
                 <div className="flex flex-col gap-2 laptop:items-end">
-                    <Link href="https://status.fruitspace.one/" target="_blank" className="flex items-center gap-2 group rounded-lg bg-active px-2 py-1 w-fit">
+                    <Link href="https://status.fruitspace.ru/" target="_blank" className="flex items-center gap-2 group rounded-lg bg-active px-2 py-1 w-fit">
                         <span className="h-2 w-2 bg-success rounded-full animate-pulse"></span>
                         <span className="group-hover:text-white group-hover:underline">Статус серверов</span>
                     </Link>
                     <p className="flex items-center gap-2 text-sm group">
                         Designed by
                         <Link href="https://m41den.com" target="_blank" className="flex items-center gap-2 border-1 border-solid border-transparent group-hover:border-white rounded-full pr-2">
-                            <img src="https://cdn.fruitspace.one/profile_pics/c4ca4238a0b923820dcc509a6f75849b.png" className="w-6 h-6 rounded-full" />
+                            <img src="https://cdn.fruitspace.ru/profile_pics/c4ca4238a0b923820dcc509a6f75849b.png" className="w-6 h-6 rounded-full" />
                             M41den
                         </Link>
                     </p>

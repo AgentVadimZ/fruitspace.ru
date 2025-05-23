@@ -14,7 +14,7 @@ export default function FrontPage(props) {
     const [srv, setSrv] = useAtom(GDServer)
     const [user, setUser] = useAtom(GDUserState)
 
-    const fastIconLink = (type, id) => "https://cdn.fruitspace.one/assets/icons/"+type+"/"+id+".png"
+    const fastIconLink = (type, id) => "https://cdn.fruitspace.ru/assets/icons/"+type+"/"+id+".png"
 
     return <>
         <GlobalHead title="DefaultGDPS"/>

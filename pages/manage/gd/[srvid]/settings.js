@@ -301,7 +301,7 @@ export default function SettingsGD(props) {
     const srvIcon = (()=>{
         if(buildlab.icon==="custom") return buildlab.iconData
         if(srv.icon==="gd_default.png") return GDLogo.src
-        return "https://cdn.fruitspace.one/server_icons/"+srv.Srv?.icon
+        return "https://cdn.fruitspace.ru/server_icons/"+srv.Srv?.icon
     })()
 
     useEffect(()=>{

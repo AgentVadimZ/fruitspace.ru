@@ -90,7 +90,7 @@ export default function Tos(props) {
                         мероприятия проводятся с 22:00 до 02:00 следующего дня по московскому времени. К этому
                         пункту не относятся форс-мажорные ситуации и внеплановые работы.
                     </li>
-                    <li>Подсудность неурегулированных споров — суд Воронежской области.</li>
+                    <li>Подсудность неурегулированных споров — суд Пермского края.</li>
                 </ol>
 
                 <h3 className="text-xl text-center">Контакты</h3>
@@ -99,13 +99,13 @@ export default function Tos(props) {
                         <FontAwesomeIcon icon={faEnvelope}/> support@fruitspace.ru
                     </p>
                     <p className="px-2 rounded-full glassb flex items-center gap-2">
-                        <FontAwesomeIcon icon={faPhone}/> +2 597 064 (факс)
+                        <FontAwesomeIcon icon={faPhone}/> пока нет (факс)
                     </p>
                     <p className="px-2 rounded-full glassb flex items-center gap-2">
-                        <FontAwesomeIcon icon={faReceipt}/> ИНН: 366416455929
+                        <FontAwesomeIcon icon={faReceipt}/> ИНН: 590585051410
                     </p>
                     <p className="px-2 rounded-full glassb flex items-center gap-2">
-                        <FontAwesomeIcon icon={faUser}/> ФИО: Фоминых Александр Михайлович
+                        <FontAwesomeIcon icon={faUser}/> ФИО: Пикалов Владимир Сергеевич
                     </p>
                 </div>
             </div>

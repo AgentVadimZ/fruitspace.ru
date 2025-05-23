@@ -18,7 +18,7 @@ export default function GlobalHead(props: HeadProps) {
     const domain = "https://openbeta.fruitspace.ru"
     let og = {
         title: "FruitSpace",
-        description: "Игровой хостинг FruitSpace: сервера Minecraft, Geometry Dash, CS 1.6/GO/2",
+        description: "Игровой хостинг FruitSpace: сервера Geometry Dash",
         type: "website",
         url: "/",
         image: `${domain}${banner.src}`,
