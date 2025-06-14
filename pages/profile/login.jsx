@@ -308,7 +308,7 @@ export default function Login(props) {
                 <div>
                     <span className="text-xs text-gray-400 block text-center">Мы используем hCaptcha для защиты от ботов</span>
                     <HCaptcha
-                        sitekey="c17bb027-5ed7-4e3d-9f67-6f3ed2d78090"
+                        sitekey="61d2c8fa-7888-4336-9202-85c681520f00"
                         onVerify={(val) => setHtoken(val)}
                         theme="dark" size="invisible" ref={hcaptchaRef}
                         onExpire={() => hcaptcha.reset()}

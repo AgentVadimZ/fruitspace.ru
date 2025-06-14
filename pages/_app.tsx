@@ -101,7 +101,7 @@ export default function WebApp({Component, pageProps}) {
                 }}>
                     <AuthProvider RequireAuth={Component.RequireAuth} router={router}>
                         <Component {...pageProps} router={router} globalLoader={[isL, setL]}/>
-                        {Component.jivo && <Script src="//code.jivo.ru/widget/QDbblcMLJ0" async></Script>}
+                        {Component.jivo && <Script src="//code.jivo.ru/widget/sNqbYfg0t7" async></Script>}
                     </AuthProvider>
                 </ConfigProvider>
             </StyledEngineProvider>
